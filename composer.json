@@ -1,0 +1,36 @@
+{
+    "name": "iprotek/sms-sender",
+    "description": "A simple example package",
+    "keywords": ["laravel", "plugin", "sms-sender"],
+    "authors": [
+        {
+            "name": "Joseph Aguilar",
+            "email": "admin@iprotek.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "iProtek\\SmsSender\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "illuminate/support": "^8.0|^9.0|^10.0"
+    },
+    "type": "library",  
+    "license": "MIT", 
+    "require-dev": {
+        "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
+    },
+    "suggest": {
+        "ext-intl": "Use this for sending sms connecting to SMS Server of iprotek"
+    }, 
+    "extra": {
+        "laravel": {
+            "providers": [
+                "iProtek\\SmsSender\\SmsSenderPackageServiceProvider"
+            ]
+        }
+    },
+    "version": "1.0.0" 
+}
