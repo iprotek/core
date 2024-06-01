@@ -84,6 +84,7 @@ class LoginController extends Controller
         Cache::flush();
         Session::flush(); 
         auth()->logout();
+        auth('admin')->logout();
 
         return redirect('/');
     }
