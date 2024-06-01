@@ -76,7 +76,7 @@ class LoginController extends Controller
     }
 
     public function index(Request $request){
-        return view('auth.login');
+        return view('iprotek_core::auth.login');
     }
 
     public function logout(Request $request){
