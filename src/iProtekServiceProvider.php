@@ -4,6 +4,8 @@ namespace iProtek\Core;
 
 use Illuminate\Support\ServiceProvider;
 
+use iProtek\Core\Http\CustomKernel;
+
 class iProtekServiceProvider extends ServiceProvider
 {
     /**
@@ -50,5 +52,10 @@ class iProtekServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'iprotek_core');
+
+        
+        $this->app->singleton('Illuminate\Contracts\Http\Kernel', function ($app) {
+            return new Kernel($app, $app['router']);
+        });
     }
 }
