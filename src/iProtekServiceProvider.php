@@ -29,8 +29,8 @@ class iProtekServiceProvider extends ServiceProvider
         //    __DIR__.'/../database/migrations' => database_path('migrations'),
         //], 'migrations');
 
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
-        $this->loadRoutesFrom(__DIR__.'/routes/web.php');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'iprotek_core');
     }
 }
