@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Helpers;
+namespace iProtek\Core\Helpers;
 
-use App\Helpers\AdminLTEHelper as DesignHelper;
-use App\Helpers\_TemplateFunctionHelper;
+use iProtek\Core\Helpers\AdminLTEHelper as DesignHelper;
+use iProtek\Core\Helpers\_TemplateFunctionHelper;
 
 class _TemplateHelper extends _TemplateFunctionHelper
 {

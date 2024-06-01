@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Notifications\CustomerPasswordResetNotification;
+use iProtek\Core\Notifications\CustomerPasswordResetNotification;
 
 class Customer extends Authenticatable implements MustVerifyEmail
 {
@@ -66,7 +66,7 @@ class Customer extends Authenticatable implements MustVerifyEmail
     
     public function sendEmailVerificationNotification()
     {
-        $this->notify(new \App\Notifications\CustomerVerifyEmailNotification($this->email));
+        $this->notify(new \iProtek\Core\Notifications\CustomerVerifyEmailNotification($this->email));
     }
     
 }

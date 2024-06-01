@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Helpers;
+namespace iProtek\Core\Helpers;
 
 use DB; 
 use Illuminate\Support\Facades\Log;
-use App\Models\UserAdminPayAccount;
+use iProtek\Core\Models\UserAdminPayAccount;
 
 class PayHttp
 {

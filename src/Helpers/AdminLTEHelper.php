@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Helpers;
+namespace iProtek\Core\Helpers;
 
-use App\Helpers\AdminLTEHelper as DesignHelper;
-use App\Helpers\LanguageHelper;
+use iProtek\Core\Helpers\AdminLTEHelper as DesignHelper;
+use iProtek\Core\Helpers\LanguageHelper;
 
 class AdminLTEHelper
 {
@@ -60,7 +60,7 @@ class AdminLTEHelper
 
     public static function _CheckBox1($id, $text, $attributes)
     {
-        //{!! App\Helpers\LanguageHelper::get_translation(  $label_trans_id, $text)  !!}
+        //{!! iProtek\Core\Helpers\LanguageHelper::get_translation(  $label_trans_id, $text)  !!}
         $label_trans_id = static::_getLabelTranslateID($attributes);
         $label_trans = '';
         if(!empty($label_trans_id)){

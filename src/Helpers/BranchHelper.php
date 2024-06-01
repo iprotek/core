@@ -1,14 +1,14 @@
 <?php
-namespace App\Helpers;
+namespace iProtek\Core\Helpers;
 
 use DB; 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use App\Helpers\PayModelHelper;
-use App\Models\Branch;
-use App\Models\SharedAccountDefaultBranch;
-use App\Models\SharedAccountAllowedBranch;
+use iProtek\Core\Helpers\PayModelHelper;
+use iProtek\Core\Models\Branch;
+use iProtek\Core\Models\SharedAccountDefaultBranch;
+use iProtek\Core\Models\SharedAccountAllowedBranch;
 
 class BranchHelper
 { 

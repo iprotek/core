@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace iProtek\Core\Helpers;
 
 use DB; 
 use Swift_SmtpTransport;

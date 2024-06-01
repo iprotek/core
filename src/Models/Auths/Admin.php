@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\FileUpload;
+use iProtek\Core\Models\FileUpload;
 class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable,SoftDeletes;

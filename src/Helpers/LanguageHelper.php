@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Helpers;
+namespace iProtek\Core\Helpers;
 use Illuminate\Support\Facades\Session;
-use App\Models\LanguageList;
+use iProtek\Core\Models\LanguageList;
 use DB;
 
 class LanguageHelper

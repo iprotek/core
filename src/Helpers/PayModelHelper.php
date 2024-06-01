@@ -1,5 +1,5 @@
 <?php
-namespace App\Helpers;
+namespace iProtek\Core\Helpers;
 
 use DB; 
 use Illuminate\Support\Facades\Log;

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\_Common;
+namespace iProtek\Core\Http\Controllers\_Common;
 
 use Illuminate\Routing\Controller as BaseController;
 
-use App\Helpers\_TemplateHelper as Template;
+use iProtek\Core\Helpers\_TemplateHelper as Template;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Helpers\LanguageHelper;
+use iProtek\Core\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Helpers;
+namespace iProtek\Core\Helpers;
 
 use DB;
-use App\Models\FileUpload;
+use iProtek\Core\Models\FileUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -64,7 +64,7 @@ class FileUploadHelper
             'images/'.$txt_file_name, $content
         );
         //DELETE THE BACKUP DATA TRIGGER TO OVERWRITE
-        \App\Models\CloudData::where('file_upload_id', $fileUpload->id )->where('file_name', $txt_file_name)->delete();
+        \iProtek\Core\Models\CloudData::where('file_upload_id', $fileUpload->id )->where('file_name', $txt_file_name)->delete();
          
     }
 

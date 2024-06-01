@@ -4,7 +4,7 @@ namespace iProtek\Core\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Models\WebVisitor;
+use iProtek\Core\Models\WebVisitor;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 

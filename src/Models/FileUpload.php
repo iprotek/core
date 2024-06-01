@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace iProtek\Core\Models;
 
-use App\Models\_CommonModel;
+use iProtek\Core\Models\_CommonModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

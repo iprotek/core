@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\_Common;
+namespace iProtek\Core\Http\Controllers\_Common;
 
-use App\Http\Controllers\_Common\_CommonController;
-use App\Helpers\PayModelHelper;
+use iProtek\Core\Http\Controllers\_Common\_CommonController;
+use iProtek\Core\Helpers\PayModelHelper;
 use Illuminate\Http\Request;
 
 class _CommonOwnGroupController extends _CommonController

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\_Common;
+namespace iProtek\Core\Http\Controllers\_Common;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -8,13 +8,13 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\_Common\_CommonController;
-use App\Models\Position;
-use App\Models\Department;
-use App\Models\Factory;
-use App\Models\Region;
-use App\Models\UserAdmin;
-use App\Helpers\LanguageHelper;
+use iProtek\Core\Http\Controllers\_Common\_CommonController;
+use iProtek\Core\Models\Position;
+use iProtek\Core\Models\Department;
+use iProtek\Core\Models\Factory;
+use iProtek\Core\Models\Region;
+use iProtek\Core\Models\UserAdmin;
+use iProtek\Core\Helpers\LanguageHelper;
 
 class _CommonAuths extends _CommonController
 {

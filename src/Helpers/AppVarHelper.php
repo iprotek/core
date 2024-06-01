@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Helpers;
+namespace iProtek\Core\Helpers;
 
 //use Illuminate\Http\Request;
 use DB;
-use App\Models\AppVariable;
+use iProtek\Core\Models\AppVariable;
 
 
 class AppVarHelper

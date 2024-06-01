@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\display;
+namespace iProtek\Core\View\Components\display;
 
 use Illuminate\View\Component;
 

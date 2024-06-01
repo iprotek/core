@@ -1,10 +1,10 @@
 
 <div id="app">
     <?php
-        $shuffle_list = \App\Models\FileUpload::where(["target_name"=>"business_backgrounds","target_id"=>1])->orderBy('is_default', 'DESC')->get();
+        $shuffle_list = \iProtek\Core\Models\FileUpload::where(["target_name"=>"business_backgrounds","target_id"=>1])->orderBy('is_default', 'DESC')->get();
         $default_image = '/images/21oktober background 8.jpg'; //'/image-preview/70';
         $playList = [];
-        $shuffle_info = \App\Helpers\AppVarHelper::get(['allow_shuffle','shuffle_duration']);// ?: 0;
+        $shuffle_info = \iProtek\Core\Helpers\AppVarHelper::get(['allow_shuffle','shuffle_duration']);// ?: 0;
         $allow_shuffle = $shuffle_info['allow_shuffle'] ?: 0;
         $shuffle_duration = $shuffle_info['shuffle_duration'] ?: 120;
         if(count($shuffle_list)>0){
@@ -39,8 +39,8 @@
             <nav class="navbar navbar-expand-md @yield('nav_bar_color','navbar-light shadow-sm')">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ \App\Helpers\AppVarHelper::get('business_logo_url', '/images/email-icon.png') }}" style="max-height:30px; width:auto;"/>
-                        {{ \App\Helpers\AppVarHelper::get('business_name',  config('app.name', 'Laravel') )  }}
+                        <img src="{{ \iProtek\Core\Helpers\AppVarHelper::get('business_logo_url', '/images/email-icon.png') }}" style="max-height:30px; width:auto;"/>
+                        {{ \iProtek\Core\Helpers\AppVarHelper::get('business_name',  config('app.name', 'Laravel') )  }}
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>

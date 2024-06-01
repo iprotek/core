@@ -6,10 +6,10 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use App\Models\UserAdminPayAccount;
+use iProtek\Core\Models\UserAdminPayAccount;
 use Illuminate\Support\Facades\Session;
-use App\Helpers\PayGroup;
-use App\Models\SuperAdminSubAccount;
+use iProtek\Core\Helpers\PayGroup;
+use iProtek\Core\Models\SuperAdminSubAccount;
 
 class PayAppUserAccount
 {
@@ -23,7 +23,7 @@ class PayAppUserAccount
     
      public function handle($request, Closure $next)
      {
-        \App\Helpers\PayHttp::client();
+        \iProtek\Core\Helpers\PayHttp::client();
          if (!Auth::guard()->check()) {
              return redirect('/login');//->route('login');
          }

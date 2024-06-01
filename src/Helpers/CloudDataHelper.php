@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Helpers;
+namespace iProtek\Core\Helpers;
 
 use DB;
-use App\Models\FileUpload;
+use iProtek\Core\Models\FileUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Google\Cloud\Storage\StorageClient;
@@ -60,7 +60,7 @@ class CloudDataHelper
             //return;
         }
         //Create Create clouddata here
-        $cloudData = \App\Models\CloudData::create([
+        $cloudData = \iProtek\Core\Models\CloudData::create([
             "service_name"=>"google-cloud-storage",
             "file_upload_id"=>$file_upload_id,
             "file_allocation"=>$new_location,

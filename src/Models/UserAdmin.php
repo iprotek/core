@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace iProtek\Core\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\Factory;
-use App\Models\UserAdminInfo;
+use iProtek\Core\Models\Factory;
+use iProtek\Core\Models\UserAdminInfo;
 use DB;
 
 class UserAdmin extends Model
@@ -96,9 +96,9 @@ class UserAdmin extends Model
 
 
     public function latest_info(){
-        $result = $this->hasOne('App\Models\UserAdminInfo', 'user_admin_id')->where('is_active', 1)->latest();
+        $result = $this->hasOne('iProtek\Core\Models\UserAdminInfo', 'user_admin_id')->where('is_active', 1)->latest();
         if($result->count() <= 0)
-            $result = $this->hasOne('App\Models\UserAdminInfo', 'user_admin_id')->latest();
+            $result = $this->hasOne('iProtek\Core\Models\UserAdminInfo', 'user_admin_id')->latest();
         return $result;
     }
 

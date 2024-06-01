@@ -1,6 +1,6 @@
 <?php
 
-namespace App\View\Components\Input;
+namespace iProtek\Core\View\Components\Input;
 
 use Illuminate\View\Component;
 

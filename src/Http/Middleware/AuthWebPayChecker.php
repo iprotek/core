@@ -6,11 +6,11 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use App\Models\UserAdminPayAccount;
+use iProtek\Core\Models\UserAdminPayAccount;
 use Illuminate\Support\Facades\Session;
-use App\Helpers\PayGroup;
-use App\Models\SuperAdminSubAccount;
-use App\Helpers\PayHttp;
+use iProtek\Core\Helpers\PayGroup;
+use iProtek\Core\Models\SuperAdminSubAccount;
+use iProtek\Core\Helpers\PayHttp;
 
 class AuthWebPayChecker
 {
@@ -24,7 +24,7 @@ class AuthWebPayChecker
     
      public function handle($request, Closure $next)
      {
-        \App\Helpers\PayHttp::client(); 
+        \iProtek\Core\Helpers\PayHttp::client(); 
          $user = auth()->user();
          $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first(); 
 

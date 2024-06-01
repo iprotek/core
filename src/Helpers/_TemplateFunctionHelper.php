@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace iProtek\Core\Helpers;
 
 
 class _TemplateFunctionHelper

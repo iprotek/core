@@ -2,7 +2,7 @@
 
 namespace iProtek\Core\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use iProtek\Core\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class iProtekCoreController extends Controller
