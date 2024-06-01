@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('iprotek_core::layouts.app')
 
 @section('content') 
     <div id="main-content">
@@ -7,7 +7,7 @@
 @endsection
 
 @section('foot')
-    <script src="/design/templates/adminlte3.1.0/plugins/sweetalert2/sweetalert2.min.js"></script>
-    <script src="/js/sub-accounts-default.js"></script> 
+    <script src="/iprotek/design/templates/adminlte3.1.0/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/iprotek/js/sub-accounts-default.js"></script> 
     <!--<script src="/js/app.js"></script>-->
 @endsection
