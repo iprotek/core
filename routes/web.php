@@ -8,8 +8,8 @@ use iProtek\SmsSender\Http\Controllers\iProtekCoreController;
 //});
 Route::middleware(['web-visits'])->group(function(){
 
-  Route::get('/home', [App\Http\Controllers\MainPageController::class, 'index'])->name('mainpage2');
-  Route::get('/', [App\Http\Controllers\MainPageController::class, 'index'])->name('mainpage');
+  Route::get('/home', [iProtek\Core\Http\Controllers\MainPageController::class, 'index'])->name('mainpage2');
+  Route::get('/', [iProtek\Core\Http\Controllers\MainPageController::class, 'index'])->name('mainpage');
 
 });
 
