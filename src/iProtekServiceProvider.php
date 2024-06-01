@@ -4,7 +4,7 @@ namespace iProtek\Core;
 
 use Illuminate\Support\ServiceProvider;
 
-use iProtek\Core\Http\CustomKernel;
+use iProtek\Core\Http\Kernel;
 
 class iProtekServiceProvider extends ServiceProvider
 {
