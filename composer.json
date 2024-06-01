@@ -10,8 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "iProtek\\Core\\": "src/",
-            "iProtek\\Core\\Http\\": "src/Http/"
+            "iProtek\\Core\\": "src/"
         }
     },
     "scripts": {
