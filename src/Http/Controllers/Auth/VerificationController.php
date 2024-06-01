@@ -2,8 +2,8 @@
 
 namespace iProtek\Core\Http\Controllers\Auth;
 
-use iProtek\Core\Http\Controllers\Controller;
-use iProtek\Core\Providers\RouteServiceProvider;
+use Illuminate\Routing\Controller;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class VerificationController extends Controller

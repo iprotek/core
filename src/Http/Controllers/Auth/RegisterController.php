@@ -2,9 +2,9 @@
 
 namespace iProtek\Core\Http\Controllers\Auth;
 
-use iProtek\Core\Http\Controllers\Controller;
-use iProtek\Core\Providers\RouteServiceProvider;
-use iProtek\Core\Models\User;
+use Illuminate\Routing\Controller;
+use App\Providers\RouteServiceProvider;
+use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

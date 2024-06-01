@@ -2,7 +2,7 @@
 
 namespace iProtek\Core\Http\Controllers\Auth;
 
-use iProtek\Core\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
