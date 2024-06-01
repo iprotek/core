@@ -10,7 +10,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "iProtek\\Core\\": "src/"
+            "iProtek\\Core\\": "src/",
+            "Illuminate\\Foundation\\Http\\": "vendor/laravel/framework/src/Illuminate/Foundation/Http/"
         }
     },
     "scripts": {
