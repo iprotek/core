@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Auths;
+namespace iProtek\Core\Models\Auths;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

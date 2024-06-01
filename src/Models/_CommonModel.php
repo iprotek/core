@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace iProtek\Core\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\UserAdmin; 
+use iProtek\Core\Models\UserAdmin; 
 
 class _CommonModel extends Model
 {
