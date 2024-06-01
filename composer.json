@@ -1,7 +1,7 @@
 {
-    "name": "iprotek/sms-sender",
-    "description": "A simple example package",
-    "keywords": ["laravel", "plugin", "sms-sender"],
+    "name": "iprotek/core",
+    "description": "A simple design for UI and core functions of iprotek",
+    "keywords": ["laravel", "plugin", "iprotek-core"],
     "authors": [
         {
             "name": "Joseph Aguilar",
@@ -23,12 +23,12 @@
         "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
     },
     "suggest": {
-        "ext-intl": "Use this for sending sms connecting to SMS Server of iprotek"
+        "ext-intl": "Use this for design your dashboard on bootstrap."
     }, 
     "extra": {
         "laravel": {
             "providers": [
-                "iProtek\\SmsSender\\SmsSenderPackageServiceProvider"
+                "iProtek\\SmsSender\\iProtekServiceProvider"
             ]
         }
     },
