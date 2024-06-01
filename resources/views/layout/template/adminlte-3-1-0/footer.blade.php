@@ -38,6 +38,11 @@
 <script src="/iprotek/design/templates/adminlte3.1.0/dist/js/demo.js"></script>-->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) 
 <script src="/iprotek/design/templates/adminlte3.1.0/dist/js/pages/dashboard.js"></script>-->
+
+ 
+<script src="/iprotek/design/templates/adminlte3.1.0/plugins/fullcalendar/main.js"></script>  
+<script src="/iprotek/design/templates/adminlte3.1.0/plugins/moment/moment.min.js"></script>
+
 <script>
   
   const SwalToast = Swal.mixin({
