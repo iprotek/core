@@ -45,17 +45,17 @@
 
 
     <!--XPOSE-->
-    <script src="/js/xpose/Xpose.js?version=2.0"></script>
-    <script src="/js/xpose/Xpose-Request.js?version=2.1"></script>
+    <script src="/iprotek/js/xpose/Xpose.js?version=2.0"></script>
+    <script src="/iprotek/js/xpose/Xpose-Request.js?version=2.1"></script>
     <script src="/iprotek/design/templates/adminlte3.1.0/plugins/jquery/jquery.min.js"></script>
-    <link href="{{ asset('css/direct-chat.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="/css/Xpose-style.css">
+    <link href="{{ asset('/iprotek/css/direct-chat.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="/iprotek/css/Xpose-style.css">
 
     <!-- datatable -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   
-    <link rel="stylesheet" href="/css/w3school/preview-image.css">
+    <link rel="stylesheet" href="/iprotek/css/w3school/preview-image.css">
     
     <style>
         /** STYLE FOR LOADING */

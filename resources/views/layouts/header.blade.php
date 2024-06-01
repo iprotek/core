@@ -62,13 +62,13 @@ use iProtek\Core\Helpers\AppVarHelper;
 
 
     <!--XPOSE-->
-    <script src="/js/xpose/Xpose.js?version=2.0"></script>
-    <script src="/js/xpose/Xpose-Request.js?version=2.1"></script>
+    <script src="/iprotek/js/xpose/Xpose.js?version=2.0"></script>
+    <script src="/iprotek/js/xpose/Xpose-Request.js?version=2.1"></script>
     <script src="/iprotek/design/templates/adminlte3.1.0/plugins/jquery/jquery.min.js"></script>
-    <link rel="stylesheet" href="/css/Xpose-style.css"> 
-    <link href="/css/direct-chat.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="/iprotek/css/Xpose-style.css"> 
+    <link href="/iprotek/css/direct-chat.css" rel="stylesheet"> 
     
-    <link href="{{ asset('css/star-rating.css') }}" rel="stylesheet">
+    <link href="{{ asset('/iprotek/css/star-rating.css') }}" rel="stylesheet">
     
     <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/select2/css/select2.min.css"> 
     @yield('head')

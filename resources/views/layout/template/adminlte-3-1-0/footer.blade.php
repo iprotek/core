@@ -332,7 +332,7 @@ WebRequest("GET", '/v2/Data/List', null, 'application/json', function(result){
   //document.querySelectorAll('select.factorylist').fore
 
 </script>
-<script src="/js/xpose/Xpose-Translations.js?version=1"></script>
+<script src="/iprotek/js/xpose/Xpose-Translations.js?version=1"></script>
 <script>
   //$('select.select2').val("");
   //$('select.select2').select2();//.val("");
