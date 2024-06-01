@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
 {
@@ -79,8 +80,9 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request){
-        Session::flush();
 
+        Cache::flush();
+        Session::flush(); 
         auth()->logout();
 
         return redirect('/');
