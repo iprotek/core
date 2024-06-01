@@ -19,7 +19,7 @@ class UserAdminPayAccountController extends _CommonController
     //
     public function setup(Request $request){
 
-
+        abort(403, 'Test');
         return view('iprotek_core::pay-account.setup');
     }
 
