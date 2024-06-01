@@ -1,5 +1,5 @@
 <?php
-use iProtek\Core\Helpers\AppVarHelper;
+use \App\Helpers\AppVarHelper;
 
 ?>
 
