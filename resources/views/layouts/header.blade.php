@@ -1,3 +1,8 @@
+<?php
+use iProtek\Core\Helpers\AppVarHelper;
+
+?>
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -8,13 +13,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title> 
-        {{ \App\Helpers\AppVarHelper::get('business_name',  config('app.name', 'Laravel') )  }}
+        {{ AppVarHelper::get('business_name',  config('app.name', 'Laravel') )  }}
     </title>
 
 
     <?php
       //Customise icon
-      $logoInfo = \App\Helpers\AppVarHelper::get(["business_logo_url","business_logo_type"]);
+      $logoInfo = AppVarHelper::get(["business_logo_url","business_logo_type"]);
       $logo_url = $logoInfo['business_logo_url'] ?: '/images/mariegold-logo.png';
       $logo_type = $logoInfo['business_logo_type'] ?: 'image/png';
       if($logo_url && $logo_type){
