@@ -13,6 +13,11 @@
             "iProtek\\Core\\": "src/"
         }
     },
+    "scripts": {
+        "post-autoload-dump": [
+            "@php artisan vendor:publish --tag=public --force"
+        ]
+    },
     "require": {
         "php": ">=7.0.0",
         "illuminate/support": "^8.0|^9.0|^10.0"
