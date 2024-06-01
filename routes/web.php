@@ -6,6 +6,12 @@ use iProtek\SmsSender\Http\Controllers\iProtekCoreController;
 //Route::prefix('sms-sender')->name('sms-sender')->group(function(){
   //  Route::get('/', [SmsController::class, 'index'])->name('.index');
 //});
+Route::middleware(['web-visits'])->group(function(){
+
+  Route::get('/home', [App\Http\Controllers\MainPageController::class, 'index'])->name('mainpage2');
+  Route::get('/', [App\Http\Controllers\MainPageController::class, 'index'])->name('mainpage');
+
+});
 
 Route::get('/login', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'setup' ])->name('login');
 Route::post('/login', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'login_pay_account' ])->name('pay-login');
