@@ -29,9 +29,23 @@ class iProtekServiceProvider extends ServiceProvider
         //    __DIR__.'/../database/migrations' => database_path('migrations'),
         //], 'migrations');
 
+        
+        /*
         $this->publishes([
             __DIR__.'/../public' => public_path('vendor/iprotek'),
         ], 'public');
+        */
+        //Create link instead
+        $target = __DIR__.'/../public';
+        $link = public_path('iprotek');
+
+        // Create symbolic link if it doesn't exist
+        if (!file_exists($link)) {
+            symlink($target, $link);
+        }
+
+        //Run this to publish
+        //php artisan vendor:publish --tag=public --provider="iProtek\Core\iProtekServiceProvider"
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
