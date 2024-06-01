@@ -60,6 +60,7 @@ use iProtek\Core\Helpers\AppVarHelper;
     <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/summernote/summernote-bs4.min.css">
     <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"><!-- Summernote -->
 
+    <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/fullcalendar/main.css">
 
     <!--XPOSE-->
     <script src="/iprotek/js/xpose/Xpose.js?version=2.0"></script>
@@ -67,6 +68,11 @@ use iProtek\Core\Helpers\AppVarHelper;
     <script src="/iprotek/design/templates/adminlte3.1.0/plugins/jquery/jquery.min.js"></script>
     <link rel="stylesheet" href="/iprotek/css/Xpose-style.css"> 
     <link href="/iprotek/css/direct-chat.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="/iprotek/css/Xpose-style.css">
+    <link rel="stylesheet" href="/iprotek/css/w3school/searchinput.css">
+    <link rel="stylesheet" href="/iprotek/css/redtable.css">
+    <link rel="stylesheet" href="/iprotek/css/Xpose-hover.css">
+    <script src="/iprotek/js/xpose/Xpose-Events.js"></script>
     
     <link href="{{ asset('/iprotek/css/star-rating.css') }}" rel="stylesheet">
     
