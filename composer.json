@@ -10,7 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "iProtek\\SmsSender\\": "src/"
+            "iProtek\\Core\\": "src/"
         }
     },
     "require": {
@@ -28,7 +28,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "iProtek\\SmsSender\\iProtekServiceProvider"
+                "iProtek\\Core\\iProtekServiceProvider"
             ]
         }
     },
