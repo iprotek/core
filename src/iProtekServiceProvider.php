@@ -54,10 +54,10 @@ class iProtekServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'iprotek_core');
 
         
-        $this->app->extend('Illuminate\Contracts\Http\Kernel', function ($existingKernel, $app) {
-            return $app;
+        $this->app->extend('Illuminate\Foundation\Http\Kernel', function ($existingKernel, $app) {
+            //return $app;
             //if($app instanceof $app){}
-            //return new Kernel($app, $app['router']);
+            return new Kernel($app, $app['router']);
         });
 
         /*
