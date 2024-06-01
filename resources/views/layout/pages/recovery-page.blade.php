@@ -131,4 +131,4 @@
     <!-- /.login-box -->
 @endsection
 
-@include('layout.pages.view-page')
+@include('iprotek_core::layout.pages.view-page')

@@ -2,10 +2,10 @@
     
 
 <!-- Navbar -->
-    @include("layout.template.adminlte-3-1-0.navigation")
+    @include("iprotek_core::layout.template.adminlte-3-1-0.navigation")
 
     <!-- Main Sidebar Container -->
-    @include("layout.template.adminlte-3-1-0.sidebar")
+    @include("iprotek_core::layout.template.adminlte-3-1-0.sidebar")
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="min-height: 1172.8px;">
@@ -46,6 +46,6 @@
   </div>
   <!-- /.content-wrapper -->
 
-  @include("layout.template.adminlte-3-1-0.content-footer")
+  @include("iprotek_core::layout.template.adminlte-3-1-0.content-footer")
 
 </div>
