@@ -1,11 +1,11 @@
 <?php
 
-namespace Iprotek\Core\Http\Controllers;
+namespace iProtek\Core\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class iProtekCore extends Controller
+class iProtekCoreController extends Controller
 {
     public function index(Request $request)
     {
