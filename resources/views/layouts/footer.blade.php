@@ -1,4 +1,4 @@
-    @include('layouts.details-footer')    
+    @include('iprotek_core::layouts.details-footer')    
     @yield('foot')
 </body>
 </html>
