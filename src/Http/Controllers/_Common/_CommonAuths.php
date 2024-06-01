@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\_Common;
+namespace Protek\Core\Http\Controllers\_Common;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;

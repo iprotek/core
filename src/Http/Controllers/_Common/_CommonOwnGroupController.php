@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\_Common;
+namespace Protek\Core\Http\Controllers\_Common;
 
 use App\Http\Controllers\_Common\_CommonController;
 use App\Helpers\PayModelHelper;
