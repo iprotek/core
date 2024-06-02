@@ -24,8 +24,8 @@ class Kernel extends HttpKernel
             \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class
         ],
         'api' => [            
-            \App\Http\Middleware\EncryptCookies::class,
-            //'throttle:60,1', 
+            \iProtek\Core\Http\Middleware\EncryptCookies::class,
+            'throttle:api',
             \Illuminate\Session\Middleware\StartSession::class,  
         ],
         "web-visits"=>[
