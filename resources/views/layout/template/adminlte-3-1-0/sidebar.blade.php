@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
     <div>
-      <img src="{{ \iProtek\Core\Helpers\AppVarHelper::get('business_logo_url', '/images/email-icon.png') }}" alt="ALTE" class="brand-image elevation-3 round-50" style="border-radius:50%;" >
+      <img src="{{ \iProtek\Core\Helpers\AppVarHelper::get('business_logo_url', '/images/logo.png') }}" alt="ALTE" class="brand-image elevation-3 round-50" style="border-radius:50%;" >
     <!--<img src="/img/cartly.png" alt="ALTE" class="brand-image elevation-3" style="opacity: .8; margin-left:-5px;">-->
     </div>
       <span class="brand-text font-weight-light"><b style="font-size: 15px;">Marketing System</b></span>

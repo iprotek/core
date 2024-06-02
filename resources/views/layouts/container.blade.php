@@ -39,7 +39,7 @@
             <nav class="navbar navbar-expand-md @yield('nav_bar_color','navbar-light shadow-sm')">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <img src="{{ \iProtek\Core\Helpers\AppVarHelper::get('business_logo_url', '/images/email-icon.png') }}" style="max-height:30px; width:auto;"/>
+                        <img src="{{ \iProtek\Core\Helpers\AppVarHelper::get('business_logo_url', '/images/logo.png') }}" style="max-height:30px; width:auto;"/>
                         {{ \iProtek\Core\Helpers\AppVarHelper::get('business_name',  config('app.name', 'Laravel') )  }}
                     </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
