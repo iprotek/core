@@ -20,7 +20,7 @@ use iProtek\Core\Helpers\AppVarHelper;
     <?php
       //Customise icon
       $logoInfo = AppVarHelper::get(["business_logo_url","business_logo_type"]);
-      $logo_url = $logoInfo['business_logo_url'] ?: '/images/mariegold-logo.png';
+      $logo_url = $logoInfo['business_logo_url'] ?: '/images/logo.png';
       $logo_type = $logoInfo['business_logo_type'] ?: 'image/png';
       if($logo_url && $logo_type){
         ?>
