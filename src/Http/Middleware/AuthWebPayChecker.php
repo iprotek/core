@@ -24,7 +24,7 @@ class AuthWebPayChecker
     
      public function handle($request, Closure $next)
      {
-        if(auth()->check()){
+        if(!auth()->check()){
             return redirect('/logout');
         }
         \iProtek\Core\Helpers\PayHttp::client(); 
