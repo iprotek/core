@@ -1,10 +1,10 @@
 <?php
 
-namespace iProtek\Core\View\Components\display;
+namespace iProtek\Core\View\Components\Display;
 
 use Illuminate\View\Component;
 
-class progressbar extends Component
+class Progressbar extends Component
 {
     /**
      * Create a new component instance.
