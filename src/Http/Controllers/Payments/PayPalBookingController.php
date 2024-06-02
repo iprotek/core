@@ -21,10 +21,7 @@ class PayPalBookingController extends _CommonController
     private $secretKey = ""; 
     private $is_sandbox = false;
     public function __construct()
-    {
-        //$this->cliendId = "ARrLmqXkKpKB2M7dY1ry6kFLHwdCld1DQWGKzr-TwBpsNYd3ENqh6TC9_sCh1f83HfKibr91p5UJLtEG";//env("PAYPAL_CLIENT_ID","");
-        //$this->secretKey = "ELeosDh3XQti3w3NNR4WAEi7lFmpPl-WY8FoozhpJ-6a8_hu2Y0_xng1DuNOSqWu9swLFo-EX90j95Vb"; //env("PAYPAL_CLIENT_SECRET","");
-         
+    { 
         //BUSINESS SANDBOX
         if($this->is_sandbox){
             $api_url = 'https://api.sandbox.paypal.com/';
@@ -48,11 +45,7 @@ class PayPalBookingController extends _CommonController
                 'Accept-Language' => 'en_US',
             ],
         ]);
-
-        //SANDBOX
-        //APP NAME: iprotech
-        //Client ID: ARrLmqXkKpKB2M7dY1ry6kFLHwdCld1DQWGKzr-TwBpsNYd3ENqh6TC9_sCh1f83HfKibr91p5UJLtEG
-        //Secret Key: ELeosDh3XQti3w3NNR4WAEi7lFmpPl-WY8FoozhpJ-6a8_hu2Y0_xng1DuNOSqWu9swLFo-EX90j95Vb
+ 
     }
 
     public function createPayment(Request $request,  $pay_type, BookingBundle  $id, $debitCredit = false  )

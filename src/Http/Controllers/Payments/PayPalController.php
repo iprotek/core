@@ -23,12 +23,7 @@ class PayPalController extends BaseController
                 'Accept' => 'application/json',
                 'Accept-Language' => 'en_US',
             ],
-        ]);
-
-        //SANDBOX
-        //APP NAME: iprotech
-        //Client ID: ARrLmqXkKpKB2M7dY1ry6kFLHwdCld1DQWGKzr-TwBpsNYd3ENqh6TC9_sCh1f83HfKibr91p5UJLtEG
-        //Secret Key: ELeosDh3XQti3w3NNR4WAEi7lFmpPl-WY8FoozhpJ-6a8_hu2Y0_xng1DuNOSqWu9swLFo-EX90j95Vb
+        ]); 
     }
 
     public function createPayment(Request $request, $description = "iProtech Solutions Product", $value = 10 ,$currency = "USD" )
