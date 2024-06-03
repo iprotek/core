@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Manage;
+namespace iProtek\Core\Http\Controllers\Manage;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\_Common\_CommonController;
+use iProtek\Core\Http\Controllers\_Common\_CommonController;
 use DB;
-use App\Models\FileUpload;
+use iProtek\Core\Models\FileUpload;
 use Illuminate\Support\Facades\Storage;  
 
 
