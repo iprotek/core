@@ -1,8 +1,8 @@
 <?php
 
-namespace iProtek\Core\Models;
+namespace App\Models;
 
-use iProtek\Core\Models\_CommonModel;
+use App\Models\_CommonModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -11,11 +11,6 @@ class FileUpload extends _CommonModel
     use HasFactory, SoftDeletes;
 
     public $fillable = [
-        "group_id",
-        "pay_created_by",
-        "pay_updated_by",
-        "pay_deleted_by",
-
         "target_name",
         "target_id",
         "order_no",
@@ -39,9 +34,19 @@ class FileUpload extends _CommonModel
     ];
 
     public function getLinkAttribute(){
-        return "/manage/file-uploads/image-preview/".$this->id;
+
+        //if(substr($this->file_type,0, 5) == 'image'){ 
+            return "/storage/images/".$this->target_id."_".$this->id.".".$this->file_ext;
+        //}
+        //return "/storage/images/0blank.png";
+        //return "/manage/file-uploads/image-preview/".$this->id;
     }
     public function getPublicLinkAttribute(){
-        return "/image-preview/".$this->id;
+        
+        //if(substr($this->file_type,0, 5) == 'image'){ 
+            return "/storage/images/".$this->target_id."_".$this->id.".".$this->file_ext;
+        //}
+        //return "/storage/images/0blank.png";
+        //return "/image-preview/".$this->id; 
     }
 }
