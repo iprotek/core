@@ -1,0 +1,31 @@
+.app-default{ 
+    opacity: 0.9;
+    -webkit-box-shadow: 0px 20px 0px -10px #FFFFFF8F, 0px -20px 0px -10px #FFFFFF8F, 20px 0px 0px -10px #FFFFFF73, -20px 0px 0px -10px #FFFFFF80, 0px 0px 0px 10px #796565b2, 5px 5px 15px 5px rgba(255, 255, 255, 0); 
+    box-shadow: 0px 20px 0px -10px #FFFFFF8F, 0px -20px 0px -10px #FFFFFF8F, 20px 0px 0px -10px #FFFFFF73, -20px 0px 0px -10px #FFFFFF80, 0px 0px 0px 10px #796565b2, 5px 5px 15px 5px rgba(255, 255, 255, 0);
+}
+.app-default2{ 
+    -webkit-box-shadow: 8px 0px 0px 0px #DCD0C0, 0px 8px 0px 0px #846860, -8px 0px 0px 0px #4E4E56, 0px 0px 0px 8px #736665, 5px 5px 15px 5px rgba(0,0,0,0); 
+    box-shadow: 8px 0px 0px 0px #DCD0C0, 0px 8px 0px 0px #846860, -8px 0px 0px 0px #4E4E56, 0px 0px 0px 8px #736665, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+.app-selected2{
+    -webkit-box-shadow: 8px 0px 0px 0px #DCD0C0, 0px 8px 0px 0px #B1938B, -8px 0px 0px 0px #4E4E56, 0px 0px 0px 8px #DA635D, 5px 5px 15px 5px rgba(0,0,0,0); 
+    box-shadow: 8px 0px 0px 0px #DCD0C0, 0px 8px 0px 0px #B1938B, -8px 0px 0px 0px #4E4E56, 0px 0px 0px 8px #DA635D, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+.app-selected{
+    -webkit-box-shadow: 0px 20px 0px -10px #FFFFFF, 0px -20px 0px -10px #FFFFFF, 20px 0px 0px -10px #FFFFFF, -20px 0px 0px -10px #FFFFFF, 0px 0px 0px 10px #FF0000, 5px 5px 15px 5px rgba(0,0,0,0); 
+    box-shadow: 0px 20px 0px -10px #FFFFFF, 0px -20px 0px -10px #FFFFFF, 20px 0px 0px -10px #FFFFFF, -20px 0px 0px -10px #FFFFFF, 0px 0px 0px 10px #FF0000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+.app-default span{ 
+    color: transparent;
+    background: #444;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    text-shadow: 0px 3px 1px rgba(255,255,255,0.8);
+}
+.app-default span:hover{
+    color: red;
+    text-shadow: unset;
+    background-clip:unset;
+    background: transparent;
+}
