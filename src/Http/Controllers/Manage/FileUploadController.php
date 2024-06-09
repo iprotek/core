@@ -180,7 +180,7 @@ class FileUploadController extends _CommonController
             "status"=>1, 
             "data"=>"", 
             "message"=>"Image Successfully Added.", 
-            "url"=> route('mainpage').Storage::url('images/'.$fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext)
+            "url"=>route('mainpage').Storage::url('images/'.$fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext)
         ];
 
     }
