@@ -12,7 +12,8 @@ class AppVariableController extends Controller
         
         $app_systems_url = env("APP_SYSTEMS","");
         if(!$app_systems_url){
-            return [];
+            abort(403, "APP_SYSTEMS IS EMPTY");
+            //return [];
         }
 
 
