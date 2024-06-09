@@ -59,6 +59,11 @@ class iProtekServiceProvider extends ServiceProvider
             return new Kernel($app, $app['router']);
         });
 
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/iprotek.php', 'iprotek'
+        );
+
         /*
         $this->app->extend('Illuminate\Contracts\Http\Kernel', function ($existingKernel, $app) {
             return new Kernel($app, $app['router']);

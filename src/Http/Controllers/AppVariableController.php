@@ -10,6 +10,7 @@ class AppVariableController extends Controller
     public function api_applist(Request $request){
         
         
+        abort(403, config("iprotek.system"));
         $app_systems_url = env("APP_SYSTEMS","");
         if(!$app_systems_url){
             abort(403, "APP_SYSTEMS IS EMPTY");
