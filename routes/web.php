@@ -28,7 +28,7 @@ Route::middleware('web')->group(function(){
   });
 
     
-  Route::prefix('manage')->middleware(['admin'])->name('manage')->group(function(){
+  Route::prefix('manage')->name('manage')->group(function(){
     
     Route::middleware(['auth_web_pay_checker', 'pay.account'])->group(function(){
       //FILE UPLOADS
