@@ -9,7 +9,7 @@ use iProtek\Core\Http\Controllers\Manage\FileUploadController;
 Route::middleware('api')->group(function(){
 
 
-    Route::prefix('group/{group_id}')->middleware(['pay.api'])->name('api')->group(function(){
+    Route::prefix('api/group/{group_id}')->middleware(['pay.api'])->name('api')->group(function(){
 
         Route::prefix('/file-upload')->name('.file-upload')->group(function(){
         
@@ -24,5 +24,5 @@ Route::middleware('api')->group(function(){
         });
 
     });
-    
+
 });
