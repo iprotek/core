@@ -17,29 +17,19 @@ class AppVariableController extends Controller
             //return [];
         }
 
-        if(env("APP_SYSTEMS") == env("APP_URL")){
-            //return \App\Models\Application::get();
-        }
-
         
-        $request = Request::create($app_systems_url."/app-list", 'GET');
+        //$request = Request::create($app_systems_url."/app-list", 'GET');
 
-        $response = app()->handle($request);
+        //$response = app()->handle($request);
 
-        return json_decode($response->getContent(), true);
+        //return json_decode($response->getContent(), true);
 
-        $client = new \GuzzleHttp\Client([
-            'base_uri' => $app_systems_url,
-            "http_errors"=>false, 
-            "verify"=>false, 
-            "curl"=>[
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Specify HTTP/2
-            ],
+        $client = new \GuzzleHttp\Client([ 
             "headers"=>[
                 "Accept"=>"application/json"
             ]
          ]);
-         $response = $client->get('app-list');
+         $response = $client->get($app_systems_url."/app-list");
          
          $response_code = $response->getStatusCode();
          if($response_code != 200 && $response_code != 201){
