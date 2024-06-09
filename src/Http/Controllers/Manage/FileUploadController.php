@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use iProtek\Core\Http\Controllers\_Common\_CommonController;
 use DB;
 use iProtek\Core\Models\FileUpload;
-use Illuminate\Support\Facades\Storage;  
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use iProtek\Core\Helpers\PayModelHelper; 
 
 
 class FileUploadController extends _CommonController
@@ -133,6 +135,53 @@ class FileUploadController extends _CommonController
         );
 
         return ["status"=>1, "data"=>"", "message"=>"Image Successfully Added."];
+
+    }
+
+    public function api_add(Request $request){ 
+
+        $req = $request;
+        $this->validate($request, [
+            'target_name' => 'required',
+            'target_id' => 'required',
+            //'fileInput' => 'required|mimes:pdf,doc,docx|max:2048',
+        ]);
+        //random password
+        //$password = Str::random(30); 
+        $target_name = $req->input('target_name');
+        $target_id = $req->input('target_id');
+    
+
+        $max_order_no =  DB::select("SELECT max(order_no) as max_order_no FROM file_uploads WHERE target_name = ? AND target_id = ? AND deleted_at IS NULL",[$target_name, $target_id])[0]->max_order_no;
+        if(!$max_order_no){
+            $max_order_no = 1;
+        }
+        else{
+            $max_order_no = $max_order_no + 1;
+        }
+        
+        $fileUpload = PayModelHelper::create(FileUpload::class, $request, [
+            "target_name"   => $target_name,
+            "target_id"     => $target_id,//$req->target_id,
+            "order_no"      => $max_order_no,
+            "file_name"     => $req->file_name,
+            "file_type"     => $req->file_type,//
+            "file_ext"      => $req->file_ext,
+            "is_default"    => $max_order_no == 1 ? 1 :0,
+            "location"      => "",
+            "created_by"    =>0
+        ]);
+
+        Storage::disk('local')->putFileAs(
+            'public\\images', $request->file('file'), $fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext
+        );
+
+        return [
+            "status"=>1, 
+            "data"=>"", 
+            "message"=>"Image Successfully Added.", 
+            "url"=> route('mainpage').Storage::url('images/'.$fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext)
+        ];
 
     }
 }
