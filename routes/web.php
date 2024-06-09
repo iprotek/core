@@ -28,11 +28,11 @@ Route::middleware('web')->group(function(){
   });
 
     
-  Route::prefix('/manage')->middleware(['auth'])->name('manage')->group(function(){
+  Route::prefix('manage')->middleware(['admin'])->name('manage')->group(function(){
     
     Route::middleware(['auth_web_pay_checker', 'pay.account'])->group(function(){
       //FILE UPLOADS
-      /*
+      
       Route::prefix('/file-uploads')->name('.file-uploads')->group(function(){
         Route::post('/add', [ iProtek\Core\Http\Controllers\Manage\FileUploadController::class ,'add'])->name('.add');
         Route::get('/get-list', [ iProtek\Core\Http\Controllers\Manage\FileUploadController::class ,'list'])->name('.get-list');
@@ -42,7 +42,7 @@ Route::middleware('web')->group(function(){
         Route::post('/set-default/{id}', [ iProtek\Core\Http\Controllers\Manage\FileUploadController::class ,'set_default'])->name('.set-default');
         Route::delete('/remove/{id}', [ iProtek\Core\Http\Controllers\Manage\FileUploadController::class ,'remove'])->name('.remove');
       });
-      */
+      
       
     });
 
