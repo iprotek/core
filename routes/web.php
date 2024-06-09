@@ -64,3 +64,5 @@ Route::middleware('web')->group(function(){
   });
 
 });
+
+include(__DIR__.'/api.php');
