@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route; 
 use iProtek\Core\Http\Controllers\Manage\FileUploadController; 
+use iProtek\Core\Http\Controllers\AppVariableController; 
 
 //Route::prefix('sms-sender')->name('sms-sender')->group(function(){
   //  Route::get('/', [SmsController::class, 'index'])->name('.index');
 //});
 Route::middleware('api')->group(function(){
 
+    Route::get('/app-list', [AppVariableController::class, 'api_applist'])->name('.app-list');
 
     Route::prefix('api/group/{group_id}')->middleware(['pay.api'])->name('api')->group(function(){
 
