@@ -17,7 +17,7 @@ class AppVariableController extends Controller
         }
 
         if(env("APP_SYSTEMS") == env("APP_URL")){
-            return \App\Models\Applications::get();
+            return \App\Models\Application::get();
         }
 
 
