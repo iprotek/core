@@ -16,6 +16,10 @@ class AppVariableController extends Controller
             //return [];
         }
 
+        if(env("APP_SYSTEMS") == env("APP_URL")){
+            return \App\Models\Applications::get();
+        }
+
 
         $client = new \GuzzleHttp\Client([
             'base_uri' => $app_systems_url,
