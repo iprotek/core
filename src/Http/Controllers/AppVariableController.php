@@ -25,6 +25,11 @@ class AppVariableController extends Controller
         //return json_decode($response->getContent(), true);
 
         $client = new \GuzzleHttp\Client([ 
+            "http_errors"=>false, 
+            "verify"=>false, 
+            "curl"=>[
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Specify HTTP/2
+            ],
             "headers"=>[
                 "Accept"=>"application/json"
             ]
