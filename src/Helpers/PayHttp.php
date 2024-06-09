@@ -11,9 +11,9 @@ class PayHttp
      
 
     public static function http2($is_auth = true, $access_token=""){
-        $pay_url = env('PAY_IPROTEK_URL', '');
-        $client_id = env('PAY_IPROTEK_CLIENT_ID', '');
-        $client_secret = env('PAY_IPROTEK_CLIENT_SECRET', ''); 
+        $pay_url = config('iprotek.pay_url');
+        $client_id = config('iprotek.pay_client_id');
+        $client_secret = config('iprotek.pay_client_secret'); 
 
         $headers = [];
         if($is_auth == false){

@@ -21,7 +21,7 @@ class PayGroup
         $result = json_decode($response->getBody(), true); 
 
         //Restrition on client_id
-        if($result['app_user_account']['oauth_client_id'] != env('PAY_IPROTEK_CLIENT_ID', 0)){
+        if($result['app_user_account']['oauth_client_id'] != config('iprotek.pay_client_id')){
             return null;
         }
 

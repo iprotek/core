@@ -17,8 +17,7 @@ class ExcelReaderApiHelper
         $path1 = $file->store('temp');
         $path=storage_path('app').'/'.$path1;
 
-        $res = $client->request('POST', "http://excel-process.sportscity.com.ph/api/upload-data", [
-            //'auth'      => [ env('API_USERNAME'), env('API_PASSWORD') ],
+        $res = $client->request('POST', "http://excel-process.sportscity.com.ph/api/upload-data", [ 
             'multipart' => [
                 [
                     'name'     => 'file',
