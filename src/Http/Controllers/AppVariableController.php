@@ -65,7 +65,7 @@ class AppVariableController extends Controller
             if ($ex->hasResponse()) {
                 Log::error($ex->getResponse()->getBody()->getContents()); 
             }
-        } catch (\Exception $e) {
+        } catch (\Exception $ex) {
             Log::error($ex->getMessage()); 
         }
 
