@@ -42,35 +42,29 @@ class AppVariableController extends Controller
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0
             ]; 
         }
-        try{
-            $client = new Client([ 
-                'base_uri' => $app_systems_url,
-                'timeout' => 10,
-                "http_errors"=>false, 
-                "verify"=>false, 
-                "curl"=> $curl_header,
-                "headers"=>[
-                    "Accept"=>"application/json",
-                    "Content-type"=>"application/json",
-                ]
-            ]);
-            $response = $client->request("POST","/api/raw-app-list",[
-                'body' => "{}"
-            ]);
-            
-            $response_code = $response->getStatusCode();
-            if($response_code != 200 && $response_code != 201){
-                Log::error($response->getBody()); 
-                return [];
-            }
-            $result = json_decode($response->getBody(), true);
-            return $result;
+        
+        $client = new Client([ 
+            'base_uri' => $app_systems_url,
+            'timeout' => 10,
+            "http_errors"=>false, 
+            "verify"=>false, 
+            "curl"=> $curl_header,
+            "headers"=>[
+                "Accept"=>"application/json",
+                "Content-type"=>"application/json",
+            ]
+        ]);
+        $response = $client->request("POST","/api/raw-app-list",[
+            'body' => "{}"
+        ]);
+        
+        $response_code = $response->getStatusCode();
+        if($response_code != 200 && $response_code != 201){
+            Log::error($response->getBody());
+            return [];
         }
-        catch(\Exception $ex){
-            Log::error($ex->getMessage()); 
-            Log::error($app_systems_url); 
-        }
-        return [];
+        $result = json_decode($response->getBody(), true);
+        return $result;
     }
 
     public function raw_api_applist(Request $request){
