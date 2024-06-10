@@ -26,8 +26,8 @@ class AppVariableController extends Controller
 
         $client = new \GuzzleHttp\Client([ 
             'base_uri' => $app_systems_url,
-            //"http_errors"=>false, 
-            //"verify"=>false, 
+            "http_errors"=>false, 
+            "verify"=>false, 
             "curl"=>[
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Specify HTTP/2
             ],
