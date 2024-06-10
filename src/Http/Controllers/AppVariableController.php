@@ -23,9 +23,9 @@ class AppVariableController extends Controller
         if(config('iprotek.system') == config('app.url')){
             $requests = Request::create("/api/raw-app-list", 'POST', []);
 
-            //$response = app()->handle($requests);
+            $response = app()->handle($requests);
             
-            $response = Route::dispatch($request);
+            //$response = Route::dispatch($request);
             return json_decode($response->getContent(), true);
         }
 
