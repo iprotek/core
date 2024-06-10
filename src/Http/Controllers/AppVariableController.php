@@ -21,7 +21,7 @@ class AppVariableController extends Controller
             $requests = Request::create("/api/raw-app-list", 'GET');
 
             $response = app()->handle($requests);
-
+            return [];
             return json_decode($response->getContent(), true);
         }
         
