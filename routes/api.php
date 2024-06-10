@@ -8,7 +8,7 @@ use iProtek\Core\Http\Controllers\AppVariableController;
   //  Route::get('/', [SmsController::class, 'index'])->name('.index');
 //});
 Route::middleware('api')->group(function(){
-    Route::prefixt('api')->group(function(){
+    Route::prefix('api')->group(function(){
 
         Route::get('app-list', [AppVariableController::class, 'api_applist'])->name('api.app-list');
         Route::get('raw-app-list', [AppVariableController::class, 'raw_api_applist'])->name('api.raw-app-list');
