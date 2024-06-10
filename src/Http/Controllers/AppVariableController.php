@@ -57,6 +57,7 @@ class AppVariableController extends Controller
             
             $response_code = $response->getStatusCode();
             if($response_code != 200 && $response_code != 201){
+                Log::error($response->getBody()); 
                 return [];
             }
             $result = json_decode($response->getBody(), true);
