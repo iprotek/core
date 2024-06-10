@@ -40,6 +40,8 @@ class AppVariableController extends Controller
             $curl_header = [
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0
             ]; 
+            
+            Log::error("is localhost"); 
         }
 
         $handler = new CurlHandler();
