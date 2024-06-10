@@ -20,7 +20,7 @@ class AppVariableController extends Controller
         }
 
         if(config('iprotek.system') == config('app.url')){
-            $requests = Request::create("/api/raw-app-list", 'GET');
+            $requests = Request::create("/api/raw-app-list", 'POST');
 
             $response = app()->handle($requests);
             return json_decode($response->getContent(), true);
@@ -50,7 +50,7 @@ class AppVariableController extends Controller
                     "Accept"=>"application/json"
                 ]
             ]);
-            $response = $client->get("/api/raw-app-list");
+            $response = $client->post("/api/raw-app-list");
             
             $response_code = $response->getStatusCode();
             if($response_code != 200 && $response_code != 201){
