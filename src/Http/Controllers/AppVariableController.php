@@ -3,10 +3,8 @@
 namespace iProtek\Core\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Handler\CurlHandler;
+use Illuminate\Support\Facades\Log;
 
 class AppVariableController extends Controller
 {
@@ -30,53 +28,8 @@ class AppVariableController extends Controller
 
         $curl_header = [
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Specify HTTP/2
-            CURLOPT_DNS_SERVERS => '8.8.8.8,8.8.4.4'
+            CURLOPT_DNS_SERVERS => '8.8.8.8, 8.8.4.4'
         ];
-        
-        $parsedUrl = parse_url($app_systems_url);
-        $host = $parsedUrl['host'];
-        $is_localhost =  in_array($host, ['127.0.0.1', 'localhost', '::1']);
-        if($is_localhost){
-            $curl_header = [
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0
-            ]; 
-            
-            Log::error("is localhost"); 
-        }else{
-            
-            Log::error("not localhost"); 
-        }
-
-        $handler = new CurlHandler();
-        $stack = HandlerStack::create($handler);
-        
-        $client = new Client([
-            'handler' => $stack,
-            'curl' => $curl_header,
-            "headers"=>[
-                "Accept"=>"application/json"
-            ]
-        ]);
-
-
-
-        
-        try {
-            $response = $client->request('GET', $app_systems_url."/api/raw-app-list");
-            $result = json_decode($response->getBody(), true);
-            return $result;
-        } catch (RequestException $ex) {
-            Log::error($ex->getMessage()); 
-            if ($ex->hasResponse()) {
-                Log::error($ex->getResponse()->getBody()->getContents()); 
-            }
-        } catch (\Exception $ex) {
-            Log::error($ex->getMessage()); 
-        }
-
-        return [];
-
-
         //if($this->isLoc)
         $parsedUrl = parse_url($app_systems_url);
         $host = $parsedUrl['host'];
