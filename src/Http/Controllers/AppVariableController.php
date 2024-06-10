@@ -31,6 +31,7 @@ class AppVariableController extends Controller
             "verify"=>false, 
             "curl"=>[
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Specify HTTP/2
+                CURLOPT_DNS_SERVERS => '8.8.8.8, 8.8.4.4'
             ],
             "headers"=>[
                 "Accept"=>"application/json"
