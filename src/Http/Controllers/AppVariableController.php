@@ -3,6 +3,7 @@
 namespace iProtek\Core\Http\Controllers;
 
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class AppVariableController extends Controller
 {
@@ -21,11 +22,10 @@ class AppVariableController extends Controller
             $requests = Request::create("/api/raw-app-list", 'GET');
 
             $response = app()->handle($requests);
-            return [];
             return json_decode($response->getContent(), true);
         }
         
-        $client = new \GuzzleHttp\Client([ 
+        $client = new Client([ 
             'base_uri' => $app_systems_url,
             "http_errors"=>false, 
             "verify"=>false, 
