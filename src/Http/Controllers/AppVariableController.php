@@ -35,7 +35,7 @@ class AppVariableController extends Controller
                 "Accept"=>"application/json"
             ]
          ]);
-         $response = $client->get("app-list");
+         $response = $client->get("/api/raw-app-list");
          
          $response_code = $response->getStatusCode();
          if($response_code != 200 && $response_code != 201){
