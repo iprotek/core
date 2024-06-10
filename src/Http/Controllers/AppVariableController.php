@@ -13,7 +13,7 @@ class AppVariableController extends Controller
         
         
         //abort(403, config("iprotek.system"));
-        $app_systems_url = config("iprotek.system"); 
+        $app_systems_url = trim(config("iprotek.system")); 
         if(!$app_systems_url){
             abort(403, "APP_SYSTEMS IS EMPTY");
             //return [];
