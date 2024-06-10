@@ -25,6 +25,7 @@ class AppVariableController extends Controller
         //return json_decode($response->getContent(), true);
 
         $client = new \GuzzleHttp\Client([ 
+            'base_uri' => $app_systems_url,
             //"http_errors"=>false, 
             //"verify"=>false, 
             "curl"=>[
@@ -34,7 +35,7 @@ class AppVariableController extends Controller
                 "Accept"=>"application/json"
             ]
          ]);
-         $response = $client->get($app_systems_url."/app-list");
+         $response = $client->get("app-list");
          
          $response_code = $response->getStatusCode();
          if($response_code != 200 && $response_code != 201){
