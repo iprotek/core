@@ -24,15 +24,26 @@ class AppVariableController extends Controller
             $response = app()->handle($requests);
             return json_decode($response->getContent(), true);
         }
-        
+
+        $curl_header = [
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Specify HTTP/2
+            CURLOPT_DNS_SERVERS => '8.8.8.8, 8.8.4.4'
+        ];
+        //if($this->isLoc)
+        $parsedUrl = parse_url($app_systems_url);
+        $host = $parsedUrl['host'];
+        $is_localhost =  in_array($host, ['127.0.0.1', 'localhost', '::1']);
+        if($is_localhost){
+            $curl_header = [
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0
+            ]; 
+        }
+
         $client = new Client([ 
             'base_uri' => $app_systems_url,
             "http_errors"=>false, 
             "verify"=>false, 
-            "curl"=>[
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Specify HTTP/2
-                CURLOPT_DNS_SERVERS => '8.8.8.8, 8.8.4.4'
-            ],
+            "curl"=> $curl_header,
             "headers"=>[
                 "Accept"=>"application/json"
             ]
