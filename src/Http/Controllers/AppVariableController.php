@@ -41,8 +41,9 @@ class AppVariableController extends Controller
 
         $client = new Client([ 
             'base_uri' => $app_systems_url,
+            'timeout' => 10,
             "http_errors"=>false, 
-            "verify"=>false, 
+            "verify"=>true, 
             "curl"=> $curl_header,
             "headers"=>[
                 "Accept"=>"application/json"
