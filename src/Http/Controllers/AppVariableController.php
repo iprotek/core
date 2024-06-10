@@ -44,7 +44,7 @@ class AppVariableController extends Controller
                 'base_uri' => $app_systems_url,
                 'timeout' => 10,
                 "http_errors"=>false, 
-                "verify"=>true, 
+                "verify"=>false, 
                 "curl"=> $curl_header,
                 "headers"=>[
                     "Accept"=>"application/json"
