@@ -18,15 +18,15 @@ class AppVariableController extends Controller
         }
 
         
-        $request = Request::create($app_systems_url."/app-list", 'GET');
+        //$request = Request::create($app_systems_url."/app-list", 'GET');
 
-        $response = app()->handle($request);
+        //$response = app()->handle($request);
 
-        return json_decode($response->getContent(), true);
+        //return json_decode($response->getContent(), true);
 
         $client = new \GuzzleHttp\Client([ 
-            "http_errors"=>false, 
-            "verify"=>false, 
+            //"http_errors"=>false, 
+            //"verify"=>false, 
             "curl"=>[
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Specify HTTP/2
             ],
