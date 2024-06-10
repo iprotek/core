@@ -47,10 +47,13 @@ class AppVariableController extends Controller
                 "verify"=>false, 
                 "curl"=> $curl_header,
                 "headers"=>[
-                    "Accept"=>"application/json"
+                    "Accept"=>"application/json",
+                    "Content-type"=>"application/json",
                 ]
             ]);
-            $response = $client->post("/api/raw-app-list");
+            $response = $client->request("POST","/api/raw-app-list",[
+                'body' => "{}"
+            ]);
             
             $response_code = $response->getStatusCode();
             if($response_code != 200 && $response_code != 201){
