@@ -42,6 +42,9 @@ class AppVariableController extends Controller
             ]; 
             
             Log::error("is localhost"); 
+        }else{
+            
+            Log::error("not localhost"); 
         }
 
         $handler = new CurlHandler();
