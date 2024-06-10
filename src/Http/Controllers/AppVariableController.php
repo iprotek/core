@@ -17,12 +17,13 @@ class AppVariableController extends Controller
             //return [];
         }
 
-        
-        //$request = Request::create($app_systems_url."/app-list", 'GET');
+        if(config('iprotek.system') == config('app.url')){
+            $requests = Request::create("/api/raw-app-list", 'GET');
 
-        //$response = app()->handle($request);
+            $response = app()->handle($requests);
 
-        //return json_decode($response->getContent(), true);
+            return json_decode($response->getContent(), true);
+        }
         
         $client = new \GuzzleHttp\Client([ 
             'base_uri' => $app_systems_url,
