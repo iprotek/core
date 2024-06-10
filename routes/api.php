@@ -7,12 +7,12 @@ use iProtek\Core\Http\Controllers\AppVariableController;
 //Route::prefix('sms-sender')->name('sms-sender')->group(function(){
   //  Route::get('/', [SmsController::class, 'index'])->name('.index');
 //});
-Route::middleware('api')->group(function(){
+Route::middleware('api')->prefix('api')->group(function(){
 
-    Route::get('api/app-list', [AppVariableController::class, 'api_applist'])->name('api.app-list');
-    Route::get('api/raw-app-list', [AppVariableController::class, 'raw_api_applist'])->name('api.raw-app-list');
+    Route::get('app-list', [AppVariableController::class, 'api_applist'])->name('api.app-list');
+    Route::get('raw-app-list', [AppVariableController::class, 'raw_api_applist'])->name('api.raw-app-list');
 
-    Route::prefix('api/group/{group_id}')->middleware(['pay.api'])->name('api')->group(function(){
+    Route::prefix('group/{group_id}')->middleware(['pay.api'])->name('api')->group(function(){
 
         Route::prefix('/file-upload')->name('.file-upload')->group(function(){
         

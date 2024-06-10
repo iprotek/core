@@ -70,4 +70,4 @@ Route::middleware('web')->group(function(){
 
 });
 
-include(__DIR__.'/api.php');
+//include(__DIR__.'/api.php');
