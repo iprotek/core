@@ -19,12 +19,12 @@ class AppVariableController extends Controller
             //return [];
         }
 
-        if(config('iprotek.system') == config('app.url')){
-            $requests = Request::create("/api/raw-app-list", 'POST');
+        //if(config('iprotek.system') == config('app.url')){
+           // $requests = Request::create("/api/raw-app-list", 'POST');
 
-            $response = app()->handle($requests);
-            return json_decode($response->getContent(), true);
-        }
+            //$response = app()->handle($requests);
+            //return json_decode($response->getContent(), true);
+        //}
 
         $curl_header = [
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Specify HTTP/2
