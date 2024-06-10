@@ -10,6 +10,7 @@ use iProtek\Core\Http\Controllers\AppVariableController;
 Route::middleware('api')->group(function(){
 
     Route::get('api/app-list', [AppVariableController::class, 'api_applist'])->name('api.app-list');
+    Route::get('api/raw-app-list', [AppVariableController::class, 'raw_api_applist'])->name('api.raw-app-list');
 
     Route::prefix('api/group/{group_id}')->middleware(['pay.api'])->name('api')->group(function(){
 

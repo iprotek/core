@@ -23,7 +23,7 @@ class AppVariableController extends Controller
         //$response = app()->handle($request);
 
         //return json_decode($response->getContent(), true);
-
+        
         $client = new \GuzzleHttp\Client([ 
             'base_uri' => $app_systems_url,
             "http_errors"=>false, 
@@ -44,4 +44,12 @@ class AppVariableController extends Controller
          $result = json_decode($response->getBody(), true);
          return $result;
     }
+
+    public function raw_api_applist(Request $request){
+        
+        $apps = \App\Models\Application::on();
+        $apps->select('id', 'name', 'url');
+        return $apps->get();
+    }
+
 }
