@@ -13,6 +13,24 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
+        try{
+            if(Schema::hasTable('categories')) {
+
+                
+                Schema::table('categories', function (Blueprint $table) {
+                    $table->bigInteger('group_id');
+                    $table->string('name');
+                    $table->bigInteger('pay_created_by')->nullable(); 
+                    $table->bigInteger('pay_updated_by')->nullable();
+                    $table->bigInteger('pay_deleted_by')->nullable(); 
+                });
+
+                return;
+
+            }
+        }catch(\Exception $ex){
+            return;
+        }
         Schema::create('categories', function (Blueprint $table) { 
             $table->id();
             $table->bigInteger('group_id');
