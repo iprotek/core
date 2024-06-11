@@ -18,7 +18,7 @@ class CreateCategoriesTable extends Migration
 
                 
                 Schema::table('categories', function (Blueprint $table) {
-                    $table->bigInteger('group_id');
+                    $table->bigInteger('group_id')->nullable();
                     $table->string('name');
                     $table->bigInteger('pay_created_by')->nullable(); 
                     $table->bigInteger('pay_updated_by')->nullable();
