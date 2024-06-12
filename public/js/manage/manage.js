@@ -3352,16 +3352,16 @@ var render = function render() {
   }), _vm._v(" "), _c("span", {
     staticClass: "badge badge-warning navbar-badge",
     domProps: {
-      textContent: _vm._s(_vm.summary.isLoadSummary ? ":" : _vm.summary.total)
+      textContent: _vm._s(_vm.summary.isLoadSummary == true ? ":" : _vm.summary.total)
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "dropdown-menu dropdown-menu-lg dropdown-menu-right"
-  }, [_vm.summary.total > 0 ? _c("span", {
+  }, [_c("span", {
     staticClass: "dropdown-item dropdown-header",
     domProps: {
-      textContent: _vm._s(_vm.summary.isLoadSummary ? " Loading Notification.. " : _vm.summary.total + " Notifications")
+      textContent: _vm._s(_vm.summary.isLoadSummary == true ? " Loading Notification.. " : _vm.summary.total + " Notifications")
     }
-  }) : _vm._e(), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
   }), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
