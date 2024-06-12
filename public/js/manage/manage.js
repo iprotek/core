@@ -3348,12 +3348,12 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "far fa-bell"
-  }), _vm._v(" "), _c("span", {
+  }), _vm._v(" "), _vm.summary.isLoadSummary == true || _vm.summary.total > 0 ? _c("span", {
     staticClass: "badge badge-warning navbar-badge",
     domProps: {
-      textContent: _vm._s(_vm.summary.isLoadSummary == true ? ":" : _vm.summary.total)
+      textContent: _vm._s(_vm.summary.isLoadSummary == true ? "?" : _vm.summary.total)
     }
-  })]), _vm._v(" "), _c("div", {
+  }) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "dropdown-menu dropdown-menu-lg dropdown-menu-right"
   }, [_c("span", {
     staticClass: "dropdown-item dropdown-header",

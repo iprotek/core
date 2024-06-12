@@ -2,7 +2,7 @@
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge" v-text=" (summary.isLoadSummary == true ? ':': summary.total)"> </span>
+            <span class="badge badge-warning navbar-badge" v-if="summary.isLoadSummary == true || summary.total > 0" v-text=" (summary.isLoadSummary == true ? '?': summary.total)"> </span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <span class="dropdown-item dropdown-header" v-text=" (summary.isLoadSummary == true ? ' Loading Notification.. ': (summary.total +' Notifications'))"> </span>
