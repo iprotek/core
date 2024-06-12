@@ -55,7 +55,7 @@
             -->
             <div class="dropdown-divider"></div>
             <a href="#" @click="clickUpdate" class="dropdown-item dropdown-footer">
-                <span class="fa fa-spinner fa-pulse"></span> Check System Updates
+                <span class="fa fa-spinner fa-pulse"></span> <span v-text="updates.message"></span>
             </a>
         </div>
     </div>
@@ -72,18 +72,22 @@
                     isLoadSummary:false,
                     summaryList:[],
                     total:0,
+                },
+                updates:{
+                    isCheck:false,
+                    message:'Check System Updates'
                 }
             }
         },
         methods: { 
             clickUpdate:function(evt){
                 //Actions Here
-                this.checkSystemUpdates();
+                if(this.updates.isCheck == false){
+                    this.checkSystemUpdates(); 
+                }
+
                 evt.stopPropagation();
-            },
-            checkSystemUpdates:function(){
-                console.log("Checking system updates");
-            },
+            }, 
             loadSystemSummary:function(){
                 var vm = this;
                 vm.summary.isLoadSummary = true;
@@ -100,6 +104,20 @@
                     });
                 }, 4000);
             },
+            checkSystemUpdates:function(){
+                var vm = this;
+                vm.updates.isCheck = true;
+                vm.updates.message = "Checking Updates..";
+                setTimeout(()=>{
+                    WebRequest2('POST','/manage/sys-notification/check-system-updates', '{}').then(resp=>{
+                        vm.updates.isCheck = false;
+                        resp.json().then(data=>{
+                            console.log(data);
+                            
+                        })
+                    });
+                }, 2000);
+            }
 
         },
         mounted:function(){

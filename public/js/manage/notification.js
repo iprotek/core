@@ -3031,17 +3031,20 @@ __webpack_require__.r(__webpack_exports__);
         isLoadSummary: false,
         summaryList: [],
         total: 0
+      },
+      updates: {
+        isCheck: false,
+        message: 'Check System Updates'
       }
     };
   },
   methods: {
     clickUpdate: function clickUpdate(evt) {
       //Actions Here
-      this.checkSystemUpdates();
+      if (this.updates.isCheck == false) {
+        this.checkSystemUpdates();
+      }
       evt.stopPropagation();
-    },
-    checkSystemUpdates: function checkSystemUpdates() {
-      console.log("Checking system updates");
     },
     loadSystemSummary: function loadSystemSummary() {
       var vm = this;
@@ -3057,6 +3060,19 @@ __webpack_require__.r(__webpack_exports__);
           });
         });
       }, 4000);
+    },
+    checkSystemUpdates: function checkSystemUpdates() {
+      var vm = this;
+      vm.updates.isCheck = true;
+      vm.updates.message = "Checking Updates..";
+      setTimeout(function () {
+        WebRequest2('POST', '/manage/sys-notification/check-system-updates', '{}').then(function (resp) {
+          vm.updates.isCheck = false;
+          resp.json().then(function (data) {
+            console.log(data);
+          });
+        });
+      }, 2000);
     }
   },
   mounted: function mounted() {
@@ -3210,7 +3226,11 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "fa fa-spinner fa-pulse"
-  }), _vm._v(" Check System Updates\n        ")])], 2)]);
+  }), _vm._v(" "), _c("span", {
+    domProps: {
+      textContent: _vm._s(_vm.updates.message)
+    }
+  })])], 2)]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
