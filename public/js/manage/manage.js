@@ -3059,8 +3059,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     clickUpdate: function clickUpdate(evt) {
       //Actions Here
-
+      this.checkSystemUpdates();
       evt.stopPropagation();
+    },
+    checkSystemUpdates: function checkSystemUpdates() {
+      console.log("Checking system updates");
     }
   },
   mounted: function mounted() {},
@@ -3331,12 +3334,7 @@ var render = function render() {
     staticClass: "dropdown-divider"
   }), _vm._v(" "), _vm._m(4), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
-  }), _vm._v(" "), _c("a", {
-    staticClass: "dropdown-item dropdown-footer",
-    attrs: {
-      href: "#"
-    }
-  }, [_vm._v("\n            See All Notifications\n        ")]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
   }), _vm._v(" "), _c("a", {
     staticClass: "dropdown-item dropdown-footer",
@@ -3348,7 +3346,7 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "fa fa-spinner fa-pulse"
-  }), _vm._v(" Check Updates\n        ")])])]);
+  }), _vm._v(" Check System Updates\n        ")])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -3374,7 +3372,7 @@ var staticRenderFns = [function () {
     }
   }, [_c("i", {
     staticClass: "fas fa-envelope mr-2"
-  }), _vm._v(" 3 new messages\n        "), _c("span", {
+  }), _vm._v(" 3 new messages\n            "), _c("span", {
     staticClass: "float-right text-muted text-sm"
   }, [_vm._v("3 mins")])]);
 }, function () {
@@ -3387,7 +3385,7 @@ var staticRenderFns = [function () {
     }
   }, [_c("i", {
     staticClass: "fas fa-users mr-2"
-  }), _vm._v(" 8 friend requests\n        "), _c("span", {
+  }), _vm._v(" 8 friend requests\n            "), _c("span", {
     staticClass: "float-right text-muted text-sm"
   }, [_vm._v("12 hours")])]);
 }, function () {
@@ -3400,16 +3398,16 @@ var staticRenderFns = [function () {
     }
   }, [_c("i", {
     staticClass: "fas fa-file mr-2"
-  }), _vm._v(" 3 new reports\n        "), _c("span", {
+  }), _vm._v(" 3 new reports\n            "), _c("span", {
     staticClass: "float-right text-muted text-sm"
   }, [_vm._v("2 days")])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("a", {
-    staticClass: "m-0 px-3 py-2",
+    staticClass: "dropdown-item",
     attrs: {
-      href: "#"
+      href: "/manage/sys-notification"
     }
   }, [_c("i", {
     staticClass: "fas fa-upload mr-2"
