@@ -2,7 +2,7 @@
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item">
-        <select class="form-control languagelist"> </select>
+        <select :id="(select_id ? select_id: 'select-languagelist')" :class=" ( select_class ? select_class : 'form-control languagelist')"> </select>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
@@ -106,7 +106,7 @@
 <script>
   import NotificationVue from './notification/Notification.vue';
     export default {
-        props:[  ],
+        props:[ "select_id", "select_class" ],
         components: { 
           "sys-notification":NotificationVue
         },

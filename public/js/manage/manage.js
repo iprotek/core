@@ -3025,7 +3025,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _notification_Notification_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./notification/Notification.vue */ "./resources/js/components/manage/notification/Notification.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["select_id", "select_class"],
   components: {
     "sys-notification": _notification_Notification_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3112,17 +3112,16 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("ul", {
     staticClass: "navbar-nav ml-auto"
-  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("sys-notification"), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _vm._m(5)], 1);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("li", {
+  }, [_c("li", {
     staticClass: "nav-item"
   }, [_c("select", {
-    staticClass: "form-control languagelist"
-  })]);
-}, function () {
+    "class": _vm.select_class ? _vm.select_class : "form-control languagelist",
+    attrs: {
+      id: _vm.select_id ? _vm.select_id : "select-languagelist"
+    }
+  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("sys-notification"), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4)], 1);
+};
+var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("li", {
