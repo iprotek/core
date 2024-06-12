@@ -2,10 +2,10 @@
     <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge">14</span>
+            <span class="badge badge-warning navbar-badge" v-text=" (summary.isLoadSummary ? ':': summary.total)"> </span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">14 Notifications</span>
+            <span class="dropdown-item dropdown-header" v-if="summary.total > 0" v-text=" (summary.isLoadSummary ? ' Loading Notification.. ': (summary.total +' Notifications'))"> </span>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
                 <i class="fas fa-envelope mr-2"></i> 3 new messages
@@ -47,6 +47,11 @@
         },
         data: function () {
             return {    
+                summary:{
+                    isLoadSummary:false,
+                    summaryList:[],
+                    total:0,
+                }
             }
         },
         methods: { 
@@ -57,9 +62,23 @@
             },
             checkSystemUpdates:function(){
                 console.log("Checking system updates");
+            },
+            loadSystemSummary:function(){
+                var vm = this;
+                this.summary.isLoadSummary = true;
+                WebRequest2("GET", "/manage/sys-notification/system-updates-summary" ).then(resp=>{
+                    this.isLoadSummary = false;
+                    resp.json().then(data=>{
+                        console.log(data);
+                        vm.summary.summaryList = data.summary;
+                        vm.summary.total = data.total;
+                    });
+
+                })
             }
         },
-        mounted:function(){     
+        mounted:function(){
+            this.loadSystemSummary();
         },
         updated:function(){
 
