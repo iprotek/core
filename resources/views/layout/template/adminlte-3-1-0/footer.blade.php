@@ -44,7 +44,7 @@
 <script src="/iprotek/design/templates/adminlte3.1.0/plugins/moment/moment.min.js"></script> 
 
 
-<script src="/iprotek/manage/manage.js"></script> 
+<script src="/iprotek/js/manage/manage.js"></script> 
 
 <script>
   
