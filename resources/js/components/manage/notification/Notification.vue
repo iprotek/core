@@ -22,7 +22,17 @@
             <span class="float-right text-muted text-sm">2 days</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+            <i class="fas fa-upload mr-2"></i> 1 System Updates
+            <span class="float-right text-muted text-sm">2 days</span>
+            <div class="dropdown-divider"></div> 
+            <i class="fas fa-refresh mr-2"></i> Check Updates
+            <span class="float-right text-muted text-sm">
+                <i class="fas fa-eye"></i>
+            </span>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item dropdown-footer">
+                See All Notifications
+            </a>
         </div>
     </li>
 </template>

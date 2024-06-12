@@ -3365,12 +3365,26 @@ var staticRenderFns = [function () {
     staticClass: "float-right text-muted text-sm"
   }, [_vm._v("2 days")])]), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
+  }), _vm._v(" "), _c("i", {
+    staticClass: "fas fa-upload mr-2"
+  }), _vm._v(" 1 System Updates\n        "), _c("span", {
+    staticClass: "float-right text-muted text-sm"
+  }, [_vm._v("2 days")]), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _c("i", {
+    staticClass: "fas fa-refresh mr-2"
+  }), _vm._v(" Check Updates\n        "), _c("span", {
+    staticClass: "float-right text-muted text-sm"
+  }, [_c("i", {
+    staticClass: "fas fa-eye"
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-divider"
   }), _vm._v(" "), _c("a", {
     staticClass: "dropdown-item dropdown-footer",
     attrs: {
       href: "#"
     }
-  }, [_vm._v("See All Notifications")])])]);
+  }, [_vm._v("\n            See All Notifications\n        ")])])]);
 }];
 render._withStripped = true;
 
