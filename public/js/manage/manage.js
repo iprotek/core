@@ -3073,12 +3073,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     loadSystemSummary: function loadSystemSummary() {
       var vm = this;
-      this.summary.isLoadSummary = true;
+      vm.summary.isLoadSummary = true;
+      vm.summary.summaryList = [];
       setTimeout(function () {
         WebRequest2("GET", "/manage/sys-notification/system-updates-summary").then(function (resp) {
           vm.summary.isLoadSummary = false;
           resp.json().then(function (data) {
-            console.log(data);
+            //console.log(data);
             vm.summary.summaryList = data.summary;
             vm.summary.total = data.total;
           });
@@ -3362,7 +3363,101 @@ var render = function render() {
     domProps: {
       textContent: _vm._s(_vm.summary.isLoadSummary == true ? " Loading Notification.. " : _vm.summary.total + " Notifications")
     }
-  }), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm._l(_vm.summary.summaryList, function (summary, summaryIndex) {
+    return _c("div", {
+      key: "summary-item-" + summaryIndex
+    }, [summary.type == "message" ? _c("div", [_c("div", {
+      staticClass: "dropdown-divider"
+    }), _vm._v(" "), _c("a", {
+      staticClass: "dropdown-item",
+      attrs: {
+        href: "#"
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-envelope mr-2"
+    }), _vm._v(" "), _c("span", {
+      domProps: {
+        textContent: _vm._s(summary.count + " new messages")
+      }
+    }), _vm._v(" "), _c("span", {
+      staticClass: "float-right text-muted text-sm",
+      domProps: {
+        textContent: _vm._s(summary.diff)
+      }
+    })])]) : summary.type == "friend-request" ? _c("div", [_c("div", {
+      staticClass: "dropdown-divider"
+    }), _vm._v(" "), _c("a", {
+      staticClass: "dropdown-item",
+      attrs: {
+        href: "#"
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-users mr-2"
+    }), _vm._v(" "), _c("span", {
+      domProps: {
+        textContent: _vm._s(summary.count + " friend requests")
+      }
+    }), _vm._v(" "), _c("span", {
+      staticClass: "float-right text-muted text-sm",
+      domProps: {
+        textContent: _vm._s(summary.diff)
+      }
+    })])]) : summary.type == "report" ? _c("div", [_c("div", {
+      staticClass: "dropdown-divider"
+    }), _vm._v(" "), _c("a", {
+      staticClass: "dropdown-item",
+      attrs: {
+        href: "#"
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-file mr-2"
+    }), _vm._v(" "), _c("span", {
+      domProps: {
+        textContent: _vm._s(summary.count + " new reports")
+      }
+    }), _vm._v(" "), _c("span", {
+      staticClass: "float-right text-muted text-sm",
+      domProps: {
+        textContent: _vm._s(summary.diff)
+      }
+    })])]) : summary.type == "git" ? _c("div", [_c("div", {
+      staticClass: "dropdown-divider"
+    }), _vm._v(" "), _c("a", {
+      staticClass: "dropdown-item",
+      attrs: {
+        href: "/manage/sys-notification"
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-upload mr-2"
+    }), _vm._v(" "), _c("span", {
+      domProps: {
+        textContent: _vm._s(summary.count + " System Updates")
+      }
+    }), _vm._v(" "), _c("span", {
+      staticClass: "float-right text-muted text-sm",
+      domProps: {
+        textContent: _vm._s(summary.diff)
+      }
+    })])]) : _c("div", [_c("div", {
+      staticClass: "dropdown-divider"
+    }), _vm._v(" "), _c("a", {
+      staticClass: "dropdown-item",
+      attrs: {
+        href: "#"
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-file mr-2"
+    }), _vm._v(" "), _c("span", {
+      domProps: {
+        textContent: _vm._s(summary.count + " new " + summary.name)
+      }
+    }), _vm._v(" "), _c("span", {
+      staticClass: "float-right text-muted text-sm",
+      domProps: {
+        textContent: _vm._s(summary.diff)
+      }
+    })])])]);
+  }), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
   }), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
@@ -3376,57 +3471,9 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "fa fa-spinner fa-pulse"
-  }), _vm._v(" Check System Updates\n        ")])])]);
+  }), _vm._v(" Check System Updates\n        ")])], 2)]);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", [_c("div", [_c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _c("a", {
-    staticClass: "dropdown-item",
-    attrs: {
-      href: "#"
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-envelope mr-2"
-  }), _vm._v(" "), _c("span", [_vm._v(" 3 new messages ")]), _vm._v(" "), _c("span", {
-    staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("3 mins")])])]), _vm._v(" "), _c("div", [_c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _c("a", {
-    staticClass: "dropdown-item",
-    attrs: {
-      href: "#"
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-users mr-2"
-  }), _vm._v(" "), _c("span", [_vm._v(" 8 friend requests ")]), _vm._v(" "), _c("span", {
-    staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("12 hours")])])]), _vm._v(" "), _c("div", [_c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _c("a", {
-    staticClass: "dropdown-item",
-    attrs: {
-      href: "#"
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-file mr-2"
-  }), _vm._v(" "), _c("span", [_vm._v(" 3 new reports ")]), _vm._v(" "), _c("span", {
-    staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("2 days")])])]), _vm._v(" "), _c("div", [_c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _c("a", {
-    staticClass: "dropdown-item",
-    attrs: {
-      href: "/manage/sys-notification"
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-upload mr-2"
-  }), _vm._v(" "), _c("span", [_vm._v(" 1 System Updates ")]), _vm._v(" "), _c("span", {
-    staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("2 days")])])])]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
