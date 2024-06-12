@@ -3054,7 +3054,13 @@ __webpack_require__.r(__webpack_exports__);
   props: [],
   components: {},
   data: function data() {
-    return {};
+    return {
+      summary: {
+        isLoadSummary: false,
+        summaryList: [],
+        total: 0
+      }
+    };
   },
   methods: {
     clickUpdate: function clickUpdate(evt) {
@@ -3064,9 +3070,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     checkSystemUpdates: function checkSystemUpdates() {
       console.log("Checking system updates");
+    },
+    loadSystemSummary: function loadSystemSummary() {
+      var _this = this;
+      var vm = this;
+      this.summary.isLoadSummary = true;
+      WebRequest2("GET", "/manage/sys-notification/system-updates-summary").then(function (resp) {
+        _this.isLoadSummary = false;
+        resp.json().then(function (data) {
+          console.log(data);
+          vm.summary.summaryList = data.summary;
+          vm.summary.total = data.total;
+        });
+      });
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.loadSystemSummary();
+  },
   updated: function updated() {}
 });
 
@@ -3320,19 +3341,35 @@ var render = function render() {
     _c = _vm._self._c;
   return _c("li", {
     staticClass: "nav-item dropdown"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
+  }, [_c("a", {
+    staticClass: "nav-link",
+    attrs: {
+      "data-toggle": "dropdown",
+      href: "#"
+    }
+  }, [_c("i", {
+    staticClass: "far fa-bell"
+  }), _vm._v(" "), _c("span", {
+    staticClass: "badge badge-warning navbar-badge",
+    domProps: {
+      textContent: _vm._s(_vm.summary.isLoadSummary ? ":" : _vm.summary.total)
+    }
+  })]), _vm._v(" "), _c("div", {
     staticClass: "dropdown-menu dropdown-menu-lg dropdown-menu-right"
-  }, [_c("span", {
-    staticClass: "dropdown-item dropdown-header"
-  }, [_vm._v("14 Notifications")]), _vm._v(" "), _c("div", {
+  }, [_vm.summary.total > 0 ? _c("span", {
+    staticClass: "dropdown-item dropdown-header",
+    domProps: {
+      textContent: _vm._s(_vm.summary.isLoadSummary ? " Loading Notification.. " : _vm.summary.total + " Notifications")
+    }
+  }) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
   }), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
   }), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
   }), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _vm._m(4), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
   }), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
@@ -3349,20 +3386,6 @@ var render = function render() {
   }), _vm._v(" Check System Updates\n        ")])])]);
 };
 var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("a", {
-    staticClass: "nav-link",
-    attrs: {
-      "data-toggle": "dropdown",
-      href: "#"
-    }
-  }, [_c("i", {
-    staticClass: "far fa-bell"
-  }), _vm._v(" "), _c("span", {
-    staticClass: "badge badge-warning navbar-badge"
-  }, [_vm._v("14")])]);
-}, function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("a", {
