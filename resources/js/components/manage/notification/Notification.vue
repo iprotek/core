@@ -1,5 +1,5 @@
-<template>
-    <li class="nav-item dropdown">
+<template> 
+    <div>
         <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
             <span class="badge badge-warning navbar-badge" v-if="summary.isLoadSummary == true || summary.total > 0" v-text=" (summary.isLoadSummary == true ? '?': summary.total)"> </span>
@@ -58,7 +58,7 @@
                 <span class="fa fa-spinner fa-pulse"></span> Check System Updates
             </a>
         </div>
-    </li>
+    </div>
 </template>
 
 <script>
