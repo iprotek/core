@@ -55,7 +55,7 @@
             -->
             <div class="dropdown-divider"></div>
             <a href="#" @click="clickUpdate" class="dropdown-item dropdown-footer">
-                <span class="fa fa-spinner fa-pulse"></span> <span v-text="updates.message"></span>
+                <span :class="'fa fa-spinner '+(updates.isCheck ? 'fa-pulse':'')"></span> <span v-text="updates.message"></span>
             </a>
         </div>
     </div>

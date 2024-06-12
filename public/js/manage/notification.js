@@ -3225,7 +3225,7 @@ var render = function render() {
       click: _vm.clickUpdate
     }
   }, [_c("span", {
-    staticClass: "fa fa-spinner fa-pulse"
+    "class": "fa fa-spinner " + (_vm.updates.isCheck ? "fa-pulse" : "")
   }), _vm._v(" "), _c("span", {
     domProps: {
       textContent: _vm._s(_vm.updates.message)
