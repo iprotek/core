@@ -26,16 +26,13 @@
                 <i class="fas fa-upload mr-2"></i> 1 System Updates
                 <span class="float-right text-muted text-sm">2 days</span>
             </a>
-            <div class="dropdown-divider"></div> 
-            <a class="dropdown-item" @click="clickUpdate">
-                <i class="fas fa-refresh mr-2"></i> Check Updates
-                <span class="float-right text-muted text-sm">
-                    <i class="fas fa-eye"></i>
-                </span>
-            </a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item dropdown-footer">
                 See All Notifications
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" @click="clickUpdate" class="dropdown-item dropdown-footer">
+                <span class="fa fa-spinner fa-pulse"></span> Check Updates
             </a>
         </div>
     </li>

@@ -3332,20 +3332,23 @@ var render = function render() {
   }), _vm._v(" "), _vm._m(4), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
   }), _vm._v(" "), _c("a", {
-    staticClass: "dropdown-item",
-    on: {
-      click: _vm.clickUpdate
+    staticClass: "dropdown-item dropdown-footer",
+    attrs: {
+      href: "#"
     }
-  }, [_c("i", {
-    staticClass: "fas fa-refresh mr-2"
-  }), _vm._v(" Check Updates\n            "), _vm._m(5)]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n            See All Notifications\n        ")]), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
   }), _vm._v(" "), _c("a", {
     staticClass: "dropdown-item dropdown-footer",
     attrs: {
       href: "#"
+    },
+    on: {
+      click: _vm.clickUpdate
     }
-  }, [_vm._v("\n            See All Notifications\n        ")])])]);
+  }, [_c("span", {
+    staticClass: "fa fa-spinner fa-pulse"
+  }), _vm._v(" Check Updates\n        ")])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -3413,14 +3416,6 @@ var staticRenderFns = [function () {
   }), _vm._v(" 1 System Updates\n            "), _c("span", {
     staticClass: "float-right text-muted text-sm"
   }, [_vm._v("2 days")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("span", {
-    staticClass: "float-right text-muted text-sm"
-  }, [_c("i", {
-    staticClass: "fas fa-eye"
-  })]);
 }];
 render._withStripped = true;
 
