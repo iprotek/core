@@ -80,15 +80,17 @@
             loadSystemSummary:function(){
                 var vm = this;
                 this.summary.isLoadSummary = true;
-                WebRequest2("GET", "/manage/sys-notification/system-updates-summary" ).then(resp=>{
-                    vm.summary.isLoadSummary = false;
-                    resp.json().then(data=>{
-                        console.log(data);
-                        vm.summary.summaryList = data.summary;
-                        vm.summary.total = data.total;
-                    });
+                setTimeout(()=>{
+                    WebRequest2("GET", "/manage/sys-notification/system-updates-summary" ).then(resp=>{
+                        vm.summary.isLoadSummary = false;
+                        resp.json().then(data=>{
+                            console.log(data);
+                            vm.summary.summaryList = data.summary;
+                            vm.summary.total = data.total;
+                        });
 
-                });
+                    });
+                }, 4000);
             },
 
         },

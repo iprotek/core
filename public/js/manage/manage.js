@@ -3074,14 +3074,16 @@ __webpack_require__.r(__webpack_exports__);
     loadSystemSummary: function loadSystemSummary() {
       var vm = this;
       this.summary.isLoadSummary = true;
-      WebRequest2("GET", "/manage/sys-notification/system-updates-summary").then(function (resp) {
-        vm.summary.isLoadSummary = false;
-        resp.json().then(function (data) {
-          console.log(data);
-          vm.summary.summaryList = data.summary;
-          vm.summary.total = data.total;
+      setTimeout(function () {
+        WebRequest2("GET", "/manage/sys-notification/system-updates-summary").then(function (resp) {
+          vm.summary.isLoadSummary = false;
+          resp.json().then(function (data) {
+            console.log(data);
+            vm.summary.summaryList = data.summary;
+            vm.summary.total = data.total;
+          });
         });
-      });
+      }, 4000);
     }
   },
   mounted: function mounted() {
