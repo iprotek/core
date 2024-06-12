@@ -6,26 +6,40 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <span class="dropdown-item dropdown-header" v-text=" (summary.isLoadSummary == true ? ' Loading Notification.. ': (summary.total +' Notifications'))"> </span>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <i class="fas fa-envelope mr-2"></i> 3 new messages
-                <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <i class="fas fa-users mr-2"></i> 8 friend requests
-                <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-                <i class="fas fa-file mr-2"></i> 3 new reports
-                <span class="float-right text-muted text-sm">2 days</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="/manage/sys-notification" class="dropdown-item">
-                <i class="fas fa-upload mr-2"></i> 1 System Updates
-                <span class="float-right text-muted text-sm">2 days</span>
-            </a>
+            
+            <div>
+                <div>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> 3 new messages
+                        <span class="float-right text-muted text-sm">3 mins</span>
+                    </a>
+                </div>
+                <div>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-users mr-2"></i> 8 friend requests
+                        <span class="float-right text-muted text-sm">12 hours</span>
+                    </a>
+                </div>
+                <div>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-file mr-2"></i> 3 new reports
+                        <span class="float-right text-muted text-sm">2 days</span>
+                    </a>
+                </div>
+                <div>
+                    <div class="dropdown-divider"></div>
+                    <a href="/manage/sys-notification" class="dropdown-item">
+                        <i class="fas fa-upload mr-2"></i> 1 System Updates
+                        <span class="float-right text-muted text-sm">2 days</span>
+                    </a>
+                </div>
+            </div>
+
+
+
             <div class="dropdown-divider"></div>
             <!--
                 <a href="#" class="dropdown-item dropdown-footer">

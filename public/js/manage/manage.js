@@ -3360,15 +3360,7 @@ var render = function render() {
     domProps: {
       textContent: _vm._s(_vm.summary.isLoadSummary == true ? " Loading Notification.. " : _vm.summary.total + " Notifications")
     }
-  }), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-divider"
   }), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
   }), _vm._v(" "), _c("div", {
     staticClass: "dropdown-divider"
@@ -3387,55 +3379,51 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("a", {
+  return _c("div", [_c("div", [_c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _c("a", {
     staticClass: "dropdown-item",
     attrs: {
       href: "#"
     }
   }, [_c("i", {
     staticClass: "fas fa-envelope mr-2"
-  }), _vm._v(" 3 new messages\n            "), _c("span", {
+  }), _vm._v(" 3 new messages\n                    "), _c("span", {
     staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("3 mins")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("a", {
+  }, [_vm._v("3 mins")])])]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _c("a", {
     staticClass: "dropdown-item",
     attrs: {
       href: "#"
     }
   }, [_c("i", {
     staticClass: "fas fa-users mr-2"
-  }), _vm._v(" 8 friend requests\n            "), _c("span", {
+  }), _vm._v(" 8 friend requests\n                    "), _c("span", {
     staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("12 hours")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("a", {
+  }, [_vm._v("12 hours")])])]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _c("a", {
     staticClass: "dropdown-item",
     attrs: {
       href: "#"
     }
   }, [_c("i", {
     staticClass: "fas fa-file mr-2"
-  }), _vm._v(" 3 new reports\n            "), _c("span", {
+  }), _vm._v(" 3 new reports\n                    "), _c("span", {
     staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("2 days")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("a", {
+  }, [_vm._v("2 days")])])]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _c("a", {
     staticClass: "dropdown-item",
     attrs: {
       href: "/manage/sys-notification"
     }
   }, [_c("i", {
     staticClass: "fas fa-upload mr-2"
-  }), _vm._v(" 1 System Updates\n            "), _c("span", {
+  }), _vm._v(" 1 System Updates\n                    "), _c("span", {
     staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("2 days")])]);
+  }, [_vm._v("2 days")])])])]);
 }];
 render._withStripped = true;
 
