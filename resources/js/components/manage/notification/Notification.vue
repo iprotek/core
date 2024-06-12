@@ -54,7 +54,7 @@
             clickUpdate:function(evt){
                 //Actions Here
 
-                event.stopPropagation();
+                evt.stopPropagation();
             }
         },
         mounted:function(){     

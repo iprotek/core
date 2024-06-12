@@ -3060,7 +3060,7 @@ __webpack_require__.r(__webpack_exports__);
     clickUpdate: function clickUpdate(evt) {
       //Actions Here
 
-      event.stopPropagation();
+      evt.stopPropagation();
     }
   },
   mounted: function mounted() {},
