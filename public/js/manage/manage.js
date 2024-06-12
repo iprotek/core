@@ -3072,11 +3072,10 @@ __webpack_require__.r(__webpack_exports__);
       console.log("Checking system updates");
     },
     loadSystemSummary: function loadSystemSummary() {
-      var _this = this;
       var vm = this;
       this.summary.isLoadSummary = true;
       WebRequest2("GET", "/manage/sys-notification/system-updates-summary").then(function (resp) {
-        _this.isLoadSummary = false;
+        vm.summary.isLoadSummary = false;
         resp.json().then(function (data) {
           console.log(data);
           vm.summary.summaryList = data.summary;

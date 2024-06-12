@@ -67,15 +67,16 @@
                 var vm = this;
                 this.summary.isLoadSummary = true;
                 WebRequest2("GET", "/manage/sys-notification/system-updates-summary" ).then(resp=>{
-                    this.isLoadSummary = false;
+                    vm.summary.isLoadSummary = false;
                     resp.json().then(data=>{
                         console.log(data);
                         vm.summary.summaryList = data.summary;
                         vm.summary.total = data.total;
                     });
 
-                })
-            }
+                });
+            },
+
         },
         mounted:function(){
             this.loadSystemSummary();
