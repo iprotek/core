@@ -3388,7 +3388,7 @@ var staticRenderFns = [function () {
     }
   }, [_c("i", {
     staticClass: "fas fa-envelope mr-2"
-  }), _vm._v(" 3 new messages\n                    "), _c("span", {
+  }), _vm._v(" "), _c("span", [_vm._v(" 3 new messages ")]), _vm._v(" "), _c("span", {
     staticClass: "float-right text-muted text-sm"
   }, [_vm._v("3 mins")])])]), _vm._v(" "), _c("div", [_c("div", {
     staticClass: "dropdown-divider"
@@ -3399,7 +3399,7 @@ var staticRenderFns = [function () {
     }
   }, [_c("i", {
     staticClass: "fas fa-users mr-2"
-  }), _vm._v(" 8 friend requests\n                    "), _c("span", {
+  }), _vm._v(" "), _c("span", [_vm._v(" 8 friend requests ")]), _vm._v(" "), _c("span", {
     staticClass: "float-right text-muted text-sm"
   }, [_vm._v("12 hours")])])]), _vm._v(" "), _c("div", [_c("div", {
     staticClass: "dropdown-divider"
@@ -3410,7 +3410,7 @@ var staticRenderFns = [function () {
     }
   }, [_c("i", {
     staticClass: "fas fa-file mr-2"
-  }), _vm._v(" 3 new reports\n                    "), _c("span", {
+  }), _vm._v(" "), _c("span", [_vm._v(" 3 new reports ")]), _vm._v(" "), _c("span", {
     staticClass: "float-right text-muted text-sm"
   }, [_vm._v("2 days")])])]), _vm._v(" "), _c("div", [_c("div", {
     staticClass: "dropdown-divider"
@@ -3421,7 +3421,7 @@ var staticRenderFns = [function () {
     }
   }, [_c("i", {
     staticClass: "fas fa-upload mr-2"
-  }), _vm._v(" 1 System Updates\n                    "), _c("span", {
+  }), _vm._v(" "), _c("span", [_vm._v(" 1 System Updates ")]), _vm._v(" "), _c("span", {
     staticClass: "float-right text-muted text-sm"
   }, [_vm._v("2 days")])])])]);
 }];
