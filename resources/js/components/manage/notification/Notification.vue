@@ -8,31 +8,33 @@
             <span class="dropdown-item dropdown-header">14 Notifications</span>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 3 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
+                <i class="fas fa-envelope mr-2"></i> 3 new messages
+                <span class="float-right text-muted text-sm">3 mins</span>
             </a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
+                <i class="fas fa-users mr-2"></i> 8 friend requests
+                <span class="float-right text-muted text-sm">12 hours</span>
             </a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
+                <i class="fas fa-file mr-2"></i> 3 new reports
+                <span class="float-right text-muted text-sm">2 days</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="m-0 px-3 py-2">
+            <a href="/manage/sys-notification" class="dropdown-item">
                 <i class="fas fa-upload mr-2"></i> 1 System Updates
                 <span class="float-right text-muted text-sm">2 days</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">
-                See All Notifications
-            </a>
+            <!--
+                <a href="#" class="dropdown-item dropdown-footer">
+                    See All Notifications
+                </a>
+            -->
             <div class="dropdown-divider"></div>
             <a href="#" @click="clickUpdate" class="dropdown-item dropdown-footer">
-                <span class="fa fa-spinner fa-pulse"></span> Check Updates
+                <span class="fa fa-spinner fa-pulse"></span> Check System Updates
             </a>
         </div>
     </li>
@@ -50,8 +52,11 @@
         methods: { 
             clickUpdate:function(evt){
                 //Actions Here
-
+                this.checkSystemUpdates();
                 evt.stopPropagation();
+            },
+            checkSystemUpdates:function(){
+                console.log("Checking system updates");
             }
         },
         mounted:function(){     
