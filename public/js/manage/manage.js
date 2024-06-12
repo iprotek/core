@@ -3056,7 +3056,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
-  methods: {},
+  methods: {
+    clickUpdate: function clickUpdate(evt) {
+      //Actions Here
+
+      event.stopPropagation();
+    }
+  },
   mounted: function mounted() {},
   updated: function updated() {}
 });
@@ -3309,14 +3315,42 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _vm._m(0);
+  return _c("li", {
+    staticClass: "nav-item dropdown"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-menu dropdown-menu-lg dropdown-menu-right"
+  }, [_c("span", {
+    staticClass: "dropdown-item dropdown-header"
+  }, [_vm._v("14 Notifications")]), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _vm._m(3), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _vm._m(4), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _c("a", {
+    staticClass: "dropdown-item",
+    on: {
+      click: _vm.clickUpdate
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-refresh mr-2"
+  }), _vm._v(" Check Updates\n            "), _vm._m(5)]), _vm._v(" "), _c("div", {
+    staticClass: "dropdown-divider"
+  }), _vm._v(" "), _c("a", {
+    staticClass: "dropdown-item dropdown-footer",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("\n            See All Notifications\n        ")])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("li", {
-    staticClass: "nav-item dropdown"
-  }, [_c("a", {
+  return _c("a", {
     staticClass: "nav-link",
     attrs: {
       "data-toggle": "dropdown",
@@ -3326,13 +3360,11 @@ var staticRenderFns = [function () {
     staticClass: "far fa-bell"
   }), _vm._v(" "), _c("span", {
     staticClass: "badge badge-warning navbar-badge"
-  }, [_vm._v("14")])]), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-menu dropdown-menu-lg dropdown-menu-right"
-  }, [_c("span", {
-    staticClass: "dropdown-item dropdown-header"
-  }, [_vm._v("14 Notifications")]), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _c("a", {
+  }, [_vm._v("14")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
     staticClass: "dropdown-item",
     attrs: {
       href: "#"
@@ -3341,9 +3373,11 @@ var staticRenderFns = [function () {
     staticClass: "fas fa-envelope mr-2"
   }), _vm._v(" 3 new messages\n        "), _c("span", {
     staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("3 mins")])]), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _c("a", {
+  }, [_vm._v("3 mins")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
     staticClass: "dropdown-item",
     attrs: {
       href: "#"
@@ -3352,9 +3386,11 @@ var staticRenderFns = [function () {
     staticClass: "fas fa-users mr-2"
   }), _vm._v(" 8 friend requests\n        "), _c("span", {
     staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("12 hours")])]), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _c("a", {
+  }, [_vm._v("12 hours")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
     staticClass: "dropdown-item",
     attrs: {
       href: "#"
@@ -3363,28 +3399,28 @@ var staticRenderFns = [function () {
     staticClass: "fas fa-file mr-2"
   }), _vm._v(" 3 new reports\n        "), _c("span", {
     staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("2 days")])]), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _c("i", {
-    staticClass: "fas fa-upload mr-2"
-  }), _vm._v(" 1 System Updates\n        "), _c("span", {
-    staticClass: "float-right text-muted text-sm"
-  }, [_vm._v("2 days")]), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _c("i", {
-    staticClass: "fas fa-refresh mr-2"
-  }), _vm._v(" Check Updates\n        "), _c("span", {
-    staticClass: "float-right text-muted text-sm"
-  }, [_c("i", {
-    staticClass: "fas fa-eye"
-  })]), _vm._v(" "), _c("div", {
-    staticClass: "dropdown-divider"
-  }), _vm._v(" "), _c("a", {
-    staticClass: "dropdown-item dropdown-footer",
+  }, [_vm._v("2 days")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
+    staticClass: "m-0 px-3 py-2",
     attrs: {
       href: "#"
     }
-  }, [_vm._v("\n            See All Notifications\n        ")])])]);
+  }, [_c("i", {
+    staticClass: "fas fa-upload mr-2"
+  }), _vm._v(" 1 System Updates\n            "), _c("span", {
+    staticClass: "float-right text-muted text-sm"
+  }, [_vm._v("2 days")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("span", {
+    staticClass: "float-right text-muted text-sm"
+  }, [_c("i", {
+    staticClass: "fas fa-eye"
+  })]);
 }];
 render._withStripped = true;
 
