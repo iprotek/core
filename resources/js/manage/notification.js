@@ -21,7 +21,7 @@ if(!window.Vue){
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 //Vue.component('header-menus', require('./components/manage/HeaderMenu.vue').default);
-Vue.component('sys-notification', require('./components/manage/notification/Notification.vue').default);
+Vue.component('sys-notification', require('../components/manage/notification/Notification.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
