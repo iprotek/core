@@ -112,7 +112,10 @@
                     WebRequest2('POST','/manage/sys-notification/check-system-updates', '{}').then(resp=>{
                         vm.updates.isCheck = false;
                         resp.json().then(data=>{
-                            console.log(data);
+                            //console.log(data);
+                            if(data.status == 1){
+                                vm.loadSystemSummary();
+                            }
                             
                         })
                     });

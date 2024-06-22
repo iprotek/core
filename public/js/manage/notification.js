@@ -3069,7 +3069,10 @@ __webpack_require__.r(__webpack_exports__);
         WebRequest2('POST', '/manage/sys-notification/check-system-updates', '{}').then(function (resp) {
           vm.updates.isCheck = false;
           resp.json().then(function (data) {
-            console.log(data);
+            //console.log(data);
+            if (data.status == 1) {
+              vm.loadSystemSummary();
+            }
           });
         });
       }, 2000);
