@@ -108,7 +108,7 @@
                 var vm = this;
                 vm.updates.isCheck = true;
                 vm.updates.message = "Checking Updates..";
-                setTimeout(()=>{
+                //setTimeout(()=>{
                     WebRequest2('POST','/manage/sys-notification/check-system-updates', '{}').then(resp=>{
                         vm.updates.isCheck = false;
                         resp.json().then(data=>{
@@ -119,7 +119,7 @@
                             
                         })
                     });
-                }, 2000);
+                //}, 1000);
             }
 
         },
