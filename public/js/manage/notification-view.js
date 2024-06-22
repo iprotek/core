@@ -3298,6 +3298,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.swal_prompt.alert('question', "Update Now?", "Confirm", "POST", "/manage/sys-notification/apply-system-updates", "{}").then(function (res) {
         if (res.isConfirmed) {
           if (res.value.status == 1) {
+            console.log(res.value);
             vm.loadUpdates();
           }
         }

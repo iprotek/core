@@ -88,6 +88,7 @@
                 ).then(res=>{
                     if(res.isConfirmed){  
                         if(res.value.status == 1){
+                            console.log(res.value);
                             vm.loadUpdates();
                         }
                     }
