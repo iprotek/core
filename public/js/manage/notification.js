@@ -3059,7 +3059,7 @@ __webpack_require__.r(__webpack_exports__);
             vm.summary.total = data.total;
           });
         });
-      }, 4000);
+      }, 1000);
     },
     checkSystemUpdates: function checkSystemUpdates() {
       var vm = this;
