@@ -102,7 +102,7 @@
                         });
 
                     });
-                }, 1000);
+                }, 200);
             },
             checkSystemUpdates:function(){
                 var vm = this;

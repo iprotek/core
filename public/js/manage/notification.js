@@ -3059,23 +3059,23 @@ __webpack_require__.r(__webpack_exports__);
             vm.summary.total = data.total;
           });
         });
-      }, 1000);
+      }, 200);
     },
     checkSystemUpdates: function checkSystemUpdates() {
       var vm = this;
       vm.updates.isCheck = true;
       vm.updates.message = "Checking Updates..";
-      setTimeout(function () {
-        WebRequest2('POST', '/manage/sys-notification/check-system-updates', '{}').then(function (resp) {
-          vm.updates.isCheck = false;
-          resp.json().then(function (data) {
-            //console.log(data);
-            if (data.status == 1) {
-              vm.loadSystemSummary();
-            }
-          });
+      //setTimeout(()=>{
+      WebRequest2('POST', '/manage/sys-notification/check-system-updates', '{}').then(function (resp) {
+        vm.updates.isCheck = false;
+        resp.json().then(function (data) {
+          //console.log(data);
+          if (data.status == 1) {
+            vm.loadSystemSummary();
+          }
         });
-      }, 2000);
+      });
+      //}, 1000);
     }
   },
   mounted: function mounted() {
