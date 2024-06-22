@@ -8,7 +8,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="width:120px;">Ref#</th>
+                                    <th style="width:90px;">Ref#</th>
                                     <th>Name</th>
                                     <th>Description</th>
                                 </tr>
