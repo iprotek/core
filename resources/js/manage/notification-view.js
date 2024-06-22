@@ -22,6 +22,9 @@ if(!window.Vue){
 
 //Vue.component('header-menus', require('./components/manage/HeaderMenu.vue').default);
 Vue.component('sys-notification', require('../components/manage/notification/Index.vue').default);
+Vue.component('modal-view', require('../components/common/Modal.vue').default); 
+Vue.component('swal', require('../components/common/Swal.vue').default); 
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

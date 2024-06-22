@@ -33,13 +33,14 @@
                                 </tr>
                             </tfoot>
                         </table>
-                        <button class="btn btn-outline-primary"> Check Updates </button>
-                        <button class="btn btn-outline-primary"> Update Now </button>
+                        <button class="btn btn-outline-primary" v-if="pageList.length == 0" @click="clickCheckUpdates()"> Check Updates </button>
+                        <button class="btn btn-outline-primary" v-else @click="clickApplyUpdates()"> Update Now </button>
                         <page-footer v-model="pageFooterData" @page_changed="page_changed"></page-footer>
                     </div>
                 </div>
             </div>
         </div>
+        <swal ref="swal_prompt"></swal> 
     </div>
 </template>
 
@@ -59,6 +60,36 @@
             }
         },
         methods: { 
+            clickCheckUpdates:function(){
+
+                this.$refs.swal_prompt.alert(
+                    'question', 
+                    "Check Updates?", 
+                    "Confirm" , 
+                    "POST", 
+                    "/manage/sys-notification/check-system-updates"
+                ).then(res=>{
+                    if(res.isConfirmed){  
+                        if(res.value.status == 1){
+                        }
+                    }
+                }); 
+            },
+            clickApplyUpdates:function(){
+                this.$refs.swal_prompt.alert(
+                    'question', 
+                    "Update Now?", 
+                    "Confirm" , 
+                    "POST", 
+                    "/manage/sys-notification/apply-system-updates",
+                    "{}"
+                ).then(res=>{
+                    if(res.isConfirmed){  
+                        if(res.value.status == 1){
+                        }
+                    }
+                }); 
+            },
             page_changed:function(page){
                 this.current_page = page;
                 this.loadUpdates();
