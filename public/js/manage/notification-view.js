@@ -3284,16 +3284,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     clickCheckUpdates: function clickCheckUpdates() {
+      var vm = this;
       this.$refs.swal_prompt.alert('question', "Check Updates?", "Confirm", "POST", "/manage/sys-notification/check-system-updates").then(function (res) {
         if (res.isConfirmed) {
-          if (res.value.status == 1) {}
+          if (res.value.status == 1) {
+            vm.loadUpdates();
+          }
         }
       });
     },
     clickApplyUpdates: function clickApplyUpdates() {
+      var vm = this;
       this.$refs.swal_prompt.alert('question', "Update Now?", "Confirm", "POST", "/manage/sys-notification/apply-system-updates", "{}").then(function (res) {
         if (res.isConfirmed) {
-          if (res.value.status == 1) {}
+          if (res.value.status == 1) {
+            vm.loadUpdates();
+          }
         }
       });
     },

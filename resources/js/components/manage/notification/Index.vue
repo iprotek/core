@@ -61,7 +61,7 @@
         },
         methods: { 
             clickCheckUpdates:function(){
-
+                var vm = this;
                 this.$refs.swal_prompt.alert(
                     'question', 
                     "Check Updates?", 
@@ -71,11 +71,13 @@
                 ).then(res=>{
                     if(res.isConfirmed){  
                         if(res.value.status == 1){
+                            vm.loadUpdates();
                         }
                     }
                 }); 
             },
             clickApplyUpdates:function(){
+                var vm = this;
                 this.$refs.swal_prompt.alert(
                     'question', 
                     "Update Now?", 
@@ -86,6 +88,7 @@
                 ).then(res=>{
                     if(res.isConfirmed){  
                         if(res.value.status == 1){
+                            vm.loadUpdates();
                         }
                     }
                 }); 
