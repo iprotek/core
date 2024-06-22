@@ -3568,7 +3568,7 @@ var render = function render() {
       }
     })]), _vm._v(" "), _c("th", [_c("label", {
       domProps: {
-        textContent: _vm._s(item.name)
+        textContent: _vm._s(item.summary)
       }
     })]), _vm._v(" "), _c("th", [_c("label", {
       domProps: {

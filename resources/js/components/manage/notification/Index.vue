@@ -25,7 +25,7 @@
                                         <code v-text="item.id"></code>
                                     </th>
                                     <th>
-                                        <label v-text="item.name"></label>
+                                        <label v-text="item.summary"></label>
                                     </th>
                                     <th>
                                         <label v-text="item.description"></label>
