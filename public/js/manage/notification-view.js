@@ -3285,7 +3285,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     clickCheckUpdates: function clickCheckUpdates() {
       var vm = this;
-      this.$refs.swal_prompt.alert('question', "Check Updates?", "Confirm", "POST", "/manage/sys-notification/check-system-updates").then(function (res) {
+      this.$refs.swal_prompt.alert('question', "Check Updates?", "Confirm", "GET", "/manage/sys-notification/check-system-updates").then(function (res) {
         if (res.isConfirmed) {
           if (res.value.status == 1) {
             vm.loadUpdates();

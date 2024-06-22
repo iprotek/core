@@ -66,7 +66,7 @@
                     'question', 
                     "Check Updates?", 
                     "Confirm" , 
-                    "POST", 
+                    "GET", 
                     "/manage/sys-notification/check-system-updates"
                 ).then(res=>{
                     if(res.isConfirmed){  
