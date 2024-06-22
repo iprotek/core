@@ -8,7 +8,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Ref#</th>
+                                    <th style="width:120px;">Ref#</th>
                                     <th>Name</th>
                                     <th>Description</th>
                                 </tr>
@@ -21,7 +21,7 @@
                                     <th colspan="3" class="text-center"> -- You are currently up to date. -- </th>
                                 </tr>
                                 <tr v-for="(item,itemIndex) in pageList" v-bind:key="'update-item-'+item.id+'-'+itemIndex">
-                                    <th style="width:120px;">
+                                    <th >
                                         <code v-text="item.id"></code>
                                     </th>
                                     <th>

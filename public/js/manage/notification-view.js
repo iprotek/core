@@ -3562,11 +3562,7 @@ var render = function render() {
   }, [_vm._v(" -- You are currently up to date. -- ")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.pageList, function (item, itemIndex) {
     return _c("tr", {
       key: "update-item-" + item.id + "-" + itemIndex
-    }, [_c("th", {
-      staticStyle: {
-        width: "120px"
-      }
-    }, [_c("code", {
+    }, [_c("th", [_c("code", {
       domProps: {
         textContent: _vm._s(item.id)
       }
@@ -3611,7 +3607,11 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("thead", [_c("tr", [_c("th", [_vm._v("Ref#")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Description")])])]);
+  return _c("thead", [_c("tr", [_c("th", {
+    staticStyle: {
+      width: "120px"
+    }
+  }, [_vm._v("Ref#")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Description")])])]);
 }];
 render._withStripped = true;
 
