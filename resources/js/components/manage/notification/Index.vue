@@ -122,6 +122,7 @@
 
         },
         mounted:function(){     
+            this.loadUpdates();
         },
         updated:function(){
 

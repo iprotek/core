@@ -3331,7 +3331,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.loadUpdates();
+  },
   updated: function updated() {}
 });
 
@@ -3609,7 +3611,7 @@ var staticRenderFns = [function () {
     _c = _vm._self._c;
   return _c("thead", [_c("tr", [_c("th", {
     staticStyle: {
-      width: "120px"
+      width: "90px"
     }
   }, [_vm._v("Ref#")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Description")])])]);
 }];
