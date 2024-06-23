@@ -13,27 +13,10 @@ class CreateCloudDataTable extends Migration
      */
     public function up()
     {
-
-        try{
-           
-            if(Schema::hasTable('cloud_data')) {
-                Schema::table('cloud_data', function (Blueprint $table) {
-                    $table->string('service_name');
-                    $table->integer('file_upload_id');
-                    $table->string('file_allocation');
-                    $table->string('file_name');
-                    $table->boolean('is_uploaded');
-                    $table->longText('backup_infos')->nullable();
-                    $table->longText('error_infos')->nullable();
-                });
-
-                return;
-            }
-
-        }catch(\Exception $ex){
+ 
+        if(Schema::hasTable('cloud_data')) {
             return;
-        }
-
+        } 
 
         try{
            

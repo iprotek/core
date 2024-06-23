@@ -13,24 +13,13 @@ class CreateSharedAccountDefaultBranchesTable extends Migration
      */
     public function up()
     {
-        try{
+        
            
-            if(Schema::hasTable('shared_account_default_branches')) {
-                Schema::table('shared_account_default_branches', function (Blueprint $table) {
-                    $table->bigInteger('group_id');
-                    $table->bigInteger('shared_account_id');
-                    $table->bigInteger('branch_id');
-                    $table->bigInteger('pay_created_by')->nullable();
-                    $table->bigInteger('pay_updated_by')->nullable();
-                    $table->bigInteger('pay_deleted_by')->nullable();
-                });
-
-                return;
-            }
-
-        }catch(\Exception $ex){
+        if(Schema::hasTable('shared_account_default_branches')) { 
             return;
         }
+
+            
         Schema::create('shared_account_default_branches', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('group_id');

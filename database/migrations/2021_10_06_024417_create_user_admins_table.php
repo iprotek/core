@@ -13,6 +13,16 @@ class CreateUserAdminsTable extends Migration
      */
     public function up()
     {
+        if(Schema::hasTable('user_admins')) { 
+            if (!Schema::hasColumn('user_admins', 'user_type')) {
+                Schema::table('user_admins', function (Blueprint $table) {
+                    $table->integer('user_type')->nullable();
+                });
+            }
+
+            return;
+            
+        }
         Schema::create('user_admins', function (Blueprint $table) {
             $table->id();
             $table->string('name');

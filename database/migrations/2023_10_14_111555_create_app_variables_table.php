@@ -12,22 +12,12 @@ class CreateAppVariablesTable extends Migration
      * @return void
      */
     public function up()
-    {
-        try{
-           
-            if(Schema::hasTable('app_variables')) {
-                Schema::table('app_variables', function (Blueprint $table) {
-                    $table->string('name', 100);
-                    $table->longText('value')->nullable(); 
-                    $table->integer('updated_by')->nullable();
-                });
-
-                return;
-            }
-
-        }catch(\Exception $ex){
+    { 
+        
+        if(Schema::hasTable('app_variables')) {
             return;
         }
+ 
 
         Schema::create('app_variables', function (Blueprint $table) {
             $table->id();

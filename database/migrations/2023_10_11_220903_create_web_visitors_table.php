@@ -16,11 +16,6 @@ class CreateWebVisitorsTable extends Migration
         try{
            
             if(Schema::hasTable('web_visitors')) {
-                Schema::table('web_visitors', function (Blueprint $table) {
-                    $table->string('ip_address');
-                    $table->longText('user_agent');
-                });
-
                 return;
             }
 

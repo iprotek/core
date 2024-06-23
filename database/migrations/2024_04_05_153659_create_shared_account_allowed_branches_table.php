@@ -12,26 +12,11 @@ class CreateSharedAccountAllowedBranchesTable extends Migration
      * @return void
      */
     public function up()
-    {
-        try{
-           
-            if(Schema::hasTable('shared_account_allowed_branches')) {
-                Schema::table('shared_account_allowed_branches', function (Blueprint $table) {
-                    $table->bigInteger('group_id');
-                    $table->integer('branch_id');
-                    $table->bigInteger('shared_account_id')->nullable();
-                    $table->boolean('is_allowed')->nullable();
-                    $table->bigInteger('pay_created_by')->nullable(); 
-                    $table->bigInteger('pay_updated_by')->nullable();
-                    $table->bigInteger('pay_deleted_by')->nullable(); 
-                });
-
-                return;
-            }
-
-        }catch(\Exception $ex){
+    { 
+        if(Schema::hasTable('shared_account_allowed_branches')) { 
             return;
         }
+ 
         Schema::create('shared_account_allowed_branches', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('group_id');

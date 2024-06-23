@@ -17,15 +17,6 @@ class CreateJobsTable extends Migration
         try{
            
             if(Schema::hasTable('jobs')) {
-                Schema::table('jobs', function (Blueprint $table) {
-                    $table->string('queue')->index();
-                    $table->longText('payload');
-                    $table->unsignedTinyInteger('attempts');
-                    $table->unsignedInteger('reserved_at')->nullable();
-                    $table->unsignedInteger('available_at');
-                    $table->unsignedInteger('created_at');
-                });
-
                 return;
             }
 

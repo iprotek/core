@@ -12,24 +12,13 @@ class CreateGroupsTable extends Migration
      * @return void
      */
     public function up()
-    {
-        try{
-           
-            if(Schema::hasTable('groupings')) {
-                Schema::table('groupings', function (Blueprint $table) {
-                    $table->bigInteger('group_id');
-                    $table->string('name');
-                    $table->bigInteger('pay_created_by')->nullable(); 
-                    $table->bigInteger('pay_updated_by')->nullable();
-                    $table->bigInteger('pay_deleted_by')->nullable(); 
-                });
+    { 
 
-                return;
-            }
+        if(Schema::hasTable('groupings')) {
 
-        }catch(\Exception $ex){
             return;
         }
+            
 
         Schema::create('groupings', function (Blueprint $table) {
             $table->id();

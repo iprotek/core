@@ -12,28 +12,10 @@ class CreateUserAdminPayAccountsTable extends Migration
      * @return void
      */
     public function up()
-    {
-        try{
-           
-            if(Schema::hasTable('user_admin_pay_accounts')) {
-                Schema::table('user_admin_pay_accounts', function (Blueprint $table) {
-                    $table->bigIncrements('id');
-                    $table->integer('user_admin_id')->unique();
-                    $table->bigInteger('default_proxy_group_id');
-                    $table->bigInteger('own_proxy_group_id');
-                    $table->bigInteger('pay_app_user_account_id');
-                    $table->string('email');
-                    $table->text('access_token');
-                    $table->text('refresh_token');
-                    $table->bigInteger('sub_account_group_id')->nullable(); 
-                });
-
-                return;
-            }
-
-        }catch(\Exception $ex){
+    { 
+        if(Schema::hasTable('user_admin_pay_accounts')) { 
             return;
-        }
+        } 
 
         Schema::create('user_admin_pay_accounts', function (Blueprint $table) {
             $table->bigIncrements('id');

@@ -12,28 +12,11 @@ class CreateBranchesTable extends Migration
      * @return void
      */
     public function up()
-    {
-        try{
-           
-            if(Schema::hasTable('branches')) {
-                Schema::table('branches', function (Blueprint $table) {
-                    $table->bigInteger('group_id');
-                    $table->string('name');
-                    $table->text('address')->nullable();
-                    $table->text('coordinates')->nullable();
-                    $table->string('status')->nullable();
-                    $table->text('status_info')->nullable();
-                    $table->bigInteger('pay_created_by')->nullable(); 
-                    $table->bigInteger('pay_updated_by')->nullable();
-                    $table->bigInteger('pay_deleted_by')->nullable(); 
-                });
-
-                return;
-            }
-
-        }catch(\Exception $ex){
+    { 
+        if(Schema::hasTable('branches')) { 
             return;
         }
+ 
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('group_id');

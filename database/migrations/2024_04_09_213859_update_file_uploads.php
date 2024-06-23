@@ -12,24 +12,12 @@ class UpdateFileUploads extends Migration
      * @return void
      */
     public function up()
-    {
-        try{
-           
-            if(Schema::hasTable('file_uploads')) {
-                Schema::table('file_uploads', function (Blueprint $table) {
-                    $table->bigInteger('group_id')->nullable();
-                    $table->bigInteger('pay_created_by')->nullable(); 
-                    $table->bigInteger('pay_updated_by')->nullable();
-                    $table->bigInteger('pay_deleted_by')->nullable();
-                });
-
-                return;
-            }
-
-        }catch(\Exception $ex){
+    { 
+        
+        if(Schema::hasTable('file_uploads')) { 
             return;
-        }
-        //
+        } 
+
         Schema::table('file_uploads', function (Blueprint $table) {
             $table->bigInteger('group_id')->nullable();
             $table->bigInteger('pay_created_by')->nullable(); 

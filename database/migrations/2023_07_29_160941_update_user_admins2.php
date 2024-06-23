@@ -14,6 +14,15 @@ class UpdateUserAdmins2 extends Migration
     public function up()
     {
         //
+        if(Schema::hasTable('user_admin_infos')) { 
+            if (!Schema::hasColumn('user_admin_infos', 'is_active')) {
+                Schema::table('user_admin_infos', function (Blueprint $table) {
+                    $table->integer('is_active')->default(1);
+                });
+            }
+            return;
+            
+        }
         Schema::table('user_admins', function (Blueprint $table) {
             $table->integer('is_active')->default(1);
         });

@@ -12,22 +12,13 @@ class CreateSuperAdminSubAccountsTable extends Migration
      * @return void
      */
     public function up()
-    {
-        try{
+    { 
            
-            if(Schema::hasTable('super_admin_sub_accounts')) {
-                Schema::table('super_admin_sub_accounts', function (Blueprint $table) {
-                    $table->string('email', 50)->unique();
-                    $table->string('user_type'); //1-Admin //2Sub Account
-                    $table->bigInteger('sub_account_group_id'); //
-                });
+        if(Schema::hasTable('super_admin_sub_accounts')) { 
 
-                return;
-            }
-
-        }catch(\Exception $ex){
             return;
         }
+ 
         Schema::create('super_admin_sub_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('email', 50)->unique();

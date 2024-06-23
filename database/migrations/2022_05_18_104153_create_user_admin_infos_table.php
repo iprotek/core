@@ -13,6 +13,11 @@ class CreateUserAdminInfosTable extends Migration
      */
     public function up()
     {
+        if(Schema::hasTable('user_admin_infos')) { 
+ 
+            return;
+            
+        }
         Schema::create('user_admin_infos', function (Blueprint $table) {
             $table->id();
             $table->string('user_admin_id');
