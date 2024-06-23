@@ -13,15 +13,14 @@ class CreateFileUploadsTable extends Migration
      */
     public function up()
     {
-        
-        try{
+         
             if(Schema::hasTable('file_uploads')) {
                 // Table exists
                 
                 Schema::table('file_uploads', function (Blueprint $table) {
                     $table->string('target_name')->nullable();
                     $table->string('target_id')->nullable();
-                    $table->integer('order_no')->nullable();
+                    $table->string('order_no')->nullable();
                     $table->string('file_type')->nullable();
                     $table->string('file_name')->nullable();
                     $table->string('file_ext')->nullable();
@@ -32,10 +31,7 @@ class CreateFileUploadsTable extends Migration
                 });
 
                 return;
-            }
-        }catch(\Exception $ex){
-            return;
-        }
+            } 
 
 
 

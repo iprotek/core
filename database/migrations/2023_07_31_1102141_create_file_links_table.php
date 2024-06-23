@@ -13,6 +13,19 @@ class CreateFileLinksTable extends Migration
      */
     public function up()
     {
+        if(Schema::hasTable('file_links')) {
+
+            Schema::table('file_links', function (Blueprint $table) {
+                $table->string('name')->nullable();
+                $table->text('url')->nullable();
+                $table->string('file_type')->nullable();
+                $table->integer('created_by')->nullable();
+                $table->integer('updated_by')->nullable();
+            });
+
+            return;
+
+        }
         Schema::create('file_links', function (Blueprint $table) {
             $table->id();
             $table->string('name');
