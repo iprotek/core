@@ -15,20 +15,67 @@ class CreateFileUploadsTable extends Migration
     {
          
             if(Schema::hasTable('file_uploads')) {
-                // Table exists
-                
-                Schema::table('file_uploads', function (Blueprint $table) {
-                    $table->string('target_name')->nullable();
-                    $table->string('target_id')->nullable();
-                    $table->string('order_no')->nullable();
-                    $table->string('file_type')->nullable();
-                    $table->string('file_name')->nullable();
-                    $table->string('file_ext')->nullable();
-                    $table->boolean('is_default')->nullable();
-                    $table->text('location')->nullable();
-                    $table->integer('created_by')->nullable();
-                    $table->integer('deleted_by')->nullable();
-                });
+
+                // TARGET NAME
+                if (!Schema::hasColumn('file_uploads', 'target_name')) {
+                    Schema::table('file_uploads', function (Blueprint $table) {
+                        $table->string('target_name')->nullable();
+                    });
+                }
+                //TARGET ID
+                if (!Schema::hasColumn('file_uploads', 'target_id')) {
+                    Schema::table('file_uploads', function (Blueprint $table) {
+                        $table->string('target_id')->nullable();
+                    });
+                }
+                //ORDER NO
+                if (!Schema::hasColumn('file_uploads', 'order_no')) {
+                    Schema::table('file_uploads', function (Blueprint $table) { 
+                        $table->string('order_no')->nullable();
+                    });
+                }
+                //FILE TYPE
+                if (!Schema::hasColumn('file_uploads', 'file_type')) {
+                    Schema::table('file_uploads', function (Blueprint $table) { 
+                        $table->string('file_type')->nullable();
+                    });
+                }
+                //FILE NAME
+                if (!Schema::hasColumn('file_uploads', 'file_name')) {
+                    Schema::table('file_uploads', function (Blueprint $table) { 
+                        $table->string('file_name')->nullable();
+                    });
+                }
+                //FILE EXT
+                if (!Schema::hasColumn('file_uploads', 'file_ext')) {
+                    Schema::table('file_uploads', function (Blueprint $table) {
+                        $table->string('file_ext')->nullable();
+                    });
+                }
+                //FILE IS DEFAULT
+                if (!Schema::hasColumn('file_uploads', 'is_default')) {
+                    Schema::table('file_uploads', function (Blueprint $table) {
+                        $table->boolean('is_default')->nullable();
+                    });
+                }
+                //LOCATION
+                if (!Schema::hasColumn('file_uploads', 'location')) {
+                    Schema::table('file_uploads', function (Blueprint $table) {
+                        $table->text('location')->nullable();
+                    });
+                }
+                //CREATED BY
+                if (!Schema::hasColumn('file_uploads', 'created_by')) {
+                    Schema::table('file_uploads', function (Blueprint $table) {
+                        $table->text('created_by')->nullable();
+                    });
+                }
+                //DELETED BY
+                if (!Schema::hasColumn('file_uploads', 'deleted_by')) {
+                    Schema::table('file_uploads', function (Blueprint $table) {
+                        $table->text('deleted_by')->nullable();
+                    });
+                }
 
                 return;
             } 
@@ -39,7 +86,7 @@ class CreateFileUploadsTable extends Migration
             $table->id();
             $table->string('target_name');
             $table->string('target_id');
-            $table->integer('order_no');
+            $table->string('order_no');
             $table->string('file_type');
             $table->string('file_name');
             $table->string('file_ext');
