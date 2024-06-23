@@ -90,8 +90,12 @@
                 var vm = this;
                 vm.pageDataList = [];
                 vm.isLoading = true;
+                var url = "/manage/projects-monitoring/model-fields/model/list";
+                if(vm.is_data){
+                    url = "/manage/iprotek-data/model-fields/model/list";
+                }
             
-                WebRequest2('GET', '/manage/projects-monitoring/model-fields/model/list?'+this.queryString({
+                WebRequest2('GET', url+'?'+this.queryString({
                     search:this.search,
                     page:this.current_page,
                     items_per_page:10

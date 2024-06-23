@@ -3670,7 +3670,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'DataFieldItem',
-  props: ["value", "has_down", "data_id"],
+  props: ["value", "has_down", "data_id", "group_id", "is_data"],
   components: {
     "swal-alert": _SwalAlert_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3713,7 +3713,11 @@ __webpack_require__.r(__webpack_exports__);
         value: this.input_value
       };
       console.log(req);
-      WebRequest2('POST', '/manage/projects-monitoring/searches/data/data-value/' + this.id, JSON.stringify(req)).then(function (resp) {
+      var data_src = "projects-monitoring";
+      if (this.is_data) {
+        data_src = "iprotek-data";
+      }
+      WebRequest2('POST', '/manage/' + data_src + '/searches/data/data-value/' + this.id, JSON.stringify(req)).then(function (resp) {
         resp.json().then(function (data) {
           console.log(data);
           if (data.status == 1) {
@@ -3880,7 +3884,7 @@ __webpack_require__.r(__webpack_exports__);
  //'../../../manage/projects-monitoring/searches/modal/ModalAddData.vue';
  //'../../../manage/projects-monitoring/searches/ProjectList.vue'; 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["group_id", "is_data"],
   components: {
     "select2": _Select2_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     "user-input2": _UserInput2_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -3911,11 +3915,15 @@ __webpack_require__.r(__webpack_exports__);
       };
       var vm = this;
       vm.data_model_type = req.data_model_type;
+      var data_src = "projects-monitoring";
+      if (this.is_data) {
+        data_src = "iprotek-data";
+      }
       var title = "Add Data?";
-      var url = "/manage/projects-monitoring/searches/data/add";
+      var url = "/manage/" + data_src + "/searches/data/add";
       if (this.id > 0) {
         title = "Update Data";
-        url = "/manage/projects-monitoring/searches/data/update/" + this.id;
+        url = "/manage/" + data_src + "/searches/data/update/" + this.id;
       }
       this.$refs.swal_prompt.alert('question', title, "Confirm", this.id == 0 ? "POST" : "PUT", url, JSON.stringify(req)).then(function (res) {
         if (res.isConfirmed) {
@@ -3961,7 +3969,11 @@ __webpack_require__.r(__webpack_exports__);
     loadModel: function loadModel() {
       ///manage/projects-monitoring/searches/data/get/1
       var vm = this;
-      WebRequest2('GET', '/manage/projects-monitoring/searches/data/get/' + this.id).then(function (resp) {
+      var data_src = "projects-monitoring";
+      if (this.is_data) {
+        data_src = "iprotek-data";
+      }
+      WebRequest2('GET', '/manage/' + data_src + '/searches/data/get/' + this.id).then(function (resp) {
         resp.json().then(function (data) {
           //console.log( this.data_model_type, data);
           vm.fieldValues = vm.fieldsFormatted(data.field_values);
@@ -3988,10 +4000,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     selected: function selected() {
       if (this.data_item.id <= 0 || this.id > 0) return;
-
+      var data_src = "projects-monitoring";
+      if (this.is_data) {
+        data_src = "iprotek-data";
+      }
       //Get the format here..
       ///manage/projects-monitoring/model-fields/model/get/1
-      WebRequest2('GET', '/manage/projects-monitoring/model-fields/model/get/' + this.data_item.id).then(function (resp) {
+      WebRequest2('GET', '/manage/' + data_src + '/model-fields/model/get/' + this.data_item.id).then(function (resp) {
         resp.json().then(function (data) {
           //console.log(data);
         });
@@ -4018,7 +4033,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["data_id", "is_data"],
+  props: ["data_id", "is_data", "group_id"],
   components: {},
   data: function data() {
     return {
@@ -4070,7 +4085,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["group_id", "is_data"],
   components: {
     "switch2": _common_BoostrapSwitch2_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     "select2": _common_Select2_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -4111,7 +4126,11 @@ __webpack_require__.r(__webpack_exports__);
       };
       console.log(req);
       var vm = this;
-      this.$refs.swal_prompt.alert('question', 'Add this to list?', "Confirm", "POST", '/manage/projects-monitoring/searches/data/add-to-list', JSON.stringify(req)).then(function (res) {
+      var data_src = "projects-monitoring";
+      if (this.is_data) {
+        data_src = "iprotek-data";
+      }
+      this.$refs.swal_prompt.alert('question', 'Add this to list?', "Confirm", "POST", '/manage/' + data_src + '/searches/data/add-to-list', JSON.stringify(req)).then(function (res) {
         if (res.isConfirmed) {
           if (res.value.status == 1) {
             //vm.id = res.value.data.id;
@@ -4126,9 +4145,12 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       this.has_model = true;
       this.current_model = '';
-
+      var data_src = "projects-monitoring";
+      if (this.is_data) {
+        data_src = "iprotek-data";
+      }
       //Check if has model
-      WebRequest2('POST', '/manage/projects-monitoring/searches/data/name-check', JSON.stringify({
+      WebRequest2('POST', '/manage/' + data_src + '/searches/data/name-check', JSON.stringify({
         name: val.text
       })).then(function (resp) {
         resp.json().then(function (data) {
@@ -5258,6 +5280,8 @@ var render = function render() {
     return _c("data-field-item", {
       key: "data-field-item-" + optIndex + "-" + _vm._uid,
       attrs: {
+        group_id: _vm.group_id,
+        is_data: _vm.is_data,
         data_id: _vm.id
       },
       model: {
@@ -5270,12 +5294,18 @@ var render = function render() {
     });
   }), _vm._v(" "), _vm.data_model_type != "project" ? _c("project-list", {
     attrs: {
+      group_id: _vm.group_id,
+      is_data: _vm.is_data,
       data_id: _vm.id
     }
   }) : _vm._e()], 2) : _vm._e()]) : _vm._e()])])])]), _vm._v(" "), _c("swal", {
     ref: "swal_prompt"
   }), _vm._v(" "), _c("modal-add-data", {
-    ref: "modal_add_data"
+    ref: "modal_add_data",
+    attrs: {
+      group_id: _vm.group_id,
+      is_data: _vm.is_data
+    }
   })], 1);
 };
 var staticRenderFns = [function () {
@@ -5488,7 +5518,8 @@ var render = function render() {
   }, [_c("data-form", {
     ref: "data_form",
     attrs: {
-      group_id: _vm.group_id
+      group_id: _vm.group_id,
+      is_data: _vm.is_data
     },
     on: {
       cancel: _vm.cancel

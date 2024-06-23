@@ -151,7 +151,13 @@
                 //Load modelInfos and fields
                 var vm = this;
                 if(id>0){
-                    WebRequest2('GET', '/manage/projects-monitoring/model-fields/model/get/'+this.id).then(resp=>{
+
+                    var data_src = "projects-monitoring";
+                    if(this.is_data){
+                        data_src = "iprotek-data";
+                    }
+
+                    WebRequest2('GET', '/manage/'+data_src+'/model-fields/model/get/'+this.id).then(resp=>{
                         resp.json().then(data=>{
                             //console.log(data);
                             vm.id = data.id;
@@ -201,12 +207,17 @@
                 };
 
                 console.log(request);
+                
+                var data_src = "projects-monitoring";
+                if(this.is_data){
+                    data_src = "iprotek-data";
+                }
 
                 var title = "Add model?";
-                var url = "/manage/projects-monitoring/model-fields/model/add"
+                var url = "/manage/"+data_src+"/model-fields/model/add"
                 if(this.id > 0){
                     title = "Update model";
-                    url = "/manage/projects-monitoring/model-fields/model/update/"+this.id
+                    url = "/manage/"+data_src+"/model-fields/model/update/"+this.id
                 }
 
                 this.$refs.swal_prompt.alert(
@@ -226,14 +237,17 @@
 
 
             },
-            remove:function(id, fieldInfo){
-
+            remove:function(id, fieldInfo){ 
+                var data_src = "projects-monitoring";
+                if(this.is_data){
+                    data_src = "iprotek-data";
+                }
                 this.$refs.swal_prompt.alert(
                     'question', 
                     "Remove this field:"+fieldInfo.name+"? This will affect all your model.", 
                     "Confirm" , 
                     "DELETE", 
-                    "/manage/projects-monitoring/model-fields/field/"+id
+                    "/manage/"+data_src+"/model-fields/field/"+id
                 ).then(res=>{
                     if(res.isConfirmed){  
                         if(res.value.status == 1){ 

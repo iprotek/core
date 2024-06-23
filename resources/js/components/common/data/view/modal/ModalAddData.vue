@@ -84,13 +84,17 @@
                 console.log(req);
                 var vm = this;
 
+                var data_src = "projects-monitoring";
+                if(this.is_data){
+                    data_src = "iprotek-data";
+                }
 
                 this.$refs.swal_prompt.alert(
                     'question', 
                     'Add this to list?', 
                     "Confirm" , 
                     "POST", 
-                    '/manage/projects-monitoring/searches/data/add-to-list', 
+                    '/manage/'+data_src+'/searches/data/add-to-list', 
                     JSON.stringify(req)
                 ).then(res=>{
                     if(res.isConfirmed){  
@@ -108,9 +112,13 @@
                 var vm = this;
                 this.has_model = true;
                 this.current_model = '';
-
+                
+                var data_src = "projects-monitoring";
+                if(this.is_data){
+                    data_src = "iprotek-data";
+                }
                 //Check if has model
-                WebRequest2('POST', '/manage/projects-monitoring/searches/data/name-check', JSON.stringify({ name: val.text })).then(resp=>{
+                WebRequest2('POST', '/manage/'+data_src+'/searches/data/name-check', JSON.stringify({ name: val.text })).then(resp=>{
                     resp.json().then(data=>{
                         console.log(data);
                         if(data.status == 1){

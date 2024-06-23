@@ -96,7 +96,12 @@
                 var vm = this;
                 vm.pageDataList = [];
                 vm.isLoading = true;
-                WebRequest2('GET', '/manage/projects-monitoring/model-fields/field/list?'+this.queryString({
+                
+                var data_src = "projects-monitoring";
+                if(this.is_data){
+                    data_src = "iprotek-data";
+                }
+                WebRequest2('GET', '/manage/'+data_src+'/model-fields/field/list?'+this.queryString({
                     search:this.search,
                     page:this.current_page,
                     items_per_page:10

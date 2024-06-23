@@ -3602,7 +3602,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_UserInput2_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../common/UserInput2.vue */ "./resources/js/components/common/UserInput2.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["group_id", "is_data"],
   components: {
     "user-input2": _common_UserInput2_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3641,11 +3641,15 @@ __webpack_require__.r(__webpack_exports__);
         data_type: this.type,
         details: this.details
       };
+      var data_src = "projects-monitoring";
+      if (this.is_data) {
+        data_src = "iprotek-data";
+      }
       var title = "Add field?";
-      var url = "/manage/projects-monitoring/model-fields/field/add";
+      var url = "/manage/" + data_src + "/model-fields/field/add";
       if (this.id > 0) {
         title = "Update Field";
-        url = "/manage/projects-monitoring/model-fields/field/update/" + this.id;
+        url = "/manage/" + data_src + "/model-fields/field/update/" + this.id;
       }
       this.$refs.swal_prompt.alert('question', title, "Confirm", this.id == 0 ? "POST" : "PUT", url, JSON.stringify(request)).then(function (res) {
         if (res.isConfirmed) {
@@ -3659,7 +3663,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     remove: function remove(id, fieldInfo) {
       var _this2 = this;
-      this.$refs.swal_prompt.alert('question', "Remove this field:" + fieldInfo.name + "? This will affect all your model.", "Confirm", "DELETE", "/manage/projects-monitoring/model-fields/field/" + id).then(function (res) {
+      var data_src = "projects-monitoring";
+      if (this.is_data) {
+        data_src = "iprotek-data";
+      }
+      this.$refs.swal_prompt.alert('question', "Remove this field:" + fieldInfo.name + "? This will affect all your model.", "Confirm", "DELETE", "/manage/" + data_src + "/model-fields/field/" + id).then(function (res) {
         if (res.isConfirmed) {
           if (res.value.status == 1) {
             _this2.$emit('modal_updated');
@@ -3690,7 +3698,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["group_id", "is_data"],
   components: {
     "select2": _common_Select2_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     "swal-alert": _common_SwalAlert_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -3749,7 +3757,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'FieldItem',
-  props: ["value", "has_down"],
+  props: ["value", "has_down", "group_id", "is_data"],
   components: {
     "swal-alert": _common_SwalAlert_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3899,7 +3907,7 @@ __webpack_require__.r(__webpack_exports__);
 
  //'./Modals/ModalField.vue';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["group_id", "is_data"],
   components: {
     "page-footer": _common_PageFooter_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     "modal-field": _form_Modals_ModalField_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -3929,7 +3937,11 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       vm.pageDataList = [];
       vm.isLoading = true;
-      WebRequest2('GET', '/manage/projects-monitoring/model-fields/field/list?' + this.queryString({
+      var data_src = "projects-monitoring";
+      if (this.is_data) {
+        data_src = "iprotek-data";
+      }
+      WebRequest2('GET', '/manage/' + data_src + '/model-fields/field/list?' + this.queryString({
         search: this.search,
         page: this.current_page,
         items_per_page: 10
@@ -3968,7 +3980,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["group_id", "is_data"],
   components: {
     "field-item": _FieldItem_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     "modal-model-add-vue": _form_Modals_ModalModelAddField_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -4072,7 +4084,11 @@ __webpack_require__.r(__webpack_exports__);
       //Load modelInfos and fields
       var vm = this;
       if (id > 0) {
-        WebRequest2('GET', '/manage/projects-monitoring/model-fields/model/get/' + this.id).then(function (resp) {
+        var data_src = "projects-monitoring";
+        if (this.is_data) {
+          data_src = "iprotek-data";
+        }
+        WebRequest2('GET', '/manage/' + data_src + '/model-fields/model/get/' + this.id).then(function (resp) {
           resp.json().then(function (data) {
             //console.log(data);
             vm.id = data.id;
@@ -4115,11 +4131,15 @@ __webpack_require__.r(__webpack_exports__);
         type: type
       };
       console.log(request);
+      var data_src = "projects-monitoring";
+      if (this.is_data) {
+        data_src = "iprotek-data";
+      }
       var title = "Add model?";
-      var url = "/manage/projects-monitoring/model-fields/model/add";
+      var url = "/manage/" + data_src + "/model-fields/model/add";
       if (this.id > 0) {
         title = "Update model";
-        url = "/manage/projects-monitoring/model-fields/model/update/" + this.id;
+        url = "/manage/" + data_src + "/model-fields/model/update/" + this.id;
       }
       this.$refs.swal_prompt.alert('question', title, "Confirm", this.id == 0 ? "POST" : "PUT", url, JSON.stringify(request)).then(function (res) {
         if (res.isConfirmed) {
@@ -4131,7 +4151,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     remove: function remove(id, fieldInfo) {
       var _this4 = this;
-      this.$refs.swal_prompt.alert('question', "Remove this field:" + fieldInfo.name + "? This will affect all your model.", "Confirm", "DELETE", "/manage/projects-monitoring/model-fields/field/" + id).then(function (res) {
+      var data_src = "projects-monitoring";
+      if (this.is_data) {
+        data_src = "iprotek-data";
+      }
+      this.$refs.swal_prompt.alert('question', "Remove this field:" + fieldInfo.name + "? This will affect all your model.", "Confirm", "DELETE", "/manage/" + data_src + "/model-fields/field/" + id).then(function (res) {
         if (res.isConfirmed) {
           if (res.value.status == 1) {
             _this4.$emit('modal_updated');
@@ -4162,7 +4186,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PageFooter_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../PageFooter.vue */ "./resources/js/components/common/PageFooter.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["group_id", "is_data"],
   components: {
     "page-footer": _PageFooter_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -4191,7 +4215,11 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       vm.pageDataList = [];
       vm.isLoading = true;
-      WebRequest2('GET', '/manage/projects-monitoring/model-fields/model/list?' + this.queryString({
+      var url = "/manage/projects-monitoring/model-fields/model/list";
+      if (vm.is_data) {
+        url = "/manage/iprotek-data/model-fields/model/list";
+      }
+      WebRequest2('GET', url + '?' + this.queryString({
         search: this.search,
         page: this.current_page,
         items_per_page: 10
@@ -4231,7 +4259,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["group_id", "is_data"],
   components: {
     "fields-view": _common_data_view_Fields_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     "models-view": _common_data_view_Models_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -5250,6 +5278,10 @@ var render = function render() {
     }
   })], 1)])])]), _vm._v(" "), _c("modal-field", {
     ref: "modal_field",
+    attrs: {
+      group_id: _vm.group_id,
+      is_data: _vm.is_data
+    },
     on: {
       modal_updated: _vm.loadModelFields
     },
@@ -5377,7 +5409,9 @@ var render = function render() {
     return _c("field-item", {
       key: "field-item-" + optIndex + "-" + _vm._uid,
       attrs: {
-        has_down: optIndex < _vm.fieldList.length - 1
+        has_down: optIndex < _vm.fieldList.length - 1,
+        group_id: _vm.group_id,
+        is_data: _vm.is_data
       },
       on: {
         move_up: function move_up($event) {
@@ -5440,6 +5474,10 @@ var render = function render() {
     ref: "swal_prompt"
   }), _vm._v(" "), _c("modal-model-add-vue", {
     ref: "modal_model_add_vue",
+    attrs: {
+      group_id: _vm.group_id,
+      is_data: _vm.is_data
+    },
     on: {
       add_field_click: _vm.add_field_click
     }
@@ -5593,12 +5631,20 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "col-md-6"
   }, [_c("models-view", {
+    attrs: {
+      group_id: _vm.group_id,
+      is_data: _vm.is_data
+    },
     on: {
       show_add_model: _vm.show_add_model
     }
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("fields-view", {
+    attrs: {
+      group_id: _vm.group_id,
+      is_data: _vm.is_data
+    },
     on: {
       modal_updated: _vm.modal_updated
     }
@@ -5606,6 +5652,10 @@ var render = function render() {
     style: "display:" + (_vm.add_model ? "" : "none") + ";"
   }, [_c("model-form", {
     ref: "model_form",
+    attrs: {
+      group_id: _vm.group_id,
+      is_data: _vm.is_data
+    },
     on: {
       modal_updated: _vm.modal_updated
     }

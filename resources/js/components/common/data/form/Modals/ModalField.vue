@@ -73,11 +73,16 @@
                     data_type: this.type,
                     details: this.details
                 };
+                var data_src = "projects-monitoring";
+                if(this.is_data){
+                    data_src = "iprotek-data";
+                }
+
                 var title = "Add field?";
-                var url = "/manage/projects-monitoring/model-fields/field/add"
+                var url = "/manage/"+data_src+"/model-fields/field/add"
                 if(this.id > 0){
                     title = "Update Field";
-                    url = "/manage/projects-monitoring/model-fields/field/update/"+this.id
+                    url = "/manage/"+data_src+"/model-fields/field/update/"+this.id
                 }
 
                 this.$refs.swal_prompt.alert(
@@ -101,12 +106,16 @@
             },
             remove:function(id, fieldInfo){
 
+                var data_src = "projects-monitoring";
+                if(this.is_data){
+                    data_src = "iprotek-data";
+                }
                 this.$refs.swal_prompt.alert(
                     'question', 
                     "Remove this field:"+fieldInfo.name+"? This will affect all your model.", 
                     "Confirm" , 
                     "DELETE", 
-                    "/manage/projects-monitoring/model-fields/field/"+id
+                    "/manage/"+data_src+"/model-fields/field/"+id
                 ).then(res=>{
                     if(res.isConfirmed){  
                         if(res.value.status == 1){ 

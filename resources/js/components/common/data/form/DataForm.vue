@@ -83,13 +83,17 @@
                 }
                 var vm = this;
                 vm.data_model_type = req.data_model_type;
-
+ 
+                var data_src = "projects-monitoring";
+                if(this.is_data){
+                    data_src = "iprotek-data";
+                }
                 
                 var title = "Add Data?";
-                var url = "/manage/projects-monitoring/searches/data/add"
+                var url = "/manage/"+data_src+"/searches/data/add"
                 if(this.id > 0){
                     title = "Update Data";
-                    url = "/manage/projects-monitoring/searches/data/update/"+this.id
+                    url = "/manage/"+data_src+"/searches/data/update/"+this.id
                 }
 
                 this.$refs.swal_prompt.alert(
@@ -143,7 +147,11 @@
             loadModel:function(){
                 ///manage/projects-monitoring/searches/data/get/1
                 var vm = this;
-                WebRequest2('GET', '/manage/projects-monitoring/searches/data/get/'+this.id).then(resp=>{
+                var data_src = "projects-monitoring";
+                if(this.is_data){
+                    data_src = "iprotek-data";
+                }
+                WebRequest2('GET', '/manage/'+data_src+'/searches/data/get/'+this.id).then(resp=>{
                     resp.json().then(data=>{
                         //console.log( this.data_model_type, data);
                         vm.fieldValues = vm.fieldsFormatted( data.field_values );
@@ -172,10 +180,14 @@
             selected:function(){
                 if(this.data_item.id <= 0 || this.id > 0) return;
 
-
+                
+                var data_src = "projects-monitoring";
+                if(this.is_data){
+                    data_src = "iprotek-data";
+                }
                 //Get the format here..
                 ///manage/projects-monitoring/model-fields/model/get/1
-                WebRequest2('GET', '/manage/projects-monitoring/model-fields/model/get/'+this.data_item.id).then(resp=>{
+                WebRequest2('GET', '/manage/'+data_src+'/model-fields/model/get/'+this.data_item.id).then(resp=>{
                     resp.json().then(data=>{
                         //console.log(data);
                     })

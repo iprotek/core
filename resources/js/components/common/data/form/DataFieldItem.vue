@@ -136,7 +136,11 @@
                     value: this.input_value
                 }
                 console.log(req);
-                WebRequest2('POST', '/manage/projects-monitoring/searches/data/data-value/'+this.id, JSON.stringify(req) ).then(resp=>{
+                var data_src = "projects-monitoring";
+                if(this.is_data){
+                    data_src = "iprotek-data";
+                }
+                WebRequest2('POST', '/manage/'+data_src+'/searches/data/data-value/'+this.id, JSON.stringify(req) ).then(resp=>{
                     resp.json().then(data=>{
                         console.log(data);
                         if(data.status == 1){
