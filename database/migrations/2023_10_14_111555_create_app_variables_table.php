@@ -15,13 +15,15 @@ class CreateAppVariablesTable extends Migration
     {
         try{
            
-            Schema::table('app_variables', function (Blueprint $table) {
-                $table->string('name', 100);
-                $table->longText('value')->nullable(); 
-                $table->integer('updated_by')->nullable();
-            });
+            if(Schema::hasTable('app_variables')) {
+                Schema::table('app_variables', function (Blueprint $table) {
+                    $table->string('name', 100);
+                    $table->longText('value')->nullable(); 
+                    $table->integer('updated_by')->nullable();
+                });
 
-            return;
+                return;
+            }
 
         }catch(\Exception $ex){
             return;

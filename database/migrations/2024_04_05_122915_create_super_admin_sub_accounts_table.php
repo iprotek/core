@@ -15,13 +15,15 @@ class CreateSuperAdminSubAccountsTable extends Migration
     {
         try{
            
-            Schema::table('super_admin_sub_accounts', function (Blueprint $table) {
-                $table->string('email', 50)->unique();
-                $table->string('user_type'); //1-Admin //2Sub Account
-                $table->bigInteger('sub_account_group_id'); //
-            });
+            if(Schema::hasTable('super_admin_sub_accounts')) {
+                Schema::table('super_admin_sub_accounts', function (Blueprint $table) {
+                    $table->string('email', 50)->unique();
+                    $table->string('user_type'); //1-Admin //2Sub Account
+                    $table->bigInteger('sub_account_group_id'); //
+                });
 
-            return;
+                return;
+            }
 
         }catch(\Exception $ex){
             return;

@@ -15,18 +15,20 @@ class CreateWebVisitorsTable extends Migration
     {
         try{
            
-            Schema::table('web_visitors', function (Blueprint $table) {
-                $table->string('ip_address');
-                $table->longText('user_agent');
-            });
+            if(Schema::hasTable('web_visitors')) {
+                Schema::table('web_visitors', function (Blueprint $table) {
+                    $table->string('ip_address');
+                    $table->longText('user_agent');
+                });
 
-            return;
+                return;
+            }
 
         }catch(\Exception $ex){
             return;
         }
 
-        
+
         Schema::create('web_visitors', function (Blueprint $table) {
             $table->id();
             $table->string('ip_address');
