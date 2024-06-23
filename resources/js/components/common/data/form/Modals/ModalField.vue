@@ -37,7 +37,7 @@
 <script>    
     import UserInput2Vue from '../../../../common/UserInput2.vue';
     export default {
-        props:[  ],
+        props:[ "group_id", "is_data" ],
         components: {
             "user-input2": UserInput2Vue
         },

@@ -27,7 +27,7 @@
 
 <script>
     export default {
-        props:[ "data_id", "is_data" ],
+        props:[ "data_id", "is_data", "group_id" ],
         components: { 
         },
         data: function () {

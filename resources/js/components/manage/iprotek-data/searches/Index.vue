@@ -1,7 +1,7 @@
 <template>
     <div>
         <div :style="'display:'+(show_data_form ?'':'none')+';'">
-            <data-form ref="data_form" @cancel="cancel" :group_id="group_id"></data-form>
+            <data-form ref="data_form" @cancel="cancel" :group_id="group_id" :is_data="is_data"></data-form>
         </div>
         <div v-if="show_data_form == false" class="row">
             <div class="col-md-12">

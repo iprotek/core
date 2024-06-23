@@ -60,7 +60,7 @@
 
     import PageFooterVue from '../../PageFooter.vue'; 
     export default {
-        props:[  ],
+        props:[ "group_id", "is_data" ],
         components: { 
             "page-footer":PageFooterVue, 
         },
@@ -90,6 +90,7 @@
                 var vm = this;
                 vm.pageDataList = [];
                 vm.isLoading = true;
+            
                 WebRequest2('GET', '/manage/projects-monitoring/model-fields/model/list?'+this.queryString({
                     search:this.search,
                     page:this.current_page,

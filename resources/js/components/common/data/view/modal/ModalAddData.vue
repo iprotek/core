@@ -42,7 +42,7 @@
     import Select2Vue from '../../../../common/Select2.vue';
     import UserInput2Vue from '../../../../common/UserInput2.vue';
     export default {
-        props:[  ],
+        props:[ "group_id", "is_data" ],
         components: { 
             "switch2":BoostrapSwitch2Vue,
             "select2":Select2Vue,

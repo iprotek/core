@@ -93,7 +93,7 @@
     import SwalAlertVue from '../../SwalAlert.vue'; 
     export default {
         name:'DataFieldItem',
-        props:[  "value", "has_down", "data_id" ],
+        props:[  "value", "has_down", "data_id", "group_id", "is_data" ],
         components: {
             "swal-alert":SwalAlertVue
         },

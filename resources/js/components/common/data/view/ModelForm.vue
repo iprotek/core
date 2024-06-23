@@ -23,7 +23,7 @@
                                 <span class="fa fa-plus"></span> Add Field
                             </button>
                             <div>
-                                <field-item v-for="(opt, optIndex) in fieldList" v-bind:key="'field-item-'+optIndex+'-'+_uid" :has_down="optIndex < fieldList.length - 1" v-model="fieldList[optIndex]" @move_up="move_up(opt);" @move_down="move_down(opt);" @remove_item="remove_item(opt);"></field-item>
+                                <field-item  v-for="(opt, optIndex) in fieldList" v-bind:key="'field-item-'+optIndex+'-'+_uid" :has_down="optIndex < fieldList.length - 1" v-model="fieldList[optIndex]" @move_up="move_up(opt);" @move_down="move_down(opt);" @remove_item="remove_item(opt);"  :group_id="group_id" :is_data="is_data"></field-item>
                             </div>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <swal ref="swal_prompt"></swal> 
-        <modal-model-add-vue ref="modal_model_add_vue" @add_field_click="add_field_click"></modal-model-add-vue>
+        <modal-model-add-vue  :group_id="group_id" :is_data="is_data" ref="modal_model_add_vue" @add_field_click="add_field_click"></modal-model-add-vue>
         <swal-alert ref="swal_alert"></swal-alert>
     </div>
 </template>
@@ -49,7 +49,7 @@
     import FieldItemVue from './FieldItem.vue';
     import SwalAlertVue from '../../../common/SwalAlert.vue';
     export default {
-        props:[  ],
+        props:[ "group_id", "is_data" ],
         components: { 
             "field-item":FieldItemVue,
             "modal-model-add-vue":ModalModelAddField,

@@ -23,7 +23,7 @@
     import Select2Vue from '../../../../common/Select2.vue';
     import SwalAlertVue from '../../../../common/SwalAlert.vue';
     export default {
-        props:[  ],
+        props:[ "group_id", "is_data" ],
         components: { 
             "select2":Select2Vue,
             "swal-alert":SwalAlertVue

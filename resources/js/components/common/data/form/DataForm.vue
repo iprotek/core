@@ -32,8 +32,8 @@
                             <button class="btn btn-outline-warning btn-sm" v-else @click="save_data"> UPDATE </button>
                             <div v-if="id>0" class="pt-3">
                                 <label> <b> ** Data Info </b> </label>
-                                <data-field-item :data_id="id" v-for="(opt, optIndex) in fieldValues" v-bind:key="'data-field-item-'+optIndex+'-'+_uid"  v-model="fieldValues[optIndex]" ></data-field-item>
-                                <project-list v-if="data_model_type != 'project'" :data_id="id"></project-list>
+                                <data-field-item  :group_id="group_id" :is_data="is_data" :data_id="id" v-for="(opt, optIndex) in fieldValues" v-bind:key="'data-field-item-'+optIndex+'-'+_uid"  v-model="fieldValues[optIndex]" ></data-field-item>
+                                <project-list  :group_id="group_id" :is_data="is_data" v-if="data_model_type != 'project'" :data_id="id"></project-list>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
             </div>
         </div>
         <swal ref="swal_prompt"></swal> 
-        <modal-add-data ref="modal_add_data"></modal-add-data>
+        <modal-add-data ref="modal_add_data"  :group_id="group_id" :is_data="is_data"></modal-add-data>
     </div>
 </template>
 
@@ -52,7 +52,7 @@
     import ModalAddDataVue from '../view/modal/ModalAddData.vue';//'../../../manage/projects-monitoring/searches/modal/ModalAddData.vue';
     import ProjectListVue from './ProjectList.vue';//'../../../manage/projects-monitoring/searches/ProjectList.vue'; 
     export default {
-        props:[  ],
+        props:[ "group_id", "is_data" ],
         components: { 
             "select2":Select2Vue,
             "user-input2":UserInput2Vue,

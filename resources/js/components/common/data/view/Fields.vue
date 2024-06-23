@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        <modal-field ref="modal_field" v-model="pageData" @modal_updated="loadModelFields"></modal-field>
+        <modal-field ref="modal_field" v-model="pageData" @modal_updated="loadModelFields"  :group_id="group_id" :is_data="is_data"></modal-field>
     </div>
 </template>
 
@@ -66,7 +66,7 @@
     import PageFooterVue from '../../../common/PageFooter.vue';
     import ModalFieldVue from '../form/Modals/ModalField.vue';//'./Modals/ModalField.vue';
     export default {
-        props:[  ],
+        props:[ "group_id", "is_data" ],
         components: { 
             "page-footer":PageFooterVue,
             "modal-field":ModalFieldVue

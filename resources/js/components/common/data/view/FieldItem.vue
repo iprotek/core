@@ -33,7 +33,7 @@
     import SwalAlertVue from '../../../common/SwalAlert.vue';
     export default {
         name:'FieldItem',
-        props:[  "value", "has_down" ],
+        props:[  "value", "has_down", "group_id", "is_data" ],
         components: {
             "swal-alert":SwalAlertVue
         },
