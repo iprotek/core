@@ -134,7 +134,13 @@
                 this.pageDataList = [];
                 this.isLoading = true;
                 var vm = this;
-                WebRequest2('GET', '/manage/projects-monitoring/searches/data/list?'+this.queryString({
+
+                var url = "/manage/projects-monitoring/searches/data/list";
+                if(vm.is_data){
+                    url = "/manage/iprotek-data/searches/data/list";
+                }
+
+                WebRequest2('GET', url+'?'+this.queryString({
                     search:this.search,
                     page:this.current_page,
                     items_per_page:10,
