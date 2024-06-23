@@ -13,6 +13,18 @@ class UpdateUserAdmin3 extends Migration
      */
     public function up()
     {
+        try{
+           
+            Schema::table('user_admins', function (Blueprint $table) {
+                $table->integer('receive_email_notif')->default(0);
+            });
+
+            return;
+
+        }catch(\Exception $ex){
+            return;
+        }
+
         //
         Schema::table('user_admins', function (Blueprint $table) {
             $table->integer('receive_email_notif')->default(0);

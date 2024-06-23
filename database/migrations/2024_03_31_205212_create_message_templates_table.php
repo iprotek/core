@@ -13,6 +13,29 @@ class CreateMessageTemplatesTable extends Migration
      */
     public function up()
     {
+        try{
+           
+            Schema::table('message_templates', function (Blueprint $table) {
+                $table->bigInteger('group_id');
+                $table->bigInteger('pay_created_by')->nullable(); 
+                $table->bigInteger('pay_updated_by')->nullable();
+                $table->bigInteger('pay_deleted_by')->nullable();
+                $table->softDeletes(); 
+                $table->timestamps();
+    
+                $table->string('name');
+                $table->longText('content');
+                $table->boolean('is_active')->default(1);
+                $table->integer('message_footer_id')->nullable();
+                $table->integer('message_header_id')->nullable();
+            });
+
+            return;
+
+        }catch(\Exception $ex){
+            return;
+        }
+
         Schema::create('message_templates', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('group_id');

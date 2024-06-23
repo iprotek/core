@@ -13,6 +13,20 @@ class CreateWebVisitorsTable extends Migration
      */
     public function up()
     {
+        try{
+           
+            Schema::table('web_visitors', function (Blueprint $table) {
+                $table->string('ip_address');
+                $table->longText('user_agent');
+            });
+
+            return;
+
+        }catch(\Exception $ex){
+            return;
+        }
+
+        
         Schema::create('web_visitors', function (Blueprint $table) {
             $table->id();
             $table->string('ip_address');
