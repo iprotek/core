@@ -19,12 +19,12 @@ class CreateFileUploadsTable extends Migration
                 // Table exists
                 
                 Schema::table('file_uploads', function (Blueprint $table) {
-                    $table->string('target_name');
-                    $table->string('target_id');
-                    $table->integer('order_no');
-                    $table->string('file_type');
-                    $table->string('file_name');
-                    $table->string('file_ext');
+                    $table->string('target_name')->nullable();
+                    $table->string('target_id')->nullable();
+                    $table->integer('order_no')->nullable();
+                    $table->string('file_type')->nullable();
+                    $table->string('file_name')->nullable();
+                    $table->string('file_ext')->nullable();
                     $table->boolean('is_default')->nullable();
                     $table->text('location')->nullable();
                     $table->integer('created_by')->nullable();
