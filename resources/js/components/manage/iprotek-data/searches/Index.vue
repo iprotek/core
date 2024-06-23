@@ -91,7 +91,7 @@
     import DataFormVue from '../../../common/data/form/DataForm.vue';
     import Select2Vue from '../../../common/Select2.vue';
     export default {
-        props:[ "group_id" ],
+        props:[ "group_id", "is_data" ],
         components: { 
             "page-footer":PageFooterVue,
             "data-form":DataFormVue,

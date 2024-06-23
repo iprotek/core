@@ -27,7 +27,7 @@
 
 <script>
     export default {
-        props:[ "data_id" ],
+        props:[ "data_id", "is_data" ],
         components: { 
         },
         data: function () {
@@ -43,7 +43,13 @@
             loadProjects:function(){
                 var vm = this;
                 vm.project_items = [];
-                WebRequest2('GET', '/manage/projects-monitoring/searches/data/contact-projects/'+this.data_id).then(resp=>{
+                var url = '/manage/projects-monitoring/searches/data/contact-projects/';
+                if(vm.is_data){
+                    url =  '/manage/iprotek-data/searches/data/contact-projects/';
+                }
+
+
+                WebRequest2('GET', url+this.data_id).then(resp=>{
                     resp.json().then(data=>{
                         vm.project_items = data;
                     });
