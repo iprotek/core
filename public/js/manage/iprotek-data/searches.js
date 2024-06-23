@@ -4018,7 +4018,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["data_id"],
+  props: ["data_id", "is_data"],
   components: {},
   data: function data() {
     return {
@@ -4033,7 +4033,11 @@ __webpack_require__.r(__webpack_exports__);
     loadProjects: function loadProjects() {
       var vm = this;
       vm.project_items = [];
-      WebRequest2('GET', '/manage/projects-monitoring/searches/data/contact-projects/' + this.data_id).then(function (resp) {
+      var url = '/manage/projects-monitoring/searches/data/contact-projects/';
+      if (vm.is_data) {
+        url = '/manage/iprotek-data/searches/data/contact-projects/';
+      }
+      WebRequest2('GET', url + this.data_id).then(function (resp) {
         resp.json().then(function (data) {
           vm.project_items = data;
         });
@@ -4190,7 +4194,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["group_id"],
+  props: ["group_id", "is_data"],
   components: {
     "page-footer": _common_PageFooter_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     "data-form": _common_data_form_DataForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -4234,7 +4238,11 @@ __webpack_require__.r(__webpack_exports__);
       this.pageDataList = [];
       this.isLoading = true;
       var vm = this;
-      WebRequest2('GET', '/manage/projects-monitoring/searches/data/list?' + this.queryString({
+      var url = "/manage/projects-monitoring/searches/data/list";
+      if (vm.is_data) {
+        url = "/manage/iprotek-data/searches/data/list";
+      }
+      WebRequest2('GET', url + '?' + this.queryString({
         search: this.search,
         page: this.current_page,
         items_per_page: 10,
