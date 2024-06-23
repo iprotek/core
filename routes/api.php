@@ -10,6 +10,8 @@ use iProtek\Core\Http\Controllers\AppVariableController;
 Route::middleware('api')->group(function(){
     Route::prefix('api')->group(function(){
 
+        Route::get('app-info', [\App\Http\Controllers\AppInfoController::class, 'app_info'])->name('api.app-info');
+
         Route::get('app-list', [AppVariableController::class, 'api_applist'])->name('api.app-list');
         Route::post('raw-app-list', [AppVariableController::class, 'raw_api_applist'])->name('api.raw-app-list');
 
