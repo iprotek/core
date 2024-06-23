@@ -76,6 +76,11 @@ class CreateFileUploadsTable extends Migration
                         $table->text('deleted_by')->nullable();
                     });
                 }
+                if (!Schema::hasColumn('file_uploads', 'deleted_at')) {
+                    Schema::table('file_uploads', function (Blueprint $table) {
+                        $table->dateTime('deleted_at')->nullable();
+                    });
+                }
 
                 return;
             } 
