@@ -15,15 +15,17 @@ class CreateGroupsTable extends Migration
     {
         try{
            
-            Schema::table('groupings', function (Blueprint $table) {
-                $table->bigInteger('group_id');
-                $table->string('name');
-                $table->bigInteger('pay_created_by')->nullable(); 
-                $table->bigInteger('pay_updated_by')->nullable();
-                $table->bigInteger('pay_deleted_by')->nullable(); 
-            });
+            if(Schema::hasTable('groupings')) {
+                Schema::table('groupings', function (Blueprint $table) {
+                    $table->bigInteger('group_id');
+                    $table->string('name');
+                    $table->bigInteger('pay_created_by')->nullable(); 
+                    $table->bigInteger('pay_updated_by')->nullable();
+                    $table->bigInteger('pay_deleted_by')->nullable(); 
+                });
 
-            return;
+                return;
+            }
 
         }catch(\Exception $ex){
             return;

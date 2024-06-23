@@ -15,14 +15,16 @@ class UpdateFileUploads extends Migration
     {
         try{
            
-            Schema::table('file_uploads', function (Blueprint $table) {
-                $table->bigInteger('group_id')->nullable();
-                $table->bigInteger('pay_created_by')->nullable(); 
-                $table->bigInteger('pay_updated_by')->nullable();
-                $table->bigInteger('pay_deleted_by')->nullable();
-            });
+            if(Schema::hasTable('file_uploads')) {
+                Schema::table('file_uploads', function (Blueprint $table) {
+                    $table->bigInteger('group_id')->nullable();
+                    $table->bigInteger('pay_created_by')->nullable(); 
+                    $table->bigInteger('pay_updated_by')->nullable();
+                    $table->bigInteger('pay_deleted_by')->nullable();
+                });
 
-            return;
+                return;
+            }
 
         }catch(\Exception $ex){
             return;
