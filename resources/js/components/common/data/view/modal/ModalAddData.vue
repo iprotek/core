@@ -158,7 +158,8 @@
             },
 
         },
-        mounted:function(){      
+        mounted:function(){    
+            console.log("Modal Add Data", this.group_id, this.is_data);  
         },
         updated:function(){
 

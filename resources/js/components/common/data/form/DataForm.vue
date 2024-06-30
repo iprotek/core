@@ -198,6 +198,7 @@
         },
         mounted:function(){     
             window.ModalAddDataView = this.$refs.modal_add_data;
+            console.log("Data", this.group_id, this.is_data);
         },
         updated:function(){
 

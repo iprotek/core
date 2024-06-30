@@ -4015,6 +4015,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     window.ModalAddDataView = this.$refs.modal_add_data;
+    console.log("Data", this.group_id, this.is_data);
   },
   updated: function updated() {}
 });
@@ -4192,7 +4193,9 @@ __webpack_require__.r(__webpack_exports__);
       }, 100);
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    console.log("Modal Add Data", this.group_id, this.is_data);
+  },
   updated: function updated() {}
 });
 
