@@ -63,7 +63,8 @@
             }
 
         },
-        mounted:function(){      
+        mounted:function(){    
+            console.log("test for errors", this.group_id, this.is_data);  
         },
         updated:function(){
 

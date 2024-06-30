@@ -3736,7 +3736,9 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.modal.dismiss();
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    console.log("test for errors", this.group_id, this.is_data);
+  },
   updated: function updated() {}
 });
 
