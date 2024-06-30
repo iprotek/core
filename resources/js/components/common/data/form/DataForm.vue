@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <div v-if="id == 0">
                             <label>Model:</label>
-                            <select2 @selected="selected" v-model="data_item" :has_clear="true" :url="'/manage/projects-monitoring/model-fields/model/list-selection'" :placeholder="' -- Select Model -- '"></select2>
+                            <select2 @selected="selected" v-model="data_item" :has_clear="true" :url="'/manage/'+(is_data ? 'iprotek-data':'projects-monitoring')+'/model-fields/model/list-selection'" :placeholder="' -- Select Model -- '"></select2>
                             <div v-if="data_item.id <= 0">
                                 <code>**Please select a model</code>
                             </div>

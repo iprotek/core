@@ -5013,7 +5013,7 @@ var render = function render() {
   }, [_c("select2", {
     attrs: {
       has_clear: true,
-      url: "/manage/projects-monitoring/model-fields/field/list-selection",
+      url: "/manage/" + (_vm.is_data ? "iprotek-data" : "projects-monitoring") + "/model-fields/field/list-selection",
       modal_selector: "#modal_model_vue .modal-body",
       placeholder: "-- Select Field --"
     },

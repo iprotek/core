@@ -19,11 +19,11 @@
                                 <input v-model="search" class="form-control" placeholder="Seach any keywords" @keyup.enter="loadData()"  />
 
                                 <span style="min-width: 250px;"> 
-                                    <select2 @selected="loadData()" v-model="model_item" :has_clear="true" :url="'/manage/projects-monitoring/model-fields/model/list-selection'" :placeholder="' -- ALL Model -- '"></select2>
+                                    <select2 @selected="loadData()" v-model="model_item" :has_clear="true" :url="'/manage/'+(is_data ? 'iprotek-data':'projects-monitoring')+'/model-fields/model/list-selection'" :placeholder="' -- ALL Model -- '"></select2>
                                 </span>
 
                                 <span style="min-width: 250px;"> 
-                                    <select2 @selected="loadData()" v-model="field_info"  :has_clear="true" :url="'/manage/projects-monitoring/model-fields/field/list-selection'"  :placeholder="'-- SEARCh ALL Field --'"></select2>
+                                    <select2 @selected="loadData()" v-model="field_info"  :has_clear="true" :url="'/manage/'+(is_data ? 'iprotek-data':'projects-monitoring')+'/model-fields/field/list-selection'"  :placeholder="'-- SEARCh ALL Field --'"></select2>
                                 </span>
                                 <button class="input-group-text">Find</button>
                             </div>

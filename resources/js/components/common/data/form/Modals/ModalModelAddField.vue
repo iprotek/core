@@ -5,7 +5,7 @@
                 AddField
             </template> 
             <template slot="body" >   
-                <select2 v-model="field_info"  :has_clear="true" :url="'/manage/projects-monitoring/model-fields/field/list-selection'" :modal_selector="'#modal_model_vue .modal-body'" :placeholder="'-- Select Field --'"></select2>   
+                <select2 v-model="field_info"  :has_clear="true" :url="'/manage/'+(is_data ? 'iprotek-data':'projects-monitoring')+'/model-fields/field/list-selection'" :modal_selector="'#modal_model_vue .modal-body'" :placeholder="'-- Select Field --'"></select2>   
             </template>
             <template slot="footer">
                 <div>

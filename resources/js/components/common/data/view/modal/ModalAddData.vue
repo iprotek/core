@@ -8,14 +8,14 @@
                 <div class="mt-2">
                     <switch2 v-model="is_link" ></switch2> <label>Link Data</label>
                     <div v-if="is_link">
-                        <select2 v-if="select2ready" v-model="link_item" @selected="selected_data" :allowtag="true" :url="'/manage/projects-monitoring/searches/data/list-selection'" :modal_selector="'#add-data-modal-'+_uid+' .modal-body'" :placeholder="'-- Select Data --'"></select2>
+                        <select2 v-if="select2ready" v-model="link_item" @selected="selected_data" :allowtag="true" :url="'/manage/'+(is_data ? 'iprotek-data':'projects-monitoring')+'/searches/data/list-selection'" :modal_selector="'#add-data-modal-'+_uid+' .modal-body'" :placeholder="'-- Select Data --'"></select2>
                         <small class="text-secondary"><i>Any name that would be used as linking to any model</i></small>
                         
                         <div v-if="has_model">
                             <label v-if="current_model" v-text="'Model: '+current_model"></label>
                         </div>
                         <div v-else-if="has_model == false">
-                            <select2 v-model="model_item" :url="'/manage/projects-monitoring/model-fields/model/list-selection'" :modal_selector="'#add-data-modal-'+_uid+' .modal-body'" :placeholder="'-- Select Model --'"></select2>
+                            <select2 v-model="model_item" :url="'/manage/'+(is_data ? 'iprotek-data':'projects-monitoring')+'/model-fields/model/list-selection'" :modal_selector="'#add-data-modal-'+_uid+' .modal-body'" :placeholder="'-- Select Model --'"></select2>
                             <small class="text-danger"><i>Please select a model.</i></small>
                         </div>
 

@@ -5186,7 +5186,7 @@ var render = function render() {
   }, [_vm.id == 0 ? _c("div", [_c("label", [_vm._v("Model:")]), _vm._v(" "), _c("select2", {
     attrs: {
       has_clear: true,
-      url: "/manage/projects-monitoring/model-fields/model/list-selection",
+      url: "/manage/" + (_vm.is_data ? "iprotek-data" : "projects-monitoring") + "/model-fields/model/list-selection",
       placeholder: " -- Select Model -- "
     },
     on: {
@@ -5418,7 +5418,7 @@ var render = function render() {
   }), _vm._v(" "), _c("label", [_vm._v("Link Data")]), _vm._v(" "), _vm.is_link ? _c("div", [_vm.select2ready ? _c("select2", {
     attrs: {
       allowtag: true,
-      url: "/manage/projects-monitoring/searches/data/list-selection",
+      url: "/manage/" + (_vm.is_data ? "iprotek-data" : "projects-monitoring") + "/searches/data/list-selection",
       modal_selector: "#add-data-modal-" + _vm._uid + " .modal-body",
       placeholder: "-- Select Data --"
     },
@@ -5440,7 +5440,7 @@ var render = function render() {
     }
   }) : _vm._e()]) : _vm.has_model == false ? _c("div", [_c("select2", {
     attrs: {
-      url: "/manage/projects-monitoring/model-fields/model/list-selection",
+      url: "/manage/" + (_vm.is_data ? "iprotek-data" : "projects-monitoring") + "/model-fields/model/list-selection",
       modal_selector: "#add-data-modal-" + _vm._uid + " .modal-body",
       placeholder: "-- Select Model --"
     },
@@ -5582,7 +5582,7 @@ var render = function render() {
   }, [_c("select2", {
     attrs: {
       has_clear: true,
-      url: "/manage/projects-monitoring/model-fields/model/list-selection",
+      url: "/manage/" + (_vm.is_data ? "iprotek-data" : "projects-monitoring") + "/model-fields/model/list-selection",
       placeholder: " -- ALL Model -- "
     },
     on: {
@@ -5604,7 +5604,7 @@ var render = function render() {
   }, [_c("select2", {
     attrs: {
       has_clear: true,
-      url: "/manage/projects-monitoring/model-fields/field/list-selection",
+      url: "/manage/" + (_vm.is_data ? "iprotek-data" : "projects-monitoring") + "/model-fields/field/list-selection",
       placeholder: "-- SEARCh ALL Field --"
     },
     on: {
