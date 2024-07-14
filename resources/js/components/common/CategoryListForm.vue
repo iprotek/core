@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :id="category_list_form_id">
         <div v-if="!is_integrate">
             <button class="btn btn-outline-primary btn-xs" @click="add_sub_category(base_parent_id)">
                 <span class="fa fa-plus"></span> ADD SUB CATEGORY
@@ -38,6 +38,7 @@
         },
         data: function () {
             return {     
+                category_list_form_id: 'category-list-form-'+this._uid,
                 base_parent_id: 0,
                 sub_categories:[],
                 subCategoryElID: 'sub-cat-el-id-'+this._uid,
@@ -62,6 +63,15 @@
                     this.selected_categories = this.selected_values;
                 
                 this.loadSubCategories();
+            },
+            getSelectedChecked:function(){
+                var checks = document.querySelectorAll('#'+this.category_list_form_id+' .category-checkbox:checked');
+                var new_checks = [];
+                checks.forEach((item, v)=>{
+                    new_checks.push(item.value*1);
+                });
+                //console.log(this.selected_categories, new_checks);
+                return new_checks;
             },
             updateSelected(selected_categories = null){
                 var vm = this;
