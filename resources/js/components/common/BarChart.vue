@@ -200,6 +200,7 @@
               day_range.forEach((dayItem, dayIndex)=>{
                 var dayDate = new Date(dayItem.date);
                 var month_name = dayDate.getMonthName();
+                month_name = month_name.slice(0, 3) + "'" + month_name.slice(3);
                 var month_info = month_range.filter(a=>a.title == month_name)[0];
                 if(!month_info){
                   month_info = {
