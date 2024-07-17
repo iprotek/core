@@ -1,6 +1,6 @@
 <template>    
     <label>
-        <input :id="data_input_list_id" @focus="showOptions" :placeholder="placeholder" :list="data_list_id" @change="text_changed" class="form-control form-control-sm" @keyup="search_keyup" v-model="search_text" />
+        <input :readonly="readonly" :id="data_input_list_id" @focus="showOptions" :placeholder="placeholder" :list="data_list_id" @change="text_changed" class="form-control form-control-sm" @keyup="search_keyup" v-model="search_text" />
         <datalist :id="data_list_id">
             <option v-for="(item,itemIndex) in item_list" v-bind:key="'item-list-'+itemIndex+'-'+_uid+'-'+item.id" :value="is_text_value? item.text: item.id" v-text="item.text"></option>
         </datalist>
@@ -9,7 +9,7 @@
 <script>
     
     export default {
-        props:[ "value", "exclude_values", "placeholder","is_text_value","url","placeholder" ],
+        props:[ "value", "exclude_values", "placeholder","is_text_value","url","placeholder","readonly" ],
         components: { 
         },
         watch: {
