@@ -1,9 +1,11 @@
 <template>    
-    <div v-if="setUp">
-        <select :id="selectElID" class="form-control form-select" style="width: 100%;" :multiple="allow_multiple">
-            <option v-if="has_clear === true" :value="-1" selected="selected" v-text="placeholder"></option>
-            <option v-if="item.id != 0" :value="item.id" selected="selected" v-text="item.text"></option>
-        </select>
+    <div :id="select2Selector">
+        <div v-if="setUp">
+            <select :id="selectElID" class="form-control form-select" style="width: 100%;" :multiple="allow_multiple">
+                <option v-if="has_clear === true" :value="-1" selected="selected" v-text="placeholder"></option>
+                <option v-if="item.id != 0" :value="item.id" selected="selected" v-text="item.text"></option>
+            </select>
+        </div>
     </div>
 </template>
 <script>
@@ -24,6 +26,7 @@
         },
         data: function () {
             return { 
+                select2Selector: 'select2-item-container-'+this._uid,
                 setUp:false,
                 selectElID: 'select-el-'+this._uid,
                 item:{
@@ -131,7 +134,8 @@
                 }
                 else jSON.theme = vm.default_theme;
                 if(vm.modal_selector)
-                    jSON.dropdownParent = $(vm.modal_selector); 
+                    jSON.dropdownParent = $('#'+vm.select2Selector); //$(vm.modal_selector);
+                
                 $('#'+this.selectElID).select2(jSON).on('change', function (e) { 
                     //vm.itemSelected(this.value);
                     var selectedItem = vm.itemList.filter(a=>a.id == this.value)[0];
