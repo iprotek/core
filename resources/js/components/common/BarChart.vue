@@ -2,8 +2,12 @@
     <div :class="is_test ? 'card text-red border border-danger' : 'card'">
         <div class="card-header">
           <div class="d-flex justify-content-between">
-              <h3 class="card-title" v-text="chart_title ? chart_title : 'NO TITLE'"> </h3>
+              <label class="card-title" v-text="chart_title ? chart_title : 'NO TITLE'"> </label>
               <!--<a href="javascript:void(0);">View Report</a>-->
+              <button>
+                <span class="fas fa-download"></span>
+                DOWNLOAD DATA
+              </button>
           </div>
         </div>
         <div class="card-body">
@@ -48,6 +52,7 @@
                 from_date:'',
                 to_date:'',
                 timeline_type: 0,
+                download_url:""
             }
         },
         methods: {
