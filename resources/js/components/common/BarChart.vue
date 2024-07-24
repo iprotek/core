@@ -4,7 +4,7 @@
           <div class="d-flex justify-content-between">
               <label class="card-title" v-text="chart_title ? chart_title : 'NO TITLE'"> </label>
               <!--<a href="javascript:void(0);">View Report</a>-->
-              <button class="btn btn-outline-primary btn-sm" @click="download_click()">
+              <button v-if="download_url" class="btn btn-outline-primary btn-sm" @click="download_click()">
                 <span class="fas fa-download"></span>
                 DOWNLOAD DATA
               </button>
