@@ -4,7 +4,7 @@
           <div class="d-flex justify-content-between">
               <label class="card-title" v-text="chart_title ? chart_title : 'NO TITLE'"> </label>
               <!--<a href="javascript:void(0);">View Report</a>-->
-              <button>
+              <button class="btn btn-outline-primary btn-sm" @click="download_click()">
                 <span class="fas fa-download"></span>
                 DOWNLOAD DATA
               </button>
@@ -56,6 +56,9 @@
             }
         },
         methods: {
+            download_click:function(){
+              window.location.href = this.download_url;
+            },
             show: function () {
                // this.$refs.modal.show();
             },
