@@ -1,11 +1,17 @@
 <template>
     <div class="col-md-4" :style="view_scale?('transform:scale('+view_scale+')'):''" > 
-        <div class="card card-primary">
-            <div class="card-header p-1 text-center">DATA</div>
+        <div :class="'card '+(id == 0 ? 'card-primary':'card-success')">
+            <div class="card-header p-1 text-center" v-if="id == 0">
+               NEW DATA <button class="btn btn-sm btn-outline-danger float-right" @click="$emit('cancel')"><span class="fa fa-times"></span></button>
+            </div>
+            <div class="card-header p-1 text-center" v-else>
+                UPDATE DATA <button class="btn btn-sm btn-outline-danger  float-right" @click="$emit('cancel')"><span class="fa fa-times"></span></button>
+            </div>
             <div class="card-body py-1">
                 <div>
                     <div class="mb-1">
-                        <input class="form-control" v-model="placeholder_name" placeholder="Field Title" />
+                        <small>Field Title:</small>
+                        <input class="form-control" v-model="placeholder_name" placeholder="Required: Field Title" />
                     </div>
                     <div class="mb-1" v-if="placeholder_name">
                         <small>SOURCE TYPE:</small>
@@ -40,14 +46,14 @@
                                 <option :value="'global'"> GLOBAL </option>
                             </select>
                         </div>
-                        <div v-if="source_instance != 'self'">
-                            <small>Instance:</small>
+                        <div v-if="source_instance != 'self' && field_selected">
+                            <small>Instance Name in (PHP lan):</small>
                             <input v-model="instance_name" class="form-control mb-1" placeholder="INSTANCE NAME"/>
                         </div>
-                        <div v-if="instance_name && isValidVariableName(instance_name)">
-                            <button class="btn btn-sm btn-primary" v-if="id == 0">ADD</button>
-                            <button class="btn btn-sm btn-primary" v-else>SAVE</button>
-                            <button class="btn btn-sm btn-default">CANCEL</button>
+                        <div v-if="(field_selected && source_instance == 'self') || (instance_name && isValidVariableName(instance_name))">
+                            <button class="btn btn-sm btn-primary" v-if=" id == 0">ADD</button>
+                            <button class="btn btn-sm btn-success" v-else>SAVE</button>
+                            <button class="btn btn-sm btn-default" @click="$emit('cancel')">CANCEL</button>
                         </div>
                     </div>
                     <div v-else-if="source_type == 'instance'">
@@ -58,36 +64,40 @@
                         <div v-if=" instance_name ">
                             <small>Instance Source:</small>
                             <select  v-model="source_instance" placeholder="INSTANCE NAME" class="form-control mb-1">
-                                <option :value="'self'">  DEFAULT: SELF </option>
                                 <option :value="'instance'"> INSTANCE </option>
                                 <option :value="'local'">  TARGET LOCAL </option>
                                 <option :value="'global'"> TARGET GLOBAL </option>
                             </select>
                         </div>
-                        <div v-if="instance_name ">
+                        <div v-if="instance_name && source_instance != 'self'">
                             <button class="btn btn-sm btn-primary" v-if="id == 0">ADD</button>
-                            <button class="btn btn-sm btn-primary" v-else>SAVE</button>
-                            <button class="btn btn-sm btn-default">CANCEL</button>
+                            <button class="btn btn-sm btn-success" v-else>SAVE</button>
+                            <button class="btn btn-sm btn-default" @click="$emit('cancel')">CANCEL</button>
                         </div>
                     </div>
                     <div v-else-if="source_type == 'input'">
                         
                         <div class="mb-1" >
                             <small>INPUT TYPE:</small>
-                            <select v-model="input_type"  class="form-control mb-1">
+                            <select v-model="input_type"  class="form-control mb-1" @change="input_type_changed">
                                 <option :value="''">  -- INPUT TYPE -- </option>
                                 <option :value="'text'">  TEXT </option> 
                                 <option :value="'date'">  DATE </option> 
                                 <option :value="'checkbox'">  CHECKBOX </option> 
                             </select>
                         </div> 
+                        <div class="mb-2" v-if="input_type" > 
+                            <small>DEFAULT VALUE:</small> 
+                            <input v-if="input_type == 'checkbox'" v-model="input_default_value" :type="input_type" :checked="input_default_value" />
+                            <input class="form-control" v-else v-model="input_default_value" :type="input_type" />
+                        </div>
                         <div class="mb-2" v-if="input_type">
                             <switch2 v-model="is_required"></switch2> <label class="mb-0">Is Required?</label>
                         </div>
-                        <div v-if="input_type" >
-                            <button class="btn btn-sm btn-primary" v-if="id == 0">ADD</button>
-                            <button class="btn btn-sm btn-primary" v-else>SAVE</button>
-                            <button class="btn btn-sm btn-default">CANCEL</button>
+                        <div v-if="input_type">
+                            <button v-if="id == 0" class="btn btn-sm btn-primary"  >ADD</button>
+                            <button v-else class="btn btn-sm btn-success" >SAVE</button>
+                            <button class="btn btn-sm btn-default" @click="$emit('cancel')">CANCEL</button>
                         </div>
                     </div>
                 </div>
@@ -120,6 +130,7 @@
                 field_selected:'',
                 instance_name:'',
                 source_instance:'self',
+                input_default_value:'',
                 is_required:false,
                 input_type:''
             }
@@ -136,6 +147,18 @@
                             vm.modelList = data;
                         })
                     });
+                }
+            },
+            input_type_changed:function(){
+                var vm = this;
+                if(vm.input_type){
+                    if(vm.input_type == 'checkbox'){
+                        if(vm.input_default_value !== false && vm.input_default_value !== true){
+                            vm.input_default_value = false;
+                        }
+                    }else{
+                        vm.input_default_value = '';
+                    }
                 }
             },
             model_select_changed:function(){
