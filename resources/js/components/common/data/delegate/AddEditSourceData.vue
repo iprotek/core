@@ -32,16 +32,17 @@
                             </select>
                         </div>
                         <div v-if="field_selected">
-                            <small>Instance:</small>
-                            <input v-model="instance_name" class="form-control mb-1" placeholder="INSTANCE NAME"/>
-                        </div>
-                        <div v-if="instance_name && isValidVariableName(instance_name)">
                             <small>Instance Source:</small>
                             <select v-model="source_instance" class="form-control mb-1">
-                                <option :value="'instance'">  DEFAULT: INSTANCE </option>
+                                <option :value="'self'">  DEFAULT: SELF </option>
+                                <option :value="'instance'">  INSTANCE </option>
                                 <option :value="'local'"> LOCAL </option>
                                 <option :value="'global'"> GLOBAL </option>
                             </select>
+                        </div>
+                        <div v-if="source_instance != 'self'">
+                            <small>Instance:</small>
+                            <input v-model="instance_name" class="form-control mb-1" placeholder="INSTANCE NAME"/>
                         </div>
                         <div v-if="instance_name && isValidVariableName(instance_name)">
                             <button class="btn btn-sm btn-primary" v-if="id == 0">ADD</button>
@@ -57,7 +58,8 @@
                         <div v-if=" instance_name ">
                             <small>Instance Source:</small>
                             <select  v-model="source_instance" placeholder="INSTANCE NAME" class="form-control mb-1">
-                                <option :value="'instance'">  DEFAULT: INSTANCE </option>
+                                <option :value="'self'">  DEFAULT: SELF </option>
+                                <option :value="'instance'"> INSTANCE </option>
                                 <option :value="'local'">  TARGET LOCAL </option>
                                 <option :value="'global'"> TARGET GLOBAL </option>
                             </select>
@@ -117,7 +119,7 @@
                 model_selected:'',
                 field_selected:'',
                 instance_name:'',
-                source_instance:'instance',
+                source_instance:'self',
                 is_required:false,
                 input_type:''
             }
