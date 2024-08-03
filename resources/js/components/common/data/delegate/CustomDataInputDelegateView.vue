@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
+            <div class="card-footer" v-if="dataDelegateList.length > 0">
                 <button class="btn btn-outline-primary" @click="save">SAVE</button>
             </div>
         </div> 
