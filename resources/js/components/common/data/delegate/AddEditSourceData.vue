@@ -13,6 +13,10 @@
                         <small>Field Title:</small>
                         <input class="form-control" v-model="placeholder_name" placeholder="Required: Field Title" />
                     </div>
+                    <div class="mb-1">
+                        <switch2 v-model="is_show"></switch2>
+                        <label class="mb-0">Show</label> 
+                    </div>
                     <div class="mb-1" v-if="placeholder_name">
                         <small>SOURCE TYPE:</small>
                         <select v-model="source_type" class="form-control" @change="source_type_changed">
@@ -22,7 +26,7 @@
                             <option :value="'input'">INPUT</option>
                         </select>
                     </div>
-                    <div v-if="source_type == 'model'">
+                    <div v-if="placeholder_name && source_type == 'model'">
                         <div>
                             <small>Model:</small>
                             <select v-model="model_selected" class="form-control mb-1" @change="model_select_changed">
@@ -51,12 +55,12 @@
                             <input v-model="instance_name" class="form-control mb-1" placeholder="INSTANCE NAME"/>
                         </div>
                         <div v-if="(field_selected && source_instance == 'self') || (instance_name && isValidVariableName(instance_name))">
-                            <button class="btn btn-sm btn-primary" v-if=" id == 0">ADD</button>
-                            <button class="btn btn-sm btn-success" v-else>SAVE</button>
+                            <button class="btn btn-sm btn-primary" v-if=" id == 0" @click="save()" >ADD</button>
+                            <button class="btn btn-sm btn-success" v-else @click="save()" >SAVE</button>
                             <button class="btn btn-sm btn-default" @click="$emit('cancel')">CANCEL</button>
                         </div>
                     </div>
-                    <div v-else-if="source_type == 'instance'">
+                    <div v-else-if="placeholder_name && source_type == 'instance'">
                         <div >
                             <small>Instance Name in (PHP lan):</small>
                             <input v-model="instance_name" class="form-control mb-1" />
@@ -70,12 +74,12 @@
                             </select>
                         </div>
                         <div v-if="instance_name && source_instance != 'self'">
-                            <button class="btn btn-sm btn-primary" v-if="id == 0">ADD</button>
-                            <button class="btn btn-sm btn-success" v-else>SAVE</button>
+                            <button class="btn btn-sm btn-primary" v-if="id == 0"  @click="save()" >ADD</button>
+                            <button class="btn btn-sm btn-success" v-else  @click="save()" >SAVE</button>
                             <button class="btn btn-sm btn-default" @click="$emit('cancel')">CANCEL</button>
                         </div>
                     </div>
-                    <div v-else-if="source_type == 'input'">
+                    <div v-else-if="placeholder_name && source_type == 'input'">
                         
                         <div class="mb-1" >
                             <small>INPUT TYPE:</small>
@@ -95,19 +99,21 @@
                             <switch2 v-model="is_required"></switch2> <label class="mb-0">Is Required?</label>
                         </div>
                         <div v-if="input_type">
-                            <button v-if="id == 0" class="btn btn-sm btn-primary"  >ADD</button>
-                            <button v-else class="btn btn-sm btn-success" >SAVE</button>
+                            <button v-if="id == 0" class="btn btn-sm btn-primary" @click="save()"  >ADD</button>
+                            <button v-else class="btn btn-sm btn-success"  @click="save()" >SAVE</button>
                             <button class="btn btn-sm btn-default" @click="$emit('cancel')">CANCEL</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <swal ref="swal_prompt"></swal> 
     </div>
 </template>
 <script>
     import UserInput2Vue from '../../UserInput2.vue'; 
     import BoostrapSwitch2Vue from '../../BoostrapSwitch2.vue';
+    import SwalAlertVue from '../../Swal.vue';
     export default {
         props:[ "value","view_scale", "source_id" , "source_name" ],
         watch: {
@@ -117,7 +123,8 @@
         },
         components: { 
             "user-input2":UserInput2Vue,
-            "switch2":BoostrapSwitch2Vue
+            "switch2":BoostrapSwitch2Vue,
+            "swal":SwalAlertVue
         },
         data: function () {
             return {
@@ -132,17 +139,53 @@
                 source_instance:'self',
                 input_default_value:'',
                 is_required:false,
-                input_type:''
+                input_type:'',
+                is_show:true
             }
         },
         methods: { 
-            source_type_changed:function(){
+            edit_data:function(data){ 
+                var  vm = this;
+                this.id = data.id;
+                this.placeholder_name = data.placeholder;
+                this.source_type = data.source_type;
+                this.is_show = data.is_show == 1;
+                this.source_id = data.source_id
+                this.source_name = data.source_name;
+                var field_info = data.field_info;
+                if(data.source_type == 'model' && data.field_info){  
+                    this.model_selected = field_info.model_selected;
+                    this.field_selected = field_info.field_selected;
+                    this.source_instance = field_info.source_instance;
+                    this.instance_name = field_info.instance_name;
+                    var ss = this.source_type_changed(false);
+                    if(ss){
+                        ss.then(data=>{
+                            vm.model_select_changed(false);
+                        })
+                    }
+                }else if(data.source_type == 'input' && data.field_info){
+                    this.input_type = field_info.input_type;
+                    this.is_required = field_info.is_required;
+                    this.input_default_value = field_info.input_default_value; 
+                }
+                else if(data.source_type == 'instance' && data.field_info){
+                    this.instance_name = field_info.instance_name;
+                    this.source_instance = field_info.source_instance;
+                }
+            },
+            source_type_changed:function(is_reset=true){
                 var vm = this;
-                vm.model_selected = '';
-                vm.instance_name = '';
-                vm.field_selected = '';
+                if(is_reset){
+                    vm.model_selected = '';
+                    vm.instance_name = '';
+                    vm.field_selected = '';
+                    if(this.source_type == 'instance' || this.source_type == 'local' || this.source_type == 'global'){
+                        this.source_instance = 'instance';
+                    }
+                }
                 if(this.source_type == 'model'){
-                    WebRequest2('GET', '/manage/iprotek-data/models').then(resp=>{
+                  return WebRequest2('GET', '/manage/iprotek-data/models').then(resp=>{
                         resp.json().then(data=>{
                             vm.modelList = data;
                         })
@@ -161,11 +204,13 @@
                     }
                 }
             },
-            model_select_changed:function(){
+            model_select_changed:function(is_reset=true){
                 var vm = this;
                 vm.fieldList = [];
-                vm.field_selected = '';
-                vm.source_instance = 'instance';
+                if(is_reset){
+                    vm.field_selected = '';
+                    vm.source_instance = 'self';
+                }
                 if(this.model_selected){
                     WebRequest2('GET', '/manage/iprotek-data/model-fields?model_name='+this.model_selected).then(resp=>{
                         resp.json().then(data=>{
@@ -174,7 +219,7 @@
                     })
                 }
             },
-             isValidVariableName:function(name) {
+            isValidVariableName:function(name) {
                 try {
                     // Attempt to create a function with the name as a parameter
                     new Function(name, 'var ' + name);
@@ -182,6 +227,60 @@
                 } catch (e) {
                     return false;
                 }
+            },
+            field_info:function(){
+                if(this.source_type == 'model'){
+                    return {
+                        model_selected: this.model_selected,
+                        field_selected: this.field_selected,
+                        source_instance: this.source_instance,
+                        instance_name: this.instance_name
+                    };
+                }
+                if(this.source_type == 'instance'){
+                    return {
+                        instance_name: this.instance_name,
+                        source_instance: this.source_instance
+                    }
+                }
+                if(this.source_type == 'input'){
+                    
+                    return {
+                        input_type: this.input_type,
+                        is_required: this.is_required ? 1 : 0,
+                        input_default_value: this.input_default_value
+                    }
+                }
+            },
+            save:function(){
+                var vm = this;
+                var req = {
+                    id: this.id,
+                    source_id: this.source_id,
+                    source_name: this.source_name,
+                    placeholder: this.placeholder_name,
+                    source_type: this.source_type,
+                    is_show: this.is_show ? 1 : 0,
+                    field_info: this.field_info()
+                };
+                console.log(req);
+                this.$refs.swal_prompt.alert(
+                    'question', 
+                    this.id == 0 ? "Add Data?":"Update Data?", 
+                    "Confirm" , 
+                    this.id == 0 ? "POST":"PUT", 
+                    this.id == 0 ?"/manage/iprotek-data/add-delegate":"/manage/iprotek-data/update-delegate/"+this.id, 
+                    JSON.stringify(req)
+                ).then(res=>{
+                    if(res.isConfirmed){  
+                        if(res.value.status == 1){ 
+                            vm.id = res.value.data.id;
+                            setTimeout(function(){
+                                vm.$emit('modal_updated');
+                            }, 500);
+                        }
+                    }
+                }); 
             }
 
         },
