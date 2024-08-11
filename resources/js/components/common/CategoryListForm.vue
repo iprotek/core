@@ -32,7 +32,7 @@
 <script>
     import SwalInputVue from './SwalInput.vue'
     export default {
-        props:[ "value", "modal","selected_values","is_integrate" ],
+        props:[ "value", "modal","selected_values","is_integrate", "add_url", "list_url" ],
         components: {  
             "swal-input":SwalInputVue
         },
@@ -139,12 +139,16 @@
                 if(this.modal){
                     this.modal.dismiss();
                 } 
+                var url = "/manage/stock-fields/categories/add";
+                if(vm.add_url){
+                    url = this.add_url;
+                }
                 this.$refs.swal_input.alert(
                         'question',
                         "Add Sub Category", 
                         "Confirm" , 
                         "POST", 
-                        "/manage/stock-fields/categories/add", 
+                        url, 
                         request
                     ).then(res=>{
                         if(vm.modal){
@@ -157,7 +161,11 @@
             },
             loadSubCategories:function(){
                 var vm = this;
-                  WebRequest2('GET', '/manage/stock-fields/categories/get-list').then(resp=>{
+                var url = '/manage/stock-fields/categories/get-list';
+                if(vm.list_url){
+                    url = vm.list_url;
+                }
+                  WebRequest2('GET', url).then(resp=>{
                     resp.json().then(data=>{
                         vm.sub_categories = data.data;
                         //console.log(data); 
