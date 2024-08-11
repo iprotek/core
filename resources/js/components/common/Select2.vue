@@ -1,5 +1,5 @@
 <template>    
-    <div :id="select2Selector">
+    <div :id="select2Selector" class="w-100">
         <div v-if="setUp">
             <select :id="selectElID" class="form-control form-select" style="width: 100%;" :multiple="allow_multiple">
                 <option v-if="has_clear === true" :value="-1" selected="selected" v-text="placeholder"></option>
