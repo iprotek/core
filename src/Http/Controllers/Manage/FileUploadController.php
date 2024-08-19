@@ -175,12 +175,18 @@ class FileUploadController extends _CommonController
         Storage::disk('local')->putFileAs(
             'public\\images', $request->file('file'), $fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext
         );
+        $url = "";
+        if($req->is_local == 1){
+            $url = Storage::url('images/'.$fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext);
+        }else{
+            $url = config('app.url').Storage::url('images/'.$fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext);
+        }
 
         return [
             "status"=>1, 
             "data"=>"", 
             "message"=>"Image Successfully Added.", 
-            "url"=>route('mainpage').Storage::url('images/'.$fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext)
+            "url"=>$url
         ];
 
     }

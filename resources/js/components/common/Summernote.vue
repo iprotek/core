@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        props:[ "value", "height", "placeholder", "group_id"],
+        props:[ "value", "height", "placeholder", "group_id", "is_local"],
         components: { 
         },
         data: function () {
@@ -59,6 +59,7 @@
                             formData.append('file_name', file.name);
                             formData.append('file_type', file.type);
                             formData.append('file_ext', file_ext);
+                            formData.append('is_local', vm.is_local ? 1 : 0 )
 
                             WebRequest2('POST', "/api/group/"+vm.group_id+"/file-upload/add", formData, "multipart/form-data").then(resp=>{
                                 resp.json().then(data=>{
