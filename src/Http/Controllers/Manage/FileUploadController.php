@@ -176,7 +176,7 @@ class FileUploadController extends _CommonController
             'public\\images', $request->file('file'), $fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext
         );
         $url = "";
-        if($req->is_local == 1){
+        if($req->is_local && $req->is_local != 0){
             $url = Storage::url('images/'.$fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext);
         }else{
             $url = config('app.url').Storage::url('images/'.$fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext);
