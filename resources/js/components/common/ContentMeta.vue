@@ -4,39 +4,43 @@
             <h5 v-text="meta_title"></h5>
         </div>
         <div class="card-body pt-1">
-            <div>
-                <div class="py-1">
-                    <button-copy @button_clicked="copy_clicked" :base_color="'primary'" :base_icon="'fa fa-link'" :button_title="'SAVE AND Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="text-center">
+                        <div class="py-1">
+                            <button-copy @button_clicked="copy_clicked" :base_color="'primary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
+                        </div>
+                        <div class="py-1">
+                            <button-copy @button_clicked="copy_clicked" :base_color="'danger'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
+                        </div>
+                        <div class="py-1">
+                            <button-copy @button_clicked="copy_clicked" :base_color="'info'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
+                        </div>
+                        <div class="py-1">
+                            <button-copy @button_clicked="copy_clicked" :base_color="'secondary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
+                        </div>
+                        <div class="py-1">
+                            <button class="btn btn-outline-primary btn-lg">
+                                <span class="fa fa-save"></span> SAVE META DETAILS
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="py-1">
-                    <button-copy :base_color="'danger'" :base_icon="'fa fa-link'" :button_title="'SAVE AND Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
-                </div>
-                <div class="py-1">
-                    <button-copy :base_color="'info'" :base_icon="'fa fa-link'" :button_title="'SAVE AND Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
-                </div>
-                <div class="py-1">
-                    <button-copy :base_color="'secondary'" :base_icon="'fa fa-link'" :button_title="'SAVE AND Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
+                <div class="col-sm-9">
+                    <user-input2 v-model="title" :input_style="'height:40px;'" :placeholder="'Title(30-50 Chars)'"  ></user-input2>
+                    <small class="text-secondary" v-text=" 'Text left ( '+ (50 - (title ? title.length : 0 )) +' ) - The title to be displayed for marketing'"></small>
+
+                    <user-input2 v-model="description" :input_style="'height:40px;'" :placeholder="'Description(120-130 Chars)'" ></user-input2>
+                    <small class="text-secondary" v-text=" 'Text left ( '+ (130 - (description ? description.length:0))+' ) - The descripton to be displayed for marketing'"></small>
+
+                    <user-input2 v-model="keywords" :input_style="'height:40px;'" :placeholder="'Keywords(separate by comma and not so relivant)'" :placeholder_description="'Keywords can be useful in other SEO platform.'" ></user-input2>
                 </div>
             </div>
-            <user-input2 v-model="title" :input_style="'height:40px;'" :placeholder="'Title(30-50 Chars)'"  ></user-input2>
-            <small class="text-secondary" v-text=" 'Text left ( '+ (50 - (title ? title.length : 0 )) +' ) - The title to be displayed for marketing'"></small>
-
-            <user-input2 v-model="description" :input_style="'height:40px;'" :placeholder="'Description(120-130 Chars)'" ></user-input2>
-            <small class="text-secondary" v-text=" 'Text left ( '+ (130 - (description ? description.length:0))+' ) - The descripton to be displayed for marketing'"></small>
-
-            <user-input2 v-model="keywords" :input_style="'height:40px;'" :placeholder="'Keywords(separate by comma and not so relivant)'" :placeholder_description="'Keywords can be useful in other SEO platform.'" ></user-input2>
             <file-upload v-model="file_target_id" :target_name="'meta-data-image'" :gallery_title="'Meta Data Image'"></file-upload>
-
-            <small class="text-secondary mt-2">SEO XML INDEX FILE FOR SUBMISSION:</small>
-            <button class="btn btn-sm btn-outline-primary">
-                <span class="fa fa-check"></span> Copy XML
-            </button>
-            <textarea v-model="seo_xml_index_file" style="min-height:200px;" class="w-100" readonly=""> 
+            <small class="text-secondary mt-2">SEO XML SITEMAP FOR SUBMISSION:</small>
+            <button-copy @button_clicked="copy_clicked" :base_color="'primary'" :base_icon="'fa fa-sitemap'" :button_title="'Copy XML'" :copied_message="'XML Copied!'" :text_to_copy="seo_xml_index_file"></button-copy>
+            <textarea v-model="seo_xml_index_file" style="min-height:250px;" class="w-100" readonly=""> 
             </textarea>
-
-            <button class="btn btn-outline-primary btn-lg">
-                <span class="fa fa-save"></span> SAVE META DETAILS
-            </button>
         </div>
     </div>
 </template>
@@ -60,13 +64,22 @@
         },
         data: function () {
             return {  
+                meta_data_id:0,
                 source_id: 0,
                 files:[],
                 file_target_id: 0,
                 title:'',
                 description:'',
                 keywords:'',
-                seo_xml_index_file:''
+                seo_xml_index_file:`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.example.com/</loc>
+    <lastmod>2024-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url
+</urlset>`
             }
         },
         methods: {
