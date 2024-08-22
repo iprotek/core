@@ -23,6 +23,7 @@
                 var vm = this;
                 vm.is_copied = true;
                 navigator.clipboard.writeText(vm.text_to_copy);
+                vm.$emit('button_clicked', vm.text_to_copy);
                 setTimeout(()=>{
                     vm.is_copied = false;
                 }, 1000);
