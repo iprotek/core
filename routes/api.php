@@ -17,6 +17,7 @@ Route::middleware('api')->group(function(){
 
         Route::prefix('group/{group_id}')->middleware(['pay.api'])->name('api')->group(function(){
 
+            /*
             Route::prefix('/file-upload')->name('.file-upload')->group(function(){
             
                 Route::post('/add', [ FileUploadController::class ,'api_add'])->name('.add');
@@ -28,6 +29,10 @@ Route::middleware('api')->group(function(){
                 Route::delete('/remove/{id}', [ FileUploadController::class ,'remove'])->name('.remove');
             
             });
+            */
+            
+            //FILE UPLOADS
+            include(__DIR__.'/api/file-upload.php');
 
         });
 

@@ -32,6 +32,8 @@
                         <td>
                             <small v-if="!targetItem.is_show_full" :title="targetItem.file_name" @click="triggerClick(targetItem, 1);" v-text="limitName(targetItem.file_name)" style="cursor:pointer;"></small>
                             <small v-else @click="triggerClick(targetItem, 2);" :title="targetItem.file_name" v-text="targetItem.file_name" style="cursor:pointer;"></small>
+                            <button-copy :base_color="'primary'" :base_icon="'fa fa-link'" :button_title="'Copy LINK'" :copied_message="'Link copied!'" :text_to_copy="targetItem.full_url"></button-copy>
+                        
                         </td>
                         <td >
                             <small v-text="targetItem.file_type"></small>
@@ -63,11 +65,13 @@
 <script>
     import SwalVue from './Swal.vue';
     import PreviewImageVue from './PreviewImage.vue';
+    import ButtonCopy from './ButtonCopy.vue';
     export default {
         props:[ "target_name" , "value", "gallery_title"],
         components: { 
             "swal":SwalVue,
-            "preview-image":PreviewImageVue
+            "preview-image":PreviewImageVue,
+            "button-copy": ButtonCopy
         },
         watch: {
             value(newValue) {

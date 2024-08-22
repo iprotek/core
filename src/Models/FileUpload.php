@@ -30,7 +30,8 @@ class FileUpload extends _CommonModel
 
     public $appends = [
         "link",
-        "public_link"
+        "public_link",
+        "full_url"
     ];
 
     public function getLinkAttribute(){
@@ -45,6 +46,14 @@ class FileUpload extends _CommonModel
         
         //if(substr($this->file_type,0, 5) == 'image'){ 
             return "/storage/images/".$this->target_id."_".$this->id.".".$this->file_ext;
+        //}
+        //return "/storage/images/0blank.png";
+        //return "/image-preview/".$this->id; 
+    }
+    public function getFullUrlAttribute(){
+        
+        //if(substr($this->file_type,0, 5) == 'image'){ 
+            return config("app.url")."/storage/images/".$this->target_id."_".$this->id.".".$this->file_ext;
         //}
         //return "/storage/images/0blank.png";
         //return "/image-preview/".$this->id; 

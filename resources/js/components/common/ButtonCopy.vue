@@ -1,6 +1,6 @@
 <template>
     <button @click="copy_text_click()" :title="button_title" :class="'btn btn-sm btn-outline-'+(is_copied ? 'success':base_color)">
-        <span v-if="is_copied == false" :class="base_icon"></span>
+        <span v-if="is_copied == false" :class="base_icon" v-text="' '+button_title"></span>
         <label v-else class="p-0 m-0">
             <span class="fa fa-check"> </span> <span v-text="copied_message"></span>
         </label> 
