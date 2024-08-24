@@ -10,14 +10,15 @@
             </div>
             <div class="row">
                 <div class="col-sm-12" v-if="meta_data_id && 'custom-meta' != view">
-                    <div class="py-1 text-nowrap my-2">
-                        <button-copy :is_dynamic="true" @button_clicked="copy_fb_clicked" :base_color="'primary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
+                    <div class="py-1 my-2">
+                        
+                        <button-copy :is_dynamic="true" @button_clicked="copy_fb_clicked" :base_color="'primary my-1'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
                      
-                        <button-copy :is_dynamic="true" @button_clicked="copy_google_clicked" :base_color="'danger'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
+                        <button-copy :is_dynamic="true" @button_clicked="copy_google_clicked" :base_color="'danger my-1'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
                     
-                        <button-copy :is_dynamic="true" @button_clicked="copy_twitter_clicked" :base_color="'info'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
+                        <button-copy :is_dynamic="true" @button_clicked="copy_twitter_clicked" :base_color="'info my-1'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
                      
-                        <button-copy :is_dynamic="true" @button_clicked="copy_other_clicked" :base_color="'secondary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
+                        <button-copy :is_dynamic="true" @button_clicked="copy_other_clicked" :base_color="'secondary my-1'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
                     </div>
                 </div> 
             </div>
