@@ -12,13 +12,13 @@
                 <div class="col-sm-12" v-if="meta_data_id && 'custom-meta' != view">
                     <div class="py-1 my-2">
                         
-                        <button-copy :is_dynamic="true" @button_clicked="copy_fb_clicked" :base_color="'primary my-1'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
+                        <button-copy :is_dynamic="true" @button_clicked="copy_fb_clicked" :base_color="'primary my-1'" :base_icon="'fa fa-link'" :button_title="'Click Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
                      
-                        <button-copy :is_dynamic="true" @button_clicked="copy_google_clicked" :base_color="'danger my-1'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
+                        <button-copy :is_dynamic="true" @button_clicked="copy_google_clicked" :base_color="'danger my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
                     
-                        <button-copy :is_dynamic="true" @button_clicked="copy_twitter_clicked" :base_color="'info my-1'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
+                        <button-copy :is_dynamic="true" @button_clicked="copy_twitter_clicked" :base_color="'info my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
                      
-                        <button-copy :is_dynamic="true" @button_clicked="copy_other_clicked" :base_color="'secondary my-1'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
+                        <button-copy :is_dynamic="true" @button_clicked="copy_other_clicked" :base_color="'secondary my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
                     </div>
                 </div> 
             </div>
@@ -170,6 +170,7 @@
                 return queryString;
             }, 
             save:function(){
+                var  vm = this;
                 var request = {
                     source_id: this.source_id,
                     source: this.source,
@@ -191,7 +192,7 @@
                 ).then(res=>{
                     if(res.isConfirmed){  
                         if(res.value.status == 1){
-
+                            vm.$emit('content_updated');
                         }
                     }
                 }); 
