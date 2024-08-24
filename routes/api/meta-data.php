@@ -8,6 +8,8 @@ use iProtek\Data\Http\Controllers\Manage\FileUploadController;
  
 Route::prefix('/meta-data')->name('.meta-data')->group(function(){
             
+
+    Route::get('/get-info/{id}', [ ContentMetaDataController::class ,'get_info'])->name('.get-info');
     //Route::post('/add', [ FileUploadController::class ,'api_add'])->name('.add');
     //Route::get('/get-list', [ FileUploadController::class ,'list'])->name('.get-list');
     //Route::get('/get-list/{id}', [ FileUploadController::class ,'list'])->name('.get-one');

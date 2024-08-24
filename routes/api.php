@@ -34,6 +34,9 @@ Route::middleware('api')->group(function(){
             //FILE UPLOADS
             include(__DIR__.'/api/file-upload.php');
 
+            //FILE UPLOADS
+            include(__DIR__.'/api/meta-data.php');
+
         });
 
         
