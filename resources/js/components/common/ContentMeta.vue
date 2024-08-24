@@ -42,7 +42,7 @@
                 </div>
                 <file-upload v-if="source && source_id" v-model="file_target_id" :target_name="'meta-data-image'" :gallery_title="'Meta Data Image'" :group_id="group_id" ></file-upload>
                 <small class="text-secondary mt-2">SEO XML SITEMAP FOR SUBMISSION:</small>
-                <button-copy @button_clicked="copy_clicked" :base_color="'primary'" :base_icon="'fa fa-sitemap'" :button_title="'Copy XML'" :copied_message="'XML Copied!'" :text_to_copy="seo_xml_index_file"></button-copy>
+                <button-copy :base_color="'primary'" :base_icon="'fa fa-sitemap'" :button_title="'Copy XML'" :copied_message="'XML Copied!'" :text_to_copy="seo_xml_index_file"></button-copy>
                 <textarea v-model="seo_xml_index_file" style="min-height:250px;" class="w-100" readonly=""> 
                 </textarea>
             </div>
@@ -118,7 +118,7 @@
         methods: {
             copy_fb_clicked:function(el, val){
                 //console.log(val);
-                this.$emit('copy_text_click', el, {
+                this.$emit('copy_button_link_click', el, {
                     title: this.title,
                     description: this.description,
                     keywords: this.keywords,
@@ -127,7 +127,7 @@
             },
             copy_google_clicked:function(el, val){
                 //console.log(val);
-                this.$emit('copy_text_click', el, {
+                this.$emit('copy_button_link_click', el, {
                     title: this.title,
                     description: this.description,
                     keywords: this.keywords,
@@ -136,7 +136,7 @@
             },
             copy_twitter_clicked:function(el, val){
                 //console.log(val);
-                this.$emit('copy_text_click', el, {
+                this.$emit('copy_button_link_click', el, {
                     title: this.title,
                     description: this.description,
                     keywords: this.keywords,
@@ -145,7 +145,7 @@
             },
             copy_other_clicked:function(el, val){
                 //console.log(val);
-                this.$emit('copy_text_click', el, {
+                this.$emit('copy_button_link_click', el, {
                     title: this.title,
                     description: this.description,
                     keywords: this.keywords,
