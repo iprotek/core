@@ -9,7 +9,7 @@
 
 <script>
     export default {
-        props:[ "text_to_copy","copied_message","base_icon", "button_title","base_color" ],
+        props:[ "text_to_copy","copied_message","base_icon", "button_title","base_color", "is_dynamic" ],
         components: { 
         },
         data: function () {
@@ -21,12 +21,31 @@
             copy_text_click:function(){
                 //document.execCommand('copy',false, "Copy URL");
                 var vm = this;
+                if(vm.is_dynamic){
+
+                    vm.$emit('button_clicked', this, vm.text_to_copy);
+                    return;
+                }
+
+
+
+
                 vm.is_copied = true;
                 navigator.clipboard.writeText(vm.text_to_copy);
                 vm.$emit('button_clicked', vm.text_to_copy);
                 setTimeout(()=>{
                     vm.is_copied = false;
                 }, 1000);
+            },
+            copy_text:function(text_to_copy){
+
+                var vm = this;
+                vm.is_copied = true;
+                navigator.clipboard.writeText(text_to_copy);
+                setTimeout(()=>{
+                    vm.is_copied = false;
+                }, 1000);
+
             }
 
         },

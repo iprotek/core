@@ -9,16 +9,15 @@
                 <button type="button" :class="'btn '+( view == 'custom-meta' ? 'btn-primary':'btn-default')" @click="view='custom-meta'">SET CUSTOM META</button>
             </div>
             <div class="row">
-                <div class="col-sm-8">
-                    <div class="py-1">
-                        <button-copy @button_clicked="copy_clicked" :base_color="'primary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
+                <div class="col-sm-12" v-if="meta_data_id && 'custom-meta' != view">
+                    <div class="py-1 text-nowrap my-2">
+                        <button-copy :is_dynamic="true" @button_clicked="copy_fb_clicked" :base_color="'primary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
                      
-                        <button-copy @button_clicked="copy_clicked" :base_color="'danger'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
-                    </div>
-                    <div class="py-1">
-                        <button-copy @button_clicked="copy_clicked" :base_color="'info'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
+                        <button-copy :is_dynamic="true" @button_clicked="copy_google_clicked" :base_color="'danger'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
+                    
+                        <button-copy :is_dynamic="true" @button_clicked="copy_twitter_clicked" :base_color="'info'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
                      
-                        <button-copy @button_clicked="copy_clicked" :base_color="'secondary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
+                        <button-copy :is_dynamic="true" @button_clicked="copy_other_clicked" :base_color="'secondary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
                     </div>
                 </div> 
             </div>
@@ -53,18 +52,18 @@
                     <table class="table-bordered w-100">
                         <tr>
                             <td style="width:120px;" class="text-right"><span>Title:</span></td>
-                            <td class="px-2"><label class="m-0"  v-text="title"></label></td>
+                            <td class="px-2"><label class="m-0 text-primary"  v-text="title"></label></td>
                         </tr>
                         <tr>
                             <td class="text-right"><span>Description:</span></td>
-                            <td class="px-2"><label class="m-0"  v-text="description"></label></td>
+                            <td class="px-2"><label class="m-0 text-info"  v-text="description"></label></td>
                         </tr>
                         <tr>
                             <td class="text-right"><span>Keywords:</span></td>
-                            <td class="px-2"><label class="m-0"  v-text="keywords"></label></td>
+                            <td class="px-2"><label class="m-0 text-danger"  v-text="keywords"></label></td>
                         </tr>
                         <tr>
-                            <td class="align-top"><span>Preview Image:</span></td>
+                            <td class="text-right text-nowrap align-top"><span>Preview Image:</span></td>
                             <td><img v-if="image_url" :src="image_url" style="max-width:800px;" /></td>
                         </tr>
                     </table>  
@@ -117,8 +116,41 @@
             }
         },
         methods: {
-            copy_clicked:function(val){
-                console.log(val);
+            copy_fb_clicked:function(el, val){
+                //console.log(val);
+                this.$emit('copy_text_click', el, {
+                    title: this.title,
+                    description: this.description,
+                    keywords: this.keywords,
+                    link_source: 'facebook'
+                } );
+            },
+            copy_google_clicked:function(el, val){
+                //console.log(val);
+                this.$emit('copy_text_click', el, {
+                    title: this.title,
+                    description: this.description,
+                    keywords: this.keywords,
+                    link_source: 'google'
+                } );
+            },
+            copy_twitter_clicked:function(el, val){
+                //console.log(val);
+                this.$emit('copy_text_click', el, {
+                    title: this.title,
+                    description: this.description,
+                    keywords: this.keywords,
+                    link_source: 'twitter'
+                } );
+            },
+            copy_other_clicked:function(el, val){
+                //console.log(val);
+                this.$emit('copy_text_click', el, {
+                    title: this.title,
+                    description: this.description,
+                    keywords: this.keywords,
+                    link_source: 'other'
+                } );
             },
             triggerClick:function(item, s){
                 var vm = this;
