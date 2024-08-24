@@ -5,7 +5,7 @@
         </div>
         <div class="card-body pt-1">
             <div class="btn-group w-100">
-                <button type="button" :class="'btn '+( view == 'current-meta' ? 'btn-primary':'btn-default')" @click="view='current-meta'">CURRENT META INFO</button> 
+                <button type="button" :class="'btn '+( view == 'current-meta' ? 'btn-primary':'btn-default')" @click="view='current-meta';loadInfo();">CURRENT META INFO</button> 
                 <button type="button" :class="'btn '+( view == 'custom-meta' ? 'btn-primary':'btn-default')" @click="view='custom-meta'">SET CUSTOM META</button>
             </div>
             <div class="row">
@@ -50,6 +50,24 @@
             <div v-else>
                 <h3 class="text-center text-danger" v-if="meta_data_id == 0"> -- THERE IS NO CURRENTLY META ON THIS -- </h3>  
                 <div v-else> 
+                    <table class="table-bordered w-100">
+                        <tr>
+                            <td style="width:120px;" class="text-right"><span>Title:</span></td>
+                            <td class="px-2"><label class="m-0"  v-text="title"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><span>Description:</span></td>
+                            <td class="px-2"><label class="m-0"  v-text="description"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><span>Keywords:</span></td>
+                            <td class="px-2"><label class="m-0"  v-text="keywords"></label></td>
+                        </tr>
+                        <tr>
+                            <td class="align-top"><span>Preview Image:</span></td>
+                            <td><img v-if="image_url" :src="image_url" style="max-width:800px;" /></td>
+                        </tr>
+                    </table>  
                 </div>
             </div>
         </div>
@@ -86,6 +104,7 @@
                 title:'',
                 description:'',
                 keywords:'',
+                image_url:'',
                 seo_xml_index_file:`<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -149,16 +168,23 @@
                 vm.title = "";
                 vm.description = "";
                 vm.keywords = "";
-                WebRequest2('GET', '/api/group/'+this.group_id+'/meta-data/get-info/'+this.source_id+'-'+this.source).then(resp=>{
+                vm.meta_data_id = 0; 
+                vm.image_url = '';
+                WebRequest2('GET', '/api/group/'+this.group_id+'/meta-data/get-info/'+this.source_id+'?&source='+this.source).then(resp=>{
                     resp.json().then(data=>{
-                        //console.log("data",data);
+                        console.log("data",data);
                         if(!data) return;
 
-                        
+                        vm.meta_data_id = data.id;
                         if(data.meta_data){
+
                             vm.title = data.meta_data.title;
                             vm.description = data.meta_data.description;
                             vm.keywords = data.meta_data.keywords;
+
+                        }
+                        if(data.meta_image){
+                            vm.image_url = data.meta_image.full_url;
                         }
                     });
                 });
