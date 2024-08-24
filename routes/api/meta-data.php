@@ -10,7 +10,9 @@ Route::prefix('/meta-data')->name('.meta-data')->group(function(){
             
 
     Route::get('/get-info/{id}', [ ContentMetaDataController::class ,'get_info'])->name('.get-info');
-    //Route::post('/add', [ FileUploadController::class ,'api_add'])->name('.add');
+    Route::post('/add', [ ContentMetaDataController::class ,'add'])->name('.add');
+    Route::put('/update', [ ContentMetaDataController::class ,'update'])->name('.update');
+    Route::delete('/remove', [ ContentMetaDataController::class ,'remove'])->name('.remove');
     //Route::get('/get-list', [ FileUploadController::class ,'list'])->name('.get-list');
     //Route::get('/get-list/{id}', [ FileUploadController::class ,'list'])->name('.get-one');
     //Route::get('/image-preview/{id}', [ FileUploadController::class ,'image_preview'])->name('.image-preview');

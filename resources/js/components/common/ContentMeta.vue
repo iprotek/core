@@ -4,29 +4,31 @@
             <h5 v-text="meta_title"></h5>
         </div>
         <div class="card-body pt-1">
+            <div class="btn-group w-100">
+                <button type="button" class="btn btn-primary">CURRENT META INFO</button> 
+                <button type="button" class="btn btn-default">SET CUSTOM META</button>
+            </div>
             <div class="row">
-                <div class="col-sm-3">
-                    <div class="text-center">
-                        <div class="py-1">
-                            <button-copy @button_clicked="copy_clicked" :base_color="'primary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
-                        </div>
-                        <div class="py-1">
-                            <button-copy @button_clicked="copy_clicked" :base_color="'danger'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
-                        </div>
-                        <div class="py-1">
-                            <button-copy @button_clicked="copy_clicked" :base_color="'info'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
-                        </div>
-                        <div class="py-1">
-                            <button-copy @button_clicked="copy_clicked" :base_color="'secondary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
-                        </div>
-                        <div class="py-1">
-                            <button class="btn btn-outline-primary btn-lg">
-                                <span class="fa fa-save"></span> SAVE META DETAILS
-                            </button>
-                        </div>
+                <div class="col-sm-8">
+                    <div class="py-1">
+                        <button-copy @button_clicked="copy_clicked" :base_color="'primary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
+                     
+                        <button-copy @button_clicked="copy_clicked" :base_color="'danger'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
+                    </div>
+                    <div class="py-1">
+                        <button-copy @button_clicked="copy_clicked" :base_color="'info'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
+                     
+                        <button-copy @button_clicked="copy_clicked" :base_color="'secondary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
                     </div>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-4 pt-2">
+                    <button class="btn btn-outline-primary btn-lg">
+                        <span class="fa fa-save"></span> SAVE META DETAILS
+                    </button>
+                </div>
+            </div>
+            <div class="row"> 
+                <div class="col-sm-12">
                     <user-input2 v-model="title" :input_style="'height:40px;'" :placeholder="'Title(30-50 Chars)'"  ></user-input2>
                     <small class="text-secondary" v-text=" 'Text left ( '+ (50 - (title ? title.length : 0 )) +' ) - The title to be displayed for marketing'"></small>
 
@@ -36,7 +38,7 @@
                     <user-input2 v-model="keywords" :input_style="'height:40px;'" :placeholder="'Keywords(separate by comma and not so relivant)'" :placeholder_description="'Keywords can be useful in other SEO platform.'" ></user-input2>
                 </div>
             </div>
-            <file-upload v-model="file_target_id" :target_name="'meta-data-image'" :gallery_title="'Meta Data Image'"></file-upload>
+            <file-upload v-model="file_target_id" :target_name="'meta-data-image'" :gallery_title="'Meta Data Image'" :group_id="group_id" ></file-upload>
             <small class="text-secondary mt-2">SEO XML SITEMAP FOR SUBMISSION:</small>
             <button-copy @button_clicked="copy_clicked" :base_color="'primary'" :base_icon="'fa fa-sitemap'" :button_title="'Copy XML'" :copied_message="'XML Copied!'" :text_to_copy="seo_xml_index_file"></button-copy>
             <textarea v-model="seo_xml_index_file" style="min-height:250px;" class="w-100" readonly=""> 

@@ -67,7 +67,7 @@
     import PreviewImageVue from './PreviewImage.vue';
     import ButtonCopy from './ButtonCopy.vue';
     export default {
-        props:[ "target_name" , "value", "gallery_title"],
+        props:[ "target_name" , "value", "gallery_title", "group_id"],
         components: { 
             "swal":SwalVue,
             "preview-image":PreviewImageVue,
@@ -184,6 +184,11 @@
                 if(file.type.split('/')[0] == "image"){
                     this.imageCompression(evt).then(comp=>{
 
+                        var url = "/manage/file-uploads/add";
+                        if(vm.group_id){
+                            url = "/api/group/"+vm.group_id+"/file-upload/add";
+                        }
+
                         formData.append('target_name', vm.target_name);
                         formData.append('target_id', vm.target_id); 
                         formData.append('file', comp);
@@ -195,7 +200,7 @@
                                 "Add Image", 
                                 "Confirm" , 
                                 "POST", 
-                                "/manage/file-uploads/add", 
+                                url, 
                                 formData,
                                 null,
                                 "multipart/form-data"
@@ -213,12 +218,18 @@
                     formData.append('file_name', file.name);
                     formData.append('file_type', file.type);
                     formData.append('file_ext', file_ext);
+
+                    var url = "/manage/file-uploads/add";
+                    if(vm.group_id){
+                        url = "/api/group/"+vm.group_id+"/file-upload/add";
+                    }
+                    
                     vm.$refs.swal_prompt.alert(
                             'question', 
                             "Add File", 
                             "Confirm" , 
                             "POST", 
-                            "/manage/file-uploads/add", 
+                            url, 
                             formData,
                             null,
                             "multipart/form-data"
