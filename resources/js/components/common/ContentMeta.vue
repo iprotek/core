@@ -64,7 +64,7 @@
                         </tr>
                         <tr>
                             <td class="text-right text-nowrap align-top"><span>Preview Image:</span></td>
-                            <td><img v-if="image_url" :src="image_url" style="max-width:800px;" /></td>
+                            <td><img v-if="image_url" :src="image_url" style="max-width:800px; width:100%;" /></td>
                         </tr>
                     </table>  
                 </div>
