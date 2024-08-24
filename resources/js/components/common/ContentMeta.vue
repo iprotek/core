@@ -12,7 +12,7 @@
                 <div class="col-sm-12" v-if="meta_data_id && 'custom-meta' != view">
                     <div class="py-1 my-2">
                         
-                        <button-copy :is_dynamic="true" @button_clicked="copy_fb_clicked" :base_color="'primary my-1'" :base_icon="'fa fa-link'" :button_title="'Click Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
+                        <button-copy :is_dynamic="true" @button_clicked="copy_fb_clicked" :base_color="'primary my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
                      
                         <button-copy :is_dynamic="true" @button_clicked="copy_google_clicked" :base_color="'danger my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
                     
