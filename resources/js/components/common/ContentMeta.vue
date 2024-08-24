@@ -5,8 +5,8 @@
         </div>
         <div class="card-body pt-1">
             <div class="btn-group w-100">
-                <button type="button" class="btn btn-primary">CURRENT META INFO</button> 
-                <button type="button" class="btn btn-default">SET CUSTOM META</button>
+                <button type="button" :class="'btn '+( view == 'current-meta' ? 'btn-primary':'btn-default')" @click="view='current-meta'">CURRENT META INFO</button> 
+                <button type="button" :class="'btn '+( view == 'custom-meta' ? 'btn-primary':'btn-default')" @click="view='custom-meta'">SET CUSTOM META</button>
             </div>
             <div class="row">
                 <div class="col-sm-8">
@@ -20,52 +20,65 @@
                      
                         <button-copy @button_clicked="copy_clicked" :base_color="'secondary'" :base_icon="'fa fa-link'" :button_title="'Save and Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
                     </div>
+                </div> 
+            </div>
+            <div v-if="'custom-meta' == view">
+                <div class="row">
+                    <div class="col-sm-12 pt-2">
+                        <button class="btn btn-outline-primary btn-lg float-right" @click="save">
+                            <span class="fa fa-save"></span> SAVE META DETAILS
+                        </button>
+                    </div>
                 </div>
-                <div class="col-sm-4 pt-2">
-                    <button class="btn btn-outline-primary btn-lg">
-                        <span class="fa fa-save"></span> SAVE META DETAILS
-                    </button>
+                <div class="row"> 
+                    <div class="col-sm-12">
+                        <user-input2 v-model="title" :input_style="'height:40px;'" :placeholder="'Title(30-50 Chars)'"  ></user-input2>
+                        <small class="text-secondary" v-text=" 'Text left ( '+ (50 - (title ? title.length : 0 )) +' ) - The title to be displayed for marketing'"></small>
+
+                        <user-input2 v-model="description" :input_style="'height:40px;'" :placeholder="'Description(120-130 Chars)'" ></user-input2>
+                        <small class="text-secondary" v-text=" 'Text left ( '+ (130 - (description ? description.length:0))+' ) - The descripton to be displayed for marketing'"></small>
+
+                        <user-input2 v-model="keywords" :input_style="'height:40px;'" :placeholder="'Keywords(separate by comma and not so relivant)'" :placeholder_description="'Keywords can be useful in other SEO platform.'" ></user-input2>
+                    </div>
+                </div>
+                <file-upload v-if="source && source_id" v-model="file_target_id" :target_name="'meta-data-image'" :gallery_title="'Meta Data Image'" :group_id="group_id" ></file-upload>
+                <small class="text-secondary mt-2">SEO XML SITEMAP FOR SUBMISSION:</small>
+                <button-copy @button_clicked="copy_clicked" :base_color="'primary'" :base_icon="'fa fa-sitemap'" :button_title="'Copy XML'" :copied_message="'XML Copied!'" :text_to_copy="seo_xml_index_file"></button-copy>
+                <textarea v-model="seo_xml_index_file" style="min-height:250px;" class="w-100" readonly=""> 
+                </textarea>
+            </div>
+            <div v-else>
+                <h3 class="text-center text-danger" v-if="meta_data_id == 0"> -- THERE IS NO CURRENTLY META ON THIS -- </h3>  
+                <div v-else> 
                 </div>
             </div>
-            <div class="row"> 
-                <div class="col-sm-12">
-                    <user-input2 v-model="title" :input_style="'height:40px;'" :placeholder="'Title(30-50 Chars)'"  ></user-input2>
-                    <small class="text-secondary" v-text=" 'Text left ( '+ (50 - (title ? title.length : 0 )) +' ) - The title to be displayed for marketing'"></small>
-
-                    <user-input2 v-model="description" :input_style="'height:40px;'" :placeholder="'Description(120-130 Chars)'" ></user-input2>
-                    <small class="text-secondary" v-text=" 'Text left ( '+ (130 - (description ? description.length:0))+' ) - The descripton to be displayed for marketing'"></small>
-
-                    <user-input2 v-model="keywords" :input_style="'height:40px;'" :placeholder="'Keywords(separate by comma and not so relivant)'" :placeholder_description="'Keywords can be useful in other SEO platform.'" ></user-input2>
-                </div>
-            </div>
-            <file-upload v-model="file_target_id" :target_name="'meta-data-image'" :gallery_title="'Meta Data Image'" :group_id="group_id" ></file-upload>
-            <small class="text-secondary mt-2">SEO XML SITEMAP FOR SUBMISSION:</small>
-            <button-copy @button_clicked="copy_clicked" :base_color="'primary'" :base_icon="'fa fa-sitemap'" :button_title="'Copy XML'" :copied_message="'XML Copied!'" :text_to_copy="seo_xml_index_file"></button-copy>
-            <textarea v-model="seo_xml_index_file" style="min-height:250px;" class="w-100" readonly=""> 
-            </textarea>
         </div>
+        <swal ref="swal_prompt"></swal> 
     </div>
 </template>
 <script> 
     import ButtonCopyVue from './ButtonCopy.vue';
     import FileUploadsVue from './FileUploads.vue';
+    import SwalVue from './Swal.vue';
     import UserInput2Vue from './UserInput2.vue';
     export default {
         props:[ "source", "value", "meta_title", "group_id"],
         components: { 
             "file-upload":FileUploadsVue,
             "user-input2":UserInput2Vue,
-            "button-copy":ButtonCopyVue
+            "button-copy":ButtonCopyVue,
+            "swal":SwalVue
         },
         watch: {
             value(newValue) {
                 this.source_id = newValue;
                 //this.load_uploads();
-                this.file_target_id = this.group_id+'-'+this.source_id;
+                this.file_target_id = this.group_id+'-'+this.source_id+'-'+this.source;
             },
         },
         data: function () {
             return {  
+                view:"current-meta",
                 meta_data_id:0,
                 source_id: 0,
                 files:[],
@@ -104,11 +117,58 @@
                 }).join('&');
                 return queryString;
             }, 
+            save:function(){
+                var request = {
+                    source_id: this.source_id,
+                    source: this.source,
+                    title: this.title,
+                    description: this.description,
+                    meta_data:{
+                        title : this.title,
+                        description: this.description,
+                        keywords: this.keywords
+                    }
+                }
+                this.$refs.swal_prompt.alert(
+                    'question', 
+                    "SET META DATA CUSTOM?", 
+                    "Confirm" , 
+                    "POST", 
+                    "/api/group/"+this.group_id+"/meta-data/add", 
+                    JSON.stringify(request)
+                ).then(res=>{
+                    if(res.isConfirmed){  
+                        if(res.value.status == 1){
+
+                        }
+                    }
+                }); 
+            },
+            loadInfo:function(){
+                var vm = this;
+                vm.title = "";
+                vm.description = "";
+                vm.keywords = "";
+                WebRequest2('GET', '/api/group/'+this.group_id+'/meta-data/get-info/'+this.source_id+'-'+this.source).then(resp=>{
+                    resp.json().then(data=>{
+                        //console.log("data",data);
+                        if(!data) return;
+
+                        
+                        if(data.meta_data){
+                            vm.title = data.meta_data.title;
+                            vm.description = data.meta_data.description;
+                            vm.keywords = data.meta_data.keywords;
+                        }
+                    });
+                });
+            }
 
         },
         mounted:function(){ 
             this.source_id = this.value;
-            this.file_target_id = this.group_id+'-'+this.source_id;
+            this.file_target_id = this.group_id+'-'+this.source_id+'-'+this.source;
+            this.loadInfo();
         }
     }
 </script>
