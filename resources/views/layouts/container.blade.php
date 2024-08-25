@@ -7,7 +7,7 @@
         $default_image = '';
         $show_background_image = isset($show_background_image) ? $show_background_image: 1;
         
-        if($show_background_image > 0 ){
+        if( $show_background_image ){
             $default_image = '/images/21oktober background 8.jpg'; //'/image-preview/70';
             $playList = [];
             $shuffle_info = \iProtek\Core\Helpers\AppVarHelper::get(['allow_shuffle','shuffle_duration']);// ?: 0;
