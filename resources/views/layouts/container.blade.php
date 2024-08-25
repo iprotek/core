@@ -83,7 +83,7 @@
                             @endif
                             @if(isset($cart_url))
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="{{$cart_url}}"><span class="fa  fa-shopping-cart"></span></a> CART (0)
+                                    <a class="nav-link text-white" href="{{$cart_url}}"><span class="fa  fa-shopping-cart"></span> CART (0)</a>
                                 </li>
                             @endif
                             
