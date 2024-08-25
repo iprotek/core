@@ -1,40 +1,51 @@
 
 <div id="app">
     <?php
+
+        $backgroud_image = "";
         $shuffle_list = \iProtek\Core\Models\FileUpload::where(["target_name"=>"business_backgrounds","target_id"=>1])->orderBy('is_default', 'DESC')->get();
-        $default_image = '/images/21oktober background 8.jpg'; //'/image-preview/70';
-        $playList = [];
-        $shuffle_info = \iProtek\Core\Helpers\AppVarHelper::get(['allow_shuffle','shuffle_duration']);// ?: 0;
-        $allow_shuffle = $shuffle_info['allow_shuffle'] ?: 0;
-        $shuffle_duration = $shuffle_info['shuffle_duration'] ?: 120;
-        if(count($shuffle_list)>0){
-            $default_image = $shuffle_list[0]->public_link;
-            if($allow_shuffle == 1){
-                foreach($shuffle_list as $l){
-                    $playList[] = $l->public_link;
-                }
-                ?>
-                <script>
-                    window.shuffle ={};
-                    window.shuffle.list = <?=json_encode( $playList)?>;                    
-                    window.shuffle.duration = <?=$shuffle_duration?>;
-                    window.shuffle.counter = 1;
-                    if(window.shuffle.list.length > 1){
-                        setInterval(() => {
-                            var shuffle_image = window.shuffle.list[window.shuffle.counter];
-                            document.querySelector('#body-background').style.backgroundImage = 'url(\''+shuffle_image+'\')';
-                            window.shuffle.counter++; 
-                            if(window.shuffle.counter >= window.shuffle.list.length){
-                                window.shuffle.counter = 0;
-                            }
-                        },  window.shuffle.duration * 1000);
+        $default_image = '';
+        $show_background_image = isset($show_background_image) ? $show_background_image: 1;
+        
+        if($show_background_image){
+            $default_image = '/images/21oktober background 8.jpg'; //'/image-preview/70';
+            $playList = [];
+            $shuffle_info = \iProtek\Core\Helpers\AppVarHelper::get(['allow_shuffle','shuffle_duration']);// ?: 0;
+            $allow_shuffle = $shuffle_info['allow_shuffle'] ?: 0;
+            $shuffle_duration = $shuffle_info['shuffle_duration'] ?: 120;
+            if(count($shuffle_list)>0){
+                $default_image = $shuffle_list[0]->public_link;
+                if($allow_shuffle == 1){
+                    foreach($shuffle_list as $l){
+                        $playList[] = $l->public_link;
                     }
-                </script>
-            <?php
+                    ?>
+                    <script>
+                        window.shuffle ={};
+                        window.shuffle.list = <?=json_encode( $playList)?>;                    
+                        window.shuffle.duration = <?=$shuffle_duration?>;
+                        window.shuffle.counter = 1;
+                        if(window.shuffle.list.length > 1){
+                            setInterval(() => {
+                                var shuffle_image = window.shuffle.list[window.shuffle.counter];
+                                document.querySelector('#body-background').style.backgroundImage = 'url(\''+shuffle_image+'\')';
+                                window.shuffle.counter++; 
+                                if(window.shuffle.counter >= window.shuffle.list.length){
+                                    window.shuffle.counter = 0;
+                                }
+                            },  window.shuffle.duration * 1000);
+                        }
+                    </script>
+                <?php
+                }
             }
         }
+        
+        if($default_image){
+            $backgroud_image = "background-image:url('$default_image');";
+        }
     ?>
-    <div id="body-background" style="@yield('bg_image_style');background-image:url('{{$default_image}}');">
+    <div id="body-background" style="@yield('bg_image_style');{{$backgroud_image}}">
         <div style="@yield('bg_color_style')">
             <nav class="navbar navbar-expand-md @yield('nav_bar_color','navbar-light shadow-sm')">
                 <div class="container">
