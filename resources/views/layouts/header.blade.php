@@ -12,9 +12,11 @@ use iProtek\Core\Helpers\AppVarHelper;
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title> 
-        {{ AppVarHelper::get('business_name',  config('app.name', 'Laravel') )  }}
-    </title>
+    @if(!isset($title))
+      <title> 
+          {{ AppVarHelper::get('business_name',  config('app.name', 'Laravel') )  }}
+      </title>
+    @endif
 
 
     <?php
