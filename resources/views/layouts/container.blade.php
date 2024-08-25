@@ -66,15 +66,27 @@
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ms-auto">
                             <!-- Authentication Links -->
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#">{{ __('Help') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#">{{ __('Contact') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="#">{{ __('Registration') }}</a>
-                            </li>
+                             @if(isset($help_url))
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{$help_url}}">{{ __('Help') }}</a>
+                                </li>
+                            @endif
+                            @if(isset($contact_url))
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{$contact_url}}">{{ __('Contact') }}</a>
+                                </li>
+                            @endif
+                            @if(isset($registration_url))
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{$registration_url}}">{{ __('Registration') }}</a>
+                                </li>
+                            @endif
+                            @if(isset($cart_url))
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="{{$cart_url}}"><span class="fa  fa-shopping-cart"></span></a> CART (0)
+                                </li>
+                            @endif
+                            
                             @auth('admin')
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="/manage">{{ __('Manage') }}</a>
