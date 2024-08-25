@@ -16,6 +16,7 @@ use iProtek\Core\Helpers\AppVarHelper;
       <title> 
           {{ AppVarHelper::get('business_name',  config('app.name', 'Laravel') )  }}
       </title>
+      <meta name="author" content="Jose de Eagle">
     @endif
 
 
