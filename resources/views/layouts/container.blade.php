@@ -45,7 +45,7 @@
             $backgroud_image = "background-image:url('$default_image');";
         }
     ?>
-    <div id="body-background" style="@yield('bg_image_style');{{$backgroud_image}}">
+    <div id="body-background" style="@yield('bg_image_style') {{$backgroud_image}}">
         <div style="@yield('bg_color_style')">
             <nav class="navbar navbar-expand-md @yield('nav_bar_color','navbar-light shadow-sm')">
                 <div class="container">
