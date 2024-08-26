@@ -4,6 +4,7 @@
     </div>
     <div v-else>
         <ul class="fc-color-picker" :id="'color-chooser-'+_uid">
+            <li><a class="text-white" href="#" @click="colorSelected('')"><i class="fas fa-square" :style="(color == '' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'text-shadow:0px 0px 1px black;')"></i></a></li>
             <li><a class="text-primary" href="#" @click="colorSelected('primary')"><i class="fas fa-square" :style="(color == 'primary' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
             <li><a class="text-warning" href="#" @click="colorSelected('warning')"><i class="fas fa-square" :style="(color == 'warning' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
             <li><a class="text-success" href="#" @click="colorSelected('success')"><i class="fas fa-square" :style="(color == 'success' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
