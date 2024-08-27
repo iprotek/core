@@ -1,6 +1,6 @@
 <template>    
     <div>
-        <div>
+        <div v-if="show_val === null || show_val">
                 <label class="p-0 m-0 text-xs" v-text="' ( '+DynamicRate+' / '+starCount+' ) '"></label>
         </div>
         <div>
@@ -15,7 +15,7 @@
 </template>
 <script>
     export default {
-        props:[ "starCount", "startRate","disabled","addclass" ],
+        props:[ "starCount", "startRate", "disabled", "addclass", "show_val" ],
         components: { 
         },
         data: function () {
