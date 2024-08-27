@@ -268,6 +268,7 @@
                             item.is_show_full = false;
                         });
                         vm.files = data.data;
+                        vm.$emit('files_loaded', vm.files);
                    })
                 })
             },
