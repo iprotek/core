@@ -23,7 +23,7 @@ class CompanyDetailsController extends _CommonController
        //return \iProtek\Core\Helpers\AppVarHelper::set(" buSiness_name", "Marigold 4");
          
         AppVarHelper::set([
-            " buSiness_name"=>$request->business_name,
+            "business_name"=>$request->business_name,
             "business_address"=>$request->business_address,
             "business_tin"=>$request->business_tin,
             "business_mobile"=>$request->business_mobile,
@@ -125,5 +125,16 @@ class CompanyDetailsController extends _CommonController
             "html" => \iProtek\Core\Helpers\CompanyDetailsHelper::get_contact_us()
         ];
 
+    }
+
+    public function update_logo_link(Request $request){
+        $url = $request->link; //business_logo_url
+        $logo_type = $request->logo_type;
+        
+        AppVarHelper::set([
+            "business_logo_url"  => $url,
+            "business_logo_type" => $logo_type
+        ]);
+        return ["status"=>1, "message"=>"Logo has been updated.". $logo_type];
     }
 }

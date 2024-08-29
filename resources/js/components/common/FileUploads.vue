@@ -204,10 +204,10 @@
                                 formData,
                                 null,
                                 "multipart/form-data"
-                            ).then(confirm=>{
-                                //console.log(confirm);
-                                evt.target.value = "";
-                                vm.load_uploads();
+                            ).then(resp=>{ 
+                                    evt.target.value = "";
+                                    if(resp.isConfirmed )
+                                        vm.load_uploads(true); 
                             });
                     });
                 }
@@ -233,10 +233,10 @@
                             formData,
                             null,
                             "multipart/form-data"
-                        ).then(confirm=>{
-                            //console.log(confirm);
+                        ).then(resp=>{
                             evt.target.value = "";
-                            vm.load_uploads();
+                            if(resp.isConfirmed )
+                                vm.load_uploads(true); 
                         });
                 }
             },
@@ -255,7 +255,7 @@
             value_changed:function(){
                 this.$emit("input", this.target_id);
             }, 
-            load_uploads:function(){
+            load_uploads:function(is_update =false){
                 var vm = this; 
                 var req = this.queryString({
                     target_name : this.target_name,
@@ -268,7 +268,7 @@
                             item.is_show_full = false;
                         });
                         vm.files = data.data;
-                        vm.$emit('files_loaded', vm.files);
+                        vm.$emit('files_loaded', vm.files, is_update);
                    })
                 })
             },
@@ -281,7 +281,8 @@
                 }
                 WebRequest2('POST', '/manage/file-uploads/set-default/'+file_upload_id, JSON.stringify(req)).then(resp=>{
                     resp.json().then(data=>{
-                        vm.load_uploads();
+                        if(data.status == 1)
+                            vm.load_uploads(true);
                     });
                 });
             },
@@ -295,7 +296,7 @@
                         '/manage/file-uploads/remove/'+file_upload_id
                     ).then(confirm=>{
                         //console.log(confirm);  
-                        vm.load_uploads(); 
+                        vm.load_uploads(true); 
                     }); 
             }
 
