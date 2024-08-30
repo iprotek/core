@@ -12,7 +12,7 @@ class CompanyDetailsController extends _CommonController
     public $guard = 'admin';
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
     public function index(Request $request){
 
