@@ -28,4 +28,16 @@ class _CommonModel extends Model
         return $this->hasMany(FileUpload::class, 'target_id')->where('target_name', $this->getTable());
     }
  
+    /**
+     * Override the asDateTime method to prevent timezone conversion.
+     *
+     * @param  mixed  $value
+     * @return \Carbon\Carbon
+     */
+    protected function asDateTime($value)
+    {
+        //return $value;
+        $timezone = config('app.timezone') ?: 'UTC';
+        return parent::asDateTime($value)->setTimezone($timezone);
+    }
 }
