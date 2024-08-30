@@ -56,7 +56,7 @@ Route::middleware('web')->group(function(){
       Route::get('/get-list', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'list'])->name('.get-list');
       Route::get('/get-list/{id}', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'list'])->name('.get-one');
       Route::post('/update-profile', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'update_profile'])->name('.update-profile');
-      Route::get('/get-profile', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'get_profile'])->name('.update-profile');
+      Route::get('/get-profile', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'get_profile'])->name('.get-profile');
       Route::post('/update-background-setting', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'update_background_setting'])->name('.update-background-setting');
       Route::get('/get-background-setting', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'get_background_setting'])->name('.get-background-setting');
       
