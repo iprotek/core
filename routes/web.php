@@ -69,7 +69,7 @@ Route::middleware('web')->group(function(){
       Route::post('/update-about-us', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'update_contact_us'])->name('.update-about-us');
       Route::get('/get-about-us', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'get_contact_us'])->name('.get-about-us');
       
-  });
+    });  
 
   });
 

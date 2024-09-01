@@ -41,7 +41,6 @@ use iProtek\Core\Helpers\AppVarHelper;
     <!-- Scripts -->
 
     <!-- Fonts -->
-    
     <!-- ADMIN LTE -->
     <!-- Google Font: Source Sans Pro -->
     <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">-->
@@ -80,6 +79,8 @@ use iProtek\Core\Helpers\AppVarHelper;
     <link href="{{ asset('/iprotek/css/star-rating.css') }}" rel="stylesheet">
     
     <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/select2/css/select2.min.css"> 
+    <!-- CHATTING PUSHER-->
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     @yield('head')
 </head>
 <body>

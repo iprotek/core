@@ -54,7 +54,10 @@
     <link rel="stylesheet" href="/iprotek/css/w3school/searchinput.css">
     <link rel="stylesheet" href="/iprotek/css/redtable.css">
     <link rel="stylesheet" href="/iprotek/css/Xpose-hover.css">
-    <script src="/iprotek/js/xpose/Xpose-Events.js"></script>
+    <script src="/iprotek/js/xpose/Xpose-Events.js"></script> 
+
+    <!-- CHATTING PUSHER-->
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
     <!-- datatable -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
