@@ -3023,7 +3023,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['name', 'extended_width', 'prevent', 'body_class', 'vw', 'zIndex'],
+  props: ['name', 'extended_width', 'prevent', 'body_class', 'vw', 'zIndex', "has_close"],
   data: function data() {
     return {
       modal: null,
@@ -3187,6 +3187,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
   },
   data: function data() {
     return {
+      select2Selector: 'select2-item-container-' + this._uid,
       setUp: false,
       selectElID: 'select-el-' + this._uid,
       item: {
@@ -3284,7 +3285,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       if (vm.default_theme == false) {} else if (!vm.default_theme || vm.default_theme === true) {
         jSON.theme = "bootstrap4";
       } else jSON.theme = vm.default_theme;
-      if (vm.modal_selector) jSON.dropdownParent = $(vm.modal_selector);
+      if (vm.modal_selector) jSON.dropdownParent = $('#' + vm.select2Selector); //$(vm.modal_selector);
+
       $('#' + this.selectElID).select2(jSON).on('change', function (e) {
         var _this = this;
         //vm.itemSelected(this.value);
@@ -4320,7 +4322,7 @@ var render = function render() {
       staticClass: "modal-header pb-0"
     }, [_c("h4", {
       staticClass: "modal-title"
-    }, [_vm._t("header")], 2), _vm._v(" "), _c("button", {
+    }, [_vm._t("header")], 2), _vm._v(" "), _vm.has_close !== false ? _c("button", {
       staticClass: "close btn btn-outline-danger",
       attrs: {
         type: "button"
@@ -4333,7 +4335,7 @@ var render = function render() {
       }
     }, [_c("span", {
       staticClass: "fa fa-times"
-    })])]), _vm._v(" "), _vm._t("header-below"), _vm._v(" "), _vm.has_success_message ? [_c("div", {
+    })]) : _vm._e()]), _vm._v(" "), _vm._t("header-below"), _vm._v(" "), _vm.has_success_message ? [_c("div", {
       staticClass: "alert-custom alert-custom-success"
     }, [_c("i", {
       staticClass: "fa fa-check",
@@ -4466,7 +4468,12 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _vm.setUp ? _c("div", [_c("select", {
+  return _c("div", {
+    staticClass: "w-100",
+    attrs: {
+      id: _vm.select2Selector
+    }
+  }, [_vm.setUp ? _c("div", [_c("select", {
     staticClass: "form-control form-select",
     staticStyle: {
       width: "100%"
@@ -4491,7 +4498,7 @@ var render = function render() {
       value: _vm.item.id,
       textContent: _vm._s(_vm.item.text)
     }
-  }) : _vm._e()])]) : _vm._e();
+  }) : _vm._e()])]) : _vm._e()]);
 };
 var staticRenderFns = [];
 render._withStripped = true;

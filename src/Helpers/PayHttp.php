@@ -207,4 +207,18 @@ class PayHttp
         //return ["default_group_id"=>$pay_account->default_proxy_group_id,"user_info"=>$result];
     }
 
+    public static function client_info(){
+        
+        $client = static::client();
+        
+        $response = $client->get('client-info');
+        
+        $response_code = $response->getStatusCode(); 
+        if($response_code != 200 && $response_code != 201){
+            return null;
+        }
+        $result = json_decode($response->getBody(), true);
+        return $result;
+    }
+
 }
