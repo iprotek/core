@@ -221,4 +221,33 @@ class PayHttp
         return $result;
     }
 
+    public static function get_client_load($url){
+
+        $client_id = config('iprotek.pay_client_id');
+        $client_secret = config('iprotek.pay_client_secret');
+        $pay_url = config('iprotek.pay_url');
+        
+        $client = new \GuzzleHttp\Client([
+            'base_uri' => $url,
+            "http_errors"=>false, 
+            "verify"=>false, 
+            "curl"=>[
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0, // Specify HTTP/2
+            ],
+            "headers"=>[
+                "Accept"=>"application/json",
+                "CLIENT-ID"=>$client_id,
+                "SECRET"=>$client_secret,
+                "PAY-URL"=>$pay_url
+            ]
+         ]);
+         $response = $client->get('');
+         $response_code = $response->getStatusCode(); 
+         if($response_code != 200 && $response_code != 201){
+             return null;
+         }
+         $result = json_decode($response->getBody(), true);
+         return $result;
+    }
+
 }
