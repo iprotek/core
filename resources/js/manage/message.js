@@ -22,6 +22,7 @@ if(!window.Vue){
 
 //Vue.component('header-menus', require('./components/manage/HeaderMenu.vue').default);
 Vue.component('message-notification', require('../components/manage/message/Message.vue').default);
+Vue.component('message-container', require('../components/manage/message/ChatBoxCointainer.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,6 +30,26 @@ Vue.component('message-notification', require('../components/manage/message/Mess
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+var body = document.querySelector('body');
+var message_container = document.createElement('DIV');
+message_container.id = "message-container";
+message_container.innerHTML = "<message-container></message-container>";
+body.append(message_container);
+message_container.classList.add("sticky-bottom");
+message_container.classList.add("w-100");
+message_container.setAttribute("style", "position: fixed; bottom: 0px; padding-right:70px; z-index:10000; pointer-events:none;");
+
+
 const app = new Vue({
     el: '#message-el',
 });
+
+
+new Vue({
+    el: '#message-container',
+});
+
+
+
+
+
