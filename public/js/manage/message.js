@@ -3028,8 +3028,17 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
-  methods: {},
+  methods: {
+    loadPushNotifSettings: function loadPushNotifSettings() {
+      WebRequest2('GET', '/manage/sms-sender/push-notif-info').then(function (resp) {
+        resp.json().then(function (data) {
+          console.log("NOTIF SETTINGS", data);
+        });
+      });
+    }
+  },
   mounted: function mounted() {
+    this.loadPushNotifSettings();
     /*
     Pusher.logToConsole = true;
      var pusher = new Pusher('3ba4f1b9531904744a8e', {

@@ -70,9 +70,16 @@
             }
         },
         methods: { 
-
+            loadPushNotifSettings:function(){
+                WebRequest2('GET', '/manage/sms-sender/push-notif-info').then(resp=>{
+                    resp.json().then(data=>{
+                        console.log("NOTIF SETTINGS", data);
+                    });
+                });
+            }
         },
         mounted:function(){     
+            this.loadPushNotifSettings();
             /*
             Pusher.logToConsole = true;
 
