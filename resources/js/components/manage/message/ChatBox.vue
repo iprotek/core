@@ -32,7 +32,17 @@
                     </div> 
                     <img class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image"> 
                     <div class="direct-chat-text">
-                        Is this template really for free? That's unbelievable!
+                        <span>
+                            Is this template really for free? That's unbelievable!
+                        </span>
+                        <div style="line-height: 7px;font-style:italic;">
+                            <small class="align-center" style="font-size: 14px;">
+                                <small class="fa fa-check"></small> 
+                                <small style="font-size:10px;" class="mb-2">
+                                  <span>  Received 11AM </span> | <span>Seen 12AM</span>
+                                </small> 
+                            </small>
+                        </div>
                     </div> 
                 </div> 
                 <div class="direct-chat-msg right">
@@ -42,7 +52,17 @@
                     </div> 
                     <img class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image"> 
                     <div class="direct-chat-text">
-                    You better believe it!
+                        <span>
+                            You better believe it!
+                        </span>
+                        <div style="line-height: 7px;font-style:italic;">
+                            <small class="align-center" style="font-size: 14px;">
+                                <small class="fa fa-check"></small> 
+                                <small style="font-size:10px;" class="mb-2">
+                                  <span>  Received 11AM </span> | <span>Seen 12AM</span>
+                                </small> 
+                            </small>
+                        </div>
                     </div> 
                 </div> 
             </div> 
