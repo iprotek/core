@@ -1,9 +1,9 @@
 <template> 
     <div @click="setActive()" :class="'card '+(is_active ? 'card-primary':'card-secondary')+' card-outline direct-chat '+(is_active ? 'direct-chat-primary':'direct-chat-secondary')+' '+(is_minimize ? 'collapsed-card':'')" style="min-width:300px;">
         <div class="card-header">
-            <img :data-card-widget="(is_minimize?'collapse':'')" class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image" style="width:30px; height:30px;" @click=" (is_minimize ? isMinimizeClick():'')" :style="'cursor:'+(is_minimize?'pointer;':'none;')"> 
+            <img :data-card-widget="(is_minimize?'collapse':'')" class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image" style="width:30px; height:30px;" @click=" (is_minimize ? isMinimizeClick():'')" :style="(is_minimize ? 'cursor:pointer;':'')"> 
             &nbsp;
-            <h3 :class="'card-title py-1 ml-1 '+(is_active ? 'text-primary':'')" :data-card-widget="(is_minimize?'collapse':'')" @click=" (is_minimize ? isMinimizeClick():'')" :style="'cursor:'+(is_minimize?'pointer;':'none;')">
+            <h3 :class="'card-title py-1 ml-1 '+(is_active ? 'text-primary':'')" :data-card-widget="(is_minimize?'collapse':'')" @click=" (is_minimize ? isMinimizeClick():'')" :style="(is_minimize ? 'cursor:pointer;':'')">
                     Shadow - Small
             </h3>
             <div class="card-tools">
