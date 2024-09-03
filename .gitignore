@@ -17,3 +17,8 @@ yarn-error.log
 package-lock.json
 composer.lock
 mix-manifest.json
+public/js/manage/iprotek-data/model-fields.js.LICENSE.txt
+public/js/manage/iprotek-data/searches.js.LICENSE.txt
+public/js/manage/message.js.LICENSE.txt
+public/js/manage/notification-view.js.LICENSE.txt
+public/js/manage/notification.js.LICENSE.txt
