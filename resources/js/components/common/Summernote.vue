@@ -72,12 +72,31 @@
                     }
                 }else if(vm.is_image_upload === true){
                     //"/manage/file-uploads/add";
-                    WebRequest2('POST', "/manage/file-uploads/add", formData, "multipart/form-data").then(resp=>{
-                        resp.json().then(data=>{
-                            //console.log(data, vm.summernoteId);
-                            $('#'+vm.summernoteId).summernote('insertImage', data.url);
-                        })
-                    } );
+                    callback_json.onImageUpload = function(files){
+                        //console.log(files, FileList.length); 
+                        for( var i= 0; i <files.length; i++)
+                        {
+                            var file = files[i]; 
+                            const formData = new FormData(); 
+                            var file_ext = vm.getFileExt(file.name);
+                            formData.append('target_name', "summernote-uploads");
+                            formData.append('target_id', vm.group_id); 
+                            formData.append('file', file);
+                            formData.append('file_name', file.name);
+                            formData.append('file_type', file.type);
+                            formData.append('file_ext', file_ext);
+                            formData.append('is_local', vm.is_local ? 1 : 0 )
+
+                            WebRequest2('POST', "/manage/file-uploads/add", formData, "multipart/form-data").then(resp=>{
+                                resp.json().then(data=>{
+                                    //console.log(data, vm.summernoteId);
+                                    //console.log(data);
+                                    $('#'+vm.summernoteId).summernote('insertImage', data.url);
+                                })
+                            } );
+                            
+                        }
+                    }
                 }
 
 
