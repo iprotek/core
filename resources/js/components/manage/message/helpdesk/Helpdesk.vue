@@ -1,8 +1,8 @@
 <template>
     <div>
         <div>
-            <a class="nav-link py-1" data-toggle="dropdown" href="#">
-                <i class="ion ion-help-buoy fa-2x"></i>
+            <a class="nav-link" data-toggle="dropdown" href="#">
+                <i class="ion ion-help-buoy"></i>
                 <span v-if="has_chat" class="badge badge-warning navbar-badge">!</span>
                 <span v-else class="badge badge-danger navbar-badge">3</span>
             </a>
@@ -62,20 +62,37 @@
                     <a href="#" class="dropdown-item">
                         <!-- Message Start -->
                         <div class="media">
-                            <code class="w-100 text-center"> -- Not Available at this moment -- </code>
+                            <code class="w-100 text-center"> -- No ticket at this moment -- </code>
                         </div>
                         <!-- Message End -->
                     </a> 
                 </template>
+                <div class="dropdown-divider"></div>
+                <a  class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                        <div class="media-body">
+                            <small  class="text-sm text-secondary">
+                                <small>Send a ticket for support of this system problem.</small>
+                            </small>
+                            <div>
+                                <button class="btn btn-outline-primary btn-sm" @click="clickAddEditTicketModal()" > Submit Ticket </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Message End -->
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item dropdown-footer bg-gray">See All Tickets</a>
             </div>
-        </div>
+        </div> 
     </div>
 </template>
 
-<script>
+<script> 
     export default {
         props:[  ],
-        components: { 
+        components: {  
         },
         data: function () {
             return {
@@ -83,6 +100,9 @@
             }
         },
         methods: { 
+            clickAddEditTicketModal:function(id = 0){
+                window.add_edit_ticket_modal.show(id);
+            },
             loadPushNotifSettings:function(){
                 /*
                 WebRequest2('GET', '/manage/sms-sender/push-notif-info').then(resp=>{

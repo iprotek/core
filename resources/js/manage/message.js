@@ -25,6 +25,11 @@ Vue.component('message-notification', require('../components/manage/message/Mess
 Vue.component('message-container', require('../components/manage/message/ChatBoxCointainer.vue').default);
 Vue.component('helpdesk-notification', require('../components/manage/message/helpdesk/Helpdesk.vue').default);
 
+Vue.component('add-edit-ticket-modal', require('../components/manage/message/helpdesk/AddEditTicketModal.vue').default);
+
+Vue.component('modal-view', require('../components/common/Modal.vue').default); 
+Vue.component('swal', require('../components/common/Swal.vue').default); 
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -34,7 +39,7 @@ Vue.component('helpdesk-notification', require('../components/manage/message/hel
 var body = document.querySelector('body');
 var message_container = document.createElement('DIV');
 message_container.id = "message-container";
-message_container.innerHTML = "<message-container></message-container>";
+message_container.innerHTML = "<message-container></message-container><add-edit-ticket-modal></add-edit-ticket-modal>";
 body.append(message_container);
 message_container.classList.add("sticky-bottom");
 message_container.classList.add("w-100");
