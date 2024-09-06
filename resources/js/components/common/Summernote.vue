@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        props:[ "value", "height", "placeholder", "group_id", "is_local"],
+        props:[ "value", "height", "placeholder", "group_id", "is_local", "is_image_upload"],
         components: { 
         },
         data: function () {
@@ -70,6 +70,14 @@
                             
                         }
                     }
+                }else if(vm.is_image_upload === true){
+                    //"/manage/file-uploads/add";
+                    WebRequest2('POST', "/manage/file-uploads/add", formData, "multipart/form-data").then(resp=>{
+                        resp.json().then(data=>{
+                            //console.log(data, vm.summernoteId);
+                            $('#'+vm.summernoteId).summernote('insertImage', data.url);
+                        })
+                    } );
                 }
 
 
