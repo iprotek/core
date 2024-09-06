@@ -3469,14 +3469,14 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", [_c("div", [_c("a", {
-    staticClass: "nav-link",
+    staticClass: "nav-link py-1",
     attrs: {
       "data-toggle": "dropdown",
       href: "#",
       onclick: "window.addChatMessage({})"
     }
   }, [_c("i", {
-    staticClass: "far fa-comments"
+    staticClass: "far fa-comments fa-2x"
   }), _vm._v(" "), _vm.has_chat ? _c("span", {
     staticClass: "badge badge-warning navbar-badge"
   }, [_vm._v("!")]) : _c("span", {
@@ -3621,7 +3621,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", [_c("div", [_c("a", {
-    staticClass: "nav-link",
+    staticClass: "nav-link py-1",
     attrs: {
       "data-toggle": "dropdown",
       href: "#"

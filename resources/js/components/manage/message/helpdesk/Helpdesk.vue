@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <a class="nav-link" data-toggle="dropdown" href="#">
+            <a class="nav-link py-1" data-toggle="dropdown" href="#">
                 <i class="ion ion-help-buoy fa-2x"></i>
                 <span v-if="has_chat" class="badge badge-warning navbar-badge">!</span>
                 <span v-else class="badge badge-danger navbar-badge">3</span>
