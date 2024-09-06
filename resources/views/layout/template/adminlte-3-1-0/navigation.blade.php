@@ -43,6 +43,9 @@
 
       <!-- Messages Dropdown Menu -->
       <li id="message-el" class="nav-item dropdown">
+        <helpdesk-notification></helpdesk-notification>
+      </li>
+      <li id="helpdesk-el" class="nav-item dropdown">
         <message-notification></message-notification>
       </li>
       <!-- Notifications Dropdown Menu -->

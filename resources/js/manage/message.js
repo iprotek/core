@@ -23,6 +23,7 @@ if(!window.Vue){
 //Vue.component('header-menus', require('./components/manage/HeaderMenu.vue').default);
 Vue.component('message-notification', require('../components/manage/message/Message.vue').default);
 Vue.component('message-container', require('../components/manage/message/ChatBoxCointainer.vue').default);
+Vue.component('helpdesk-notification', require('../components/manage/message/helpdesk/Helpdesk.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -40,8 +41,11 @@ message_container.classList.add("w-100");
 message_container.setAttribute("style", "position: fixed; bottom: 0px; padding-right:70px; z-index:10000; pointer-events:none;");
 
 
-const app = new Vue({
+ new Vue({
     el: '#message-el',
+});
+ new Vue({
+    el: '#helpdesk-el',
 });
 
 
