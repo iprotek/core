@@ -71,9 +71,11 @@
                         </div>
                         <div class="card" v-else-if="id>0">
                             <div   class="card-body">
-                                <div> 
-                                    <label>Catered by: </label>
-                                    <label>Catered at: </label>
+                                <div v-if="ticket_info"> 
+                                    <label>Catered by: <span v-text="ticket_info.cater_by_name"></span> </label>
+                                    <div>
+                                        <label>Catered at: <span v-text="ticket_info.cater_at"></span> </label>
+                                    </div>
                                 </div>
                                 <div>
                                     <div>Status:</div>
