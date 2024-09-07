@@ -35,6 +35,22 @@
             show:function(){ 
                 this.$refs.modal.show();
             },
+            add:function(){
+                /*
+                    this.$refs.swal_prompt.alert(
+                        'question',
+                        "Add Event", 
+                        "Confirm" , 
+                        "POST", 
+                        "/manage/dashboard/resort-events/add", 
+                        JSON.stringify(request)
+                    ).then(res=>{
+                        if(res.isConfirmed){
+                            vm.$emit('data_updated');
+                        }
+                    });
+                */
+            }
 
         },
         mounted:function(){      

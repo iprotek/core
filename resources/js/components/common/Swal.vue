@@ -1,5 +1,4 @@
 <template>
-    
 </template>
 <script>
 export default {
@@ -15,7 +14,15 @@ export default {
             alert(icon, title, buttonTitle,method, url, data, __error_callback=null,_contentType='application/json'){
                 return  Swal.fire({
                             title: title, 
-                            icon: icon,
+                            icon: icon,  
+                            didOpen: () => {
+                                const container = Swal.getPopup();//.getHtmlContainer(); // Get the SweetAlert container element
+                                //console.log(container); // Logs the container element
+                                if(container){
+                                    if(!container.parentElement.style.zIndex)
+                                        container.parentElement.style.zIndex = 100000;
+                                }
+                            },
                             showCancelButton: true,
                             confirmButtonText: buttonTitle,
                             showLoaderOnConfirm: true,
@@ -61,14 +68,30 @@ export default {
                             if (result.isConfirmed) {
                                 if(result.value.status == 1){
                                     Swal.fire({
-                                    icon:'success',
-                                    title: result.value.message
+                                        icon:'success',
+                                        title: result.value.message,  
+                                        didOpen: () => {
+                                            const container = Swal.getPopup();//.getHtmlContainer(); // Get the SweetAlert container element
+                                            //console.log(container); // Logs the container element
+                                            if(container){
+                                                if(!container.parentElement.style.zIndex)
+                                                    container.parentElement.style.zIndex = 100000;
+                                            }
+                                        }
                                     }); 
                                     this.$emit('result', result);
                                 }else{                                    
                                     Swal.fire({
-                                    icon:'error',
-                                    title: result.value.message
+                                        icon:'error',
+                                        title: result.value.message,
+                                        didOpen: () => {
+                                            const container = Swal.getPopup();//.getHtmlContainer(); // Get the SweetAlert container element
+                                            //console.log(container); // Logs the container element
+                                            if(container){
+                                                if(!container.parentElement.style.zIndex)
+                                                    container.parentElement.style.zIndex = 100000;
+                                            }
+                                        }
                                     }); 
                                     this.$emit('result', result);
                                 }
@@ -96,6 +119,9 @@ export default {
 
         },
         mounted:function(){     
+            if(!window.swal_prompt){
+                window.swal_prompt = this;
+            }
         } 
 }
 </script>

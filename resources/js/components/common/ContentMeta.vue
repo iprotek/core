@@ -1,77 +1,79 @@
 <template>
-    <div v-if="source_id" class="card my-1">
-        <div class="card-header">
-            <h5 v-text="meta_title"></h5>
-        </div>
-        <div class="card-body pt-1">
-            <div class="btn-group w-100">
-                <button type="button" :class="'btn '+( view == 'current-meta' ? 'btn-primary':'btn-default')" @click="view='current-meta';loadInfo();">CURRENT META INFO</button> 
-                <button type="button" :class="'btn '+( view == 'custom-meta' ? 'btn-primary':'btn-default')" @click="view='custom-meta'">SET CUSTOM META</button>
+    <div>
+        <div v-if="source_id" class="card my-1">
+            <div class="card-header">
+                <h5 v-text="meta_title"></h5>
             </div>
-            <div class="row">
-                <div class="col-sm-12" v-if="meta_data_id && 'custom-meta' != view">
-                    <div class="py-1 my-2">
-                        
-                        <button-copy :is_dynamic="true" @button_clicked="copy_fb_clicked" :base_color="'primary my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
-                     
-                        <button-copy :is_dynamic="true" @button_clicked="copy_google_clicked" :base_color="'danger my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
-                    
-                        <button-copy :is_dynamic="true" @button_clicked="copy_twitter_clicked" :base_color="'info my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
-                     
-                        <button-copy :is_dynamic="true" @button_clicked="copy_other_clicked" :base_color="'secondary my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
-                    </div>
-                </div> 
-            </div>
-            <div v-if="'custom-meta' == view">
+            <div class="card-body pt-1">
+                <div class="btn-group w-100">
+                    <button type="button" :class="'btn '+( view == 'current-meta' ? 'btn-primary':'btn-default')" @click="view='current-meta';loadInfo();">CURRENT META INFO</button> 
+                    <button type="button" :class="'btn '+( view == 'custom-meta' ? 'btn-primary':'btn-default')" @click="view='custom-meta'">SET CUSTOM META</button>
+                </div>
                 <div class="row">
-                    <div class="col-sm-12 pt-2">
-                        <button class="btn btn-outline-primary btn-lg float-right" @click="save">
-                            <span class="fa fa-save"></span> SAVE META DETAILS
-                        </button>
+                    <div class="col-sm-12" v-if="meta_data_id && 'custom-meta' != view">
+                        <div class="py-1 my-2">
+                            
+                            <button-copy :is_dynamic="true" @button_clicked="copy_fb_clicked" :base_color="'primary my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for FB Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace FB Link'"></button-copy>
+                        
+                            <button-copy :is_dynamic="true" @button_clicked="copy_google_clicked" :base_color="'danger my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for Google Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Google Link'"></button-copy>
+                        
+                            <button-copy :is_dynamic="true" @button_clicked="copy_twitter_clicked" :base_color="'info my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for Twitter Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Twitter Link'"></button-copy>
+                        
+                            <button-copy :is_dynamic="true" @button_clicked="copy_other_clicked" :base_color="'secondary my-1'" :base_icon="'fa fa-link'" :button_title="'Click to Copy for OThers Link'" :copied_message="'Link Copied!'" :text_to_copy="'Replace Others Link'"></button-copy>
+                        </div>
+                    </div> 
+                </div>
+                <div v-if="'custom-meta' == view">
+                    <div class="row">
+                        <div class="col-sm-12 pt-2">
+                            <button class="btn btn-outline-primary btn-lg float-right" @click="save">
+                                <span class="fa fa-save"></span> SAVE META DETAILS
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row"> 
+                        <div class="col-sm-12">
+                            <user-input2 v-model="title" :input_style="'height:40px;'" :placeholder="'Title(30-50 Chars)'"  ></user-input2>
+                            <small class="text-secondary" v-text=" 'Text left ( '+ (50 - (title ? title.length : 0 )) +' ) - The title to be displayed for marketing'"></small>
+
+                            <user-input2 v-model="description" :input_style="'height:40px;'" :placeholder="'Description(120-130 Chars)'" ></user-input2>
+                            <small class="text-secondary" v-text=" 'Text left ( '+ (130 - (description ? description.length:0))+' ) - The descripton to be displayed for marketing'"></small>
+
+                            <user-input2 v-model="keywords" :input_style="'height:40px;'" :placeholder="'Keywords(separate by comma and not so relivant)'" :placeholder_description="'Keywords can be useful in other SEO platform.'" ></user-input2>
+                        </div>
+                    </div>
+                    <file-upload v-if="source && source_id" v-model="file_target_id" :target_name="'meta-data-image'" :gallery_title="'Meta Data Image'" :group_id="group_id" ></file-upload>
+                    <small class="text-secondary mt-2">SEO XML SITEMAP FOR SUBMISSION:</small>
+                    <button-copy :base_color="'primary'" :base_icon="'fa fa-sitemap'" :button_title="'Copy XML'" :copied_message="'XML Copied!'" :text_to_copy="seo_xml_index_file"></button-copy>
+                    <textarea v-model="seo_xml_index_file" style="min-height:250px;" class="w-100" readonly=""> 
+                    </textarea>
+                </div>
+                <div v-else>
+                    <h3 class="text-center text-danger" v-if="meta_data_id == 0"> -- THERE IS NO CURRENTLY META ON THIS -- </h3>  
+                    <div v-else> 
+                        <table class="table-bordered w-100">
+                            <tr>
+                                <td style="width:120px;" class="text-right"><span>Title:</span></td>
+                                <td class="px-2"><label class="m-0 text-primary"  v-text="title"></label></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><span>Description:</span></td>
+                                <td class="px-2"><label class="m-0 text-info"  v-text="description"></label></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><span>Keywords:</span></td>
+                                <td class="px-2"><label class="m-0 text-danger"  v-text="keywords"></label></td>
+                            </tr>
+                            <tr>
+                                <td class="text-right text-nowrap align-top"><span>Preview Image:</span></td>
+                                <td><img v-if="image_url" :src="image_url" style="max-width:800px; width:100%;" /></td>
+                            </tr>
+                        </table>  
                     </div>
                 </div>
-                <div class="row"> 
-                    <div class="col-sm-12">
-                        <user-input2 v-model="title" :input_style="'height:40px;'" :placeholder="'Title(30-50 Chars)'"  ></user-input2>
-                        <small class="text-secondary" v-text=" 'Text left ( '+ (50 - (title ? title.length : 0 )) +' ) - The title to be displayed for marketing'"></small>
-
-                        <user-input2 v-model="description" :input_style="'height:40px;'" :placeholder="'Description(120-130 Chars)'" ></user-input2>
-                        <small class="text-secondary" v-text=" 'Text left ( '+ (130 - (description ? description.length:0))+' ) - The descripton to be displayed for marketing'"></small>
-
-                        <user-input2 v-model="keywords" :input_style="'height:40px;'" :placeholder="'Keywords(separate by comma and not so relivant)'" :placeholder_description="'Keywords can be useful in other SEO platform.'" ></user-input2>
-                    </div>
-                </div>
-                <file-upload v-if="source && source_id" v-model="file_target_id" :target_name="'meta-data-image'" :gallery_title="'Meta Data Image'" :group_id="group_id" ></file-upload>
-                <small class="text-secondary mt-2">SEO XML SITEMAP FOR SUBMISSION:</small>
-                <button-copy :base_color="'primary'" :base_icon="'fa fa-sitemap'" :button_title="'Copy XML'" :copied_message="'XML Copied!'" :text_to_copy="seo_xml_index_file"></button-copy>
-                <textarea v-model="seo_xml_index_file" style="min-height:250px;" class="w-100" readonly=""> 
-                </textarea>
             </div>
-            <div v-else>
-                <h3 class="text-center text-danger" v-if="meta_data_id == 0"> -- THERE IS NO CURRENTLY META ON THIS -- </h3>  
-                <div v-else> 
-                    <table class="table-bordered w-100">
-                        <tr>
-                            <td style="width:120px;" class="text-right"><span>Title:</span></td>
-                            <td class="px-2"><label class="m-0 text-primary"  v-text="title"></label></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><span>Description:</span></td>
-                            <td class="px-2"><label class="m-0 text-info"  v-text="description"></label></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right"><span>Keywords:</span></td>
-                            <td class="px-2"><label class="m-0 text-danger"  v-text="keywords"></label></td>
-                        </tr>
-                        <tr>
-                            <td class="text-right text-nowrap align-top"><span>Preview Image:</span></td>
-                            <td><img v-if="image_url" :src="image_url" style="max-width:800px; width:100%;" /></td>
-                        </tr>
-                    </table>  
-                </div>
-            </div>
+            <swal ref="swal_prompt"></swal> 
         </div>
-        <swal ref="swal_prompt"></swal> 
     </div>
 </template>
 <script> 

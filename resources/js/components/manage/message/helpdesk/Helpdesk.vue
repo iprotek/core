@@ -2,7 +2,7 @@
     <div>
         <div>
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="ion ion-help-buoy"></i>
+                <i class="ion ion-help-buoy text-warning"></i>
                 <span v-if="has_chat" class="badge badge-warning navbar-badge">!</span>
                 <span v-else class="badge badge-danger navbar-badge">3</span>
             </a>
@@ -76,14 +76,14 @@
                                 <small>Send a ticket for support of this system problem.</small>
                             </small>
                             <div>
-                                <button class="btn btn-outline-primary btn-sm" @click="clickAddEditTicketModal()" > Submit Ticket </button>
+                                <button class="btn btn-outline-primary btn-sm" @click="clickAddEditTicketModal()" > Submit New Ticket </button>
                             </div>
                         </div>
                     </div>
                     <!-- Message End -->
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer bg-gray">See All Tickets</a>
+                <a href="#" class="dropdown-item dropdown-footer text-primary" style="border:1px solid blue;">See All Tickets</a>
             </div>
         </div> 
     </div>

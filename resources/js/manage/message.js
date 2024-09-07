@@ -39,7 +39,7 @@ Vue.component('swal', require('../components/common/Swal.vue').default);
 var body = document.querySelector('body');
 var message_container = document.createElement('DIV');
 message_container.id = "message-container";
-message_container.innerHTML = "<message-container></message-container><add-edit-ticket-modal></add-edit-ticket-modal>";
+message_container.innerHTML = "<message-container></message-container><add-edit-ticket-modal></add-edit-ticket-modal> <swal ></swal> ";
 body.append(message_container);
 message_container.classList.add("sticky-bottom");
 message_container.classList.add("w-100");

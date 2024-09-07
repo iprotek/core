@@ -1,65 +1,67 @@
 <template>
-    <div v-if="target_id" class="card my-1">
-        <div class="card-header">
-            <h5 v-text="galleryTitle"></h5>
+    <div>
+        <div v-if="target_id" class="card my-1">
+            <div class="card-header">
+                <h5 v-text="galleryTitle"></h5>
+            </div>
+            <div class="card-body p-0">        
+                <table class="w-100 table table-bordered" >
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <td></td>
+                            <td>Name</td>
+                            <td>Type</td>
+                            <td>Default</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-if="files.length == 0">
+                            <td colspan="6" class="text-center">
+                                <code>No Image/File Found</code>
+                            </td>
+                        </tr>
+                        <tr v-for="(targetItem, targetIndex) in files" v-bind:key="'file-'+targetItem.id+'-'+targetIndex">
+                            <th v-text="targetIndex+1"></th>
+                            <td class="p-1">
+                                <img v-if="targetItem.file_type.split('/')[0] == 'image'" class="preview-image" @click="$refs.preview_image.preview($event)" :alt="targetItem.file_name" :src="targetItem.public_link" style="width:80px; heigth:auto;" />
+                                <a :href="targetItem.public_link" v-else target="_blank">
+                                    <img  class="preview-image" :alt="targetItem.file_name" :src="'/storage/images/0blank.png'" style="width:80px; heigth:auto;" />
+                                </a>
+                            </td>
+                            <td>
+                                <small v-if="!targetItem.is_show_full" :title="targetItem.file_name" @click="triggerClick(targetItem, 1);" v-text="limitName(targetItem.file_name)" style="cursor:pointer;"></small>
+                                <small v-else @click="triggerClick(targetItem, 2);" :title="targetItem.file_name" v-text="targetItem.file_name" style="cursor:pointer;"></small>
+                                <button-copy :base_color="'primary'" :base_icon="'fa fa-link'" :button_title="'Copy LINK'" :copied_message="'Link copied!'" :text_to_copy="targetItem.full_url"></button-copy>
+                            
+                            </td>
+                            <td >
+                                <small v-text="targetItem.file_type"></small>
+                            </td>
+                            <td>
+                                <label v-if="targetItem.is_default == 1" class="btn btn-outline-primary m-0 btn-xs">Default</label>
+                                <label @click="setDefault(targetItem.id)" v-else class="btn m-0 btn-xs">SET Default</label>
+                            </td>
+                            <td>
+                                <button @click="removeFile(targetItem.id)" class="btn btn-danger btn-xs">
+                                    <span class="fa fa-times"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="6">
+                                <input  accept="image/*" class="w-100 form-control" type="file" @change="file_changed($event)" />
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div> 
+            <swal ref="swal_prompt"></swal>
+            <preview-image ref="preview_image"></preview-image>
         </div>
-        <div class="card-body p-0">        
-            <table class="w-100 table table-bordered" >
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <td></td>
-                        <td>Name</td>
-                        <td>Type</td>
-                        <td>Default</td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-if="files.length == 0">
-                        <td colspan="6" class="text-center">
-                            <code>No Image/File Found</code>
-                        </td>
-                    </tr>
-                    <tr v-for="(targetItem, targetIndex) in files" v-bind:key="'file-'+targetItem.id+'-'+targetIndex">
-                        <th v-text="targetIndex+1"></th>
-                        <td class="p-1">
-                            <img v-if="targetItem.file_type.split('/')[0] == 'image'" class="preview-image" @click="$refs.preview_image.preview($event)" :alt="targetItem.file_name" :src="targetItem.public_link" style="width:80px; heigth:auto;" />
-                            <a :href="targetItem.public_link" v-else target="_blank">
-                                <img  class="preview-image" :alt="targetItem.file_name" :src="'/storage/images/0blank.png'" style="width:80px; heigth:auto;" />
-                            </a>
-                        </td>
-                        <td>
-                            <small v-if="!targetItem.is_show_full" :title="targetItem.file_name" @click="triggerClick(targetItem, 1);" v-text="limitName(targetItem.file_name)" style="cursor:pointer;"></small>
-                            <small v-else @click="triggerClick(targetItem, 2);" :title="targetItem.file_name" v-text="targetItem.file_name" style="cursor:pointer;"></small>
-                            <button-copy :base_color="'primary'" :base_icon="'fa fa-link'" :button_title="'Copy LINK'" :copied_message="'Link copied!'" :text_to_copy="targetItem.full_url"></button-copy>
-                        
-                        </td>
-                        <td >
-                            <small v-text="targetItem.file_type"></small>
-                        </td>
-                        <td>
-                            <label v-if="targetItem.is_default == 1" class="btn btn-outline-primary m-0 btn-xs">Default</label>
-                            <label @click="setDefault(targetItem.id)" v-else class="btn m-0 btn-xs">SET Default</label>
-                        </td>
-                        <td>
-                            <button @click="removeFile(targetItem.id)" class="btn btn-danger btn-xs">
-                                <span class="fa fa-times"></span>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="6">
-                            <input  accept="image/*" class="w-100 form-control" type="file" @change="file_changed($event)" />
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div> 
-        <swal ref="swal_prompt"></swal>
-        <preview-image ref="preview_image"></preview-image>
     </div>
 </template>
 <script>

@@ -41,6 +41,7 @@ class Admin extends Authenticatable
         'lang',
         'lang',
         'region',
+        'contact_no',
         'is_active'
     ];
     protected $appends=[

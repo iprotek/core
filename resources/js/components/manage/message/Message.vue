@@ -2,7 +2,7 @@
     <div>
         <div>
             <a class="nav-link" data-toggle="dropdown" href="#" onclick="window.addChatMessage({})">
-                <i class="far fa-comments"></i>
+                <i class="far fa-comments text-primary"></i>
                 <span v-if="has_chat" class="badge badge-warning navbar-badge">!</span>
                 <span v-else class="badge badge-danger navbar-badge">3</span>
             </a>
