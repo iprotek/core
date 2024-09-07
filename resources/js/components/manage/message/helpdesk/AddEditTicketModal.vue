@@ -11,10 +11,23 @@
             </template> 
             <template slot="body" > 
                 <div v-if="view_mode == 'details'">    
-                    <div class="text-right mt-2" v-if="id>0">
-                        <button class="btn btn-outline-primary" @click="view_mode = 'chats'">
-                            CHATS (0) <span class="fa fa-arrow-right"></span>
-                        </button>
+                    <div class="row mt-2" v-if="id>0">
+                        <div class="col-sm-9">
+                            <div v-if="id>0 && ticket_info">
+                                <label>Created by: 
+                                    <span v-if="ticket_info.creator" v-text="ticket_info.creator.name"></span> 
+                                    <span v-else-if="ticket_info.customer_name" v-text="ticket_info.customer_name"></span> 
+                                </label>
+                                <div>
+                                    <label>Created at: <span v-text="ticket_info.created_at"></span> </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-outline-primary float-right" @click="view_mode = 'chats'">
+                                CHATS (0) <span class="fa fa-arrow-right"></span>
+                            </button>
+                        </div>
                     </div>
                     <div>
                         <user-input2 v-model="title" :input_style="'height:40px;'" :placeholder="'Title'" :placeholder_description="'Descriptive Title for helpdesk'"></user-input2>
@@ -50,10 +63,14 @@
                         <div class="mt-2">
                             <summernote v-model="details" :height="'300px'" :placeholder="'Descriptive Details'"  :is_local="false" :is_image_upload="true"  ></summernote>
                         </div>
-                        <div class="card" v-if="id>0">
-                            <div class="card-body">
-                                <label>Created by: </label>
-                                <label>Created at: </label>
+                        <div v-if="!cater_by_id " class="text-right">
+                            <button v-if="id>0 && ticket_type == 'customer'" class="btn btn-outline-primary btn-lg" @click="caterTicket">
+                                CATER THIS TICKET?
+                            </button>
+                            <label v-else-if="id>0" class="text-warning"> -- Waiting for the system support to cater -- </label>
+                        </div>
+                        <div class="card" v-else-if="id>0">
+                            <div   class="card-body">
                                 <div> 
                                     <label>Catered by: </label>
                                     <label>Catered at: </label>
@@ -61,7 +78,7 @@
                                 <div>
                                     <div>Status:</div>
                                     <div>
-                                        <select v-model="status_id" class="form-control">
+                                        <select v-model="current_status_id" class="form-control">
                                             <option :value="0">Pending</option>
                                             <option :value="1">Completed</option>
                                             <option :value="2">Failed</option>
@@ -69,10 +86,10 @@
                                             <option :value="4">Cancelled</option>
                                             <option :value="5">Close</option> 
                                         </select>
-                                        <textarea v-model="status_remarks" class="w-100" style="height: 200px" placeholder="Remarks">
+                                        <textarea v-model="status_remarks" class="w-100" style="height: 80px" placeholder="Remarks">
 
                                         </textarea>
-                                        <button class="btn btn-outline-primary"> UPDATE STATUS </button>
+                                        <button class="btn btn-outline-primary" @click="updateTicketStatus"> UPDATE STATUS </button>
                                     </div>
                                 </div>
                             </div>
@@ -124,10 +141,60 @@
                 status_remarks:'',
                 view_mode:'details',
                 cater_by_id:0,
-                cater_by_name:''
+                cater_by_name:'',
+                ticket_info:null
            }
         },
         methods:{ 
+            updateTicketStatus:function(){
+                var vm = this;
+                var request = {
+                    status_id: this.current_status_id,
+                    remarks: this.status_remarks
+                };
+                window.swal_prompt.alert(
+                    'question',
+                    "Cater this ticket?", 
+                    "Confirm" , 
+                    "POST", 
+                    "/manage/sms-sender/ticket/update-status/"+this.id, 
+                    JSON.stringify(request)
+                ).then(res=>{
+                    if(res.isConfirmed){
+                        //vm.$emit('data_updated');
+                        //console.log(res.value);
+                        var val = res.value;
+                        if(val && val.status == 1){
+                            window.loadHelpdesk();
+                        }
+                    }
+                });
+
+            },
+            caterTicket:function(){
+                var vm = this;
+                window.swal_prompt.alert(
+                    'question',
+                    "Cater this ticket?", 
+                    "Confirm" , 
+                    "POST", 
+                    "/manage/sms-sender/ticket/cater/"+this.id, 
+                    '{}'
+                ).then(res=>{
+                    if(res.isConfirmed){
+                        //vm.$emit('data_updated');
+                        //console.log(res.value);
+                        var val = res.value;
+                        if(val && val.status == 1){
+                            vm.id = val.data.id;
+                            //Reload List
+                            vm.cater_by_id = val.data.cater_by_id;
+                            vm.cater_by_name = val.data.cater_by_name;
+                            window.loadHelpdesk();
+                        }
+                    }
+                });
+            },
             submit_ticket:function(){
                 //WebRequest2('POST', '/manage/sms-sender/ticket/add')
                 var vm = this;
@@ -155,6 +222,7 @@
                         if(val && val.status == 1){
                             vm.id = val.data.id;
                             //Reload List
+                            vm.ticket_info = val.data;
                              window.loadHelpdesk();
                         }
                     }
@@ -170,10 +238,12 @@
                 this.customer_contact_no = '';
                 this.customer_email = '';
                 this.customer_name = '';
-                this.current_status_id = 0;
-                this.status_remarks = '';
                 this.cater_by_id = 0;
                 this.cater_by_name = '';
+                this.ticket_info = null;
+
+                this.current_status_id = 0;
+                this.status_remarks = '';
             },
             show:function(id = 0){ 
                 var vm = this;
@@ -191,9 +261,16 @@
                                 vm.customer_account_no = data.customer_account_no;
                                 vm.customer_name = data.customer_name;
                                 vm.customer_email = data.customer_email;
+                                vm.customer_contact_no = data.customer_contact_no;
                                 vm.current_status_id = data.current_status_id;
                                 vm.cater_by_id = data.cater_by_id;
                                 vm.cater_by_name = data.cater_by_name;
+                                vm.ticket_info = data;
+                                
+                                //console.log("Status Info",data);
+                                if(data.status){
+                                    vm.status_remarks = data.status.remarks;
+                                }
                                 vm.$refs.modal.show();
                             }
                         });

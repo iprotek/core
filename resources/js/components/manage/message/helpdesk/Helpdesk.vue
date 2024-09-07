@@ -48,11 +48,8 @@
                                         <span class="text-nowrap">
                                             <b v-text="limitString(ticketItem.title)"></b>
                                         </span>
-                                        <span v-if="ticketItem.current_status_id == 0" class="float-right text-sm text-warning" title="Pending"><i class="fas fa-star"></i></span>
-                                        <span v-else-if="ticketItem.current_status_id == 1" class="float-right text-sm text-success" title="Completed"><i class="fas fa-star"></i></span>
-                                        <span v-else-if="ticketItem.current_status_id == 3" class="float-right text-sm text-primary" title="Solved"><i class="fas fa-star"></i></span>
-                                        <span v-else-if="ticketItem.current_status_id == 5" class="float-right text-sm text-secondary"  title="Closed"><i class="fas fa-star"></i></span>
-                                        <span v-else class="float-right text-sm text-danger" title="Failed or Cancelled"><i class="fas fa-star"></i></span>
+                                        <span v-if="ticketItem.cater_by_id" class="float-right text-sm text-success" title="Catered"><i class="fas fa-star"></i></span> 
+                                        <span  v-else class="float-right text-sm text-warning" title="Waiting"><i class="far fa-clock"></i></span> 
                                     </h3>
                                     <small class="text-sm">
                                         <small>
@@ -61,7 +58,10 @@
                                             <i class="fa fa-user text-primary mx-1" title="Requestor"></i> 
                                             <span v-if="ticketItem.ticket_type == 'customer' " v-text="ticketItem.customer_name" ></span>
                                             <span v-else-if="ticketItem.ticket_type == 'system-support' && ticketItem.creator " v-text="ticketItem.creator.name" ></span>
-                                            <i v-if="ticketItem.cater_by_name" class="fa fa-wrench text-success mx-1" :title="ticketItem.cater_by_name"></i> 
+                                            <span v-if="ticketItem.cater_by_name">
+                                                <i  class="fa fa-wrench text-success mx-1" :title="ticketItem.cater_by_name"></i> Catered
+                                            </span>
+                                            
                                         </small>
                                     </small>
                                     <div>
@@ -152,7 +152,6 @@
                     resp.json().then(data=>{
                         vm.ticket_list = data.data;
                         vm.total_tickets = data.total;
-                        //console.log("SMS SENDER:",data);
                     });
                 });
             }
