@@ -67,7 +67,7 @@
                                             <option :value="2">Failed</option>
                                             <option :value="3">Solved</option>
                                             <option :value="4">Cancelled</option>
-                                            <option :value="5">Close</option>
+                                            <option :value="5">Close</option> 
                                         </select>
                                         <textarea v-model="status_remarks" class="w-100" style="height: 200px" placeholder="Remarks">
 
@@ -120,7 +120,7 @@
                 customer_name:'',
                 customer_email:'',
                 customer_contact_no:'', 
-                status_id:0,
+                current_status_id:0,
                 status_remarks:'',
                 view_mode:'details',
                 cater_by_id:0,
@@ -154,6 +154,8 @@
                         var val = res.value;
                         if(val && val.status == 1){
                             vm.id = val.data.id;
+                            //Reload List
+                             window.loadHelpdesk();
                         }
                     }
                 });
@@ -161,25 +163,44 @@
             reset:function(){
                 this.id = 0;
                 this.title = '';
-                this.description = '';
+                this.details = '';
                 this.view_mode = 'details';
                 this.ticket_type = 'system-support';
-                this.customer_account_number = '';
+                this.customer_account_no = '';
                 this.customer_contact_no = '';
                 this.customer_email = '';
                 this.customer_name = '';
-                this.status_id = 0;
+                this.current_status_id = 0;
                 this.status_remarks = '';
                 this.cater_by_id = 0;
                 this.cater_by_name = '';
             },
             show:function(id = 0){ 
+                var vm = this;
                 this.reset();
                 this.id = id;
-                this.$refs.modal.show();
 
                 //Load by details
-                
+                if(id){
+                    WebRequest2('GET','/manage/sms-sender/ticket/get-info/'+id).then(resp=>{
+                        resp.json().then(data=>{
+                            if(data){
+                                vm.title = data.title;
+                                vm.details = data.details;
+                                vm.ticket_type = data.ticket_type;
+                                vm.customer_account_no = data.customer_account_no;
+                                vm.customer_name = data.customer_name;
+                                vm.customer_email = data.customer_email;
+                                vm.current_status_id = data.current_status_id;
+                                vm.cater_by_id = data.cater_by_id;
+                                vm.cater_by_name = data.cater_by_name;
+                                vm.$refs.modal.show();
+                            }
+                        });
+                    });
+                }else{
+                    this.$refs.modal.show();
+                }
             },
 
         },

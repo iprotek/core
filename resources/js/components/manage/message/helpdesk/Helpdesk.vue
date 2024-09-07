@@ -2,78 +2,16 @@
     <div>
         <div>
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="ion ion-help-buoy text-warning"></i>
-                <span v-if="has_chat" class="badge badge-warning navbar-badge">!</span>
-                <span v-else class="badge badge-danger navbar-badge">3</span>
+                <i class="ion ion-help-buoy text-warning"></i> 
+                <span v-if="total_tickets > 0"  class="badge badge-danger navbar-badge" v-text="total_tickets"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <template v-if="has_chat">
-                    <a href="#" class="dropdown-item">
-                        <!-- Message Start -->
-                        <div class="media">
-                        <img alt="User Avatar" class="img-size-50 mr-3 img-circle"/>
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                            Brad Diesel
-                            <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                            </h3>
-                            <p class="text-sm">Call me whenever you can...</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                        </div>
-                        </div>
-                        <!-- Message End -->
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <!-- Message Start -->
-                        <div class="media">
-                        <img alt="User Avatar" class="img-size-50 img-circle mr-3"/>
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                            John Pierce
-                            <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                            </h3>
-                            <p class="text-sm">I got your message bro</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                        </div>
-                        </div>
-                        <!-- Message End -->
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <!-- Message Start -->
-                        <div class="media">
-                        <img alt="User Avatar" class="img-size-50 img-circle mr-3"/>
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                            Nora Silvester
-                            <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                            </h3>
-                            <p class="text-sm">The subject goes here</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                        </div>
-                        </div>
-                        <!-- Message End -->
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                </template>
-                <template v-else>
-                    <a href="#" class="dropdown-item">
-                        <!-- Message Start -->
-                        <div class="media">
-                            <code class="w-100 text-center"> -- No ticket at this moment -- </code>
-                        </div>
-                        <!-- Message End -->
-                    </a> 
-                </template>
-                <div class="dropdown-divider"></div>
                 <a  class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
                         <div class="media-body">
                             <small  class="text-sm text-secondary">
-                                <small>Send a ticket for support of this system problem.</small>
+                                <small>Send a ticket for support customer/system.</small>
                             </small>
                             <div>
                                 <button class="btn btn-outline-primary btn-sm" @click="clickAddEditTicketModal()" > Submit New Ticket </button>
@@ -83,6 +21,72 @@
                     <!-- Message End -->
                 </a>
                 <div class="dropdown-divider"></div>
+                
+                <a v-if="isLoading" href="#" class="dropdown-item">
+                    <!-- Message Start -->
+                    <div class="media">
+                        <code class="w-100 text-center"> -- Loading Ticket -- </code>
+                    </div>
+                    <!-- Message End -->
+                </a> 
+                <template v-else-if="ticket_list.length == 0"> 
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <code class="w-100 text-center"> -- No ticket at this moment -- </code>
+                        </div>
+                        <!-- Message End -->
+                    </a> 
+                </template>
+                <template  >
+                    <div v-for="(ticketItem, ticketIndex) in ticket_list" v-bind:key="'ticket-item-'+_uid+'-'+ticketItem.id+'-'+ticketIndex">
+                        <a href="#" class="dropdown-item" @click="clickAddEditTicketModal(ticketItem.id)">
+                            <!-- Message Start -->
+                            <div class="media"> 
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title"> 
+                                        <span class="text-nowrap">
+                                            <b v-text="limitString(ticketItem.title)"></b>
+                                        </span>
+                                        <span v-if="ticketItem.current_status_id == 0" class="float-right text-sm text-warning" title="Pending"><i class="fas fa-star"></i></span>
+                                        <span v-else-if="ticketItem.current_status_id == 1" class="float-right text-sm text-success" title="Completed"><i class="fas fa-star"></i></span>
+                                        <span v-else-if="ticketItem.current_status_id == 3" class="float-right text-sm text-primary" title="Solved"><i class="fas fa-star"></i></span>
+                                        <span v-else-if="ticketItem.current_status_id == 5" class="float-right text-sm text-secondary"  title="Closed"><i class="fas fa-star"></i></span>
+                                        <span v-else class="float-right text-sm text-danger" title="Failed or Cancelled"><i class="fas fa-star"></i></span>
+                                    </h3>
+                                    <small class="text-sm">
+                                        <small>
+                                            <i class="fa fa-ticket text-info mr-1"></i> 
+                                            <b class="text-secondary" v-text="ticketNumbering(ticketItem.id)"></b> 
+                                            <i class="fa fa-user text-primary mx-1" title="Requestor"></i> 
+                                            <span v-if="ticketItem.ticket_type == 'customer' " v-text="ticketItem.customer_name" ></span>
+                                            <span v-else-if="ticketItem.ticket_type == 'system-support' && ticketItem.creator " v-text="ticketItem.creator.name" ></span>
+                                            <i v-if="ticketItem.cater_by_name" class="fa fa-wrench text-success mx-1" :title="ticketItem.cater_by_name"></i> 
+                                        </small>
+                                    </small>
+                                    <div>
+                                        <small class="text-sm text-muted">
+                                            <small v-if="ticketItem.ticket_type == 'customer'" class="text-primary" v-text="ticketItem.ticket_type"></small>
+                                            <small v-else class="text-danger" v-text="ticketItem.ticket_type"></small>
+                                            <small>
+                                                <i class="far fa-clock mr-1"></i> 
+                                                <span v-text="ticketItem.created_diff"> </span> 
+                                            </small>
+                                            <small class="btn btn-outline-success px-1 py-0" @click.stop="ticketSendEmail(ticketItem.id)">
+                                                <small class="fa fa-paper-plane"></small>
+                                            </small>
+                                            <small class="btn btn-outline-primary px-1 py-0" title="Chats" >
+                                                <small class="fa fa-comments"></small> <small>8</small>
+                                            </small>
+                                        </small> 
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </template>
                 <a href="#" class="dropdown-item dropdown-footer text-primary" style="border:1px solid blue;">See All Tickets</a>
             </div>
         </div> 
@@ -96,38 +100,66 @@
         },
         data: function () {
             return {
-                has_chat:false
+                has_chat:false,
+                ticket_list:[],
+                isLoading:false,
+                total_tickets: 0
             }
         },
         methods: { 
+            ticketSendEmail:function(id){
+                console.log("Ticket Send email"+id);
+                var request = {
+
+                };
+                window.swal_prompt.alert(
+                    'question',
+                    "Notify this to recepient?", 
+                    "Confirm" , 
+                    "POST", 
+                    "/", 
+                    JSON.stringify(request)
+                ).then(res=>{
+                    if(res.isConfirmed){ 
+                        var val = res.value;
+                        if(val && val.status == 1){ 
+                            //Reload List
+                             window.loadHelpdesk();
+                        }
+                    }
+                });
+            },
+            ticketNumbering:function(number){
+                number = "0000000"+number;
+               return  number.substring(number.length - 7);
+            },
+            limitString:function(text){
+                if(!text) return '';
+                if(text.length > 20)
+                    return text.substring(0, 20)+'...';
+                return text;
+            },
             clickAddEditTicketModal:function(id = 0){
                 window.add_edit_ticket_modal.show(id);
             },
-            loadPushNotifSettings:function(){
-                /*
-                WebRequest2('GET', '/manage/sms-sender/push-notif-info').then(resp=>{
+            loadHelpdesk:function(){ 
+                var vm = this;
+                //vm.ticket_list = [];
+                vm.isLoading = true;
+                vm.total_tickets = 0;
+                WebRequest2('GET', '/manage/sms-sender/ticket/list?action=notification').then(resp=>{
+                    vm.isLoading = false;
                     resp.json().then(data=>{
-                        console.log("NOTIF SETTINGS", data);
+                        vm.ticket_list = data.data;
+                        vm.total_tickets = data.total;
+                        //console.log("SMS SENDER:",data);
                     });
                 });
-                */
             }
         },
-        mounted:function(){     
-            //this.loadPushNotifSettings();
-            /*
-            Pusher.logToConsole = true;
-
-            var pusher = new Pusher('3ba4f1b9531904744a8e', {
-            cluster: 'ap1'
-            });
-
-            var channel = pusher.subscribe('chat-channel');
-            channel.bind('my-event', function(data) {
-                console.log(data);
-                //app.messages.push(JSON.stringify(data));
-            });
-            */
+        mounted:function(){   
+            this.loadHelpdesk();
+            window.loadHelpdesk = this.loadHelpdesk;
         },
         updated:function(){
 
