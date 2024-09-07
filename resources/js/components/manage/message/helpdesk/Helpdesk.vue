@@ -75,8 +75,8 @@
                                             <small class="btn btn-outline-success px-1 py-0" @click.stop="ticketSendEmail(ticketItem.id)">
                                                 <small class="fa fa-paper-plane"></small>
                                             </small>
-                                            <small class="btn btn-outline-primary px-1 py-0" title="Chats" >
-                                                <small class="fa fa-comments"></small> <small>8</small>
+                                            <small class="btn btn-outline-primary px-1 py-0" title="Chats" v-if="ticketItem.message_count">
+                                                <small class="fa fa-comments"></small> <small v-text="ticketItem.message_count"></small>
                                             </small>
                                         </small> 
                                     </div>
