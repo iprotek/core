@@ -5,13 +5,13 @@
                 Name Details for Support
             </template> 
             <template slot="body" >     
-                <user-input2 v-model="account_no" :placeholder="'Account No#:'" :input_style="'height:40px;'" :placeholder_description="'Numeric value for Account number.'"></user-input2>
+                <user-input2 v-model="account_no" :placeholder="'Account No#:'" :input_style="'height:40px;'" :placeholder_description="'Support Account Number.'"></user-input2>
                 <user-input2 v-model="name" :placeholder="'Full name of Support'" :input_style="'height:40px'" :placeholder_description="'Name of the support will cater the ticket.'"></user-input2>
             </template>
             <template slot="footer">
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
-                    <button type="button" class="btn btn-outline-primary" > CATER NOW </button> 
+                    <button type="button" class="btn btn-outline-primary" @click="caterTicket()"> CATER NOW </button> 
                 </div>
             </template>
         </modal-view> 
@@ -21,12 +21,14 @@
 </template>
 
 <script>    
+    import SwalVue from '../common/Swal.vue';
     import UserInput2Vue from '../common/UserInput2.vue';
     
     export default {
-        props:[  ],
+        props:[ "data" ],
         components: {
-            "user-input2":UserInput2Vue
+            "user-input2":UserInput2Vue,
+            "swal":SwalVue
         },
         data: function () {
             return {        
@@ -36,11 +38,36 @@
            }
         },
         methods:{ 
+            caterTicket:function(){
+                var  vm = this;
+                var request = {
+                    action:'cater',
+                    account_no: this.account_no,
+                    name: this.name
+                };
+                this.$refs.swal_prompt.alert(
+                    'question',
+                    "Cater Now?", 
+                    "Confirm" , 
+                    "POST", 
+                    vm.data.response_url, 
+                    JSON.stringify(request)
+                ).then(res=>{
+                    if(res.isConfirmed){ 
+                        var val = res.value; 
+                        //if(val && val.status == 1){ 
+                        //}
+                        setTimeout(()=>{
+                            window.location.reload();
+                        }, 2000);
+                    }
+                });
+            },
             reset:function(){
 
             },
             show:function(){ 
-
+                var vm = this;
                 this.$refs.modal.show();
 
                 return new Promise((promiseExec)=>{

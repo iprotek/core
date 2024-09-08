@@ -2,14 +2,17 @@
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
             <template slot="header" >
-                Contact Tags
+                Message
             </template> 
-            <template slot="body" >     
-            
+            <template slot="body" >
+                <textarea v-model="message" class="w-100" style="min-heigth: 250px;"></textarea> 
             </template>
             <template slot="footer">
                 <div>
-                    <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
+                    <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button>
+                    <button type="button" class="btn btn-outline-primary" @click="submit_message">
+                        <span class="fa fa-paper-plane"></span> Submit    
+                    </button> 
                 </div>
             </template>
         </modal-view> 
@@ -19,14 +22,16 @@
 </template>
 
 <script>    
-    
+    import SwalVue from '../common/Swal.vue';
     export default {
-        props:[  ],
+        props:[ "data" ],
         components: {   
+            "swal":SwalVue
         },
         data: function () {
             return {        
-                promiseExec:null
+                promiseExec:null,
+                message:''
            }
         },
         methods:{ 
@@ -35,6 +40,7 @@
             },
             show:function(){ 
                 var vm = this;
+                
 
                 this.$refs.modal.show();
 
@@ -42,6 +48,31 @@
                     vm.promiseExec = promiseExec;
                 });
                 
+            },
+            submit_message:function(){
+                var vm = this;
+                var request = {
+                    action:'message',
+                    message: this.message
+                };
+                this.$refs.swal_prompt.alert(
+                    'question',
+                    "Send", 
+                    "Confirm" , 
+                    "POST", 
+                    this.data.response_url, 
+                    JSON.stringify(request)
+                ).then(res=>{
+                    if(res.isConfirmed){
+                        var val = res.value;
+                        if(val.status == 1){
+                            setTimeout(()=>{
+                                window.location.reload();
+                            }, 2000);
+                        }
+                    }
+                });
+
             },
             add:function(){
                 var vm = this;

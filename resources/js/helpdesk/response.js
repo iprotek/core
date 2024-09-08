@@ -22,6 +22,7 @@ if(!window.Vue){
 
 //Vue.component('header-menus', require('./components/manage/HeaderMenu.vue').default);
 Vue.component('helpdesk', require('../components/helpdesk/Index.vue').default);
+Vue.component('modal-view', require('../components/common/Modal.vue').default); 
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
