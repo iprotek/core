@@ -5,7 +5,7 @@
                 Message
             </template> 
             <template slot="body" >
-                <textarea v-model="message" class="w-100" style="min-heigth: 250px;"></textarea> 
+                <textarea v-model="message" class="w-100 form-control" style="min-heigth: 250px;"></textarea> 
             </template>
             <template slot="footer">
                 <div>
