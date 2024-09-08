@@ -34,7 +34,7 @@
                             <button class="btn btn-default btn-lg mr-4" @click="cancelTicket">
                                   CANCEL
                             </button>
-                            <button class="btn btn-outline-primary btn-lg">
+                            <button class="btn btn-outline-primary btn-lg" @click="createTicket">
                                 <span class="fa fa-paper-plane"></span> SUBMIT
                             </button>
                         </div>
@@ -42,9 +42,13 @@
                 </div>
                 <div v-else class="card">
                     <div class="card-body">
-                        <h2> Please take note of your current ticket number: <span class="text-primary" v-text="ticketNumbering(id)"></span> </h2>
+                        <h2> Please take note of your current ticket number: 
+                            <div>
+                                <span class="text-primary" v-text="ticketNumbering(id)"></span>
+                            </div> 
+                        </h2>
                         <div>
-                            <button class="btn btn-outline-primary btn-lg" @click="id = 0">
+                            <button class="btn btn-outline-primary btn-lg" @click="newTicket()">
                                 <span class="fa fa-paper-plane"></span> SUBMIT NEW TICKET
                             </button>
                         </div>
@@ -96,6 +100,34 @@
             },
             cancelTicket:function(){
                 window.location.href="/";
+            },
+            createTicket:function(){
+                var vm = this;
+                var request = {
+                    title: this.title,
+                    message: this.message,
+                    customer_account_no: this.account_no,
+                    customer_name: this.full_name,
+                    customer_email: this.email,
+                    customer_contact_no: this.contact_no
+                };
+
+                this.$refs.swal_prompt.alert(
+                    'question',
+                    "Submit Now?", 
+                    "Confirm" , 
+                    "POST", 
+                    '/helpdesk/create', 
+                    JSON.stringify(request)
+                ).then(res=>{
+                    if(res.isConfirmed){ 
+                        var val = res.value; 
+                        if(val.status == 1){
+                            vm.id = val.data.id;
+                        }
+                    }
+                });
+
             }
         },
         mounted:function(){     

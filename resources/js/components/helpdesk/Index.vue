@@ -33,7 +33,7 @@
                                     <th v-text="data.details"></th>
 
                                 </tr>
-                                <tr v-if="!data.cater_by_name">
+                                <tr v-if="!data.cater_by_name && data.ticket_type == 'system-support'">
                                     <td colspan="2" class="text-center">
                                         <button class="btn btn-outline-primary btn-xl" @click="$refs.cater_modal.show()"> CATER THIS TICKET? </button>
                                     </td>

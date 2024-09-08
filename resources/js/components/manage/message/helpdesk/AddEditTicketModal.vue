@@ -37,6 +37,12 @@
                             <option value="customer">Customer</option>
                             <option value="system-support">System Support</option>
                         </select>
+                        <div>
+                            <small>
+                                <code v-if="ticket_type == 'customer'">Create ticket in behalf of customer</code>
+                                <code v-if="ticket_type == 'system-support'">Create ticket for system developer in terms of system errors etc.</code>
+                            </small>
+                        </div>
                         <div class="card mt-2" v-if="ticket_type == 'customer'"> 
                             <div class="card-body pt-0">
                                 <div class="row mt-2">
@@ -191,11 +197,12 @@
                         var val = res.value;
                         vm.promiseExec(val);
                         if(val && val.status == 1){
-                            vm.id = val.data.id;
+                            //vm.id = val.data.id;
                             //Reload List
-                            vm.cater_by_id = val.data.cater_by_id;
-                            vm.cater_by_name = val.data.cater_by_name;
+                            //vm.cater_by_id = val.data.cater_by_id;
+                            //vm.cater_by_name = val.data.cater_by_name;
                             window.loadHelpdesk(); 
+                            vm.loadInfo(vm.id);
                         }
                     }
                 });
@@ -248,6 +255,32 @@
                 this.current_status_id = 0;
                 this.status_remarks = '';
             },
+            loadInfo:function(id){
+                var vm = this;
+                WebRequest2('GET','/manage/sms-sender/ticket/get-info/'+id).then(resp=>{
+                    resp.json().then(data=>{
+                        if(data){
+                            vm.title = data.title;
+                            vm.details = data.details;
+                            vm.ticket_type = data.ticket_type;
+                            vm.customer_account_no = data.customer_account_no;
+                            vm.customer_name = data.customer_name;
+                            vm.customer_email = data.customer_email;
+                            vm.customer_contact_no = data.customer_contact_no;
+                            vm.current_status_id = data.current_status_id;
+                            vm.cater_by_id = data.cater_by_id;
+                            vm.cater_by_name = data.cater_by_name;
+                            vm.ticket_info = data;
+                            
+                            //console.log("Status Info",data);
+                            if(data.status){
+                                vm.status_remarks = data.status.remarks;
+                            }
+                            vm.$refs.modal.show();
+                        }
+                    });
+                });
+            },
             show:function(id = 0){ 
                 var vm = this;
                 this.reset();
@@ -255,29 +288,8 @@
 
                 //Load by details
                 if(id){
-                    WebRequest2('GET','/manage/sms-sender/ticket/get-info/'+id).then(resp=>{
-                        resp.json().then(data=>{
-                            if(data){
-                                vm.title = data.title;
-                                vm.details = data.details;
-                                vm.ticket_type = data.ticket_type;
-                                vm.customer_account_no = data.customer_account_no;
-                                vm.customer_name = data.customer_name;
-                                vm.customer_email = data.customer_email;
-                                vm.customer_contact_no = data.customer_contact_no;
-                                vm.current_status_id = data.current_status_id;
-                                vm.cater_by_id = data.cater_by_id;
-                                vm.cater_by_name = data.cater_by_name;
-                                vm.ticket_info = data;
-                                
-                                //console.log("Status Info",data);
-                                if(data.status){
-                                    vm.status_remarks = data.status.remarks;
-                                }
-                                vm.$refs.modal.show();
-                            }
-                        });
-                    });
+                    this.loadInfo(id);
+
                 }else{
                     this.$refs.modal.show();
                 }
