@@ -144,7 +144,8 @@
                 view_mode:'details',
                 cater_by_id:0,
                 cater_by_name:'',
-                ticket_info:null
+                ticket_info:null,
+                promiseExec:null
            }
         },
         methods:{ 
@@ -166,6 +167,7 @@
                         //vm.$emit('data_updated');
                         //console.log(res.value);
                         var val = res.value;
+                        vm.promiseExec(val);
                         if(val && val.status == 1){
                             window.loadHelpdesk();
                         }
@@ -187,12 +189,13 @@
                         //vm.$emit('data_updated');
                         //console.log(res.value);
                         var val = res.value;
+                        vm.promiseExec(val);
                         if(val && val.status == 1){
                             vm.id = val.data.id;
                             //Reload List
                             vm.cater_by_id = val.data.cater_by_id;
                             vm.cater_by_name = val.data.cater_by_name;
-                            window.loadHelpdesk();
+                            window.loadHelpdesk(); 
                         }
                     }
                 });
@@ -217,13 +220,11 @@
                     "/manage/sms-sender/ticket/add", 
                     JSON.stringify(request)
                 ).then(res=>{
-                    if(res.isConfirmed){
-                        //vm.$emit('data_updated');
-                        //console.log(res.value);
+                    if(res.isConfirmed){ 
                         var val = res.value;
+                        vm.promiseExec(val);
                         if(val && val.status == 1){
-                            vm.id = val.data.id;
-                            //Reload List
+                            vm.id = val.data.id; 
                             vm.ticket_info = val.data;
                              window.loadHelpdesk();
                         }
@@ -280,6 +281,11 @@
                 }else{
                     this.$refs.modal.show();
                 }
+
+                //
+                return new Promise((promiseExec)=>{
+                    vm.promiseExec = promiseExec;
+                });
             },
 
         },

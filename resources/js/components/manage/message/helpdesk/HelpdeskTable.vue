@@ -6,6 +6,9 @@
                     <div class="card-header">Helpdesk Tickets</div> 
                     <div class="card-body">  
                         <div class="input-group text-sm mb-1"> 
+                            <span class="btn btn-default" @click="createNewTicket()">
+                                <small title="Create Ticket" class="fa fa-plus text-primary"></small> 
+                            </span>
                             <span class="btn btn-default">
                                 <small title="Show" class="fa fa-search text-primary"></small> 
                             </span>
@@ -110,10 +113,25 @@
             }
         },
         methods: { 
-            showTicket:function(id){
-                
+            createNewTicket:function(){
+                var  vm = this;
                 if(window.add_edit_ticket_modal)
-                    window.add_edit_ticket_modal.show(id);/// = this;
+                    window.add_edit_ticket_modal.show().then(res=>{
+                        //console.log(res);
+                        if(res.status == 1){
+                            vm.loadTicketList();
+                        }
+                    });
+            },
+            showTicket:function(id){
+                var vm = this;
+                if(window.add_edit_ticket_modal)
+                    window.add_edit_ticket_modal.show(id).then(res=>{
+                        if(res.status == 1){
+                            vm.loadTicketList();
+                        }
+                    });
+
             },
             limitString:function(text, limit=20){
                 if(text.length > 20)

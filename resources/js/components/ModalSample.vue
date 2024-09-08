@@ -26,6 +26,7 @@
         },
         data: function () {
             return {        
+                promiseExec:null
            }
         },
         methods:{ 
@@ -33,7 +34,13 @@
 
             },
             show:function(){ 
+
                 this.$refs.modal.show();
+
+                return new Promise((promiseExec)=>{
+                    vm.promiseExec = promiseExec;
+                });
+                
             },
             add:function(){
                 /*
