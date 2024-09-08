@@ -9,50 +9,51 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <td class="text-right" style="width:200px;">Ticket Number</td>
-                                    <th class="text-primary" v-text="ticketNumbering(data.id)"></th>
-                                </tr>
-                                <tr>
-                                    <td class="text-right"  >Title</td>
-                                    <th v-text="data.title"></th>
-                                </tr>
-                                <tr>
-                                    <td class="text-right"  >APP NAME</td>
-                                    <th v-text="data.app_name"></th>
-                                </tr>
-                                <tr>
-                                    <td class="text-right"  >APP URL</td>
-                                    <th v-text="data.app_url"></th>
-                                </tr>
-                                <tr>
-                                    <td class="text-right align-top"  >
-                                        <span>Message </span>
-                                     </td>
-                                    <th v-text="data.details"></th>
+                            <div class="col-sm-12">
+                                <div class="text-center py-2" v-if="!data.cater_by_name && data.ticket_type == 'system-support'">
+                                        <button class="btn btn-outline-primary btn-lg" @click="$refs.cater_modal.show()"> CLICK TO CATER THIS TICKET </button>
+                                </div>
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <td class="text-right" style="width:200px;">Ticket Number</td>
+                                        <th class="text-primary" v-text="ticketNumbering(data.id)"></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right"  >Title</td>
+                                        <th v-text="data.title"></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right"  >APP NAME</td>
+                                        <th v-text="data.app_name"></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right"  >APP URL</td>
+                                        <th v-text="data.app_url"></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right align-top"  >
+                                            <span>Message </span>
+                                        </td>
+                                        <td v-html="data.details"></td>
 
-                                </tr>
-                                <tr v-if="!data.cater_by_name && data.ticket_type == 'system-support'">
-                                    <td colspan="2" class="text-center">
-                                        <button class="btn btn-outline-primary btn-xl" @click="$refs.cater_modal.show()"> CATER THIS TICKET? </button>
-                                    </td>
-                                </tr>
-                                <tr >
-                                    <td class="text-right"> STATUS </td>
-                                    <td v-if="data.status">
-                                        <b class="text-primary" v-text="data.status.status_name"></b>
-                                        <span v-if="data.status" v-text="' - '+ data.status.remarks"></span>
-                                    </td>
-                                    <td v-else class="text-danger"> -- PENDING -- </td>
-                                </tr>
-                                <tr v-if="data.cater_by_name">
-                                    <td class="text-right">Cater by Info</td>
-                                    <td>
-                                        <b v-text="'ID#:'+data.cater_by_id+' Name:'+data.cater_by_name+' @'+data.cater_at"></b>
-                                    </td>
-                                </tr>
-                            </table>
+                                    </tr>
+                                    <tr >
+                                        <td class="text-right"> STATUS </td>
+                                        <td v-if="data.status">
+                                            <b class="text-primary" v-text="data.status.status_name"></b>
+                                            <span v-if="data.status" v-text="' - '+ data.status.remarks"></span>
+                                        </td>
+                                        <td v-else class="text-danger"> -- PENDING -- </td>
+                                    </tr>
+                                    <tr v-if="data.cater_by_name">
+                                        <td class="text-right">Cater by Info</td>
+                                        <td>
+                                            <b v-text="'ID#:'+data.cater_by_id+' Name:'+data.cater_by_name+' @'+data.cater_at"></b>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
