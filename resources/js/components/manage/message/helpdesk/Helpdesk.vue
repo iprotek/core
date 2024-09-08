@@ -87,7 +87,7 @@
                         <div class="dropdown-divider"></div>
                     </div>
                 </template>
-                <a href="#" class="dropdown-item dropdown-footer text-primary" style="border:1px solid blue;">See All Tickets</a>
+                <a href="/manage/helpdesk" id="link-see-tickets-el" class="dropdown-item dropdown-footer text-primary" style="border:1px solid blue;">See All Tickets</a>
             </div>
         </div> 
     </div>
@@ -130,6 +130,10 @@
                 });
             },
             ticketNumbering:function(number){
+                number = number+'';
+                if(number.length > 7)
+                    return number;
+                
                 number = "0000000"+number;
                return  number.substring(number.length - 7);
             },
