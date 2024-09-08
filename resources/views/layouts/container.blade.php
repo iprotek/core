@@ -66,6 +66,14 @@
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ms-auto">
                             <!-- Authentication Links -->
+                            @if (Route::has('helpdesk.create-get'))
+                                <li class="nav-item"> 
+                                    <a class="nav-link text-white" href="{{route('helpdesk.create-get')}}">  
+                                        <span class="ion ion-help-buoy"></span> 
+                                        {{ __('Helpdesk') }}
+                                    </a>
+                                </li>
+                            @endif
                              @if(isset($help_url))
                                 <li class="nav-item">
                                     <a class="nav-link text-white" href="{{$help_url}}">{{ __('Help') }}</a>
