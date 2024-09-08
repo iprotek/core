@@ -73,7 +73,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <button class="btn btn-outline-primary" @click="showTicket(ticket.id)">
+                                        <button class="btn btn-outline-primary btn-sm" @click="showTicket(ticket.id)">
                                             <span class="fa fa-eye"></span>
                                         </button>
                                     </td>
