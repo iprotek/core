@@ -2,14 +2,16 @@
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
             <template slot="header" >
-                Contact Tags
+                Name Details for Support
             </template> 
             <template slot="body" >     
-            
+                <user-input2 v-model="account_no" :placeholder="'Account No#:'" :input_style="'height:40px;'" :placeholder_description="'Numeric value for Account number.'"></user-input2>
+                <user-input2 v-model="name" :placeholder="'Full name of Support'" :input_style="'height:40px'" :placeholder_description="'Name of the support will cater the ticket.'"></user-input2>
             </template>
             <template slot="footer">
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
+                    <button type="button" class="btn btn-outline-primary" > CATER NOW </button> 
                 </div>
             </template>
         </modal-view> 
@@ -19,14 +21,18 @@
 </template>
 
 <script>    
+    import UserInput2Vue from '../common/UserInput2.vue';
     
     export default {
         props:[  ],
-        components: {   
+        components: {
+            "user-input2":UserInput2Vue
         },
         data: function () {
             return {        
-                promiseExec:null
+                promiseExec:null,
+                account_no:'',
+                name:''
            }
         },
         methods:{ 
