@@ -24,6 +24,7 @@ if(!window.Vue){
 Vue.component('message-notification', require('../components/manage/message/Message.vue').default);
 Vue.component('message-container', require('../components/manage/message/ChatBoxCointainer.vue').default);
 Vue.component('helpdesk-notification', require('../components/manage/message/helpdesk/Helpdesk.vue').default);
+Vue.component('helpdesk-table', require('../components/manage/message/helpdesk/HelpdeskTable.vue').default);
 
 Vue.component('add-edit-ticket-modal', require('../components/manage/message/helpdesk/AddEditTicketModal.vue').default);
 

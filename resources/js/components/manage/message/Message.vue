@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <a class="nav-link" data-toggle="dropdown" href="#" onclick="window.addChatMessage({})">
+            <a class="nav-link" data-toggle="dropdown" href="#" >
                 <i class="far fa-comments text-primary"></i>
                 <span v-if="has_chat" class="badge badge-warning navbar-badge">!</span>
                 <span v-else class="badge badge-danger navbar-badge">3</span>
@@ -59,7 +59,7 @@
                     <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
                 </template>
                 <template v-else>
-                    <a href="#" class="dropdown-item">
+                    <a href="#" class="dropdown-item" onclick="window.addChatMessage({})">
                         <!-- Message Start -->
                         <div class="media">
                             <code class="w-100 text-center"> -- Not Available at this moment -- </code>
