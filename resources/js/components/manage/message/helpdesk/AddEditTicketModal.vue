@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <div class="mt-2">
-                            <summernote v-model="details" :value="1"  :height="'300px'" :placeholder="'Descriptive Details'"  :is_local="false" :is_image_upload="true"  ></summernote>
+                            <summernote v-model="details" :height="'300px'" :placeholder="'Descriptive Details'"  :is_local="false" :is_image_upload="true"  ></summernote>
                         </div>
                         <div v-if="!cater_by_id " class="text-right">
                             <button v-if="id>0 && ticket_type == 'customer'" class="btn btn-outline-primary btn-lg" @click="caterTicket">
@@ -137,6 +137,7 @@
         },
         data: function () {
             return {
+
                 id:0,
                 title:'',
                 details:'',

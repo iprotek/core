@@ -79,8 +79,9 @@
                             var file = files[i]; 
                             const formData = new FormData(); 
                             var file_ext = vm.getFileExt(file.name);
-                            formData.append('target_name', "summernote-uploads");
-                            formData.append('target_id', vm.group_id); 
+                            formData.append('target_name', "summernote-uploads"); 
+                            formData.append('group_id', vm.group_id); 
+                            formData.append('target_id', 1); 
                             formData.append('file', file);
                             formData.append('file_name', file.name);
                             formData.append('file_type', file.type);
