@@ -49,6 +49,8 @@
       <li id="sys-notification-el" class="nav-item dropdown">
         <sys-notification></sys-notification>
       </li>
+      
+      <!-- Helpdesk Dropdown -->
       <li id="helpdesk-el" class="nav-item dropdown">
         <helpdesk-notification></helpdesk-notification>
       </li>
