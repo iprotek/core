@@ -1,19 +1,26 @@
 <template>
     <div class="w-100">
         <label v-text="'Total Items: '+total_item"></label>
-        <div style="float:right;" class="text-nowrap">
+        <div v-if="!is_reverse" style="float:right;" class="text-nowrap">
             <button @click="pagePrev" class="btn btn-primary" v-text="'<'" :disabled="current_page<=1">  </button>
             <label>Page</label>
             <input class="form-control" v-model="current_page" @change="pageChanged" style="width:40px; text-align:center; display:inline;"/>
             <label v-text="'of '+last_page"></label>
             <button @click="pageNext" class="btn btn-primary" v-text="'>'" :disabled="current_page>=last_page">  </button>
         </div>
+        <div v-else  style="float:right;" class="text-nowrap">
+            <button @click="pageNext" class="btn btn-primary" v-text="'<'" :disabled="current_page>=last_page">  </button>
+            <label>Page</label>
+            <input class="form-control" v-model="current_page" @change="pageChanged" style="width:40px; text-align:center; display:inline;"/>
+            <label v-text="'of '+last_page"></label>
+            <button @click="pagePrev" class="btn btn-primary" v-text="'>'" :disabled="current_page<=1">  </button>
+        </div>
         
     </div>
 </template>
 <script> 
     export default {
-        props: ["value"],
+        props: ["value", "is_reverse"],
         data: function () {
             return { 
                 current_page:1,

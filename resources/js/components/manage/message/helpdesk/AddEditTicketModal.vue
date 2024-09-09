@@ -12,7 +12,12 @@
             <template slot="body" > 
                 <div v-if="view_mode == 'details'">    
                     <div class="row mt-2" v-if="id>0">
-                        <div class="col-sm-9">
+                        <div class="col-sm-12" >
+                            <button v-if="ticket_info" class="btn btn-outline-primary float-right" @click="view_mode = 'chats'">
+                                <span class="fa fa-comments"></span>
+                                CHATS ( <span v-text="ticket_info.message_count" > </span> ) 
+                                <span class="fa fa-arrow-right"></span>
+                            </button>
                             <div v-if="id>0 && ticket_info">
                                 <label>Created by: 
                                     <span v-if="ticket_info.creator" v-text="ticket_info.creator.name"></span> 
@@ -21,12 +26,7 @@
                                 <div>
                                     <label>Created at: <span v-text="ticket_info.created_at"></span> </label>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <button class="btn btn-outline-primary float-right" @click="view_mode = 'chats'">
-                                CHATS (0) <span class="fa fa-arrow-right"></span>
-                            </button>
+                            </div> 
                         </div>
                     </div>
                     <div>
@@ -109,6 +109,7 @@
                         <button class="btn btn-outline-primary" @click="view_mode = 'details'">
                             <span class="fa fa-arrow-left"></span> DETAILS
                         </button>
+                        <ticket-chats v-if="ticket_info" :ticket_id="ticket_info.id" @messages_result="messages_result"></ticket-chats>
                     </div>
 
                 </div>
@@ -129,11 +130,13 @@
 <script> 
     import SummernoteVue from '../../../common/Summernote.vue';
     import UserInput2Vue from '../../../common/UserInput2.vue';
+    import TicketChatsVue from './TicketChats.vue';
     export default {
         props:[  ],
         components: {
             "user-input2":UserInput2Vue,
-            "summernote":SummernoteVue
+            "summernote":SummernoteVue,
+            "ticket-chats":TicketChatsVue
         },
         data: function () {
             return {
@@ -156,6 +159,12 @@
            }
         },
         methods:{ 
+            messages_result:function(pageData){
+                //console.log(pageData);
+                if(this.ticket_info && pageData){
+                   this.ticket_info.message_count = pageData.total;
+                }
+            },
             updateTicketStatus:function(){
                 var vm = this;
                 var request = {
