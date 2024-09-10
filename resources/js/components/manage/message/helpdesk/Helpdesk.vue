@@ -14,7 +14,9 @@
                                 <small>Send a ticket for support customer/system.</small>
                             </small>
                             <div>
-                                <button class="btn btn-outline-primary btn-sm" @click="clickAddEditTicketModal()" > Submit New Ticket </button>
+                                <button class="btn btn-outline-primary btn-sm mr-1" @click="clickAddEditTicketModal()" > Submit New Ticket </button>
+                                <a v-if="user_manual_url != '#'" :href="user_manual_url" class="btn btn-outline-success btn-sm" target="_blank" > USER MANUAL </a>
+                                <a href="#" v-else class="btn btn-outline-danger btn-sm"> No Manual </a>
                             </div>
                         </div>
                     </div>
@@ -103,7 +105,8 @@
                 has_chat:false,
                 ticket_list:[],
                 isLoading:false,
-                total_tickets: 0
+                total_tickets: 0,
+                user_manual_url:'#'
             }
         },
         methods: { 
@@ -154,8 +157,10 @@
                 WebRequest2('GET', '/manage/sms-sender/ticket/list?action=notification').then(resp=>{
                     vm.isLoading = false;
                     resp.json().then(data=>{
-                        vm.ticket_list = data.data;
-                        vm.total_tickets = data.total;
+                        //console.log(data);
+                        vm.ticket_list = data.pageData.data;
+                        vm.total_tickets = data.pageData.total;
+                        vm.user_manual_url = data.manual_url
                     });
                 });
             }
