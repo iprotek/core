@@ -16,7 +16,7 @@
                             <div>
                                 <button class="btn btn-outline-primary btn-sm mr-1" @click="clickAddEditTicketModal()" > Submit New Ticket </button>
                                 <a v-if="user_manual_url != '#'" :href="user_manual_url" class="btn btn-outline-success btn-sm" target="_blank" > USER MANUAL </a>
-                                <a href="#" v-else class="btn btn-outline-danger btn-sm"> No Manual </a>
+                                <a href="#" v-else class="btn btn-outline-danger btn-sm"><i> No Manual </i> </a>
                             </div>
                         </div>
                     </div>
