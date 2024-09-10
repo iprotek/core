@@ -244,10 +244,12 @@ class PayHttp
          $response = $client->get('');
          $response_code = $response->getStatusCode(); 
          if($response_code != 200 && $response_code != 201){
-             return null;
+             return json_decode($response->getBody(), true);
          }
          $result = json_decode($response->getBody(), true);
          return $result;
     }
+
+
 
 }
