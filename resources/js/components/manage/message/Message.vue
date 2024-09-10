@@ -84,10 +84,31 @@
         },
         methods: { 
             loadPushNotifSettings:function(){
+                var vm = this;
                 WebRequest2('GET', '/manage/sms-sender/push-notif-info').then(resp=>{
                     resp.json().then(data=>{
                         console.log("NOTIF SETTINGS", data);
+                        if(data.is_active && data.name == 'PUSHER.COM')
+                            vm.loadPusher();
                     });
+                });
+            },
+            loadPusher:function(details){
+                
+                Pusher.logToConsole = true;
+
+                var pusher = new Pusher('3ba4f1b9531904744a8e', {
+                cluster: 'ap1'
+                });
+
+                var channel = pusher.subscribe('chat-channel');
+                channel.bind('notification', function(data) {
+                    console.log(data);
+                    //app.messages.push(JSON.stringify(data));
+                });
+                channel.bind('message', function(data) {
+                    console.log(data);
+                    //app.messages.push(JSON.stringify(data));
                 });
             }
         },
