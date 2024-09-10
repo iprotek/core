@@ -101,12 +101,12 @@
                 cluster: 'ap1'
                 });
 
-                var channel = pusher.subscribe('chat-channel');
-                channel.bind('notification', function(data) {
+                var chat_channel = pusher.subscribe('chat-channel');
+                chat_channel.bind('notification', function(data) {
                     console.log(data);
                     //app.messages.push(JSON.stringify(data));
                 });
-                channel.bind('message', function(data) {
+                chat_channel.bind('message', function(data) {
                     console.log(data);
                     //app.messages.push(JSON.stringify(data));
                 });
