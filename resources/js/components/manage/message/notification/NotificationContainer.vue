@@ -14,7 +14,7 @@
                         <img src="/images/temp-image.png" alt="User Avatar" class="img-size-50 mr-3 img-circle"/>
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
-                            {{ chatItem.name }}
+                            <span v-if="chatItem.is_self" class="text-primary"> <i>(Self)</i> </span> {{ chatItem.name }} 
                             <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                             </h3>
                             <p class="text-sm">Call me whenever you can...</p>
