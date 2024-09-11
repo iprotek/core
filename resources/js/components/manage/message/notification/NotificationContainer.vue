@@ -4,7 +4,7 @@
             <div class="media px-2" @click.stop="">
                 <div class="media-body">
                     <b v-text="header"></b> 
-                    <small class="mx-1 badge badge-danger">3</small>
+                    <small class="mx-1 badge badge-danger" v-if="data && data.total" v-text="data.total"></small>
                 </div>
             </div>
             <div class="dropdown-divider mt-1"></div>
@@ -29,7 +29,7 @@
                     <code> -- No Chat Available -- </code>
                     <div class="dropdown-divider"></div>
                 </div>
-                <div v-else>
+                <div v-else-if="data.other_chat_count > 0">
                     <small class="text-center">
                         <small> <i v-text="'and '+data.other_chat_count+' Others '"></i> </small>
                     </small>

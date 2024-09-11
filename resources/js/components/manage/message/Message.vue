@@ -4,7 +4,7 @@
             <a class="nav-link" data-toggle="dropdown" href="#" >
                 <i class="far fa-comments text-primary"></i>
                 <span v-if="!has_chat" class="badge badge-warning navbar-badge">!</span>
-                <span v-else class="badge badge-danger navbar-badge">3</span>
+                <span v-else-if="notification_count" class="badge badge-danger navbar-badge" v-text="notification_count"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <template v-if="has_chat">
@@ -62,6 +62,7 @@
                 ai:null,
                 group:null,
                 team:null,
+                notification_count:0
             }
         },
         methods: { 
@@ -84,7 +85,9 @@
                             vm.ai = result.ai;
                             vm.group = result.group;
                             vm.team = result.team;
- 
+                            if(result.notification_details){
+                                vm.notification_count = result.notification_details.total;
+                            }
 
                             
                         }else{
