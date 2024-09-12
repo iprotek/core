@@ -187,7 +187,7 @@
                             } 
                         }else if(data.result){
                             //vm.errorMessage = data.result.message;
-                            vm.errorMessage = "This requires login to proceed.";
+                            vm.errorMessage = "This requires centralise login account to proceed.";
                         }
 
                     })
