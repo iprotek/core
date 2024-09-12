@@ -175,7 +175,7 @@
                                 //scroll to bottom
                                 setTimeout(()=>{
                                     var el = document.querySelector('#'+vm.chatContainerEl);
-                                    console.log(el);
+                                    //console.log(el);
                                     if(el){
                                         //el.scrollTo(0, el.scrollHeight);
                                         el.scrollTo({
