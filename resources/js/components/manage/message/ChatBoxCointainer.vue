@@ -22,7 +22,19 @@
         },
         methods: { 
             addChatMessage:function(chatItem){
-                this.chats.push(chatItem);
+                var vm = this;
+                //If already exists it will not proceed.
+                var exists = vm.chats.filter(a=> a == chatItem)[0];
+                if(exists)
+                    return;
+
+                setTimeout(()=>{
+                    vm.chats.push(chatItem);
+                    if(vm.chats.length >  3){
+                        vm.chats.shift();
+                    }
+                }, 50);
+ 
             },
             removeChatMessage:function(chatItem){
                  this.chats = this.chats.filter(a=>a!=chatItem);//[chatItem];

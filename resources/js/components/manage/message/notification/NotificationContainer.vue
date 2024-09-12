@@ -14,11 +14,21 @@
                         <img src="/images/temp-image.png" alt="User Avatar" class="img-size-50 mr-3 img-circle"/>
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
-                            <span v-if="chatItem.is_self" class="text-primary"> <i>(Self)</i> </span> {{ chatItem.name }} 
-                            <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                            <small>
+                                <b v-if="chatItem.is_self" class="text-primary"> <i>(Self)</i>   </b> 
+                                <b> {{ chatItem.name }} </b>
+                            </small>
+                            <span class="float-right mx-1 badge badge-danger" v-if="chatItem.count_unseen" v-text="chatItem.count_unseen"></span>
                             </h3>
-                            <p class="text-sm">Call me whenever you can...</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            <small>
+                            <p class="text-sm" v-if="chatItem.last_message_info && chatItem.last_message_info.message && chatItem.last_message_info.chat_type == 'text'" >
+                                <small v-if="chatItem.last_message_info.is_self" class="text-secondary" v-text="limitString(chatItem.last_message_info.message)"></small>
+                                <small v-if="chatItem.last_message_info.is_self" class="text-secondary" v-text="limitString(chatItem.last_message_info.message)"></small>
+                            </p>
+                            <p  v-else>
+                                <small> <i>Not chat Available.</i> </small>
+                            </p></small>
+                            <p class="text-sm text-muted" v-if="chatItem.last_message_diff"><i class="far fa-clock mr-1"></i> {{ chatItem.last_message_diff }}</p>
                         </div>
                     </div> 
                 </a>
@@ -52,8 +62,13 @@
         },
         methods: { 
             clicktChatNotif:function(chatInfo){
-                window.addChatMessage({});
+                window.addChatMessage(chatInfo);
             },
+            limitString:function(text){
+                if(text && text.length > 10)
+                    return text.substring(0, 10)+'..';
+                return text;
+            }
 
         },
         mounted:function(){     
