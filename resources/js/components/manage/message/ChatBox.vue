@@ -152,7 +152,9 @@
                 if(!this.is_active){
                     this.is_active = true;
                     setTimeout(()=>{
-                        document.querySelector('#'+vm.chat_id).focus();
+                        var chat_input = document.querySelector('#'+vm.chat_id);
+                        if(chat_input) 
+                            chat_input.focus();
                     }, 600);
                 }
             },
@@ -216,8 +218,6 @@
                                 vm.sendText = '';
                                 vm.loadContactMessages();
                             }
-                        }else if(data.status == 0 && data.status.result){
-                            vm.$refs.swal_alert.error("Cannot be allowed");
                         }
                     })
                 });
