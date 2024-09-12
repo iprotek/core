@@ -186,7 +186,8 @@
                                 })
                             } 
                         }else if(data.result){
-                            vm.errorMessage = data.result.message;
+                            //vm.errorMessage = data.result.message;
+                            vm.errorMessage = "This requires login to proceed.";
                         }
 
                     })
