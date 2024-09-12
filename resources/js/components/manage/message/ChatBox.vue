@@ -77,6 +77,9 @@
                             </div> 
                         </div> 
                     </div>
+                    <div class="text-center" v-if="errorMessage">
+                        <code v-text="errorMessage"></code>
+                    </div>
                 </div> 
                 <!--
                 <div class="direct-chat-contacts">
@@ -96,8 +99,8 @@
                 </div> 
                 -->
             </div> 
-            <div class="card-footer" :style="'display: '+(is_minimize ? 'none;':'block;')"> 
-                <div class="input-group">
+            <div  class="card-footer" :style="'display: '+(is_minimize ? 'none;':'block;')"> 
+                <div class="input-group" v-if="!errorMessage">
                     <span class="input-group-text p-2 px-3">
                         <span :class="'fa fa-paperclip text-lg '+(is_active ? 'text-primary':'')" style="cursor:pointer;"></span>
                     </span>
@@ -108,13 +111,16 @@
                 </div> 
             </div>
         </div> 
+        <swal-alert ref="swal_alert"></swal-alert>
     </div>
 </template>
 
 <script>
+    import SwalAlertVue from '../../common/SwalAlert.vue';
     export default {
         props:[ "value" ],
         components: { 
+            "swal-alert":SwalAlertVue
         },
         data: function () {
             return {
@@ -125,7 +131,8 @@
                 is_group:false,
                 sendText:'',
                 chatContainerEl:'chat-container-'+this._uid,
-                isSend:false
+                isSend:false,
+                errorMessage:''
 
             }
         },
@@ -155,6 +162,7 @@
             },
             loadContactMessages:function(is_add = false){
                 var vm = this;
+                vm.errorMessage = '';
                 WebRequest2('GET', '/manage/message/dm/contact/'+this.value.app_user_account_id).then(resp=>{
                     resp.json().then(data=>{
                         console.log(data);
@@ -175,6 +183,8 @@
                                     }
                                 })
                             } 
+                        }else if(data.result){
+                            vm.errorMessage = data.result.message;
                         }
 
                     })
@@ -199,13 +209,15 @@
                 }
                 WebRequest2('POST', '/manage/message/dm/contact/'+this.value.app_user_account_id, request).then(resp=>{
                     resp.json().then(data=>{
-                        //console.log(data);
+                        console.log(data);
                         vm.isSend = false;
                         if(data.status == 1){
                             if(data.result.status == 1){
                                 vm.sendText = '';
                                 vm.loadContactMessages();
                             }
+                        }else if(data.status == 0 && data.status.result){
+                            vm.$refs.swal_alert.error("Cannot be allowed");
                         }
                     })
                 });

@@ -26,7 +26,7 @@
                                 <small v-else class="text-primary" v-text="'(Response) '+limitString(chatItem.last_message_info.message)"></small>
                             </p>
                             <p  v-else>
-                                <small> <i>Not chat Available.</i> </small>
+                                <small> <i>Chat Not Available.</i> </small>
                             </p></small>
                             <p class="text-sm text-muted" v-if="chatItem.last_message_diff"><i class="far fa-clock mr-1"></i> {{ chatItem.last_message_diff }}</p>
                         </div>
