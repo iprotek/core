@@ -22,8 +22,8 @@
                             </h3>
                             <small>
                             <p class="text-sm" v-if="chatItem.last_message_info && chatItem.last_message_info.message && chatItem.last_message_info.chat_type == 'text'" >
-                                <small v-if="chatItem.last_message_info.is_self" class="text-secondary" v-text="limitString(chatItem.last_message_info.message)"></small>
-                                <small v-if="chatItem.last_message_info.is_self" class="text-secondary" v-text="limitString(chatItem.last_message_info.message)"></small>
+                                <small v-if="chatItem.last_message_info.is_self" class="text-secondary" v-text="'(You) '+limitString(chatItem.last_message_info.message)"></small>
+                                <small v-else class="text-primary" v-text="'(Response) '+limitString(chatItem.last_message_info.message)"></small>
                             </p>
                             <p  v-else>
                                 <small> <i>Not chat Available.</i> </small>
