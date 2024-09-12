@@ -65,8 +65,8 @@
                 window.addChatMessage(chatInfo);
             },
             limitString:function(text){
-                if(text && text.length > 10)
-                    return text.substring(0, 10)+'..';
+                if(text && text.length > 20)
+                    return text.substring(0, 18)+'...';
                 return text;
             }
 
