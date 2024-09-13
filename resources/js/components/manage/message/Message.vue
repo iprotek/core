@@ -62,7 +62,8 @@
                 ai:null,
                 group:null,
                 team:null,
-                notification_count:0
+                notification_count:0,
+                
             }
         },
         methods: { 
@@ -75,18 +76,22 @@
                 WebRequest2('GET', '/manage/message/notifications').then(resp=>{
                     vm.isLoading = false;
                     resp.json().then(data=>{
-                        console.log("Info", data);
+                        console.log("Chat Settings", data);
                         if(data.status == 1){
                             
-                            var result = data.result;
-                            vm.has_chat = true;
-                            vm.dm = result.dm;
-                            console.log("DM", result.dm);
-                            vm.ai = result.ai;
-                            vm.group = result.group;
-                            vm.team = result.team;
-                            if(result.notification_details){
-                                vm.notification_count = result.notification_details.total;
+                            if(data.result.is_active == true){
+                                var result = data.result;
+                                vm.has_chat = true;
+                                vm.dm = result.dm;
+                                vm.ai = result.ai;
+                                vm.group = result.group;
+                                vm.team = result.team;
+                                if(result.notification_details){
+                                    vm.notification_count = result.notification_details.total;
+                                }
+                            }else if(data.result.message){
+                               vm.error_message = "Chat Settings Invalidated.";
+                               //vm.error_message = data.result.message;
                             }
 
                             
