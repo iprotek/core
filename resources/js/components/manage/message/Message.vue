@@ -79,7 +79,7 @@
                         console.log("Chat Settings", data);
                         if(data.status == 1){
                             
-                            if(data.result.is_active == true){
+                            if(data.result.client){
                                 var result = data.result;
                                 vm.has_chat = true;
                                 vm.dm = result.dm;
