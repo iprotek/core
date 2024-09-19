@@ -89,6 +89,7 @@
                                 if(result.notification_details){
                                     vm.notification_count = result.notification_details.total;
                                 }
+                                vm.loadPusherInfo();
                             }else if(data.result.message){
                                vm.error_message = "Chat Settings Invalidated.";
                                //vm.error_message = data.result.message;
@@ -125,15 +126,15 @@
             loadPusherInfo:function(){
 
                 var vm = this;
-                /*
+                
                 WebRequest2('GET', '/manage/message/push-notif-info').then(resp=>{
                     resp.json().then(data=>{
                         console.log("NOTIF SETTINGS", data);
-                        if(data.is_active && data.name == 'PUSHER.COM')
-                            vm.loadPusher();
+                        //if(data.is_active && data.name == 'PUSHER.COM')
+                            //vm.loadPusher();
                     });
                 });
-                */
+                
             }
         },
         mounted:function(){     
