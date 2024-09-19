@@ -127,6 +127,7 @@
 
                 var vm = this;
                 
+                //FOR MESSAGING PUSH NOTIF INFO
                 WebRequest2('GET', '/manage/message/push-notif-info').then(resp=>{
                     resp.json().then(data=>{
                         console.log("NOTIF SETTINGS", data);
