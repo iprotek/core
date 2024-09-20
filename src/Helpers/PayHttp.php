@@ -256,13 +256,36 @@ class PayHttp
 
             if(is_array($client_info)){
                 $socket_settings = isset( $client_info['socket_settings'] ) ?  $client_info['socket_settings'] : null;
+                if($socket_settings){
+                    $socket_settings = json_decode( json_encode($socket_settings), TRUE);
+                } 
                 return $socket_settings;
             }
             else{
-                return $client_info->socket_settings; 
+                if(isset( $client_info->socket_settings ) ){
+                    $socket_settings = json_decode( json_encode($client_info->socket_settings), TRUE);
+                    return $socket_settings;
+                } 
             }
         }
         return null;
+    }
+
+    public static function send_pusher_notification($channel, $bind_trigger, $data){
+        
+        $options = array(
+            'cluster' => 'ap1', //cluster
+            'useTLS' => false
+          );
+          $pusher = new \Pusher\Pusher(
+            '3ba4f1b9531904744a8e', //key
+            '1b7dd30d6604966641ab', //secrete
+            '1858123', //app_id
+            $options
+          );
+        
+          $data['message'] = 'new sms';
+          $pusher->trigger('sms', 'add', $data);
     }
 
 
