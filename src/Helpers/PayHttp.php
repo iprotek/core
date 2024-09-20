@@ -271,21 +271,34 @@ class PayHttp
         return null;
     }
 
-    public static function send_pusher_notification($channel, $bind_trigger, $data){
-        
-        $options = array(
-            'cluster' => 'ap1', //cluster
-            'useTLS' => false
-          );
-          $pusher = new \Pusher\Pusher(
-            '3ba4f1b9531904744a8e', //key
-            '1b7dd30d6604966641ab', //secrete
-            '1858123', //app_id
-            $options
-          );
-        
-          $data['message'] = 'new sms';
-          $pusher->trigger('sms', 'add', $data);
+    public static function send_pusher_notification($channel, $bind_trigger, $data=[]){
+        $pusher_info = static::pusher_info();
+
+        if($pusher_info && $pusher_info['is_active'] && $pusher_info['socket_name'] == 'PUSHER.COM'){
+
+
+            $cluster = isset($pusher_info['cluster']) ? $pusher_info['cluster']:"";
+            $key = isset($pusher_info['key']) ? $pusher_info['key']:"";
+            $secret = isset($pusher_info['secret']) ? $pusher_info['secret']:"";
+            $app_id = isset($pusher_info['app_id']) ? $pusher_info['app_id']:"";  
+            
+            $options = array(
+                'cluster' => $cluster,//'ap1', //cluster 
+                'useTLS' => false
+            );
+            $pusher = new \Pusher\Pusher(
+                $key,//'3ba4f1b9531904744a8e', //key
+                $secret, //'1b7dd30d6604966641ab', //secret
+                $app_id, //'1858123', //app_id
+                $options
+            );
+            
+            //$data['message'] = 'new sms';
+            $pusher->trigger($channel, $bind_trigger, $data);
+
+
+        }
+
     }
 
 
