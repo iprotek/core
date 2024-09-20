@@ -250,7 +250,7 @@ class PayHttp
          return $result;
     }
 
-    public function pusher_info(){
+    public static function pusher_info(){
         $client_info = static::client_info(); 
         if($client_info){
 
