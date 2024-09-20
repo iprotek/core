@@ -250,6 +250,21 @@ class PayHttp
          return $result;
     }
 
+    public function pusher_info(){
+        $client_info = static::client_info(); 
+        if($client_info){
+
+            if(is_array($client_info)){
+                $socket_settings = isset( $client_info['socket_settings'] ) ?  $client_info['socket_settings'] : null;
+                return $socket_settings;
+            }
+            else{
+                return $client_info->socket_settings; 
+            }
+        }
+        return null;
+    }
+
 
 
 }
