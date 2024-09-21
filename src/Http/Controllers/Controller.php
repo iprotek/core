@@ -25,5 +25,8 @@ class Controller extends BaseController
         return ["message"=>"Successful"];
     }
 
+    public function check_app_compatibility(Request $request){
+        return ["status"=>1, "message"=>"Compatible."];
+    }
 
 }

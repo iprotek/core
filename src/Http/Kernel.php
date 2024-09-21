@@ -46,5 +46,6 @@ class Kernel extends HttpKernel
         'pay.api'=>\iProtek\Core\Http\Middleware\PayAppUserAccountApi::class,
         'super_admin'=>\iProtek\Core\Http\Middleware\SuperAdmin::class,
         'auth_web_pay_checker'=>\iProtek\Core\Http\Middleware\AuthWebPayChecker::class,
+        'pay_app_check'=>\iProtek\Core\Http\Middleware\PayAppCompatibleCheck::class
     ];
 }
