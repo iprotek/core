@@ -28,7 +28,7 @@ class PayAppCompatibleCheck
 
         $client_id = trim( config('iprotek.pay_client_id') ?: "" );
         $client_secret = trim( config('iprotek.pay_client_secret') ?: "");
-        $app_type = trim( config('iprotek.type') ?: "");
+        $app_type = trim( config('iprotek.app_type') ?: "");
 
         if( $header_client_id != $client_id || $header_client_secret != $client_secret  ){
             //return ["status"=>0, "message"=>"Invalid"];
