@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace iProtek\Core\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -31,7 +31,13 @@ class PayAppCompatibleCheck
         $app_type = trim( config('iprotek.type') ?: "");
 
         if( $header_client_id != $client_id || $header_client_secret != $client_secret || $header_app_type != $app_type ){
-            abort(403, 'Invalid Credentials');
+            //return ["status"=>0, "message"=>"Invalid"];
+            return response()->json([
+                'status'=>0,
+                'error' => 'Unauthorized',
+                'message' => 'Invalid Credential'
+            ], 403);
+            //abort(403, 'Invalid Credentials');
         }
 
 

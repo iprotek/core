@@ -10,7 +10,7 @@ use iProtek\Core\Http\Controllers\AppVariableController;
 Route::middleware('api')->group(function(){
     Route::prefix('api')->group(function(){
 
-        Route::get('check-app-compatibility', [\iProtek\Core\Http\Controllers\Controller::class, 'check_app_compatibility'])->name('api.check-app-compatibility');
+        Route::middleware('pay_app_check')->get('check-app-compatibility', [\iProtek\Core\Http\Controllers\Controller::class, 'check_app_compatibility'])->name('api.check-app-compatibility');
 
 
         Route::get('app-info', [\App\Http\Controllers\AppInfoController::class, 'app_info'])->name('api.app-info');
