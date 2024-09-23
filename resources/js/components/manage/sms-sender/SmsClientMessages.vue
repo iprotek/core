@@ -12,36 +12,45 @@
                         <table class="table custom-red-table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>To Number</th>
+                                    <th style="width:20px;">#</th>
+                                    <th style="width:35px;">To Number</th>
                                     <th>Messages</th>
-                                    <th>Status</th>
-                                    <th>Sender Id</th>
-                                    <th>Sender Number</th>
-                                    <th>Created At</th>
-                                    <th></th>
+                                    <th style="width:100px;">Status</th>
+                                    <th style="width:40px;">SenderId</th> 
+                                    <th style="width:100px;">Created At</th>
+                                    <th style="width:50px;"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-if="isLoading">
-                                    <th colspan="8" class="text-center">
+                                    <th colspan="7" class="text-center">
                                         <code> Loading Messages </code>
                                     </th>
                                 </tr>
                                 <tr v-else-if="messageItems.length == 0">
-                                    <th colspan="8" class="text-center">
+                                    <th colspan="7" class="text-center">
                                         <code> No Message Found </code>
                                     </th>
                                 </tr> 
                                 <tr v-for="(msg, msgIndex) in messageItems" v-bind:key="'msg-'+msg.id+'-'+msgIndex">
                                     <th v-text="msg.id"></th>
-                                    <td v-text="msg.to_number"></td>
+                                    <td class="text-nowrap" v-text="msg.to_number"></td>
                                     <td v-text="msg.message"></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>
+                                        <small v-text="msg.status_info"></small>
+                                        <div v-if="msg.sent_at">
+                                            <small class="text-primary text-nowrap" v-text="msg.sent_at"></small>
+                                        </div>
+                                    </td>
+                                    <td class="text-center" v-text="msg.sender_id"></td> 
+                                    <td >
+                                        <small v-text="msg.created_at" class="text-nowrap text-secondary"></small>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-outline-danger btn-sm">
+                                            <span class="fa fa-times"></span>
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
