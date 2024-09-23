@@ -1,23 +1,21 @@
 <template>
     <div>
-        <div class="row ">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
-                </div>
-            </div>
-        </div>
+        <sms-client-api :group_id="group_id"></sms-client-api>
+        <sms-client-message :group_id="group_id"></sms-client-message>
+        <sms-client-received-message :group_id="group_id"></sms-client-received-message>
     </div>
 </template>
 
 <script>
+    import SmsClientApiVue from './SmsClientApi.vue';
+    import SmsClientMessagesVue from './SmsClientMessages.vue';
+    import SmsClientReceivedMessagesVue from './SmsClientReceivedMessages.vue';
     export default {
         props:[ "group_id" ],
-        components: { 
+        components: {
+            "sms-client-api":SmsClientApiVue,
+            "sms-client-message":SmsClientMessagesVue,
+            "sms-client-received-message":SmsClientReceivedMessagesVue
         },
         data: function () {
             return {    
