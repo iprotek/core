@@ -9,6 +9,16 @@
                             <span class="fa fa-plus"></span> 
                             CREATE SMS MESSAGE
                         </button>
+                        <div class="input-group text-sm my-1">
+                            <span class="btn btn-default">
+                                <small title="Search" class="fa fa-search text-primary">
+                                    </small>
+                            </span> 
+                            <input v-model="search" type="text" class="form-control" @keyup.enter="loadMessages()">
+                            <span class="btn btn-default">
+                                <small title="Search" class="text-primary" @click="loadMessages()"> Search </small>
+                            </span> 
+                        </div>
                         <table class="table custom-red-table">
                             <thead>
                                 <tr>
@@ -37,7 +47,9 @@
                                     <td class="text-nowrap" v-text="msg.to_number"></td>
                                     <td v-text="msg.message"></td>
                                     <td>
-                                        <small v-text="msg.status_info"></small>
+                                        <small v-if="msg.status_id == 0" v-text="msg.status_info" class="text-warning"></small>
+                                        <small v-else-if="msg.status_id == 1"  v-text="msg.status_info" class="text-success"></small>
+                                        <small v-else v-text="msg.status_info" class="text-danger"></small>
                                         <div v-if="msg.sent_at">
                                             <small class="text-primary text-nowrap" v-text="msg.sent_at"></small>
                                         </div>
@@ -47,7 +59,7 @@
                                         <small v-text="msg.created_at" class="text-nowrap text-secondary"></small>
                                     </td>
                                     <td>
-                                        <button class="btn btn-outline-danger btn-sm">
+                                        <button class="btn btn-outline-danger btn-sm" @click="remove_message(msg.id)">
                                             <span class="fa fa-times"></span>
                                         </button>
                                     </td>
@@ -62,6 +74,7 @@
             </div>
         </div>
         <modal-add-sms-message ref="modal_add_sms_message" @data_updated="data_updated"></modal-add-sms-message>
+        <swal ref="swal_prompt"></swal> 
     </div>
 </template>
 
@@ -105,6 +118,20 @@
                         vm.pageData = data;
                         vm.messageItems = data.data;
                     });
+                });
+            },
+            remove_message:function(id){
+                var vm = this;
+                this.$refs.swal_prompt.alert(
+                    'question',
+                    "Delete this message?", 
+                    "Confirm" , 
+                    "DELETE", 
+                    "/manage/sms-sender/delete-message/"+id 
+                ).then(res=>{
+                    if(res.isConfirmed){
+                        vm.loadMessages();
+                    }
                 });
             }
         },
