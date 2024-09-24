@@ -16,7 +16,7 @@
                     <user-input2 v-model="to_number" :input_style="'height:37px;'" :placeholder="'To Mobile Number'" :placeholder_description="'Send to mobile number'"></user-input2>
                     
                     <label class="mt-2">Message:</label>
-                    <textarea v-model="message" class="form-control" style="height:80px" maxlength="80"></textarea>
+                    <textarea v-model="message" class="form-control" style="height:80px" maxlength="150"></textarea>
 
 
                 </div>
