@@ -24,6 +24,7 @@
         methods: { 
             value_changed:function(){
                 this.$emit("input", this.input_check);
+                this.$emit("value_changed", this.input_check);
             },
             setOn:function(check){
                 this.input_value = check ? true:false;
