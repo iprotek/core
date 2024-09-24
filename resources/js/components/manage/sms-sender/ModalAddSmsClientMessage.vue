@@ -63,8 +63,8 @@
                 this.id = 0;
                 this.message = '';
                 this.to_number = '';
-                this.selItem.id = 0;
-                this.selItem.text = '';
+                //this.selItem.id = 0;
+                //this.selItem.text = '';
             },
             send_message:function(){
                 var vm = this;
