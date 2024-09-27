@@ -54,7 +54,7 @@ class HomeController extends _CommonController
     }
 
     public function privacy_policy(Request $request){
-        return view('privacy-policy-content');
+        return view('iprotek_core::privacy-policy-content');
     }
 
 }

@@ -11,5 +11,6 @@ return [
     'api_description'=>env('APP_DESCRIPTION', ''),
     'pay_message_url'=>env('PAY_MESSAGE_URL', '' ),
     "pay_sms_report_url"=>env('PAY_SMS_REPORT_URL','www.iprotek.net'),
-    'app_type'=>env('PAY_IPROTEK_TYPE','')
+    'app_type'=>env('PAY_IPROTEK_TYPE',''),
+    "cart_url"=>env('PAY_CART_URL', '')
 ];

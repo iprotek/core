@@ -1,6 +1,6 @@
 <?php
     $show_background_image = 0;
-    $cart_url = "/cart";
+    $cart_url = config('iprotek.cart_url'); //isset($cart_url) ? "/cart" : "";
 ?>
 @section('bg_image_style', "background-position: center; background-repeat: no-repeat;background-attachment: fixed;background-size: cover;")
 @section('bg_color_style', "background-color:#0000000d; color:white;")
@@ -120,7 +120,7 @@
             <div class="col-sm-12">
                 <div class="card mt-3">
                     <div class="card-body text-black">
-                     @include('layout.content.privacy-policy')
+                     @include('iprotek_core::layouts.privacy-policy')
                     </div>
                 </div>
             </div>
