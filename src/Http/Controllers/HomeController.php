@@ -49,4 +49,12 @@ class HomeController extends _CommonController
         return view('about-us');
     }
 
+    public function terms_and_conditions(Request $request){
+        return view('iprotek_core::terms-and-condition-content');
+    }
+
+    public function privacy_policy(Request $request){
+        return view('privacy-policy-content');
+    }
+
 }
