@@ -16,7 +16,7 @@ class CompanyDetailsController extends _CommonController
     }
     public function index(Request $request){
 
-        return $this->view('manage.company-details.index');
+        return $this->view('iprotek_core::company-details.index');
     }
 
     public function update_profile(Request $request){
