@@ -13,6 +13,10 @@ Route::middleware('web')->group(function(){
     Route::get('/', [iProtek\Core\Http\Controllers\MainPageController::class, 'index'])->name('mainpage');
 
   }); 
+
+  //COMPANY PROFIFE
+  Route::get('/get-profile-data', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'get_profile'])->name('.get-profile-data');
+    
   
   //PRIVACY POLICY AND TERMS AND CONDITIONS
   Route::get('/terms-and-conditions', [iProtek\Core\Http\Controllers\HomeController::class, 'terms_and_conditions'])->name('terms-and-conditions');
