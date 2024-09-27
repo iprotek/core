@@ -60,7 +60,7 @@
         <li>
           <p>
             <strong>Company</strong> (referred to as either "the Company", "We",
-            "Us" or "Our" in this Agreement) refers to iProtek IT Solutions,
+            "Us" or "Our" in this Agreement) refers to <?=config('app.name')?>,
             Alegria Cordova Cebu.
           </p>
         </li>
@@ -511,10 +511,10 @@
           <p>
             By visiting this page on our website:
             <a
-              href="https://www.iprotek.net/contact"
+              href="<?=config('app.url')?>/contact"
               rel="external nofollow noopener"
               target="_blank"
-              >https://www.iprotek.net/contact</a
+              ><?=config('app.url')?>/contact</a
             >
           </p>
         </li>

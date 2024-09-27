@@ -2699,10 +2699,10 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     Policy:<strong
       >&nbsp;<span style="color: rgb(0, 58, 250);"
         ><a
-          href="<?=config('app.url')?>privacy-policy"
+          href="<?=config('app.url')?>/privacy-policy"
           target="_blank"
           data-custom-class="link"
-          ><?=config('app.url')?>privacy-policy</a
+          ><?=config('app.url')?>/privacy-policy</a
         ></span
       ></strong
     >. By using the Services, you agree to be bound by our Privacy Policy, which
