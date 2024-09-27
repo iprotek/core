@@ -33,7 +33,27 @@
     <span
       style="font-size:11.0pt;line-height:115%;font-family:Arial;Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     >
-      We are iProtek IT Solutions, doing business as iProtek
+    <?php
+      $firstWord = function($string){
+          // Trim leading and trailing spaces
+          $trimmedString = trim($string);
+
+          // Remove any special characters like comma
+          $cleanedString = preg_replace('/[^a-zA-Z0-9\s]/', '', $trimmedString);
+
+          // Split the string into an array of words
+          $words = explode(" ", $cleanedString);
+
+          // Get the first word (Hello)
+          $firstWord = $words[0];
+
+          return $firstWord;
+      };
+
+    ?>
+
+
+      We are <?=config('app.name')?>, doing business as <?=$firstWord(config('app.name'))?>
       ("<strong>Company</strong>," "<strong>we</strong>," "<strong>us</strong>,"
       "<strong>our</strong>")
       <span
