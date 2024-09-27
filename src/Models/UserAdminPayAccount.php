@@ -22,4 +22,5 @@ class UserAdminPayAccount extends Model
         "pay_deleted_by",
         "sub_account_group_id",
     ];
+
 }
