@@ -109,7 +109,7 @@
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
         }
     </style>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDEWsoInCSktMHcm0ioXECJCLU4clAjV2o&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?=config('iprotek.google_map_key')?>&libraries=places"></script>
     
     <!-- ANIMATION -->
 @endsection
