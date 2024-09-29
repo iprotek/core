@@ -112,7 +112,11 @@
                 }
 
                 setTimeout(function(){
-                    document.querySelector('.note-icon-question').closest('button').remove();
+                    var note_icon = document.querySelector('.note-icon-question');
+                    if(note_icon){
+                        var btn = note_icon.closest('button');
+                        if(btn) btn.remove();
+                    }
                     //document.querySelector('.note-icon-picture').closest('button').remove();
                     //document.querySelector('.note-icon-video').closest('button').remove();
                     //document.querySelector('.note-icon-link').closest('button').remove();
