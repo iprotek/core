@@ -84,7 +84,18 @@ class _CommonController extends BaseController
         //var_dump($sidemenus[0]->items);
        // abort(200);
 
-        return ["SIDEMENUS"=>$sidemenus, "USER"=>$user];
+
+       //GROUP ID
+
+       $user_id = $user->id;
+       $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where('user_admin_id', $user_id)->first();
+       $group_id = 0;
+       if($pay_account){
+          $group_id = $pay_account->default_proxy_group_id;
+        }
+       
+
+        return ["SIDEMENUS"=>$sidemenus, "USER"=>$user, "group_id"=>$group_id];
     }
 
     public function loginpage()
