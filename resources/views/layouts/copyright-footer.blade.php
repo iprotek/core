@@ -1,5 +1,5 @@
 
-<footer class="main-footer m-0 sticky-bottom py-1">
+<footer class="main-footer m-0 sticky-bottom py-1 bg-white">
     <div  class="row mx-4">
         <div class="col-sm-5">
             <strong>Copyright©2024 <a href="/">{{ config('app.name') }}</a>.</strong> All rights reserved.
