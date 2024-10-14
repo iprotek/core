@@ -60,7 +60,7 @@ class _CommonController extends BaseController
 
                         $newList = [];
                         //Filter inside the items
-                        if(  !$sidemenus || is_array($array)  || $sideItem->items == null || !$sidemenus->items)
+                        if(  !$sidemenus || $sideItem->items == null || !$sideItem->items)
                             continue;
                         foreach($sideItem->items as $subItem){
                             
