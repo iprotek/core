@@ -60,6 +60,8 @@ class _CommonController extends BaseController
 
                         $newList = [];
                         //Filter inside the items
+                        if( !$sidemenus || $sideItem->items == null || !$sidemenus->items)
+                            continue;
                         foreach($sideItem->items as $subItem){
                             
                             //if($subItem->user_types != null && $subItem->user_types != ""){ 
