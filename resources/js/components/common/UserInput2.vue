@@ -8,21 +8,25 @@
             </div>
             <div class="input-group-text form-control text-nowrap" style="padding:0px; max-width:100%;">
                 <div class="user-input-wrp" style="margin-top:-25px;"><br>
-                    <input :id="input2_id" v-model="input_value" @keyup="userInputKeyUp" @change="value_changed" @focus="focusenter" @focusout="focusout" :readonly="is_readonly" :type="type ? type:'text' " class="inputText" :disabled="is_disabled" :style="'border:0px;'+input_style" required="" :title="placeholder_description">
+                    <input :list="'user-input2-list-'+_uid" :id="input2_id" v-model="input_value" @keyup="userInputKeyUp" @change="value_changed" @focus="focusenter" @focusout="focusout" :readonly="is_readonly" :type="type ? type:'text' " class="inputText" :disabled="is_disabled" :style="'border:0px;'+input_style" required="" :title="placeholder_description">
                     <span :id="label_id" class="floating-label" v-html="placeholder" :title="placeholder_description" :style="placeholder_style"></span>
                 </div>
             </div>
         </div>
         <div v-else class="user-input-wrp"><br>
-            <input :id="input2_id" v-model="input_value" @keyup="userInputKeyUp" @change="value_changed" @focus="focusenter" @focusout="focusout" :readonly="is_readonly" :type="type ? type:'text' " class="inputText" :disabled="is_disabled" :style="input_style" required="" :title="placeholder_description">
+            <input :list="'user-input2-list-'+_uid" :id="input2_id" v-model="input_value" @keyup="userInputKeyUp" @change="value_changed" @focus="focusenter" @focusout="focusout" :readonly="is_readonly" :type="type ? type:'text' " class="inputText" :disabled="is_disabled" :style="input_style" required="" :title="placeholder_description">
             <span :id="label_id" class="floating-label" v-html="placeholder" :title="placeholder_description" :style="placeholder_style"></span>
         </div>
         <i v-if="placeholder_description"><small class="text-secondary" v-html="placeholder_description"> </small></i>
+        <datalist v-if="datalist" :id="'user-input2-list-'+_uid" >
+            <option v-for="(ditem,dIndex) in datalist" v-bind:key="'user-input2-list-'+_uid+'-'+dIndex" :value="ditem"></option>
+        </datalist>
     </div>
+
 </template>
 <script>
     export default {
-        props:[ "type","placeholder","prepend_icon_title" , "input_style", "placeholder_style", "readonly" , "placeholder_description", "placeholder_focus_color", "disabled", "value", "prepend_icon"],
+        props:[ "type","placeholder","prepend_icon_title" , "input_style", "placeholder_style", "readonly" , "placeholder_description", "placeholder_focus_color", "disabled", "value", "prepend_icon" , "datalist"],
         components: { 
         },
         watch: {
