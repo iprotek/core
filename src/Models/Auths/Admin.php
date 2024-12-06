@@ -69,7 +69,7 @@ class Admin extends Authenticatable
     ];
 
     public function getDefaultImageAttribute(){
-        $fileUpload = FileUpload::where('target_name', 'user_admins')->where('target_id', $this->id)->first();
+        $fileUpload = FileUpload::where('target_name', 'user_admins')->where('target_id', $this->id)->orderBy('is_default','DESC')->first();
         if($fileUpload){
             return "/image-preview/".$fileUpload->id;
         }
