@@ -9,7 +9,7 @@ use iProtek\Core\Models\FileUpload;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use iProtek\Core\Helpers\PayModelHelper; 
-
+use iProtek\Core\Helpers\AppVarHelper;
 
 class FileUploadController extends _CommonController
 {
@@ -85,6 +85,13 @@ class FileUploadController extends _CommonController
         FileUpload::where(["target_name"=> $request->target_name, "target_id"=>$request->target_id,"is_default"=>1 ])->update(["is_default"=>0]);
         $id->is_default = 1;
         $id->save();
+
+        //CHECK FOR LOGO
+        if($id->target_name == 'business_logos' && $id->is_default == 1){
+            AppVarHelper::set("business_logo_url", $id->public_link);
+            AppVarHelper::set("business_logo_type", $id->file_type);
+        } 
+
         return ["status"=>1, "data"=>"", "message"=>"Default set."];
     }
 
@@ -139,6 +146,11 @@ class FileUploadController extends _CommonController
             $url = Storage::url('images/'.$fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext);
         }else{
             $url = config('app.url').Storage::url('images/'.$fileUpload->target_id."_".$fileUpload->id.".".$fileUpload->file_ext);
+        }
+        
+        if($fileUpload->target_name == 'business_logos' && $fileUpload->is_default == 1){
+            AppVarHelper::set("business_logo_url", $fileUpload->public_link);
+            AppVarHelper::set("business_logo_type", $fileUpload->file_type);
         }
 
         return ["status"=>1, "data"=>"", "message"=>"Image Successfully Added.", "url"=>$url];

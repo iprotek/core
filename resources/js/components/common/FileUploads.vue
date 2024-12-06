@@ -59,7 +59,7 @@
                     </tfoot>
                 </table>
             </div> 
-            <swal ref="swal_prompt"></swal>
+            <swal2 ref="swal_prompt"></swal2>
             <preview-image ref="preview_image"></preview-image>
         </div>
     </div>
@@ -71,7 +71,7 @@
     export default {
         props:[ "target_name" , "value", "gallery_title", "group_id"],
         components: { 
-            "swal":SwalVue,
+            "swal2":SwalVue,
             "preview-image":PreviewImageVue,
             "button-copy": ButtonCopy
         },
@@ -179,9 +179,21 @@
             file_changed:function(evt){ 
                 var vm = this;
                 const formData = new FormData();
-                console.log(evt.target);
                 var file = evt.target.files[0];
                 var file_ext = this.getFileExt(file.name);
+                
+                /*
+                console.log(evt.target);
+                console.log({
+                    target_name: vm.target_name,
+                    target_id: vm.target_id,
+                    file: file.name,
+                    file_type: file.type,
+                    file_ext: file_ext,
+                    group_id: vm.group_id
+                });
+                return null; 
+                */
 
                 if(file.type.split('/')[0] == "image"){
                     this.imageCompression(evt).then(comp=>{
@@ -197,6 +209,7 @@
                         formData.append('file_name', file.name);
                         formData.append('file_type', file.type);
                         formData.append('file_ext', file_ext);
+                         
                         vm.$refs.swal_prompt.alert(
                                 'question', 
                                 "Add Image", 

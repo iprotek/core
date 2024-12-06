@@ -52,13 +52,13 @@
                     <button class="btn btn-outline-secondary btn-lg m-1 disabled">
                         Theme Color
                     </button>
-                    <button class="btn btn-outline-warning btn-lg m-1" @click="$refs.modal_business_logo.show()">
+                    <button class="btn btn-outline-primary btn-lg m-1" @click="$refs.modal_business_logo.show()">
                         Icon/Logo
                     </button>
-                    <button class="btn btn-outline-primary btn-lg m-1 disabled" >
-                        Booking Terms and Conditions
+                    <button v-if="has_terms" class="btn btn-outline-primary btn-lg m-1 disabled" >
+                        Terms and Conditions
                     </button>
-                    <button class="btn btn-outline-primary btn-lg m-1 disabled" >
+                    <button v-if="has_about" class="btn btn-outline-primary btn-lg m-1 disabled" >
                         About Us
                     </button>
                 </div>
@@ -78,7 +78,7 @@
     import UserInput2Vue from './UserInput2.vue';
     import SwalVue from './Swal.vue';
     export default {
-        props:[  ],
+        props:[ "has_terms","has_about"  ],
         components: { 
             "user-input2":UserInput2Vue,
             //"modal-business-backgrounds": ModalBusinessBackgroundsVue,

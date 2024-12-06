@@ -44,21 +44,21 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-header">
-                        DESIGNS AND THEME
+                        DESIGNS AND THEMES
                     </div>
                     <button class="btn btn-outline-primary btn-lg m-1" @click="$refs.modal_business_background.show()">
                         Background Images
                     </button>
-                    <button class="btn btn-outline-secondary btn-lg m-1 disabled">
+                    <button class="btn btn-outline-primary btn-lg m-1 disabled">
                         Theme Color
                     </button>
-                    <button class="btn btn-outline-warning btn-lg m-1" @click="$refs.modal_business_logos.show()">
+                    <button class="btn btn-outline-primary btn-lg m-1" @click="$refs.modal_business_logos.show()">
                         Icon/Logo
                     </button>
-                    <button class="btn btn-outline-primary btn-lg m-1" @click="$refs.modal_terms_conditions.show()">
-                        Booking Terms and Conditions
+                    <button class="btn btn-outline-primary btn-lg m-1 disabled" @click="$refs.modal_terms_conditions.show()">
+                       Terms and Conditions
                     </button>
-                    <button class="btn btn-outline-primary btn-lg m-1" @click="$refs.modal_about_us.show()">
+                    <button class="btn btn-outline-primary btn-lg m-1 disabled" @click="$refs.modal_about_us.show()">
                         About Us
                     </button>
                 </div>
