@@ -37,6 +37,8 @@ use iProtek\Core\Helpers\AppVarHelper;
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="/iprotek/css/icons.css">
+    <link rel="stylesheet" href="/iprotek/css/ribbon.css">
     
     <!-- Scripts -->
 

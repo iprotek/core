@@ -33,6 +33,22 @@ class _CommonController extends BaseController
         }
     }
 
+    public function sort_filter(Request $request, $model){
+        if($request->filter){
+            $filter = json_decode($request->filter, TRUE);
+
+            if($filter && is_array($filter) ){
+                foreach(array_keys($filter) as $key){
+                    $model->orderBy($key, $filter[$key]);
+                }
+            }
+
+        }
+
+
+
+    }
+
 
     public function _CResult($retval, $message, $dataid)
     {

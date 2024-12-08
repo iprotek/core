@@ -18,8 +18,14 @@
                             <thead>
                                 <tr>
                                     <th>Ticket No#</th>
-                                    <th>Type</th>
-                                    <th>Title</th>
+                                    <th>
+                                        Type 
+                                        <sort-el v-model="filter" :field="'ticket_type'"  :active_class="'text-primary'" :inactive_class="'text-white'" :is_right="true" @sort_changed="loadTicketList()" />
+                                    </th>
+                                    <th>
+                                        Title
+                                        <sort-el v-model="filter" :field="'title'"  :active_class="'text-primary'" :inactive_class="'text-white'" :is_right="true" @sort_changed="loadTicketList()" />
+                                    </th>
                                     <th>Requestor</th>
                                     <th>Contacts</th>
                                     <th>Chats</th>
@@ -97,11 +103,13 @@
 
 <script> 
     import PageFooterVue from '../../../common/PageFooter.vue';
+    import SortElVue from '../../../common/SortEl.vue';
 
     export default {
         props:[  ],
         components: {
-                "page-footer":PageFooterVue
+            "page-footer":PageFooterVue,
+            "sort-el":SortElVue
         },
         data: function () {
             return {  
@@ -109,7 +117,8 @@
                 ticketList:[],
                 isLoading:false,
                 current_page:1, 
-                search:''
+                search:'',
+                filter:{}
             }
         },
         methods: { 
@@ -165,12 +174,13 @@
                 WebRequest2('GET', '/manage/sms-sender/ticket/list?'+this.queryString({
                     page: this.current_page,
                     search_text: this.search,
-                    items_per_page: 10
+                    items_per_page: 10,
+                    filter: JSON.stringify( this.filter )
                 })).then(resp=>{
 
                     vm.isLoading = false;
                     resp.json().then(data=>{
-                        //console.log(data);
+                        console.log("HELPDESK", data);
                         vm.pageData = data;
                         vm.ticketList = data.data;
                     });
