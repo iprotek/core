@@ -69,6 +69,9 @@
     <link rel="stylesheet" href="/iprotek/css/w3school/preview-image.css">
     
     <style>
+        .sidebar-collapse .brand-link .brand-text b{
+            display:none;
+        }
         /** STYLE FOR LOADING */
         .bd-example-modal-lg .modal-dialog{
             display: table;
