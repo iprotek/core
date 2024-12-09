@@ -14,11 +14,12 @@
         </div>
     </div>
 </footer>
-
-<div style="bottom:10%; right:10%; position:fixed; z-index:1000;"> 
-    <div  class="row justify-content-end">
-        <div  class="col-sm-2 text-center">
-            <span onclick="ShowChatDialog()" class="ion ion-chatbubble-working text-white" style="font-size:80px; text-shadow: 0px 0px 4px black; cursor:pointer;"></span>
+@if(!auth('admin')->check())
+    <div style="bottom:10%; right:10%; position:fixed; z-index:10000;"> 
+        <div  class="row justify-content-end">
+            <div  class="col-sm-2 text-center">
+                <span onclick="ShowChatDialog()" class="ion ion-chatbubble-working text-white" style="font-size:80px; text-shadow: 0px 0px 4px black; cursor:pointer;"></span>
+            </div>
         </div>
     </div>
-</div>
+@endif
