@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route; 
-
+use Illuminate\Http\Request;
+use iProtek\Core\Helpers\UISettingHelper;
 //Route::prefix('sms-sender')->name('sms-sender')->group(function(){
   //  Route::get('/', [SmsController::class, 'index'])->name('.index');
 //});
@@ -26,18 +27,20 @@ Route::middleware('web')->group(function(){
   Route::middleware('throttle:10,5')->get('/login', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'setup' ])->name('login');
   Route::middleware('throttle:5,5')->post('/login', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'login_pay_account' ])->name('pay-login');
   
+
+  /** PAY ACCOUNT MANAGEMENT */
   Route::get('/logout', [ iProtek\Core\Http\Controllers\Auth\LoginController::class, 'logout' ])->name('.get-logout');
   Route::post('/logout', [ iProtek\Core\Http\Controllers\Auth\LoginController::class, 'logout' ])->name('.post-logout');
   Route::post('/pay-forget-password', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'post_forgot_password' ])->name('.pay-forget-password');
   Route::get('/pay-account',  [ iProtek\Core\Http\Controllers\Manage\DashboardController::class, 'pay_acccount' ])->name('.pay-account');
 
 
-  Route::prefix('languages')->name('languages.')->group(function(){
-    Route::post('/', [iProtek\Core\Http\Controllers\LanguagesController::class, 'get_translation'])->name('get-translation');
-    Route::get('/', [iProtek\Core\Http\Controllers\LanguagesController::class, 'get_languages'])->name('get-languages');
-    Route::get('/get', [iProtek\Core\Http\Controllers\LanguagesController::class, 'get_current_language'])->name('get');
-    Route::post('/set/{language}', [iProtek\Core\Http\Controllers\LanguagesController::class, 'set_current_language'])->name('set');
-  });
+  /** LANGUAGE SETUP */
+  include(__DIR__.'/manage/languages.php'); 
+
+
+  /**UI SETTINGS */ 
+  include(__DIR__.'/manage/ui-settings.php'); 
 
     
   Route::prefix('manage')->middleware(['auth'])->name('manage')->group(function(){
@@ -66,6 +69,7 @@ Route::middleware('web')->group(function(){
 
   });
 
+  /** STORED PROCEDURE DATA */
   Route::prefix('v2/Data')->name('v2.Data')->group(function(){
 
     //Data/Sample/1/20/0

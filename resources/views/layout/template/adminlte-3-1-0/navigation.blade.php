@@ -2,9 +2,24 @@
   <nav id="top-menu" class="main-header navbar navbar-expand navbar-white navbar-light" style="z-index:100000;">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
+      <li class="nav-item" onclick="sideBarCollapseTrigger()">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
+        <script>
+          window.sideBarCollapseTrigger = function(){
+            //console.log("Hi");
+            setTimeout(() => {
+              var exists = document.querySelector('body.sidebar-collapse');
+              //console.log(exists);
+              if(exists)
+                WebRequest2('GET', '/ui-settings/adminlte/sidebar_collapse/sidebar-collapse');
+              else
+                WebRequest2('GET', '/ui-settings-clear/adminlte/sidebar_collapse');
+            }, 2000);
+            
+          }
+          
+        </script> 
       <!--
       <li class="nav-item d-none d-sm-inline-block">
         <a href="../index3.html" class="nav-link">Home</a>
