@@ -77,10 +77,12 @@
                     vm.$emit('input', null);
                     setTimeout(()=>{
                         vm.$emit('input', trans);
+                        vm.$emit('sort_changed', vm.selected_sort, vm.filter);
                     }, 10);
                     //this.$emit('update:value', this.filter);
+                }else{
+                    this.$emit('sort_changed', this.selected_sort, this.filter);
                 }
-                this.$emit('sort_changed', this.selected_sort, this.filter);
                 //this.getItemIndex();
             }
         },
