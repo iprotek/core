@@ -11,8 +11,8 @@
                 <button type="button" data-card-widget="collapse" class="btn btn-tool">
                     <i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool">
-                        <i class="fas fa-times"></i></button>
+                <button type="button" class="btn btn-tool" @click="$emit('modal_close')">
+                        <i class="fas fa-times text-danger"></i></button>
                 </div>
             </div> 
             <div class="card-body" style="display: block;">

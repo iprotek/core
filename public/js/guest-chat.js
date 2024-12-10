@@ -4178,7 +4178,19 @@ var render = function render() {
     }
   }, [_c("i", {
     staticClass: "fas fa-question"
-  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)])]), _vm._v(" "), _vm._m(2), _vm._v(" "), _c("div", {
+  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-tool",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.$emit("modal_close");
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fas fa-times text-danger"
+  })])])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c("div", {
     staticClass: "card-footer",
     staticStyle: {
       display: "block"
@@ -4200,7 +4212,7 @@ var render = function render() {
       name: "message",
       placeholder: "Type Message ..."
     }
-  }), _vm._v(" "), _vm._m(3)])])]), _vm._v(" "), _c("comp-profile", {
+  }), _vm._v(" "), _vm._m(2)])])]), _vm._v(" "), _c("comp-profile", {
     ref: "comp_profile"
   })], 1);
 };
@@ -4215,17 +4227,6 @@ var staticRenderFns = [function () {
     }
   }, [_c("i", {
     staticClass: "fas fa-minus"
-  })]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("button", {
-    staticClass: "btn btn-tool",
-    attrs: {
-      type: "button"
-    }
-  }, [_c("i", {
-    staticClass: "fas fa-times"
   })]);
 }, function () {
   var _vm = this,
@@ -4303,7 +4304,13 @@ var render = function render() {
     staticStyle: {
       "pointer-events": "all"
     }
-  }, [_c("guest-chat-box")], 1)])])]);
+  }, [_c("guest-chat-box", {
+    on: {
+      modal_close: function modal_close($event) {
+        _vm.show_chat = false;
+      }
+    }
+  })], 1)])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
