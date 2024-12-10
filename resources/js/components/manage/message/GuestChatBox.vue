@@ -7,20 +7,35 @@
                 Live Chat Support
             </h3> 
             <div class="card-tools"> 
-                <button title="Company Details" type="button" @click="$refs.comp_profile.show()" class="btn btn-tool text-primary" style="border:2px solid gray; padding:1.8px 6px; border-radius:50%;"><i class="fas fa-question"></i></button>
+                <button title="Company Details" type="button" @click="$refs.comp_profile.show()" class="btn btn-tool" style="font-size:8px; border:2px solid gray; padding:2px 6px; border-radius:50%;"><i class="fas fa-question"></i></button>
                 <button type="button" data-card-widget="collapse" class="btn btn-tool">
                     <i class="fas fa-minus"></i>
                 </button>
                 <button type="button" class="btn btn-tool" @click="$emit('modal_close')">
-                        <i class="fas fa-times text-danger"></i></button>
+                        <i class="fas fa-times"></i></button>
                 </div>
             </div> 
             <div class="card-body" style="display: block;">
-                <div id="chat-container-17" class="direct-chat-messages">
-                    <div></div> 
+                <div id="chat-container-17" class="direct-chat-messages" style="min-height:300px;">
+                    <div>
+                        <div>
+                            <small>
+                                <code>**We require your details below enable us to have conversation.</code>
+                            </small>
+                        </div>
+                        <label class="mb-0 text-sm">Name: <code>*</code> <validation :errors="errors" :field="'name'"/> </label>
+                        <input v-model="chat_info.name" type="text" class="form-control form-control-sm"/>
+                        <label class="mb-0 text-sm">Email: <code>*</code> <validation :errors="errors" :field="'email'"/> </label>
+                        <input v-model="chat_info.email" type="email" class="form-control form-control-sm"/>
+                        <label class="mb-0 text-sm">Mobile#:</label>
+                        <input v-model="chat_info.contact_no" type="text" class="form-control form-control-sm"/>
+                        <div class="text-center">
+                            <web-submit :action="start_chat" :el_class="'btn btn-sm btn-outline-primary mt-2'" :label="'START CHATTING'" ></web-submit>
+                        </div>
+                    </div> 
                 </div>
             </div> 
-            <div class="card-footer" style="display: block;">
+            <div v-if="has_info" class="card-footer" style="display: block;">
                 <div class="input-group">
                     <span v-if="has_upload" class="input-group-text p-2 px-3">
                         <span class="fa fa-paperclip text-lg text-primary" style="cursor: pointer;"></span>
@@ -38,19 +53,42 @@
 
 <script>
     import CompanyProfileVue from '../../CompanyProfile.vue'
+    import WebSubmitVue from '../../common/WebSubmit.vue'
+    import ValidationVue from '../../common/Validation.vue'
 
     export default {
         props:[  ],
         components: { 
-            "comp-profile":CompanyProfileVue
+            "comp-profile":CompanyProfileVue,
+            "web-submit":WebSubmitVue,
+            "validation":ValidationVue
         },
         data: function () {
             return { 
-                has_upload:false
+                has_upload:false,
+                has_info:false,
+                chat_info:{
+                    name:'',
+                    email:'',
+                    contact_no:''
+                },
+                errors:[]
             }
         },
         methods: { 
+            start_chat:function(){
+                var vm = this;
+                var req = vm.chat_info; 
+                return WebRequest2('POST', '/guest-chat/start-chat', JSON.stringify(req) ).then(resp=>{
 
+                    return resp.json().then(data=>{ 
+                        if(!resp.ok){
+                            vm.errors = data;
+                        }
+                        return data;
+                    });
+                });
+            }
         },
         mounted:function(){     
         },

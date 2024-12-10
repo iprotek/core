@@ -42,6 +42,10 @@ Route::middleware('web')->group(function(){
   /**UI SETTINGS */ 
   include(__DIR__.'/manage/ui-settings.php'); 
 
+
+  /** GUEST CHAT */
+  include(__DIR__.'/manage/guest-chat.php'); 
+
     
   Route::prefix('manage')->middleware(['auth'])->name('manage')->group(function(){
     
