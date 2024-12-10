@@ -58,10 +58,7 @@
     <link rel="stylesheet" href="/iprotek/css/Xpose-hover.css">
     <script src="/iprotek/js/xpose/Xpose-Events.js"></script> 
 
-    <!-- PUSHER NOTIFICATIONS-->
-    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-
-    <!-- CHATTING PUSHER-->
+    <!-- PUSHER NOTIFICATIONS && CHATTING PUSHER-->
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
     <!-- datatable -->

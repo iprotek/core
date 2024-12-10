@@ -15,11 +15,8 @@
     </div>
 </footer>
 @if(!auth('admin')->check())
-    <div style="bottom:10%; right:10%; position:fixed; z-index:10000;"> 
-        <div  class="row justify-content-end">
-            <div  class="col-sm-2 text-center">
-                <span onclick="ShowChatDialog()" class="ion ion-chatbubble-working text-white" style="font-size:80px; text-shadow: 0px 0px 4px black; cursor:pointer;"></span>
-            </div>
-        </div>
+    <div id="guest-chat-container-el" style="bottom:10%; right:10%; position:fixed; z-index:10000;"> 
+        <guest-chat-container/>
     </div>
+    <script src="/iprotek/js/guest-chat.js"></script>
 @endif

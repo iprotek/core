@@ -42,7 +42,6 @@ use iProtek\Core\Helpers\AppVarHelper;
     
     <!-- Scripts -->
 
-    <!-- Fonts -->
     <!-- ADMIN LTE -->
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -56,22 +55,25 @@ use iProtek\Core\Helpers\AppVarHelper;
     <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- JQVMap -->
     <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Daterange picker -->
     <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
     <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/summernote/summernote-bs4.min.css">
-    <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"><!-- Summernote -->
+    <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 
     <link rel="stylesheet" href="/iprotek/design/templates/adminlte3.1.0/plugins/fullcalendar/main.css">
+
 
     <!--XPOSE-->
     <script src="/iprotek/js/xpose/Xpose.js?version=2.0"></script>
     <script src="/iprotek/js/xpose/Xpose-Request.js?version=2.1"></script>
     <script src="/iprotek/design/templates/adminlte3.1.0/plugins/jquery/jquery.min.js"></script>
     <link rel="stylesheet" href="/iprotek/css/Xpose-style.css"> 
-    <link href="/iprotek/css/direct-chat.css" rel="stylesheet"> 
+    <link href="{{ asset('/iprotek/css/direct-chat.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="/iprotek/css/Xpose-style.css">
     <link rel="stylesheet" href="/iprotek/css/w3school/searchinput.css">
     <link rel="stylesheet" href="/iprotek/css/redtable.css">

@@ -1,8 +1,10 @@
 <template>
-    <div style="pointer-events:none;">
-        <div class="row justify-content-end align-items-end" style="pointer-events:none;">
-            <div class="col-md-3" v-for="(chatItem,chatIndex) in chats" v-bind:key="'chat-item-'+chatIndex" style="pointer-events:all;">
-                <chat-box :value="chatItem"></chat-box>
+    <div>
+        <div style="pointer-events:none;">
+            <div class="row justify-content-end align-items-end" style="pointer-events:none;">
+                <div class="col-md-3" v-for="(chatItem,chatIndex) in chats" v-bind:key="'chat-item-'+chatIndex" style="pointer-events:all;">
+                    <chat-box :value="chatItem"></chat-box>
+                </div>
             </div>
         </div>
     </div>
