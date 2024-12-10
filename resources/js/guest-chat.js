@@ -22,6 +22,8 @@ if(!window.Vue){
 
 //Vue.component('header-menus', require('./components/manage/HeaderMenu.vue').default);
 Vue.component('guest-chat-container', require('./components/manage/message/GuestChatBoxContainer').default); 
+Vue.component('modal-view', require('./components/common/Modal.vue').default); 
+Vue.component('swal', require('./components/common/Swal.vue').default); 
  
 new Vue({
     el: '#guest-chat-container-el',
