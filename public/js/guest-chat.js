@@ -3436,7 +3436,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           //if(data.status != null){
           vm.status = 2;
           vm.add_class = 'disabled text-danger';
-          vm.message = data.message ? data.message : "Submit Error";
+          vm.message = data.message ? data.message : "Validation Error";
         } /*else{
              vm.status = 2;
              vm.add_class = 'disabled text-danger';
@@ -3515,6 +3515,7 @@ __webpack_require__.r(__webpack_exports__);
     start_chat: function start_chat() {
       var vm = this;
       var req = vm.chat_info;
+      vm.errors = [];
       return WebRequest2('POST', '/guest-chat/start-chat', JSON.stringify(req)).then(function (resp) {
         return resp.json().then(function (data) {
           if (!resp.ok) {
@@ -4419,12 +4420,12 @@ var render = function render() {
     }
   }, [_c("div", [_vm._m(1), _vm._v(" "), _c("label", {
     staticClass: "mb-0 text-sm"
-  }, [_vm._v("Name: "), _c("code", [_vm._v("*")]), _vm._v(" "), _c("validation", {
+  }, [_vm._v("Name: "), _c("code", [_vm._v("* "), _c("validation", {
     attrs: {
       errors: _vm.errors,
       field: "name"
     }
-  })], 1), _vm._v(" "), _c("input", {
+  })], 1)]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -4446,12 +4447,12 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("label", {
     staticClass: "mb-0 text-sm"
-  }, [_vm._v("Email: "), _c("code", [_vm._v("*")]), _vm._v(" "), _c("validation", {
+  }, [_vm._v("Email: "), _c("code", [_vm._v("* "), _c("validation", {
     attrs: {
       errors: _vm.errors,
       field: "email"
     }
-  })], 1), _vm._v(" "), _c("input", {
+  })], 1)]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",

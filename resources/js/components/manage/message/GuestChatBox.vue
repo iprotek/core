@@ -23,9 +23,9 @@
                                 <code>**We require your details below enable us to have conversation.</code>
                             </small>
                         </div>
-                        <label class="mb-0 text-sm">Name: <code>*</code> <validation :errors="errors" :field="'name'"/> </label>
+                        <label class="mb-0 text-sm">Name: <code>* <validation :errors="errors" :field="'name'"/></code>  </label>
                         <input v-model="chat_info.name" type="text" class="form-control form-control-sm"/>
-                        <label class="mb-0 text-sm">Email: <code>*</code> <validation :errors="errors" :field="'email'"/> </label>
+                        <label class="mb-0 text-sm">Email: <code>* <validation :errors="errors" :field="'email'"/></code> </label>
                         <input v-model="chat_info.email" type="email" class="form-control form-control-sm"/>
                         <label class="mb-0 text-sm">Mobile#:</label>
                         <input v-model="chat_info.contact_no" type="text" class="form-control form-control-sm"/>
@@ -79,6 +79,7 @@
             start_chat:function(){
                 var vm = this;
                 var req = vm.chat_info; 
+                vm.errors = [];
                 return WebRequest2('POST', '/guest-chat/start-chat', JSON.stringify(req) ).then(resp=>{
 
                     return resp.json().then(data=>{ 
