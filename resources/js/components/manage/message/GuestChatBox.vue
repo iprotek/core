@@ -21,9 +21,17 @@
                         <small>
                             Hi, <code class="text-success" v-text="chat_info.guest_chat_name"></code>!
                         </small>
-                        <span class="text-danger btn-sm float-right" style="cursor:pointer;" @click="restChat()"> 
-                            <i class="fa fa-times"></i>  END CHAT TICKET 
-                        </span>
+                        <small title="End Chat Ticket" class="text-danger btn-sm float-right mx-2" style="cursor:pointer;" @click="restChat()"> 
+                            <i class="fa fa-times"></i>  END
+                        </small>
+                        <small title="Verify Email" @click="$refs.guest_modal.show()" v-if="!chat_info.guest_chat_verified" class="text-orange btn-sm float-right mx-2" style="cursor:pointer;" > 
+                            <i class="fa fa-envelope"></i> Verify
+                        </small>
+                        <!--
+                        <div v-if="!chat_info.guest_chat_catered_by">
+                            <small class="text-secondarry text-nowrap">**Please wait.. while we're waiting for support.</small>
+                        </div>
+                        -->
                     </div> 
                 </div>
 
@@ -66,6 +74,7 @@
             </div>
         </div>
         <comp-profile ref="comp_profile"></comp-profile>
+        <guest-modal ref="guest_modal"></guest-modal>
         <swal ref="swal_alert"></swal>
     </div>
 </template>
@@ -74,6 +83,7 @@
     import CompanyProfileVue from '../../CompanyProfile.vue'
     import WebSubmitVue from '../../common/WebSubmit.vue'
     import ValidationVue from '../../common/Validation.vue'
+    import GuestModalVerifyVue from './GuestModalVerify.vue'
 
     export default {
         props:[ "chat_info" ],
@@ -86,7 +96,8 @@
         components: { 
             "comp-profile":CompanyProfileVue,
             "web-submit":WebSubmitVue,
-            "validation":ValidationVue
+            "validation":ValidationVue,
+            "guest-modal":GuestModalVerifyVue
         },
         data: function () {
             return { 
@@ -124,7 +135,7 @@
                 var vm = this;
                 vm.$refs.swal_alert.alert(
                     'question',
-                    "Would you like to end your this chat?", 
+                    "Would you like to end this chat?", 
                     "Confirm" , 
                     "POST", 
                     "/guest-chat/clear-chat-info", 

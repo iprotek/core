@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use iProtek\SmsSender\Helpers\PayMessageHttp;
+use iProtek\Core\Helpers\MailHelper;
+use Carbon\Carbon;
 
 class GuestChatHelper
 {  
@@ -39,6 +41,12 @@ class GuestChatHelper
         //guest_contact_no
         //guest_is_verified
         static::set_guest_session($guest_info['id'], $name, $email, $contact_no, $guest_info['session_id']); 
+
+
+        //SET HIDDEN
+        Session::put('guest_chat_verify_code', $guest_info['verify_code'] );
+        Session::put('guest_chat_attempts', 0 );
+
          
         return ["status"=>1, "message"=>"Preparing Support Chat."];
         
@@ -65,6 +73,14 @@ class GuestChatHelper
         Session::put('guest_chat_contact_no', '' );
         Session::put('guest_chat_verified', 0 ); 
         Session::put('guest_chat_session_id', '' ); 
+        Session::put('guest_chat_catered_by', 0 ); 
+
+        //HIDDEN
+        Session::put('guest_chat_verify_code', '' );
+        Session::put('guest_chat_attempts', 0 );
+        Session::put('guest_chat_attempt_at', '');
+
+
         return ["status"=>1, "message"=>"Clear guest chat"];
     }
 
@@ -95,6 +111,7 @@ class GuestChatHelper
         $chat_contact_no = static::get_session_data('guest_chat_contact_no');
         $chat_verified = static::get_session_data('guest_chat_verified');
         $chat_session_id = static::get_session_data('guest_chat_session_id');
+        $guest_chat_catered_by = static::get_session_data('guest_chat_catered_by');
 
         return [
             "guest_check"=>$check,
@@ -103,9 +120,74 @@ class GuestChatHelper
             "guest_chat_email"=>$chat_email,
             "guest_chat_contact_no"=>$chat_contact_no,
             "guest_chat_verified"=>$chat_verified,
-            "guest_chat_session_id"=>$chat_session_id
+            "guest_chat_session_id"=>$chat_session_id,
+            "guest_chat_catered_by"=>$guest_chat_catered_by
         ];
 
+    }
+
+    public static function send_verification_code(){
+
+        $attempts = static::get_session_data('guest_chat_attempts');
+        if($attempts > 3){
+            return ["status"=>0, "message"=>"Vefication 3 attempts reached!"];
+        }
+
+
+        if(!static::check_chat()){
+            return ["status"=>0, "message"=>"Something went wrong."];
+        }
+        
+
+        $is_verified = static::get_session_data('guest_chat_verified');
+        if($is_verified){
+            return ["status"=>0, "message"=>"Already Verified"];
+        }
+
+        $code = static::get_session_data('guest_chat_verify_code');
+
+        if(!$code){
+            return ["status"=>0, "message"=>"Unable to retrieve code"];
+
+        }
+
+        $name = static::get_session_data('guest_chat_name');
+        $email = static::get_session_data('guest_chat_email');
+
+
+        //
+        $secs = static::get_seconds_attempts();
+        if($secs && $secs<120){
+            return ["status"=>0, "message"=>"Wait until countdown ends", "seconds"=>$secs];
+        }
+
+    
+
+        //SENDING VERIFICATION CODE HERE
+        $mailable =  new \iProtek\SmsSender\Mailables\GuestVerifyEmailMailable($name, $code);
+        MailHelper::send( $email, $mailable);
+        
+        
+        Session::put('guest_chat_attempt_at', Carbon::now()->format('Y-m-d H:i:s') ); 
+
+
+        return ["status"=>1, "message"=>"We have sent the verification code", "seconds"=>static::get_seconds_attempts()];
+    }
+
+    public static function get_seconds_attempts(){
+        $attempt_at = static::get_session_data('guest_chat_attempt_at');
+        if($attempt_at ){
+            //GET THE NOW AND ATTEMPT_AT DIFFERENCE
+            $now = Carbon::now();
+            $att = Carbon::parse($attempt_at);
+            $sec = $now->diffInSeconds($att);
+            if($sec > 120)
+                return null;
+            if($sec<2)
+                return 1;
+            return $sec;
+        }
+        return null;
     }
 
 
