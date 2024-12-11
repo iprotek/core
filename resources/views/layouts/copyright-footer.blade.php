@@ -16,7 +16,11 @@
 </footer>
 @if(!auth('admin')->check())
     <div id="guest-chat-container-el" style="bottom:10%; right:10%; position:fixed; z-index:10000;"> 
-        <guest-chat-container/>
+        <?php
+            $chat_info = \iProtek\Core\Helpers\GuestChat\GuestChatHelper::get_chat_info();
+        ?>
+    
+        <guest-chat-container :chat_info="{{ json_encode($chat_info) }}"/>
     </div>
     <script src="/iprotek/js/guest-chat.js"></script>
 @endif

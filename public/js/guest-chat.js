@@ -3493,7 +3493,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["chat_info"],
+  watch: {
+    chat_info: function chat_info(newValue) {
+      //this.input_value = newValue;
+      //console.log("updates", newValue);
+    }
+  },
   components: {
     "comp-profile": _CompanyProfile_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     "web-submit": _common_WebSubmit_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -3503,7 +3509,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       has_upload: false,
       has_info: false,
-      chat_info: {
+      chat_input: {
         name: '',
         email: '',
         contact_no: ''
@@ -3514,19 +3520,41 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     start_chat: function start_chat() {
       var vm = this;
-      var req = vm.chat_info;
+      var req = vm.chat_input;
       vm.errors = [];
       return WebRequest2('POST', '/guest-chat/start-chat', JSON.stringify(req)).then(function (resp) {
         return resp.json().then(function (data) {
           if (!resp.ok) {
             vm.errors = data;
+            return data;
           }
+          setTimeout(function () {
+            vm.$emit('reload_chat_info');
+          }, 2500);
           return data;
         });
       });
+    },
+    restChat: function restChat() {
+      var vm = this;
+      vm.$refs.swal_alert.alert('question', "Would you like to end your this chat?", "Confirm", "POST", "/guest-chat/clear-chat-info", '{}').then(function (res) {
+        if (res.isConfirmed) {
+          vm.$emit('reload_chat_info');
+        }
+      });
+      /*
+      WebRequest2("POST", "/guest-chat/clear-chat-info").then(resp=>{
+          if( resp.ok ){
+              resp.json().then(data=>{
+                  vm.$emit('reload_chat_info');
+              });
+          }
+      });*/
     }
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    //this.loadChatInfo();
+  },
   updated: function updated() {}
 });
 
@@ -3546,17 +3574,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _GuestChatBox_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GuestChatBox.vue */ "./resources/js/components/manage/message/GuestChatBox.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["chat_info"],
   components: {
     "guest-chat-box": _GuestChatBox_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
-      show_chat: false
+      show_chat: false,
+      copy_chat_info: this.chat_info
     };
   },
-  methods: {},
-  mounted: function mounted() {},
+  methods: {
+    loadChatInfo: function loadChatInfo() {
+      var vm = this;
+      WebRequest2("GET", "/guest-chat/chat-info").then(function (resp) {
+        if (resp.ok) {
+          resp.json().then(function (data) {
+            //vm.$emit('update:chat_info', data);
+            //console.log(data, vm.chat_info);
+            vm.copy_chat_info = data;
+          });
+        }
+      });
+    }
+  },
+  mounted: function mounted() {
+    //console.log("chat_info", this.chat_info);
+    this.copy_chat_info = this.chat_info;
+    this.loadChatInfo();
+  },
   updated: function updated() {}
 });
 
@@ -4352,7 +4398,7 @@ var render = function render() {
   return _c("div", [_c("div", {
     staticClass: "card card-primary card-outline direct-chat direct-chat-primary",
     staticStyle: {
-      "min-width": "300px"
+      "min-width": "350px"
     }
   }, [_c("div", {
     staticClass: "card-header"
@@ -4410,7 +4456,31 @@ var render = function render() {
     staticStyle: {
       display: "block"
     }
+  }, [_vm.chat_info && _vm.chat_info.guest_check ? _c("div", {
+    staticStyle: {
+      position: "sticky",
+      "background-color": "#80808021"
+    }
   }, [_c("div", {
+    staticClass: "pl-3 py-1"
+  }, [_c("small", [_vm._v("\n                        Hi, "), _c("code", {
+    staticClass: "text-success",
+    domProps: {
+      textContent: _vm._s(_vm.chat_info.guest_chat_name)
+    }
+  }), _vm._v("!\n                    ")]), _vm._v(" "), _c("span", {
+    staticClass: "text-danger btn-sm float-right",
+    staticStyle: {
+      cursor: "pointer"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.restChat();
+      }
+    }
+  }, [_c("i", {
+    staticClass: "fa fa-times"
+  }), _vm._v("  END CHAT TICKET \n                    ")])])]) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "direct-chat-messages",
     staticStyle: {
       "min-height": "300px"
@@ -4418,7 +4488,7 @@ var render = function render() {
     attrs: {
       id: "chat-container-17"
     }
-  }, [_c("div", [_vm._m(1), _vm._v(" "), _c("label", {
+  }, [!_vm.chat_info || _vm.chat_info.guest_check == false ? _c("div", [_vm._m(1), _vm._v(" "), _c("div", [_c("label", {
     staticClass: "mb-0 text-sm"
   }, [_vm._v("Name: "), _c("code", [_vm._v("* "), _c("validation", {
     attrs: {
@@ -4429,20 +4499,20 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.chat_info.name,
-      expression: "chat_info.name"
+      value: _vm.chat_input.name,
+      expression: "chat_input.name"
     }],
     staticClass: "form-control form-control-sm",
     attrs: {
       type: "text"
     },
     domProps: {
-      value: _vm.chat_info.name
+      value: _vm.chat_input.name
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.chat_info, "name", $event.target.value);
+        _vm.$set(_vm.chat_input, "name", $event.target.value);
       }
     }
   }), _vm._v(" "), _c("label", {
@@ -4456,20 +4526,20 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.chat_info.email,
-      expression: "chat_info.email"
+      value: _vm.chat_input.email,
+      expression: "chat_input.email"
     }],
     staticClass: "form-control form-control-sm",
     attrs: {
       type: "email"
     },
     domProps: {
-      value: _vm.chat_info.email
+      value: _vm.chat_input.email
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.chat_info, "email", $event.target.value);
+        _vm.$set(_vm.chat_input, "email", $event.target.value);
       }
     }
   }), _vm._v(" "), _c("label", {
@@ -4478,20 +4548,20 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.chat_info.contact_no,
-      expression: "chat_info.contact_no"
+      value: _vm.chat_input.contact_no,
+      expression: "chat_input.contact_no"
     }],
     staticClass: "form-control form-control-sm",
     attrs: {
       type: "text"
     },
     domProps: {
-      value: _vm.chat_info.contact_no
+      value: _vm.chat_input.contact_no
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.chat_info, "contact_no", $event.target.value);
+        _vm.$set(_vm.chat_input, "contact_no", $event.target.value);
       }
     }
   }), _vm._v(" "), _c("div", {
@@ -4502,7 +4572,7 @@ var render = function render() {
       el_class: "btn btn-sm btn-outline-primary mt-2",
       label: "START CHATTING"
     }
-  })], 1)])])]), _vm._v(" "), _vm.has_info ? _c("div", {
+  })], 1)])]) : _c("div")])]), _vm._v(" "), _vm.chat_info && _vm.chat_info.guest_check ? _c("div", {
     staticClass: "card-footer",
     staticStyle: {
       display: "block"
@@ -4526,6 +4596,8 @@ var render = function render() {
     }
   }), _vm._v(" "), _vm._m(2)])]) : _vm._e()]), _vm._v(" "), _c("comp-profile", {
     ref: "comp_profile"
+  }), _vm._v(" "), _c("swal", {
+    ref: "swal_alert"
   })], 1);
 };
 var staticRenderFns = [function () {
@@ -4543,7 +4615,9 @@ var staticRenderFns = [function () {
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("small", [_c("code", [_vm._v("**We require your details below enable us to have conversation.")])])]);
+  return _c("div", [_c("small", [_c("code", {
+    staticClass: "text-success"
+  }, [_vm._v("**We require your details below allowing us to address your issues.")])])]);
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
@@ -4597,7 +4671,7 @@ var render = function render() {
       "pointer-events": "none"
     }
   }, [_c("div", {
-    staticClass: "row justify-content-center align-items-center",
+    staticClass: "row align-items-center justify-content-center",
     staticStyle: {
       "pointer-events": "none"
     }
@@ -4607,10 +4681,14 @@ var render = function render() {
       "pointer-events": "all"
     }
   }, [_c("guest-chat-box", {
+    attrs: {
+      chat_info: _vm.copy_chat_info
+    },
     on: {
       modal_close: function modal_close($event) {
         _vm.show_chat = false;
-      }
+      },
+      reload_chat_info: _vm.loadChatInfo
     }
   })], 1)])])]);
 };

@@ -8,9 +8,9 @@
         </div>
 
         <div v-else style="pointer-events:none;">
-            <div class="row justify-content-center align-items-center " style="pointer-events:none;">
+            <div class="row align-items-center justify-content-center" style="pointer-events:none;">
                 <div class="col-md-4" style="pointer-events:all;">
-                    <guest-chat-box @modal_close="show_chat=false " />
+                    <guest-chat-box @modal_close="show_chat=false " :chat_info="copy_chat_info" @reload_chat_info="loadChatInfo" />
                 </div>
             </div>
         </div>
@@ -20,20 +20,35 @@
 <script>
     import ChatBoxVue from './GuestChatBox.vue';
     export default {
-        props:[  ],
+        props:[ "chat_info" ],
         components: { 
             "guest-chat-box":ChatBoxVue,
             
         },
         data: function () {
             return {  
-                show_chat:false
+                show_chat:false,
+                copy_chat_info: this.chat_info
             }
         },
         methods: {  
+            loadChatInfo:function(){
+                var vm = this;
+                WebRequest2("GET", "/guest-chat/chat-info").then(resp=>{
+                    if( resp.ok ){
+                        resp.json().then(data=>{
+                            //vm.$emit('update:chat_info', data);
+                            //console.log(data, vm.chat_info);
+                            vm.copy_chat_info = data;
+                        });
+                    }
+                });
+            },
         },
         mounted:function(){
-
+            //console.log("chat_info", this.chat_info);
+            this.copy_chat_info = this.chat_info;
+            this.loadChatInfo();
         },
         updated:function(){
 

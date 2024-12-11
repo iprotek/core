@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="card card-primary card-outline direct-chat direct-chat-primary " style="min-width: 300px;">
+        <div class="card card-primary card-outline direct-chat direct-chat-primary " style="min-width: 350px;">
             <div class="card-header"><img data-card-widget="" src="/iprotek/images/temp-image.png" alt="Message User Image" class="direct-chat-img" style="width: 30px; height: 30px;"> 
             &nbsp;
             <h3 data-card-widget="" class="card-title py-1 ml-1 text-primary">
@@ -16,26 +16,44 @@
                 </div>
             </div> 
             <div class="card-body" style="display: block;">
-                <div id="chat-container-17" class="direct-chat-messages" style="min-height:300px;">
-                    <div>
-                        <div>
-                            <small>
-                                <code>**We require your details below enable us to have conversation.</code>
-                            </small>
-                        </div>
-                        <label class="mb-0 text-sm">Name: <code>* <validation :errors="errors" :field="'name'"/></code>  </label>
-                        <input v-model="chat_info.name" type="text" class="form-control form-control-sm"/>
-                        <label class="mb-0 text-sm">Email: <code>* <validation :errors="errors" :field="'email'"/></code> </label>
-                        <input v-model="chat_info.email" type="email" class="form-control form-control-sm"/>
-                        <label class="mb-0 text-sm">Mobile#:</label>
-                        <input v-model="chat_info.contact_no" type="text" class="form-control form-control-sm"/>
-                        <div class="text-center">
-                            <web-submit :action="start_chat" :el_class="'btn btn-sm btn-outline-primary mt-2'" :label="'START CHATTING'" ></web-submit>
-                        </div>
+                <div v-if="chat_info && chat_info.guest_check" style="position:sticky; background-color:#80808021;">
+                    <div class="pl-3 py-1">
+                        <small>
+                            Hi, <code class="text-success" v-text="chat_info.guest_chat_name"></code>!
+                        </small>
+                        <span class="text-danger btn-sm float-right" style="cursor:pointer;" @click="restChat()"> 
+                            <i class="fa fa-times"></i>  END CHAT TICKET 
+                        </span>
                     </div> 
                 </div>
+
+                <div id="chat-container-17" class="direct-chat-messages" style="min-height:300px;">
+                    <div v-if="!chat_info || chat_info.guest_check == false" >
+                        <div>
+                            <small>
+                                <code class="text-success">**We require your details below allowing us to address your issues.</code>
+                            </small>
+                        </div>
+                        <div>
+                            <label class="mb-0 text-sm">Name: <code>* <validation :errors="errors" :field="'name'"/></code>  </label>
+                            <input v-model="chat_input.name" type="text" class="form-control form-control-sm"/>
+                            <label class="mb-0 text-sm">Email: <code>* <validation :errors="errors" :field="'email'"/></code> </label>
+                            <input v-model="chat_input.email" type="email" class="form-control form-control-sm"/>
+                            <label class="mb-0 text-sm">Mobile#:</label>
+                            <input v-model="chat_input.contact_no" type="text" class="form-control form-control-sm"/>
+                            <div class="text-center">
+                                <web-submit :action="start_chat" :el_class="'btn btn-sm btn-outline-primary mt-2'" :label="'START CHATTING'" ></web-submit>
+                            </div>
+                        </div>
+                    </div> 
+                    <div v-else> 
+                        
+
+                    </div>
+                </div>
+                
             </div> 
-            <div v-if="has_info" class="card-footer" style="display: block;">
+            <div v-if="chat_info && chat_info.guest_check" class="card-footer" style="display: block;">
                 <div class="input-group">
                     <span v-if="has_upload" class="input-group-text p-2 px-3">
                         <span class="fa fa-paperclip text-lg text-primary" style="cursor: pointer;"></span>
@@ -48,6 +66,7 @@
             </div>
         </div>
         <comp-profile ref="comp_profile"></comp-profile>
+        <swal ref="swal_alert"></swal>
     </div>
 </template>
 
@@ -57,7 +76,13 @@
     import ValidationVue from '../../common/Validation.vue'
 
     export default {
-        props:[  ],
+        props:[ "chat_info" ],
+        watch: {
+            chat_info(newValue) {
+                //this.input_value = newValue;
+                //console.log("updates", newValue);
+            },
+        },
         components: { 
             "comp-profile":CompanyProfileVue,
             "web-submit":WebSubmitVue,
@@ -67,7 +92,7 @@
             return { 
                 has_upload:false,
                 has_info:false,
-                chat_info:{
+                chat_input:{
                     name:'',
                     email:'',
                     contact_no:''
@@ -78,20 +103,51 @@
         methods: { 
             start_chat:function(){
                 var vm = this;
-                var req = vm.chat_info; 
+                var req = vm.chat_input; 
                 vm.errors = [];
                 return WebRequest2('POST', '/guest-chat/start-chat', JSON.stringify(req) ).then(resp=>{
 
                     return resp.json().then(data=>{ 
                         if(!resp.ok){
                             vm.errors = data;
-                        }
+                            return data;
+                        } 
+                        setTimeout(()=>{
+                            vm.$emit('reload_chat_info');
+                        }, 2500);
+
                         return data;
                     });
                 });
+            },
+            restChat:function(){
+                var vm = this;
+                vm.$refs.swal_alert.alert(
+                    'question',
+                    "Would you like to end your this chat?", 
+                    "Confirm" , 
+                    "POST", 
+                    "/guest-chat/clear-chat-info", 
+                    '{}'
+                ).then(res=>{
+                    if(res.isConfirmed){
+                        vm.$emit('reload_chat_info');
+                    }
+                });
+                /*
+                WebRequest2("POST", "/guest-chat/clear-chat-info").then(resp=>{
+                    if( resp.ok ){
+                        resp.json().then(data=>{
+                            vm.$emit('reload_chat_info');
+                        });
+                    }
+                });*/
+
             }
         },
-        mounted:function(){     
+        mounted:function(){ 
+            //this.loadChatInfo();
+            
         },
         updated:function(){
 

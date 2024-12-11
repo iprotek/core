@@ -28,17 +28,17 @@ class GuestChatController extends _CommonController
     }
 
     public function start_chat(Request $request){
-
+        /*
         $this->validate($request, [
             "name"=>"required",
             "email"=>"required|email"
         ]);
+        */
 
         //REGISTER SESION
-        GuestChatHelper::set_start_chat($request->name, $request->email, $request->contact_no);
-
-        return ["name"=>"Required"];
-        //return ["status"=>0, "message"=>"Chatting successful"];
+        return GuestChatHelper::set_start_chat($request->name, $request->email, $request->contact_no);
+ 
+        //return ["status"=>1, "message"=>"Chatting successful"];
 
     }
 
