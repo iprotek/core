@@ -3521,6 +3521,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    key_enter: function key_enter() {
+      this.$refs.web_submit.submit();
+    },
     start_chat: function start_chat() {
       var vm = this;
       var req = vm.chat_input;
@@ -4665,6 +4668,10 @@ var render = function render() {
       value: _vm.chat_input.name
     },
     on: {
+      keyup: function keyup($event) {
+        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
+        return _vm.key_enter();
+      },
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.$set(_vm.chat_input, "name", $event.target.value);
@@ -4692,6 +4699,10 @@ var render = function render() {
       value: _vm.chat_input.email
     },
     on: {
+      keyup: function keyup($event) {
+        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
+        return _vm.key_enter();
+      },
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.$set(_vm.chat_input, "email", $event.target.value);
@@ -4714,6 +4725,10 @@ var render = function render() {
       value: _vm.chat_input.contact_no
     },
     on: {
+      keyup: function keyup($event) {
+        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
+        return _vm.key_enter();
+      },
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.$set(_vm.chat_input, "contact_no", $event.target.value);
@@ -4721,13 +4736,15 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "text-center"
+  }, [_c("button", {
+    staticClass: "btn btn-sm btn-outline-primary mt-2"
   }, [_c("web-submit", {
+    ref: "web_submit",
     attrs: {
       action: _vm.start_chat,
-      el_class: "btn btn-sm btn-outline-primary mt-2",
       label: "START CHATTING"
     }
-  })], 1)])]) : _c("div")])]), _vm._v(" "), _vm.chat_info && _vm.chat_info.guest_check ? _c("div", {
+  })], 1)])])]) : _c("div")])]), _vm._v(" "), _vm.chat_info && _vm.chat_info.guest_check ? _c("div", {
     staticClass: "card-footer",
     staticStyle: {
       display: "block"

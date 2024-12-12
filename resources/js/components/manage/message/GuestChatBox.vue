@@ -44,13 +44,15 @@
                         </div>
                         <div>
                             <label class="mb-0 text-sm">Name: <code>* <validation :errors="errors" :field="'name'"/></code>  </label>
-                            <input v-model="chat_input.name" type="text" class="form-control form-control-sm"/>
+                            <input @keyup.enter="key_enter()" v-model="chat_input.name" type="text" class="form-control form-control-sm"/>
                             <label class="mb-0 text-sm">Email: <code>* <validation :errors="errors" :field="'email'"/></code> </label>
-                            <input v-model="chat_input.email" type="email" class="form-control form-control-sm"/>
+                            <input @keyup.enter="key_enter()" v-model="chat_input.email" type="email" class="form-control form-control-sm"/>
                             <label class="mb-0 text-sm">Mobile#:</label>
-                            <input v-model="chat_input.contact_no" type="text" class="form-control form-control-sm"/>
+                            <input @keyup.enter="key_enter()" v-model="chat_input.contact_no" type="text" class="form-control form-control-sm"/>
                             <div class="text-center">
-                                <web-submit :action="start_chat" :el_class="'btn btn-sm btn-outline-primary mt-2'" :label="'START CHATTING'" ></web-submit>
+                                <button class="btn btn-sm btn-outline-primary mt-2"  >
+                                    <web-submit ref="web_submit" :action="start_chat" :label="'START CHATTING'" ></web-submit>
+                                </button>
                             </div>
                         </div>
                     </div> 
@@ -112,6 +114,11 @@
             }
         },
         methods: { 
+
+            key_enter:function(){
+                this.$refs.web_submit.submit(); 
+            },
+
             start_chat:function(){
                 var vm = this;
                 var req = vm.chat_input; 
