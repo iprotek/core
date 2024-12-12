@@ -74,7 +74,7 @@
             </div>
         </div>
         <comp-profile ref="comp_profile"></comp-profile>
-        <guest-modal ref="guest_modal"></guest-modal>
+        <guest-modal ref="guest_modal" @reload_chat_info="$emit('reload_chat_info')"></guest-modal>
         <swal ref="swal_alert"></swal>
     </div>
 </template>

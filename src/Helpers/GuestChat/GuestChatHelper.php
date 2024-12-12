@@ -45,7 +45,8 @@ class GuestChatHelper
 
         //SET HIDDEN
         Session::put('guest_chat_verify_code', $guest_info['verify_code'] );
-        Session::put('guest_chat_attempts', 0 );
+        Session::put('guest_chat_verify_attempts', 0 );
+        Session::put('guest_chat_resend_verify_code_count', 0);
 
          
         return ["status"=>1, "message"=>"Preparing Support Chat."];
@@ -77,8 +78,9 @@ class GuestChatHelper
 
         //HIDDEN
         Session::put('guest_chat_verify_code', '' );
-        Session::put('guest_chat_attempts', 0 );
+        Session::put('guest_chat_verify_attempts', 0 );
         Session::put('guest_chat_attempt_at', '');
+        Session::put('guest_chat_resend_verify_code_count', 0);
 
 
         return ["status"=>1, "message"=>"Clear guest chat"];
@@ -112,6 +114,7 @@ class GuestChatHelper
         $chat_verified = static::get_session_data('guest_chat_verified');
         $chat_session_id = static::get_session_data('guest_chat_session_id');
         $guest_chat_catered_by = static::get_session_data('guest_chat_catered_by');
+        $chat_verify_attempts = static::get_session_data('guest_chat_verify_attempts');
 
         return [
             "guest_check"=>$check,
@@ -121,14 +124,68 @@ class GuestChatHelper
             "guest_chat_contact_no"=>$chat_contact_no,
             "guest_chat_verified"=>$chat_verified,
             "guest_chat_session_id"=>$chat_session_id,
-            "guest_chat_catered_by"=>$guest_chat_catered_by
+            "guest_chat_catered_by"=>$guest_chat_catered_by,
+            "guest_chat_verify_attempts"=>$chat_verify_attempts?:0
         ];
 
     }
 
+    public static function submit_code($verify_code, $force=false){
+        
+        if(!$verify_code){
+            return response()->json(["code"=>["Verify code is required"]], 403);
+        }
+
+        if(!static::check_chat()){
+            return response()->json(["code"=>["Error encountered."]], 403);
+        }
+        $chat_verified = static::get_session_data('guest_chat_verified');
+        if($chat_verified){
+            return response()->json(["code"=>["Already Verified"]], 403);
+        }
+        //return response()->json(["code"=>["Already Verified"]], 403);
+
+        if(!$force && false){
+            $attempts = static::get_session_data('guest_chat_verify_attempts') ?: 0;
+            if($attempts && $attempts >= 3){
+                return response()->json(["code"=>["Verification invalidated only three(3) attempts allowed."]], 403);
+            }
+            //STORE ATTEMPTS
+            Session::put('guest_chat_verify_attempts', ($attempts+1) );
+        }
+
+        //PRECHECK
+        $code = static::get_session_data('guest_chat_verify_code');
+        if(!$code){
+            return response()->json(["code"=>["Error encountered."]], 403);
+        }
+
+        if($code != $verify_code){
+            return response()->json(["code"=>["Invalid Code. Please retry."]], 403);
+        }
+
+        $chat_id = static::get_session_data('guest_chat_id');
+        $email = static::get_session_data('guest_chat_email');
+
+        //SUBMIT VERIFICATION TO MESSAGING 
+        $response = PayMessageHttp::post_client("api/guest-chat/verify-code", [ "guest_chat_id"=>$chat_id, "email"=>$email, "code"=>$verify_code ], true);
+        $response_code = $response->getStatusCode(); 
+        $data = $response->getBody();
+        if(is_object($data) || is_string($data)){
+            $data = json_decode( $data, TRUE );
+        } 
+        if( !(200 <= $response_code && $response_code <=204)){
+            return response()->json(  $data, $response_code);
+        }
+        
+        Session::put('guest_chat_verified', 1 ); 
+
+        return ["status"=>1, "message"=> "Verified!"];
+    }
+
     public static function send_verification_code(){
 
-        $attempts = static::get_session_data('guest_chat_attempts');
+        $attempts = static::get_session_data('guest_chat_verify_attempts');
         if($attempts > 3){
             return ["status"=>0, "message"=>"Vefication 3 attempts reached!"];
         }
@@ -169,6 +226,8 @@ class GuestChatHelper
         
         
         Session::put('guest_chat_attempt_at', Carbon::now()->format('Y-m-d H:i:s') ); 
+        $send_code_count = (static::get_session_data('guest_chat_resend_verify_code_count') ?: 0)+1;
+        Session::put('guest_chat_resend_verify_code_count', $send_code_count);
 
 
         return ["status"=>1, "message"=>"We have sent the verification code", "seconds"=>static::get_seconds_attempts()];
@@ -188,6 +247,17 @@ class GuestChatHelper
             return $sec;
         }
         return null;
+    }
+
+    public static function get_verify_attempts(){
+        $verify_attempts = static::get_session_data('guest_chat_verify_attempts');
+        return $verify_attempts?:0;
+    }
+
+    public static function send_verify_code_count(){
+        $verify_attempts = static::get_session_data('guest_chat_resend_verify_code_count');
+        return $verify_attempts?:0;
+
     }
 
 

@@ -3622,12 +3622,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _common_UserInput2_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../common/UserInput2.vue */ "./resources/js/components/common/UserInput2.vue");
+/* harmony import */ var _common_Validation_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../common/Validation.vue */ "./resources/js/components/common/Validation.vue");
+/* harmony import */ var _common_WebSubmit_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../common/WebSubmit.vue */ "./resources/js/components/common/WebSubmit.vue");
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: [],
-  components: {},
+  components: {
+    "user-input2": _common_UserInput2_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    "web-submit": _common_WebSubmit_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    "validation": _common_Validation_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
-      promiseExec: null
+      promiseExec: null,
+      code: '',
+      email: '',
+      time_count: 0,
+      errors: [],
+      is_counting: false,
+      attempt_count: 0
     };
   },
   methods: {
@@ -3635,8 +3651,71 @@ __webpack_require__.r(__webpack_exports__);
     show: function show() {
       var vm = this;
       this.$refs.modal.show();
+      vm.loadGuestCountdown();
       return new Promise(function (promiseExec) {
         vm.promiseExec = promiseExec;
+      });
+    },
+    loadGuestCountdown: function loadGuestCountdown() {
+      var vm = this;
+      WebRequest2("GET", "/guest-chat/verification-code/get-countdown").then(function (resp) {
+        resp.json().then(function (data) {
+          console.log("VERIFY", data);
+          if (!resp.ok) {
+            vm.errors = data;
+            return data;
+          }
+          vm.email = data.email;
+          vm.time_count = data.seconds;
+          vm.attempt_count = data.guest_chat_verify_attempts;
+          if (vm.time_count) {
+            if (!vm.is_counting) {
+              vm.is_counting = true;
+              vm.startCount();
+            }
+          }
+
+          //console.log(data);
+        });
+      });
+    },
+    startCount: function startCount() {
+      var vm = this;
+      if (!vm.time_count || vm.time_count < 0 || vm.time_count >= 120) {
+        vm.time_count = 0;
+        vm.is_counting = false;
+        return;
+      }
+      setTimeout(function () {
+        vm.time_count++;
+        vm.startCount();
+      }, 1000);
+    },
+    requestCode: function requestCode() {
+      var vm = this;
+      console.log("Clicked");
+      WebRequest2('POST', '/guest-chat/verification-code/request', '{}').then(function (resp) {
+        resp.json().then(function (data) {
+          if (data.status == 1) vm.loadGuestCountdown();
+        });
+      });
+    },
+    submitCode: function submitCode() {
+      var vm = this;
+      vm.errors = [];
+      return WebRequest2("POST", "/guest-chat/verification-code/submit-code/" + vm.code, '{}').then(function (resp) {
+        return resp.json().then(function (data) {
+          if (!resp.ok) {
+            vm.errors = data;
+            return data;
+          }
+          //FOR MODAL DISMISSAL AND EMIT VERIFIED
+          setTimeout(function () {
+            vm.$emit('reload_chat_info');
+            vm.$refs.modal.dismiss();
+          }, 2000);
+          return data;
+        });
       });
     },
     add: function add() {
@@ -4673,7 +4752,12 @@ var render = function render() {
   }), _vm._v(" "), _vm._m(2)])]) : _vm._e()]), _vm._v(" "), _c("comp-profile", {
     ref: "comp_profile"
   }), _vm._v(" "), _c("guest-modal", {
-    ref: "guest_modal"
+    ref: "guest_modal",
+    on: {
+      reload_chat_info: function reload_chat_info($event) {
+        return _vm.$emit("reload_chat_info");
+      }
+    }
   }), _vm._v(" "), _c("swal", {
     ref: "swal_alert"
   })], 1);
@@ -4794,7 +4878,6 @@ var render = function render() {
   return _c("div", [_c("modal-view", {
     ref: "modal",
     attrs: {
-      prevent: true,
       body_class: "pt-0"
     }
   }, [_c("template", {
@@ -4802,17 +4885,69 @@ var render = function render() {
   }, [_vm._v("\n            Verify Email\n        ")]), _vm._v(" "), _c("template", {
     slot: "body"
   }, [_c("div", {
-    staticClass: "input-group text-lg input-group-lg mb-1"
+    staticClass: "my-2"
+  }, [_c("user-input2", {
+    attrs: {
+      placeholder: "Email",
+      input_style: "height:40px;",
+      placeholder_description: "Will receive the verification code.",
+      readonly: true
+    },
+    model: {
+      value: _vm.email,
+      callback: function callback($$v) {
+        _vm.email = $$v;
+      },
+      expression: "email"
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "my-4"
+  }, [_c("div", {
+    staticClass: "input-group text-lg input-group-lg"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.code,
+      expression: "code"
+    }],
     staticClass: "form-control",
     attrs: {
-      type: "text"
+      type: "text",
+      placeholder: "Verification Code here.."
+    },
+    domProps: {
+      value: _vm.code
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.code = $event.target.value;
+      }
     }
   }), _vm._v(" "), _c("span", {
-    staticClass: "input-group-text btn btn-info"
-  }, [_c("small", {
-    staticClass: "fa fa-arrow-up"
-  })])])]), _vm._v(" "), _c("template", {
+    "class": "input-group-text btn btn-primary " + (_vm.code ? "" : "disabled")
+  }, [_c("web-submit", {
+    attrs: {
+      action: _vm.submitCode,
+      label: "Verify Now!"
+    }
+  })], 1)]), _vm._v(" "), _c("validation", {
+    attrs: {
+      errors: _vm.errors,
+      field: "code"
+    }
+  })], 1), _vm._v(" "), _c("button", {
+    "class": "btn btn-outline-primary " + (_vm.time_count || _vm.attempt_count >= 3 ? "disabled" : ""),
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.requestCode
+    }
+  }, [_vm._v("\n                    Request Verification Code "), _vm.time_count && _vm.time_count < 120 ? _c("span", [_vm._v(" ( " + _vm._s(120 - _vm.time_count) + " ) ")]) : _vm._e()]), _vm._v(" "), _c("p", {
+    staticClass: "text-secondary"
+  }, [_c("small", [_vm._v("\n                        *The intention of this verification is allowing the support to verify the actual guest and do certain request without requiring guest to login.\n                        This portal is useful to hande multiple system requests.\n                    ")])])], 1)]), _vm._v(" "), _c("template", {
     slot: "footer"
   }, [_c("div", [_c("button", {
     staticClass: "btn btn-outline-dark",
