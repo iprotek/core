@@ -53,9 +53,17 @@ class GuestChatController extends _CommonController
         }else{
             $chat_id = GuestChatHelper::get_chat_id();
         }
+        $pay_account_id = 0;
+        if(auth('admin')->check()){
+            $user_id = auth('admin')->user()->id;
+            $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where('user_admin_id', $user_id)->first();
+            if($pay_account){
+                $pay_account_id = $pay_account->pay_app_user_account_id;
+            }
+        }
         
 
-        return GuestChatContentHelper::message( $chat_id, $request->before_id, $request->after_id );
+        return GuestChatContentHelper::message( $chat_id, $request->before_id, $request->after_id, $pay_account_id );
     }
 
 }

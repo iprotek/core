@@ -35,7 +35,7 @@
                     </div> 
                 </div>
 
-                <div id="chat-container-17" class="direct-chat-messages" style="min-height:300px;">
+                <div :id="'chat-container-'+_uid" class="direct-chat-messages w-100" style="min-height:300px;">
                     <div v-if="!chat_info || chat_info.guest_check == false" >
                         <div>
                             <small>
@@ -56,10 +56,7 @@
                             </div>
                         </div>
                     </div> 
-                    <div v-else> 
-                        
-
-                    </div>
+                    <guest-chat-messages v-else/>
                 </div>
                 
             </div> 
@@ -86,6 +83,7 @@
     import WebSubmitVue from '../../common/WebSubmit.vue'
     import ValidationVue from '../../common/Validation.vue'
     import GuestModalVerifyVue from './GuestModalVerify.vue'
+    import GuestChatMessagesVue from './GuestChatMessages.vue'
 
     export default {
         props:[ "chat_info" ],
@@ -99,7 +97,8 @@
             "comp-profile":CompanyProfileVue,
             "web-submit":WebSubmitVue,
             "validation":ValidationVue,
-            "guest-modal":GuestModalVerifyVue
+            "guest-modal":GuestModalVerifyVue,
+            "guest-chat-messages":GuestChatMessagesVue
         },
         data: function () {
             return { 

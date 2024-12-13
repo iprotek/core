@@ -11,11 +11,11 @@ use Carbon\Carbon;
 
 class GuestChatContentHelper
 {   
-    public static function message( $guest_chat_id, $before_id, $after_id){
+    public static function message( $guest_chat_id, $before_id, $after_id, $pay_account_id=0){
         
         //SUBMIT VERIFICATION TO MESSAGING
 
-        $response = PayMessageHttp::get_client("api/guest-chat/messages?guest_chat_id=$guest_chat_id&before_id=$before_id&after_id=$after_id", true);
+        $response = PayMessageHttp::get_client("api/guest-chat/messages?guest_chat_id=$guest_chat_id&before_id=$before_id&after_id=$after_id&pay_account_id=$pay_account_id", true);
         $response_code = $response->getStatusCode(); 
         $data = $response->getBody();
         if(is_object($data) || is_string($data)){
