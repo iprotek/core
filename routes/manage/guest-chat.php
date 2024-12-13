@@ -49,6 +49,11 @@ use iProtek\Core\Http\Controllers\GuestChatController;
 
 
 
+
     });
+    
+    //MESSAGE
+    Route::get('messages', [GuestChatController::class, 'get_messages'])->name('.messages');
+
 
   });
