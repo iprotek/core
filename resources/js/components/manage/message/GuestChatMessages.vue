@@ -29,7 +29,7 @@
             </div> 
             <div v-else class="direct-chat-msg right">
                 <div class="direct-chat-infos clearfix">
-                    <span :class="'direct-chat-name float-right '+(is_active ? 'text-primary':'')" v-text="chat.sender_info.name"></span>
+                    <span :class="'direct-chat-name float-right text-primary'" v-text="chat.sender_info.name"></span>
                     <span class="direct-chat-timestamp float-left" v-if="chat.created_at_diff" v-text="chat.created_at_diff" :title="chat.created_at"></span>
                 </div> 
                 <img class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image"> 
@@ -64,18 +64,37 @@
         },
         data: function () {
             return {
-                messages:[]
+                messages:[],
+                maxMessageId:0,
+                minMessageId:0
             }
         },
         methods: { 
-            loadMessage:function(){
+            loadMessage:function(before_id=0, after_id=0){
                 var vm = this;
-                WebRequest2('GET', '/guest-chat/messages').then(resp=>{
+                WebRequest2('GET', '/guest-chat/messages?before_id='+before_id+'&after_id='+after_id).then(resp=>{
                     resp.json().then(data=>{
-                        //console.log(data);
-                        vm.messages = data.data;
+                        console.log(vm.data, vm.maxMessageId, vm.minMessageId);
+                        //vm.messages = data.data;
+                        data.data.forEach((m)=>{
+
+                            vm.messages.push(m);
+                            
+                            if( vm.maxMessageId == 0 || m.id > vm.maxMessageId ){
+                                vm.maxMessageId = m.id;
+                            }else if( vm.minMessageId == 0 || m.id < vm.minMessageId){
+                                vm.minMessageId = m.id;
+                            }
+
+                        });
                     })
                 })
+            },
+            loadPrev:function(){
+                this.loadMessage(this.minMessageId, 0);
+            },
+            loadNext:function(){
+                this.loadNext(0, this.maxMessageId);
             }
         },
         mounted:function(){

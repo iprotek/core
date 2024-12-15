@@ -43,4 +43,8 @@ class PayGroup
         $user = auth()->user();
         Session::put("user_admin_group_".$user->id, $group_id);
     }
+
+    public static function pay_account_id(){
+        return PayHttp::pay_account_id();
+    }
 }

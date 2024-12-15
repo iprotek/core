@@ -66,4 +66,12 @@ class GuestChatController extends _CommonController
         return GuestChatContentHelper::message( $chat_id, $request->before_id, $request->after_id, $pay_account_id );
     }
 
+    public function send_message(Request $request){
+        
+        $data = [
+            "message"=>$request->message
+        ]; 
+        return GuestChatContentHelper::send_message($data);
+    }
+
 }

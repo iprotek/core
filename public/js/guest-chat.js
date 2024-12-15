@@ -3520,7 +3520,9 @@ __webpack_require__.r(__webpack_exports__);
         email: '',
         contact_no: ''
       },
-      errors: []
+      errors: [],
+      message: '',
+      is_send: false
     };
   },
   methods: {
@@ -3559,6 +3561,30 @@ __webpack_require__.r(__webpack_exports__);
               });
           }
       });*/
+    },
+    sendMessage: function sendMessage() {
+      var vm = this;
+      if (vm.is_send) return;
+      vm.is_send = true;
+      var req = {
+        message: vm.message
+      };
+      return WebRequest2('POST', '/guest-chat/send-message', JSON.stringify(req)).then(function (resp) {
+        return resp.json().then(function (data) {
+          if (!resp.ok) {
+            vm.errors = data;
+            return data;
+          }
+          console.log(data);
+          /*
+          setTimeout(()=>{
+              vm.$emit('reload_chat_info');
+          }, 2500);
+          */
+
+          return data;
+        });
+      });
     }
   },
   mounted: function mounted() {
@@ -3633,18 +3659,36 @@ __webpack_require__.r(__webpack_exports__);
   components: {},
   data: function data() {
     return {
-      messages: []
+      messages: [],
+      maxMessageId: 0,
+      minMessageId: 0
     };
   },
   methods: {
     loadMessage: function loadMessage() {
+      var before_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var after_id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
       var vm = this;
-      WebRequest2('GET', '/guest-chat/messages').then(function (resp) {
+      WebRequest2('GET', '/guest-chat/messages?before_id=' + before_id + '&after_id=' + after_id).then(function (resp) {
         resp.json().then(function (data) {
-          //console.log(data);
-          vm.messages = data.data;
+          console.log(vm.data, vm.maxMessageId, vm.minMessageId);
+          //vm.messages = data.data;
+          data.data.forEach(function (m) {
+            vm.messages.push(m);
+            if (vm.maxMessageId == 0 || m.id > vm.maxMessageId) {
+              vm.maxMessageId = m.id;
+            } else if (vm.minMessageId == 0 || m.id < vm.minMessageId) {
+              vm.minMessageId = m.id;
+            }
+          });
         });
       });
+    },
+    loadPrev: function loadPrev() {
+      this.loadMessage(this.minMessageId, 0);
+    },
+    loadNext: function loadNext() {
+      this.loadNext(0, this.maxMessageId);
     }
   },
   mounted: function mounted() {
@@ -4800,14 +4844,44 @@ var render = function render() {
       cursor: "pointer"
     }
   })]) : _vm._e(), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.message,
+      expression: "message"
+    }],
     staticClass: "form-control",
     attrs: {
-      id: "chat-input-text-17",
       type: "text",
       name: "message",
       placeholder: "Type Message ..."
+    },
+    domProps: {
+      value: _vm.message
+    },
+    on: {
+      keyup: function keyup($event) {
+        if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
+        return _vm.sendMessage();
+      },
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.message = $event.target.value;
+      }
     }
-  }), _vm._v(" "), _vm._m(2)])]) : _vm._e()]), _vm._v(" "), _c("comp-profile", {
+  }), _vm._v(" "), _c("span", {
+    staticClass: "input-group-append"
+  }, [_c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      type: "submit"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.sendMessage();
+      }
+    }
+  }, [_vm._v("Send")])])])]) : _vm._e()]), _vm._v(" "), _c("comp-profile", {
     ref: "comp_profile"
   }), _vm._v(" "), _c("guest-modal", {
     ref: "guest_modal",
@@ -4838,17 +4912,6 @@ var staticRenderFns = [function () {
   return _c("div", [_c("small", [_c("code", {
     staticClass: "text-success"
   }, [_vm._v("**We require your details below allowing us to address your issues.")])])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("span", {
-    staticClass: "input-group-append"
-  }, [_c("button", {
-    staticClass: "btn btn-primary",
-    attrs: {
-      type: "submit"
-    }
-  }, [_vm._v("Send")])]);
 }];
 render._withStripped = true;
 
@@ -5019,7 +5082,7 @@ var render = function render() {
     }, [_c("div", {
       staticClass: "direct-chat-infos clearfix"
     }, [_c("span", {
-      "class": "direct-chat-name float-right " + (_vm.is_active ? "text-primary" : ""),
+      "class": "direct-chat-name float-right text-primary",
       domProps: {
         textContent: _vm._s(chat.sender_info.name)
       }

@@ -65,9 +65,9 @@
                     <span v-if="has_upload" class="input-group-text p-2 px-3">
                         <span class="fa fa-paperclip text-lg text-primary" style="cursor: pointer;"></span>
                     </span> 
-                    <input id="chat-input-text-17" type="text" name="message" placeholder="Type Message ..." class="form-control"> 
+                    <input v-model="message" @keyup.enter="sendMessage()" type="text" name="message" placeholder="Type Message ..." class="form-control"> 
                     <span class="input-group-append">
-                        <button type="submit" class="btn btn-primary ">Send</button>
+                        <button type="submit" class="btn btn-primary" @click="sendMessage()">Send</button>
                     </span>
                 </div>
             </div>
@@ -109,7 +109,9 @@
                     email:'',
                     contact_no:''
                 },
-                errors:[]
+                errors:[],
+                message:'',
+                is_send:false
             }
         },
         methods: { 
@@ -159,6 +161,34 @@
                         });
                     }
                 });*/
+
+            },
+            sendMessage:function(){
+                var vm = this;
+                if(vm.is_send)
+                    return;
+                vm.is_send = true;
+                var req = {
+                    message:vm.message
+                };
+                return WebRequest2('POST', '/guest-chat/send-message', JSON.stringify(req) ).then(resp=>{
+
+                    return resp.json().then(data=>{ 
+                        if(!resp.ok){
+                            vm.errors = data;
+                            return data;
+                        } 
+                        console.log(data);
+                        /*
+                        setTimeout(()=>{
+                            vm.$emit('reload_chat_info');
+                        }, 2500);
+                        */
+
+                        return data;
+                    });
+                });
+
 
             }
         },
