@@ -35,7 +35,7 @@
                     </div> 
                 </div>
 
-                <div :id="'chat-container-'+_uid" class="direct-chat-messages w-100" style="min-height:300px;">
+                <div :id="chat_container" class="direct-chat-messages w-100" style="min-height:300px;">
                     <div v-if="!chat_info || chat_info.guest_check == false" >
                         <div>
                             <small>
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </div> 
-                    <guest-chat-messages v-else/>
+                    <guest-chat-messages :container_id="chat_container"  ref="guest_chat_messages" v-else/>
                 </div>
                 
             </div> 
@@ -98,7 +98,7 @@
             "web-submit":WebSubmitVue,
             "validation":ValidationVue,
             "guest-modal":GuestModalVerifyVue,
-            "guest-chat-messages":GuestChatMessagesVue
+            "guest-chat-messages":GuestChatMessagesVue,
         },
         data: function () {
             return { 
@@ -111,7 +111,8 @@
                 },
                 errors:[],
                 message:'',
-                is_send:false
+                is_send:false,
+                chat_container:'chat-container-'+this._uid
             }
         },
         methods: { 
@@ -172,7 +173,8 @@
                     message:vm.message
                 };
                 return WebRequest2('POST', '/guest-chat/send-message', JSON.stringify(req) ).then(resp=>{
-
+                    vm.is_send = false;
+                    vm.message = '';
                     return resp.json().then(data=>{ 
                         if(!resp.ok){
                             vm.errors = data;
@@ -184,6 +186,7 @@
                             vm.$emit('reload_chat_info');
                         }, 2500);
                         */
+                        vm.$refs.guest_chat_messages.loadNext();
 
                         return data;
                     });

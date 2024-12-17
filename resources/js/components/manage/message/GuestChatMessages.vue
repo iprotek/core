@@ -59,7 +59,7 @@
 
 <script>
     export default {
-        props:[  ],
+        props:[ "container_id" ],
         components: { 
         },
         data: function () {
@@ -74,11 +74,17 @@
                 var vm = this;
                 WebRequest2('GET', '/guest-chat/messages?before_id='+before_id+'&after_id='+after_id).then(resp=>{
                     resp.json().then(data=>{
-                        console.log(vm.data, vm.maxMessageId, vm.minMessageId);
+                        console.log(data, vm.maxMessageId, vm.minMessageId);
                         //vm.messages = data.data;
-                        data.data.forEach((m)=>{
-
-                            vm.messages.push(m);
+                        var resultData = data.data;
+                        if(before_id){
+                            resultData.reverse();
+                        }
+                        resultData.forEach((m)=>{
+                            if(before_id)
+                                vm.messages.unshift(m);
+                            else
+                                vm.messages.push(m);
                             
                             if( vm.maxMessageId == 0 || m.id > vm.maxMessageId ){
                                 vm.maxMessageId = m.id;
@@ -87,6 +93,13 @@
                             }
 
                         });
+                        if(vm.container_id){
+                            //console.log(vm.container_id, "tigger");
+                            setTimeout(()=>{
+                                let element = document.getElementById(vm.container_id);
+                                element.scrollTo({ top: element.scrollHeight, behavior: "smooth" });
+                            }, 100);
+                        }
                     })
                 })
             },
@@ -94,7 +107,7 @@
                 this.loadMessage(this.minMessageId, 0);
             },
             loadNext:function(){
-                this.loadNext(0, this.maxMessageId);
+                this.loadMessage(0, this.maxMessageId);
             }
         },
         mounted:function(){

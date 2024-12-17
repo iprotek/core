@@ -3522,7 +3522,8 @@ __webpack_require__.r(__webpack_exports__);
       },
       errors: [],
       message: '',
-      is_send: false
+      is_send: false,
+      chat_container: 'chat-container-' + this._uid
     };
   },
   methods: {
@@ -3570,6 +3571,8 @@ __webpack_require__.r(__webpack_exports__);
         message: vm.message
       };
       return WebRequest2('POST', '/guest-chat/send-message', JSON.stringify(req)).then(function (resp) {
+        vm.is_send = false;
+        vm.message = '';
         return resp.json().then(function (data) {
           if (!resp.ok) {
             vm.errors = data;
@@ -3581,7 +3584,7 @@ __webpack_require__.r(__webpack_exports__);
               vm.$emit('reload_chat_info');
           }, 2500);
           */
-
+          vm.$refs.guest_chat_messages.loadNext();
           return data;
         });
       });
@@ -3655,7 +3658,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["container_id"],
   components: {},
   data: function data() {
     return {
@@ -3671,16 +3674,30 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       WebRequest2('GET', '/guest-chat/messages?before_id=' + before_id + '&after_id=' + after_id).then(function (resp) {
         resp.json().then(function (data) {
-          console.log(vm.data, vm.maxMessageId, vm.minMessageId);
+          console.log(data, vm.maxMessageId, vm.minMessageId);
           //vm.messages = data.data;
-          data.data.forEach(function (m) {
-            vm.messages.push(m);
+          var resultData = data.data;
+          if (before_id) {
+            resultData.reverse();
+          }
+          resultData.forEach(function (m) {
+            if (before_id) vm.messages.unshift(m);else vm.messages.push(m);
             if (vm.maxMessageId == 0 || m.id > vm.maxMessageId) {
               vm.maxMessageId = m.id;
             } else if (vm.minMessageId == 0 || m.id < vm.minMessageId) {
               vm.minMessageId = m.id;
             }
           });
+          if (vm.container_id) {
+            //console.log(vm.container_id, "tigger");
+            setTimeout(function () {
+              var element = document.getElementById(vm.container_id);
+              element.scrollTo({
+                top: element.scrollHeight,
+                behavior: "smooth"
+              });
+            }, 100);
+          }
         });
       });
     },
@@ -3688,7 +3705,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loadMessage(this.minMessageId, 0);
     },
     loadNext: function loadNext() {
-      this.loadNext(0, this.maxMessageId);
+      this.loadMessage(0, this.maxMessageId);
     }
   },
   mounted: function mounted() {
@@ -4729,7 +4746,7 @@ var render = function render() {
       "min-height": "300px"
     },
     attrs: {
-      id: "chat-container-" + _vm._uid
+      id: _vm.chat_container
     }
   }, [!_vm.chat_info || _vm.chat_info.guest_check == false ? _c("div", [_vm._m(1), _vm._v(" "), _c("div", [_c("label", {
     staticClass: "mb-0 text-sm"
@@ -4829,7 +4846,12 @@ var render = function render() {
       action: _vm.start_chat,
       label: "START CHATTING"
     }
-  })], 1)])])]) : _c("guest-chat-messages")], 1)]), _vm._v(" "), _vm.chat_info && _vm.chat_info.guest_check ? _c("div", {
+  })], 1)])])]) : _c("guest-chat-messages", {
+    ref: "guest_chat_messages",
+    attrs: {
+      container_id: _vm.chat_container
+    }
+  })], 1)]), _vm._v(" "), _vm.chat_info && _vm.chat_info.guest_check ? _c("div", {
     staticClass: "card-footer",
     staticStyle: {
       display: "block"
