@@ -13,7 +13,7 @@
                 </button>
                 <button type="button" class="btn btn-tool" @click="$emit('modal_close')">
                         <i class="fas fa-times"></i></button>
-                </div>
+            </div>
             </div> 
             <div class="card-body" style="display: block;">
                 <div v-if="chat_info && chat_info.guest_check" style="position:sticky; background-color:#80808021;">
@@ -73,7 +73,7 @@
             </div>
         </div>
         <comp-profile ref="comp_profile"></comp-profile>
-        <guest-modal ref="guest_modal" @reload_chat_info="$emit('reload_chat_info')"></guest-modal>
+        <guest-modal ref="guest_modal" @reload_chat_info="chat_info.guest_chat_verified=true; $refs.guest_chat_messages.loadNext();/*$emit('reload_chat_info')*/"></guest-modal>
         <swal ref="swal_alert"></swal>
     </div>
 </template>
@@ -180,7 +180,7 @@
                             vm.errors = data;
                             return data;
                         } 
-                        console.log(data);
+                        //console.log(data);
                         /*
                         setTimeout(()=>{
                             vm.$emit('reload_chat_info');

@@ -3578,7 +3578,7 @@ __webpack_require__.r(__webpack_exports__);
             vm.errors = data;
             return data;
           }
-          console.log(data);
+          //console.log(data);
           /*
           setTimeout(()=>{
               vm.$emit('reload_chat_info');
@@ -4909,7 +4909,8 @@ var render = function render() {
     ref: "guest_modal",
     on: {
       reload_chat_info: function reload_chat_info($event) {
-        return _vm.$emit("reload_chat_info");
+        _vm.chat_info.guest_chat_verified = true;
+        _vm.$refs.guest_chat_messages.loadNext(); /*$emit('reload_chat_info')*/
       }
     }
   }), _vm._v(" "), _c("swal", {
@@ -4993,7 +4994,9 @@ var render = function render() {
       modal_close: function modal_close($event) {
         _vm.show_chat = false;
       },
-      reload_chat_info: _vm.loadChatInfo
+      reload_chat_info: function reload_chat_info($event) {
+        return _vm.loadChatInfo();
+      }
     }
   })], 1)])])]);
 };

@@ -10,7 +10,7 @@
         <div v-else style="pointer-events:none;">
             <div class="row align-items-center justify-content-center" style="pointer-events:none;">
                 <div class="col-md-4" style="pointer-events:all;">
-                    <guest-chat-box @modal_close="show_chat=false " :chat_info="copy_chat_info" @reload_chat_info="loadChatInfo" />
+                    <guest-chat-box @modal_close="show_chat=false " :chat_info="copy_chat_info" @reload_chat_info="loadChatInfo()" />
                 </div>
             </div>
         </div>
