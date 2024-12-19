@@ -44,7 +44,8 @@ class GuestChatContentHelper
         if( !(200 <= $response_code && $response_code <=204)){
             return response()->json(  $data, $response_code);
         }
-        return ["status"=>1, "message"=>"message sent."];
+        return response()->json(  $data, $response_code);
+        //return ["status"=>1, "message"=>"message sent."];
 
 
     }

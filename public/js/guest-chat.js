@@ -3502,6 +3502,7 @@ __webpack_require__.r(__webpack_exports__);
     chat_info: function chat_info(newValue) {
       //this.input_value = newValue;
       //console.log("updates", newValue);
+      window.guest_chat_messages = this.$refs.guest_chat_messages;
     }
   },
   components: {
@@ -3567,13 +3568,14 @@ __webpack_require__.r(__webpack_exports__);
             vm.errors = data;
             return data;
           }
-          //console.log(data);
+          //console.log("Content Result", data);
           /*
           setTimeout(()=>{
               vm.$emit('reload_chat_info');
           }, 2500);
           */
-          vm.$refs.guest_chat_messages.loadNext();
+
+          vm.$refs.guest_chat_messages.loadNext(data.content_id);
           return data;
         });
       });
@@ -3581,6 +3583,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     //this.loadChatInfo();
+    //window.guest_chat_messages = this.$refs.guest_chat_messages;
   },
   updated: function updated() {}
 });
@@ -3633,18 +3636,19 @@ __webpack_require__.r(__webpack_exports__);
       if (!vm.copy_chat_info.guest_chat_id) return;
       if (vm.pusher_loaded) return;
       vm.pusher_loaded = true;
-      setTimeout(function () {
-        //Pusher.logToConsole = true;
-        //console.log("PUSHER INFO", key, cluster, vm.pusher_key, vm.pusher_cluster);
-        var pusher = new Pusher(vm.pusher_key, {
-          cluster: vm.pusher_cluster
-        });
-        var chat_channel = pusher.subscribe('chat-channel');
-        chat_channel.bind('notify', function (data) {
-          console.log(data);
-          return data;
-        });
-      }, 2000);
+      Pusher.logToConsole = true;
+      var pusher = new Pusher(vm.pusher_key, {
+        cluster: vm.pusher_cluster
+      });
+      var chat_channel = pusher.subscribe('chat-channel');
+      chat_channel.bind('notify', function (data) {
+        if (data.guest_chat_id == vm.copy_chat_info.guest_chat_id && window.guest_chat_messages) {
+          window.guest_chat_messages.loadNext(data.content_id);
+        }
+
+        //console.log(data);
+        return data;
+      });
     },
     loadPusherInfo: function loadPusherInfo() {
       var vm = this;
@@ -3705,9 +3709,7 @@ __webpack_require__.r(__webpack_exports__);
           //console.log(data, vm.maxMessageId, vm.minMessageId);
           //vm.messages = data.data;
           var resultData = data.data;
-          if (before_id) {
-            resultData.reverse();
-          }
+          if (!before_id) resultData.reverse();
           resultData.forEach(function (m) {
             if (before_id) vm.messages.unshift(m);else vm.messages.push(m);
             if (vm.maxMessageId == 0 || m.id > vm.maxMessageId) {
@@ -3746,23 +3748,29 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     loadNext: function loadNext() {
+      var content_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var vm = this;
       if (vm.isLoading) {
+        if (content_id == null) return;
+        if (content_id <= vm.maxMessageId) return;
+        vm.maxMessageId = content_id;
         vm.isPending = true;
+        return;
       }
       vm.isLoading = true;
-      vm.loadMessage(0, this.maxMessageId).then(function (data) {
+      vm.loadMessage(0, vm.maxMessageId).then(function (data) {
         vm.isLoading = false;
         if (vm.isPending) {
           vm.isPending = false;
           vm.isLoading = false;
-          loadMessage(0, vm.maxMessageId);
+          vm.loadMessage(0, vm.maxMessageId);
         }
       });
     }
   },
   mounted: function mounted() {
     this.loadMessage();
+    window.guest_chat_messages = this;
   },
   updated: function updated() {}
 });

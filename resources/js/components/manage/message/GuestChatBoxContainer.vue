@@ -56,22 +56,25 @@
                 if(vm.pusher_loaded) return;
 
                 vm.pusher_loaded = true;
+ 
 
-                setTimeout(()=>{
+                Pusher.logToConsole = true;
 
-                    //Pusher.logToConsole = true;
-                    //console.log("PUSHER INFO", key, cluster, vm.pusher_key, vm.pusher_cluster);
-                    var pusher = new Pusher( vm.pusher_key, {
-                        cluster: vm.pusher_cluster
-                    });
+                var pusher = new Pusher( vm.pusher_key, {
+                    cluster: vm.pusher_cluster
+                });
 
-                    var chat_channel = pusher.subscribe('chat-channel');
-                    chat_channel.bind('notify', function(data) {
-                        console.log(data);
-                        return data;
-                    });
+                var chat_channel = pusher.subscribe('chat-channel');
+                chat_channel.bind('notify', function(data) {
 
-                }, 2000);
+                    if( data.guest_chat_id == vm.copy_chat_info.guest_chat_id && window.guest_chat_messages){
+                        window.guest_chat_messages.loadNext(data.content_id);
+                    }
+
+                    //console.log(data);
+                    return data;
+                });
+ 
 
             },
             loadPusherInfo:function(){

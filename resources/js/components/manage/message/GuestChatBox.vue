@@ -91,6 +91,7 @@
             chat_info(newValue) {
                 //this.input_value = newValue;
                 //console.log("updates", newValue);
+                window.guest_chat_messages = this.$refs.guest_chat_messages;
             },
         },
         components: { 
@@ -169,13 +170,14 @@
                             vm.errors = data;
                             return data;
                         } 
-                        //console.log(data);
+                        //console.log("Content Result", data);
                         /*
                         setTimeout(()=>{
                             vm.$emit('reload_chat_info');
                         }, 2500);
                         */
-                        vm.$refs.guest_chat_messages.loadNext();
+
+                        vm.$refs.guest_chat_messages.loadNext(data.content_id);
 
                         return data;
                     });
@@ -186,6 +188,7 @@
         },
         mounted:function(){ 
             //this.loadChatInfo();
+            //window.guest_chat_messages = this.$refs.guest_chat_messages;
             
         },
         updated:function(){

@@ -79,9 +79,9 @@
                         //console.log(data, vm.maxMessageId, vm.minMessageId);
                         //vm.messages = data.data;
                         var resultData = data.data;
-                        if(before_id){
+                        if(!before_id)
                             resultData.reverse();
-                        }
+
                         resultData.forEach((m)=>{
                             if(before_id)
                                 vm.messages.unshift(m);
@@ -122,24 +122,31 @@
                     }
                 });
             },
-            loadNext:function(){
+            loadNext:function( content_id = null ){
                 var vm = this;
                 if(vm.isLoading){
+                    if(content_id == null)
+                        return;
+                    if(content_id <= vm.maxMessageId)
+                        return;
+                    vm.maxMessageId = content_id;
                     vm.isPending = true;
+                    return;
                 }
                 vm.isLoading = true;
-                vm.loadMessage(0, this.maxMessageId).then(data=>{
+                vm.loadMessage(0, vm.maxMessageId).then(data=>{
                     vm.isLoading = false;
                     if(vm.isPending){
                         vm.isPending = false;
                         vm.isLoading = false;
-                        loadMessage( 0, vm.maxMessageId );
+                        vm.loadMessage( 0, vm.maxMessageId );
                     }
                 });
             }
         },
         mounted:function(){
             this.loadMessage(); 
+            window.guest_chat_messages = this;
         },
         updated:function(){
 
