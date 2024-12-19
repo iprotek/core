@@ -10,7 +10,7 @@
         <div v-else style="pointer-events:none;">
             <div class="row align-items-center justify-content-center" style="pointer-events:none;">
                 <div class="col-md-4" style="pointer-events:all;">
-                    <guest-chat-box @modal_close="show_chat=false " :chat_info="copy_chat_info" @reload_chat_info="loadChatInfo()" />
+                    <guest-chat-box ref="guest_chat_box" @modal_close="show_chat=false " :chat_info="copy_chat_info" @reload_chat_info="loadChatInfo()" />
                 </div>
             </div>
         </div>
@@ -44,11 +44,40 @@
                     }
                 });
             },
+            loadPusher:function( key, cluster){
+                
+                //Pusher.logToConsole = true;
+
+                var pusher = new Pusher(key/*'3ba4f1b9531904744a8e'*/, {
+                cluster: cluster /*'ap1'*/
+                });
+
+                var chat_channel = pusher.subscribe('chat-channel');
+                return chat_channel.bind('notify', function(data) {
+                    console.log(data);
+                    return data;
+                });
+            },
+            loadPusherInfo:function(){
+
+                var vm = this;
+                
+                //FOR MESSAGING PUSH NOTIF INFO
+                WebRequest2('GET', '/api/push-info').then(resp=>{
+                    resp.json().then(data=>{
+                        console.log("NOTIF SETTINGS", data);
+                        if(data.is_active  && data.name == 'PUSHER.COM')
+                            vm.loadPusher(data.key, data.cluster);
+                    });
+                });
+                
+            }
         },
         mounted:function(){
             //console.log("chat_info", this.chat_info);
             this.copy_chat_info = this.chat_info;
             this.loadChatInfo();
+            this.loadPusherInfo();
         },
         updated:function(){
 

@@ -3634,12 +3634,36 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    loadPusher: function loadPusher(key, cluster) {
+      //Pusher.logToConsole = true;
+
+      var pusher = new Pusher(key /*'3ba4f1b9531904744a8e'*/, {
+        cluster: cluster /*'ap1'*/
+      });
+      var chat_channel = pusher.subscribe('chat-channel');
+      return chat_channel.bind('notify', function (data) {
+        console.log(data);
+        return data;
+      });
+    },
+    loadPusherInfo: function loadPusherInfo() {
+      var vm = this;
+
+      //FOR MESSAGING PUSH NOTIF INFO
+      WebRequest2('GET', '/api/push-info').then(function (resp) {
+        resp.json().then(function (data) {
+          console.log("NOTIF SETTINGS", data);
+          if (data.is_active && data.name == 'PUSHER.COM') vm.loadPusher(data.key, data.cluster);
+        });
+      });
     }
   },
   mounted: function mounted() {
     //console.log("chat_info", this.chat_info);
     this.copy_chat_info = this.chat_info;
     this.loadChatInfo();
+    this.loadPusherInfo();
   },
   updated: function updated() {}
 });

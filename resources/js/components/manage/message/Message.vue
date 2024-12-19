@@ -105,23 +105,26 @@
                 });
                 //vm.loadPusherInfo();
             },
-            loadPusher:function(details){
+            loadPusher:function(name, key, cluster){
                 
                 Pusher.logToConsole = true;
 
-                var pusher = new Pusher('3ba4f1b9531904744a8e', {
-                cluster: 'ap1'
+                var pusher = new Pusher(key/*'3ba4f1b9531904744a8e'*/, {
+                cluster: cluster /*'ap1'*/
                 });
 
                 var chat_channel = pusher.subscribe('chat-channel');
-                chat_channel.bind('notification', function(data) {
+                return chat_channel.bind('notify', function(data) {
                     console.log(data);
+                    return data;
                     //app.messages.push(JSON.stringify(data));
                 });
+                /*
                 chat_channel.bind('message', function(data) {
                     console.log(data);
                     //app.messages.push(JSON.stringify(data));
                 });
+                */
             },
             loadPusherInfo:function(){
 
