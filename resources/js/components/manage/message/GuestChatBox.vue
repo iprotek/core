@@ -44,13 +44,13 @@
                         </div>
                         <div>
                             <label class="mb-0 text-sm">Name: <code>* <validation :errors="errors" :field="'name'"/></code>  </label>
-                            <input @keyup.enter="key_enter()" v-model="chat_input.name" type="text" class="form-control form-control-sm"/>
+                            <input @keyup.enter="$refs.web_submit.submit()" v-model="chat_input.name" type="text" class="form-control form-control-sm"/>
                             <label class="mb-0 text-sm">Email: <code>* <validation :errors="errors" :field="'email'"/></code> </label>
-                            <input @keyup.enter="key_enter()" v-model="chat_input.email" type="email" class="form-control form-control-sm"/>
+                            <input @keyup.enter="$refs.web_submit.submit()" v-model="chat_input.email" type="email" class="form-control form-control-sm"/>
                             <label class="mb-0 text-sm">Mobile#:</label>
-                            <input @keyup.enter="key_enter()" v-model="chat_input.contact_no" type="text" class="form-control form-control-sm"/>
+                            <input @keyup.enter="$refs.web_submit.submit()" v-model="chat_input.contact_no" type="text" class="form-control form-control-sm"/>
                             <div class="text-center">
-                                <button class="btn btn-sm btn-outline-primary mt-2"  >
+                                <button class="btn btn-sm btn-outline-primary mt-2" @click="$refs.web_submit.submit()" >
                                     <web-submit ref="web_submit" :action="start_chat" :label="'START CHATTING'" ></web-submit>
                                 </button>
                             </div>
@@ -117,9 +117,6 @@
         },
         methods: { 
 
-            key_enter:function(){
-                this.$refs.web_submit.submit(); 
-            },
 
             start_chat:function(){
                 var vm = this;
@@ -154,14 +151,6 @@
                         vm.$emit('reload_chat_info');
                     }
                 });
-                /*
-                WebRequest2("POST", "/guest-chat/clear-chat-info").then(resp=>{
-                    if( resp.ok ){
-                        resp.json().then(data=>{
-                            vm.$emit('reload_chat_info');
-                        });
-                    }
-                });*/
 
             },
             sendMessage:function(){

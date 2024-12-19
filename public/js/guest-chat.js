@@ -3527,9 +3527,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    key_enter: function key_enter() {
-      this.$refs.web_submit.submit();
-    },
     start_chat: function start_chat() {
       var vm = this;
       var req = vm.chat_input;
@@ -3554,14 +3551,6 @@ __webpack_require__.r(__webpack_exports__);
           vm.$emit('reload_chat_info');
         }
       });
-      /*
-      WebRequest2("POST", "/guest-chat/clear-chat-info").then(resp=>{
-          if( resp.ok ){
-              resp.json().then(data=>{
-                  vm.$emit('reload_chat_info');
-              });
-          }
-      });*/
     },
     sendMessage: function sendMessage() {
       var vm = this;
@@ -3619,7 +3608,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       show_chat: false,
-      copy_chat_info: this.chat_info
+      copy_chat_info: this.chat_info,
+      pusher_loaded: false,
+      pusher_key: '',
+      pusher_cluster: ''
     };
   },
   methods: {
@@ -3631,21 +3623,28 @@ __webpack_require__.r(__webpack_exports__);
             //vm.$emit('update:chat_info', data);
             //console.log(data, vm.chat_info);
             vm.copy_chat_info = data;
+            vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
           });
         }
       });
     },
     loadPusher: function loadPusher(key, cluster) {
-      //Pusher.logToConsole = true;
-
-      var pusher = new Pusher(key /*'3ba4f1b9531904744a8e'*/, {
-        cluster: cluster /*'ap1'*/
-      });
-      var chat_channel = pusher.subscribe('chat-channel');
-      return chat_channel.bind('notify', function (data) {
-        console.log(data);
-        return data;
-      });
+      var vm = this;
+      if (!vm.copy_chat_info.guest_chat_id) return;
+      if (vm.pusher_loaded) return;
+      vm.pusher_loaded = true;
+      setTimeout(function () {
+        //Pusher.logToConsole = true;
+        //console.log("PUSHER INFO", key, cluster, vm.pusher_key, vm.pusher_cluster);
+        var pusher = new Pusher(vm.pusher_key, {
+          cluster: vm.pusher_cluster
+        });
+        var chat_channel = pusher.subscribe('chat-channel');
+        chat_channel.bind('notify', function (data) {
+          console.log(data);
+          return data;
+        });
+      }, 2000);
     },
     loadPusherInfo: function loadPusherInfo() {
       var vm = this;
@@ -3653,16 +3652,19 @@ __webpack_require__.r(__webpack_exports__);
       //FOR MESSAGING PUSH NOTIF INFO
       WebRequest2('GET', '/api/push-info').then(function (resp) {
         resp.json().then(function (data) {
-          console.log("NOTIF SETTINGS", data);
-          if (data.is_active && data.name == 'PUSHER.COM') vm.loadPusher(data.key, data.cluster);
+          //console.log("NOTIF SETTINGS", data);
+          if (data.is_active && data.name == 'PUSHER.COM') {
+            vm.pusher_key = data.key;
+            vm.pusher_cluster = data.cluster;
+            vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
+          }
         });
+        vm.loadChatInfo();
       });
     }
   },
   mounted: function mounted() {
-    //console.log("chat_info", this.chat_info);
     this.copy_chat_info = this.chat_info;
-    this.loadChatInfo();
     this.loadPusherInfo();
   },
   updated: function updated() {}
@@ -3688,7 +3690,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       messages: [],
       maxMessageId: 0,
-      minMessageId: 0
+      minMessageId: 0,
+      isLoading: false,
+      isPending: false
     };
   },
   methods: {
@@ -3696,9 +3700,9 @@ __webpack_require__.r(__webpack_exports__);
       var before_id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
       var after_id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
       var vm = this;
-      WebRequest2('GET', '/guest-chat/messages?before_id=' + before_id + '&after_id=' + after_id).then(function (resp) {
-        resp.json().then(function (data) {
-          console.log(data, vm.maxMessageId, vm.minMessageId);
+      return WebRequest2('GET', '/guest-chat/messages?before_id=' + before_id + '&after_id=' + after_id).then(function (resp) {
+        return resp.json().then(function (data) {
+          //console.log(data, vm.maxMessageId, vm.minMessageId);
           //vm.messages = data.data;
           var resultData = data.data;
           if (before_id) {
@@ -3722,14 +3726,39 @@ __webpack_require__.r(__webpack_exports__);
               });
             }, 100);
           }
+          return data;
         });
       });
     },
     loadPrev: function loadPrev() {
-      this.loadMessage(this.minMessageId, 0);
+      var vm = this;
+      if (vm.isLoading) {
+        vm.isPending = true;
+      }
+      vm.isLoading = true;
+      vm.loadMessage(this.minMessageId, 0).then(function (data) {
+        vm.isLoading = false;
+        if (vm.isPending) {
+          vm.isPending = false;
+          vm.isLoading = false;
+          loadMessage(vm.minMessageId, 0);
+        }
+      });
     },
     loadNext: function loadNext() {
-      this.loadMessage(0, this.maxMessageId);
+      var vm = this;
+      if (vm.isLoading) {
+        vm.isPending = true;
+      }
+      vm.isLoading = true;
+      vm.loadMessage(0, this.maxMessageId).then(function (data) {
+        vm.isLoading = false;
+        if (vm.isPending) {
+          vm.isPending = false;
+          vm.isLoading = false;
+          loadMessage(0, vm.maxMessageId);
+        }
+      });
     }
   },
   mounted: function mounted() {
@@ -4796,7 +4825,7 @@ var render = function render() {
     on: {
       keyup: function keyup($event) {
         if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
-        return _vm.key_enter();
+        return _vm.$refs.web_submit.submit();
       },
       input: function input($event) {
         if ($event.target.composing) return;
@@ -4827,7 +4856,7 @@ var render = function render() {
     on: {
       keyup: function keyup($event) {
         if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
-        return _vm.key_enter();
+        return _vm.$refs.web_submit.submit();
       },
       input: function input($event) {
         if ($event.target.composing) return;
@@ -4853,7 +4882,7 @@ var render = function render() {
     on: {
       keyup: function keyup($event) {
         if (!$event.type.indexOf("key") && _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")) return null;
-        return _vm.key_enter();
+        return _vm.$refs.web_submit.submit();
       },
       input: function input($event) {
         if ($event.target.composing) return;
@@ -4863,7 +4892,12 @@ var render = function render() {
   }), _vm._v(" "), _c("div", {
     staticClass: "text-center"
   }, [_c("button", {
-    staticClass: "btn btn-sm btn-outline-primary mt-2"
+    staticClass: "btn btn-sm btn-outline-primary mt-2",
+    on: {
+      click: function click($event) {
+        return _vm.$refs.web_submit.submit();
+      }
+    }
   }, [_c("web-submit", {
     ref: "web_submit",
     attrs: {
@@ -5011,6 +5045,7 @@ var render = function render() {
       "pointer-events": "all"
     }
   }, [_c("guest-chat-box", {
+    ref: "guest_chat_box",
     attrs: {
       chat_info: _vm.copy_chat_info
     },

@@ -28,7 +28,10 @@
         data: function () {
             return {  
                 show_chat:false,
-                copy_chat_info: this.chat_info
+                copy_chat_info: this.chat_info,
+                pusher_loaded:false,
+                pusher_key:'',
+                pusher_cluster:''
             }
         },
         methods: {  
@@ -40,23 +43,36 @@
                             //vm.$emit('update:chat_info', data);
                             //console.log(data, vm.chat_info);
                             vm.copy_chat_info = data;
+                            vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
                         });
                     }
                 });
             },
             loadPusher:function( key, cluster){
-                
-                //Pusher.logToConsole = true;
+                var vm = this;
 
-                var pusher = new Pusher(key/*'3ba4f1b9531904744a8e'*/, {
-                cluster: cluster /*'ap1'*/
-                });
+                if(!vm.copy_chat_info.guest_chat_id)
+                    return;
+                if(vm.pusher_loaded) return;
 
-                var chat_channel = pusher.subscribe('chat-channel');
-                return chat_channel.bind('notify', function(data) {
-                    console.log(data);
-                    return data;
-                });
+                vm.pusher_loaded = true;
+
+                setTimeout(()=>{
+
+                    //Pusher.logToConsole = true;
+                    //console.log("PUSHER INFO", key, cluster, vm.pusher_key, vm.pusher_cluster);
+                    var pusher = new Pusher( vm.pusher_key, {
+                        cluster: vm.pusher_cluster
+                    });
+
+                    var chat_channel = pusher.subscribe('chat-channel');
+                    chat_channel.bind('notify', function(data) {
+                        console.log(data);
+                        return data;
+                    });
+
+                }, 2000);
+
             },
             loadPusherInfo:function(){
 
@@ -65,18 +81,21 @@
                 //FOR MESSAGING PUSH NOTIF INFO
                 WebRequest2('GET', '/api/push-info').then(resp=>{
                     resp.json().then(data=>{
-                        console.log("NOTIF SETTINGS", data);
-                        if(data.is_active  && data.name == 'PUSHER.COM')
-                            vm.loadPusher(data.key, data.cluster);
+                        //console.log("NOTIF SETTINGS", data);
+                        if(data.is_active  && data.name == 'PUSHER.COM'){
+                            vm.pusher_key = data.key;
+                            vm.pusher_cluster = data.cluster;
+                            vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
+                        }
                     });
+
+                    vm.loadChatInfo();
                 });
                 
             }
         },
         mounted:function(){
-            //console.log("chat_info", this.chat_info);
             this.copy_chat_info = this.chat_info;
-            this.loadChatInfo();
             this.loadPusherInfo();
         },
         updated:function(){

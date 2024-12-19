@@ -66,15 +66,17 @@
             return {
                 messages:[],
                 maxMessageId:0,
-                minMessageId:0
+                minMessageId:0,
+                isLoading:false,
+                isPending:false
             }
         },
         methods: { 
             loadMessage:function(before_id=0, after_id=0){
                 var vm = this;
-                WebRequest2('GET', '/guest-chat/messages?before_id='+before_id+'&after_id='+after_id).then(resp=>{
-                    resp.json().then(data=>{
-                        console.log(data, vm.maxMessageId, vm.minMessageId);
+                return  WebRequest2('GET', '/guest-chat/messages?before_id='+before_id+'&after_id='+after_id).then(resp=>{
+                   return  resp.json().then(data=>{
+                        //console.log(data, vm.maxMessageId, vm.minMessageId);
                         //vm.messages = data.data;
                         var resultData = data.data;
                         if(before_id){
@@ -100,14 +102,40 @@
                                 element.scrollTo({ top: element.scrollHeight, behavior: "smooth" });
                             }, 100);
                         }
+
+                        return data;
                     })
                 })
             },
             loadPrev:function(){
-                this.loadMessage(this.minMessageId, 0);
+                var vm = this;
+                if(vm.isLoading){
+                    vm.isPending = true;
+                }
+                vm.isLoading = true;
+                vm.loadMessage(this.minMessageId, 0).then(data=>{
+                    vm.isLoading = false;
+                    if(vm.isPending){
+                        vm.isPending = false;
+                        vm.isLoading = false;
+                        loadMessage( vm.minMessageId, 0 );
+                    }
+                });
             },
             loadNext:function(){
-                this.loadMessage(0, this.maxMessageId);
+                var vm = this;
+                if(vm.isLoading){
+                    vm.isPending = true;
+                }
+                vm.isLoading = true;
+                vm.loadMessage(0, this.maxMessageId).then(data=>{
+                    vm.isLoading = false;
+                    if(vm.isPending){
+                        vm.isPending = false;
+                        vm.isLoading = false;
+                        loadMessage( 0, vm.maxMessageId );
+                    }
+                });
             }
         },
         mounted:function(){
