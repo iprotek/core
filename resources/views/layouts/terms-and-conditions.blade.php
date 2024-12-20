@@ -242,7 +242,7 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
   <div class="MsoNormal" style="line-height: 1.5;"><br /></div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#services"
+      href="#services"
       ><span data-custom-class="link"
         ><span style="color: rgb(0, 58, 250); font-size: 15px;"
           ><span data-custom-class="body_text">1. OUR SERVICES</span></span
@@ -253,7 +253,7 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#ip"
+      href="#ip"
       ><span style="color: rgb(0, 58, 250);"
         ><span data-custom-class="body_text"
           >2. INTELLECTUAL PROPERTY RIGHTS</span
@@ -264,11 +264,11 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#userreps"
+      href="#userreps"
     ></a
     ><a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#userreps"
+      href="#userreps"
       ><span style="color: rbg(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >3. USER REPRESENTATIONS</span
@@ -281,7 +281,7 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
       ><span data-custom-class="body_text"></span></span
     ><a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#userreg"
+      href="#userreg"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">4. USER REGISTRATION</span></span
       ></a
@@ -290,26 +290,26 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     ></span>
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#products"
+      href="#products"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#products"
+      href="#products"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">5. PRODUCTS</span></span
       ></a
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#purchases"
+      href="#purchases"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#purchases"
+      href="#purchases"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >6. PURCHASES AND PAYMENT</span
@@ -325,7 +325,7 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
       ><span data-custom-class="body_text"></span></span
     ><a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#returnyes"
+      href="#returnyes"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">7. RETURN POLICY</span></span
       ></a
@@ -334,29 +334,29 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     ></span>
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#software"
+      href="#software"
     ></a>
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#software"
+      href="#software"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#software"
+      href="#software"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"></span></span
     ></a>
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#prohibited"
+      href="#prohibited"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#prohibited"
+      href="#prohibited"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >8. PROHIBITED ACTIVITIES</span
@@ -365,13 +365,13 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#ugc"
+      href="#ugc"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#ugc"
+      href="#ugc"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >9. USER GENERATED CONTRIBUTIONS</span
@@ -380,13 +380,13 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#license"
+      href="#license"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#license"
+      href="#license"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >10. CONTRIBUTION LICENSE</span
@@ -395,13 +395,13 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#reviews"
+      href="#reviews"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#reviews"
+      href="#reviews"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >11. GUIDELINES FOR REVIEWS</span
@@ -410,13 +410,13 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#mobile"
+      href="#mobile"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#mobile"
+      href="#mobile"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >12. MOBILE APPLICATION LICENSE</span
@@ -425,49 +425,49 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#socialmedia"
+      href="#socialmedia"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#socialmedia"
+      href="#socialmedia"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"></span></span
     ></a>
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#thirdparty"
+      href="#thirdparty"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#thirdparty"
+      href="#thirdparty"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"></span></span
     ></a>
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#advertisers"
+      href="#advertisers"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#advertisers"
+      href="#advertisers"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"></span></span
     ></a>
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#sitemanage"
+      href="#sitemanage"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#sitemanage"
+      href="#sitemanage"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >13. SERVICES MANAGEMENT</span
@@ -476,38 +476,38 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#ppyes"
+      href="#ppyes"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#ppyes"
+      href="#ppyes"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">14. PRIVACY POLICY</span></span
       ></a
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#ppno"
+      href="#ppno"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#ppno"
+      href="#ppno"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"></span></span
     ></a>
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#dmca"
+      href="#dmca"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#dmca"
+      href="#dmca"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"></span></span
     ></a>
@@ -518,13 +518,13 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     ></span>
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#terms"
+      href="#terms"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#terms"
+      href="#terms"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >15. TERM AND TERMINATION</span
@@ -533,13 +533,13 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#modifications"
+      href="#modifications"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#modifications"
+      href="#modifications"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >16. MODIFICATIONS AND INTERRUPTIONS</span
@@ -548,65 +548,65 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#law"
+      href="#law"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#law"
+      href="#law"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">17. GOVERNING LAW</span></span
       ></a
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#disputes"
+      href="#disputes"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#disputes"
+      href="#disputes"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">18. DISPUTE RESOLUTION</span></span
       ></a
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#corrections"
+      href="#corrections"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#corrections"
+      href="#corrections"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">19. CORRECTIONS</span></span
       ></a
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#disclaimer"
+      href="#disclaimer"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#disclaimer"
+      href="#disclaimer"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">20. DISCLAIMER</span></span
       ></a
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#liability"
+      href="#liability"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#liability"
+      href="#liability"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >21. LIMITATIONS OF LIABILITY</span
@@ -615,39 +615,39 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#indemnification"
+      href="#indemnification"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#indemnification"
+      href="#indemnification"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">22. INDEMNIFICATION</span></span
       ></a
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#userdata"
+      href="#userdata"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#userdata"
+      href="#userdata"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">23. USER DATA</span></span
       ></a
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#electronic"
+      href="#electronic"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#electronic"
+      href="#electronic"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"
           >24. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES</span
@@ -656,7 +656,7 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#california"
+      href="#california"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
@@ -666,7 +666,7 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     <span style="color: rgb(0, 58, 250); font-size: 15px;"
       ><a
         data-custom-class="link"
-        href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#sms"
+        href="#sms"
         ><span data-custom-class="body_text">25. SMS TEXT MESSAGING</span></a
       ></span
     ><span style="font-size: 15px;"></span>
@@ -674,26 +674,26 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#california"
+      href="#california"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text"></span></span
     ></a>
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#misc"
+      href="#misc"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#misc"
+      href="#misc"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">26. MISCELLANEOUS</span></span
       ></a
     >
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#contact"
+      href="#contact"
     ></a>
   </div>
   <div class="MsoNormal" style="line-height: 1.5;"></div>
@@ -709,7 +709,7 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
   <div class="MsoNormal" style="line-height: 1.5;">
     <a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#contact"
+      href="#contact"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         ><span data-custom-class="body_text">27. CONTACT US</span></span
       ></a
@@ -834,7 +834,7 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
       >Subject to your compliance with these Legal Terms, including the "</span
     ><a
       data-custom-class="link"
-      href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#prohibited"
+      href="#prohibited"
       ><span style="color: rgb(0, 58, 250); font-size: 15px;"
         >PROHIBITED ACTIVITIES</span
       ></a
@@ -959,7 +959,7 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     <span style="font-size: 15px;"
       >Please review this section and the "<a
         data-custom-class="link"
-        href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#prohibited"
+        href="#prohibited"
         ><span style="color: rgb(0, 58, 250);">PROHIBITED ACTIVITIES</span></a
       >" section carefully prior to using our Services to understand the (a)
       rights you give us and (b) obligations you have when you post or upload
@@ -1070,7 +1070,7 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
         >confirm that you have read and agree with our "</span
       ><a
         data-custom-class="link"
-        href="https://app.termly.io/dashboard/website/53b037ee-fbc9-4966-accc-110c7606a198/terms-of-service#prohibited"
+        href="#prohibited"
         ><span style="color: rgb(0, 58, 250); font-size: 15px;"
           >PROHIBITED ACTIVITIES</span
         ></a
