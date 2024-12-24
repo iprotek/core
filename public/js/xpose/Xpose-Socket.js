@@ -1,8 +1,10 @@
 window.XposeSocket = function(url, cluster, app_id, key){
     //var socket = new WebSocket(`${url}?cluster=${cluster}&app_id=${app_id}&key=${key}`);
-    (async()=>{
+   return (async()=>{
         const socket = await window.openWebSocketWithTimeout(`${url}?cluster=${cluster}&app_id=${app_id}&key=${key}`, 3000);
 
+        if(!socket)
+            return;
 
         socket.settings = {
             cluster: cluster,
@@ -20,7 +22,8 @@ window.XposeSocket = function(url, cluster, app_id, key){
         socket.socket = function(app_id){
             return window.XposeSocketStatus(socket, app_id);
         }
-    });
+        return socket;
+    })();
  
     //return socket;
 }
