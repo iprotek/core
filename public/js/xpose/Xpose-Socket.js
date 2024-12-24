@@ -20,9 +20,9 @@ window.XposeSocket = async function(url, cluster, app_id, key){
         
         };
 
-        socket.status = function(app_id){
+        socket.status = function(app_id, status_cluster = null){
         
-            return window.XposeSocketStatus(socket, app_id);
+            return window.XposeSocketStatus(socket, app_id, status_cluster);
         
         }
 
@@ -69,7 +69,7 @@ window.openWebSocketWithTimeout = function(url, timeout = 5000) {
 }
 
 
-window.XposeSocketStatus = function(socket, app_id = ''){
+window.XposeSocketStatus = function(socket, app_id, status_cluster){
     var res = {
         callback:null,
         //This is trigger for then function
@@ -102,7 +102,8 @@ window.XposeSocketStatus = function(socket, app_id = ''){
     socket.send(JSON.stringify({
         type:'status',
         status_key: res.status_key,
-        app_id: res.app_id
+        app_id: res.app_id,
+        status_cluster: status_cluster
     }));
 
     return res;
@@ -138,7 +139,8 @@ window.XposeSocketSetMessage = function(socket){
                 else if( data.type == 'subscribe' && data.channel == item.channel && item.event == data.event ){
                     if(data.subscribe_key == item.subscribe_key){
                         item.result_data(data);
-                        console.log("Success to subscribe on channel:"+data.channel+' at event:'+data.event);
+                        
+                        console.log("Success to subscribe on channel:"+data.channel+' at event:'+data.event, data);
                     }else{
                         console.error("Failed to subscribe on channel:"+data.channel+' at event:'+data.event);
                     }
