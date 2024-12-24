@@ -59,6 +59,7 @@
 
     <!--XPOSE-->
     <script src="/js/xpose/Xpose.js?version=2.0"></script>
+    <script src="/iprotek/js/xpose/Xpose-Socket.js?version=2.0"></script>
     <script src="/js/xpose/Xpose-Request.js?version=2.1"></script>
     <script src="/design/templates/adminlte3.1.0/plugins/jquery/jquery.min.js"></script>
     <link href="/css/direct-chat.css" rel="stylesheet"> 
