@@ -17,14 +17,16 @@ window.XposeSocket = async function(url, cluster, app_id, key){
         socket.subscribe = function( channel ){
 
             return window.XposeSocketSubscribe(socket, channel);
-
+        
         };
 
         socket.status = function(app_id){
+        
             return window.XposeSocketStatus(socket, app_id);
+        
         }
 
-        socket.sendMessage = function(channel, event ,data, secret){
+        socket.sendMessage = function(secret, channel, event ,data){
             socket.send( JSON.stringify( {
                 secret: secret,
                 data: data,
