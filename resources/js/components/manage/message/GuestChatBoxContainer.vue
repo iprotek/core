@@ -31,7 +31,10 @@
                 copy_chat_info: this.chat_info,
                 pusher_loaded:false,
                 pusher_key:'',
-                pusher_cluster:''
+                pusher_cluster:'',
+                pusher_name:'',
+                pusher_app_id:'',
+                is_active:false
             }
         },
         methods: {  
@@ -50,6 +53,7 @@
             },
             loadPusher:function( key, cluster){
                 var vm = this;
+                if(!vm.is_active) return;
 
                 if(!vm.copy_chat_info.guest_chat_id)
                     return;
@@ -57,27 +61,42 @@
 
                 vm.pusher_loaded = true;
  
+                if(vm.pusher_name == 'PUSHER.COM'){
 
-                Pusher.logToConsole = true;
+                    Pusher.logToConsole = true;
 
-                var pusher = new Pusher( vm.pusher_key, {
-                    cluster: vm.pusher_cluster
-                });
+                    var pusher = new Pusher( vm.pusher_key, {
+                        cluster: vm.pusher_cluster
+                    });
 
-                var chat_channel = pusher.subscribe('chat-channel');
-                chat_channel.bind('notify', function(data) {
+                    var chat_channel = pusher.subscribe('chat-channel');
+                    chat_channel.bind('notify', function(data) {
 
-                    if( data.guest_chat_id == vm.copy_chat_info.guest_chat_id && window.guest_chat_messages){
-                        window.guest_chat_messages.loadNext(data.content_id);
-                    }
+                        if( data.guest_chat_id == vm.copy_chat_info.guest_chat_id && window.guest_chat_messages){
+                            window.guest_chat_messages.loadNext(data.content_id);
+                        }
 
-                    //console.log(data);
-                    return data;
-                });
- 
+                        //console.log(data);
+                        return data;
+                    });
 
+                }else if(vm.pusher_name == 'iProtek WebSocket' && window.iProtekPusher){
+
+                    var channel = window.iProtekPusher.subscribe('chat-channel');
+                    channel.listen('notify').then(result=>{
+                        var data = result.data;
+                        if(data && result.type == 'message'){
+                            if( data.guest_chat_id == vm.copy_chat_info.guest_chat_id && window.guest_chat_messages){
+                                window.guest_chat_messages.loadNext(data.content_id);
+                            }
+                        }
+                        return data;
+                    });
+
+
+                }
             },
-            loadPusherInfo:function(){
+            loadPusherInfo: function(){
 
                 var vm = this;
                 
@@ -85,14 +104,24 @@
                 WebRequest2('GET', '/api/push-info').then(resp=>{
                     resp.json().then(data=>{
                         //console.log("NOTIF SETTINGS", data);
+                        vm.pusher_name = data.name;
+                        vm.pusher_key = data.key;
+                        vm.pusher_cluster = data.cluster;
+                        vm.pusher_app_id = data.app_id;
+                        vm.is_active = data.is_active;
                         if(data.is_active  && data.name == 'PUSHER.COM'){
-                            vm.pusher_key = data.key;
-                            vm.pusher_cluster = data.cluster;
                             vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
+                        }
+                        else if(data.is_active && data.name == "iProtek WebSocket"){
+                           (async()=>{ 
+                            if(!window.iProtekPusher)
+                                window.iProtekPusher = await window.XposeSocket(data.url, data.cluster, data.app_id, data.key);
+                            vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
+                           })();
                         }
                     });
 
-                    vm.loadChatInfo();
+                    
                 });
                 
             }
@@ -100,6 +129,7 @@
         mounted:function(){
             this.copy_chat_info = this.chat_info;
             this.loadPusherInfo();
+            
         },
         updated:function(){
 

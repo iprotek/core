@@ -44,8 +44,7 @@ window.XposeSocket = async function(url, cluster, app_id, key){
 }
 
 window.openWebSocketWithTimeout = function(url, timeout = 5000) {
-    return new Promise((resolve, reject) => {
-
+    return new Promise((resolve, reject) => { 
         const ws = new WebSocket(url);
 
         window.XposeSocketSetMessage(ws);

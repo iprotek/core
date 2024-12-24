@@ -65,9 +65,9 @@
                     <span v-if="has_upload" class="input-group-text p-2 px-3">
                         <span class="fa fa-paperclip text-lg text-primary" style="cursor: pointer;"></span>
                     </span> 
-                    <input v-model="message" @keyup.enter="sendMessage()" type="text" name="message" placeholder="Type Message ..." class="form-control"> 
+                    <input :readonly="is_send" v-model="message" @keyup.enter="sendMessage()" type="text" name="message" placeholder="Type Message ..." class="form-control"> 
                     <span class="input-group-append">
-                        <button type="submit" class="btn btn-primary" @click="sendMessage()">Send</button>
+                        <button type="submit" :class="'btn btn-primary '+(is_send?'disabled':'')" @click="sendMessage()" v-text="is_send ? 'Sending':'Send'"></button>
                     </span>
                 </div>
             </div>
