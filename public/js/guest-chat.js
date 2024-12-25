@@ -3675,40 +3675,43 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       var vm = this;
 
       //FOR MESSAGING PUSH NOTIF INFO
-      WebRequest2('GET', '/api/push-info').then(function (resp) {
-        resp.json().then(function (data) {
-          //console.log("NOTIF SETTINGS", data);
-          vm.pusher_name = data.name;
-          vm.pusher_key = data.key;
-          vm.pusher_cluster = data.cluster;
-          vm.pusher_app_id = data.app_id;
-          vm.is_active = data.is_active;
-          if (data.is_active && data.name == 'PUSHER.COM') {
-            vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
-          } else if (data.is_active && data.name == "iProtek WebSocket") {
-            _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-              return _regeneratorRuntime().wrap(function _callee$(_context) {
-                while (1) switch (_context.prev = _context.next) {
-                  case 0:
-                    if (window.iProtekPusher) {
-                      _context.next = 4;
-                      break;
-                    }
-                    _context.next = 3;
-                    return window.XposeSocket(data.url, data.cluster, data.app_id, data.key);
-                  case 3:
-                    window.iProtekPusher = _context.sent;
-                  case 4:
-                    vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
-                  case 5:
-                  case "end":
-                    return _context.stop();
-                }
-              }, _callee);
-            }))();
-          }
-        });
+      //WebRequest2('GET', '/api/push-info').then(resp=>{
+      //resp.json().then(data=>{
+      //console.log("NOTIF SETTINGS", data);
+      window.XposeSetSocket(function (data) {
+        vm.pusher_name = data.name;
+        vm.pusher_key = data.key;
+        vm.pusher_cluster = data.cluster;
+        vm.pusher_app_id = data.app_id;
+        vm.is_active = data.is_active;
+        if (data.is_active && data.name == 'PUSHER.COM') {
+          vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
+        } else if (data.is_active && data.name == "iProtek WebSocket") {
+          _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+            return _regeneratorRuntime().wrap(function _callee$(_context) {
+              while (1) switch (_context.prev = _context.next) {
+                case 0:
+                  if (window.iProtekPusher) {
+                    _context.next = 4;
+                    break;
+                  }
+                  _context.next = 3;
+                  return window.XposeSocket(data.url, data.cluster, data.app_id, data.key);
+                case 3:
+                  window.iProtekPusher = _context.sent;
+                case 4:
+                  vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
+                case 5:
+                case "end":
+                  return _context.stop();
+              }
+            }, _callee);
+          }))();
+        }
       });
+      //});
+
+      //});
     }
   },
   mounted: function mounted() {

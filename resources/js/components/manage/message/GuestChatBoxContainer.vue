@@ -101,28 +101,30 @@
                 var vm = this;
                 
                 //FOR MESSAGING PUSH NOTIF INFO
-                WebRequest2('GET', '/api/push-info').then(resp=>{
-                    resp.json().then(data=>{
+                //WebRequest2('GET', '/api/push-info').then(resp=>{
+                    //resp.json().then(data=>{
                         //console.log("NOTIF SETTINGS", data);
-                        vm.pusher_name = data.name;
-                        vm.pusher_key = data.key;
-                        vm.pusher_cluster = data.cluster;
-                        vm.pusher_app_id = data.app_id;
-                        vm.is_active = data.is_active;
-                        if(data.is_active  && data.name == 'PUSHER.COM'){
-                            vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
-                        }
-                        else if(data.is_active && data.name == "iProtek WebSocket"){
-                           (async()=>{ 
-                            if(!window.iProtekPusher)
-                                window.iProtekPusher = await window.XposeSocket(data.url, data.cluster, data.app_id, data.key);
-                            vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
-                           })();
-                        }
-                    });
+                        window.XposeSetSocket(data=>{
+                            vm.pusher_name = data.name;
+                            vm.pusher_key = data.key;
+                            vm.pusher_cluster = data.cluster;
+                            vm.pusher_app_id = data.app_id;
+                            vm.is_active = data.is_active;
+                            if(data.is_active  && data.name == 'PUSHER.COM'){
+                                vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
+                            }
+                            else if(data.is_active && data.name == "iProtek WebSocket"){
+                            (async()=>{ 
+                                if(!window.iProtekPusher)
+                                    window.iProtekPusher = await window.XposeSocket(data.url, data.cluster, data.app_id, data.key);
+                                vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
+                            })();
+                            }
+                        });
+                    //});
 
                     
-                });
+                //});
                 
             }
         },
