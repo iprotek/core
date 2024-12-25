@@ -11,6 +11,7 @@ use iProtek\Core\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use iProtek\Core\Helpers\PayGroup;
 
 class _CommonController extends BaseController
 {
@@ -18,6 +19,9 @@ class _CommonController extends BaseController
         if(!$array){
             $array = $this->common_infos();
         }
+
+        //FORCE TO ADD CONSTRAINT
+        $array["group_id"] = PayGroup::getGroupId();
         return view($view, $array);
     }
 

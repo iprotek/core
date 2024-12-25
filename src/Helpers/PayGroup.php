@@ -30,13 +30,15 @@ class PayGroup
 
 
     public static function getGroupId(){
-        $user = auth()->user();
+        if(auth()->check()){
+            $user = auth()->user();
 
-        if(!Session::get("user_admin_group_".$user->id) ){
-            return null;
+            if(!Session::get("user_admin_group_".$user->id) ){
+                return null;
+            }
+            return Session::get("user_admin_group_".$user->id);
         }
-        return Session::get("user_admin_group_".$user->id);
-
+        return "";
     }
 
     public static function setGroupId($group_id){
