@@ -23,18 +23,16 @@ class PayHttp
     }
 
     public static function proxy_group_id(){
-        //default_proxy_group_id
-        $proxy_group_id = 0;
-        if(auth('admin')->check()){
+        //GETTING THE SESSION BUT IF FAILED THEN GET THE DB DEFAULTS
+        $proxy_group_id = PayGroup::getGroupId();
+        if( !$proxy_group_id && auth('admin')->check() ){
             $user_admin_id = auth('admin')->user()->id;
             $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
             if($user_admin){
                 $proxy_group_id = $user_admin->default_proxy_group_id;
             }
         }
-
         return $proxy_group_id;
-
     }
 
     public static function http2($is_auth = true, $access_token=""){
