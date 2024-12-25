@@ -214,21 +214,23 @@ window.PusherSet = false;
 window.iProtekPusher = null;
 
 window.XposeSetSocket = function(fn){
-    if(window.PusherSet || window.iProtekPusher) return;
+    
     WebRequest2('GET', '/api/push-info').then(resp=>{
         resp.json().then(data=>{ 
+            if(fn)
+                fn(data);
+
+            //Preventing from proceeding
+            if(window.PusherSet || window.iProtekPusher) return;
+
+            //Triggers that to set its pushertypes
             if(data.is_active  && data.name == 'PUSHER.COM'){
                 window.PusherSet = true;
-                //vm.loadPusher(vm.pusher_key, vm.pusher_cluster);
-                if(fn)
-                    fn(data);
             }
             else if(data.is_active && data.name == "iProtek WebSocket"){
                (async()=>{ 
                 if(!window.iProtekPusher)
                     window.iProtekPusher = await window.XposeSocket(data.url, data.cluster, data.app_id, data.key);
-                if(fn)
-                    fn(data);
                })();
             }
         });
