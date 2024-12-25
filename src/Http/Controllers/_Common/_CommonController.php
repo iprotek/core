@@ -11,7 +11,7 @@ use iProtek\Core\Helpers\LanguageHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use iProtek\Core\Helpers\PayGroup;
+use iProtek\Core\Helpers\PayHttp;
 
 class _CommonController extends BaseController
 {
@@ -21,7 +21,7 @@ class _CommonController extends BaseController
         }
 
         //FORCE TO ADD CONSTRAINT
-        $array["group_id"] = PayGroup::getGroupId();
+        $array["group_id"] = PayHttp::proxy_group_id();
         return view($view, $array);
     }
 
