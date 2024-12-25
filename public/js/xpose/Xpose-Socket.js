@@ -140,7 +140,7 @@ window.XposeSocketSetMessage = function(socket){
                     if(data.subscribe_key == item.subscribe_key){
                         item.result_data(data);
                         
-                        console.log("Success to subscribe on channel:"+data.channel+' at event:'+data.event, data);
+                        console.log("Success to subscribe on channel:"+data.channel+' at event:'+data.event);
                     }else{
                         console.error("Failed to subscribe on channel:"+data.channel+' at event:'+data.event);
                     }
