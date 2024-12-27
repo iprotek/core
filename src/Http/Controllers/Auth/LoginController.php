@@ -80,6 +80,14 @@ class LoginController extends Controller
     }
 
     public function logout(Request $request){
+        // Log out the user
+        Auth::logout();
+
+        // Invalidate the session
+        $request->session()->invalidate();
+
+        // Regenerate the session token
+        $request->session()->regenerateToken();
 
         Cache::flush();
         Session::flush(); 
