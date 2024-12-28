@@ -14,8 +14,23 @@
             </div>
         </div>
         <div v-else class="user-input-wrp"><br>
-            <input :list="'user-input2-list-'+_uid" :id="input2_id" v-model="input_value" @keyup="userInputKeyUp" @change="value_changed" @focus="focusenter" @focusout="focusout" :readonly="is_readonly" :type="type ? type:'text' " class="inputText" :disabled="is_disabled" :style="input_style" required="" :title="placeholder_description">
-            <span :id="label_id" class="floating-label" v-html="placeholder" :title="placeholder_description" :style="placeholder_style"></span>
+            <div v-if="type == 'password'" >
+                <span v-html="placeholder" :title="placeholder_description"></span>
+                <div class="input-group">
+                    <input :list="'user-input2-list-'+_uid" :id="input2_id" v-model="input_value" @keyup="userInputKeyUp" @change="value_changed" @focus="focusenter" @focusout="focusout" :readonly="is_readonly" :type="toggleEye ? 'password':'text' " class="form-control" :disabled="is_disabled" required="" :title="placeholder_description">
+                    <span class="btn btn-default" @click="toggleEye=!toggleEye" :title="toggleEye? 'Show':'Hide'">
+                        <span v-if="toggleEye" class="fa fa-eye-slash" ></span>
+                        <span v-else class="fa fa-eye"></span>
+                    </span>
+                </div>
+                <!--
+                <span :id="label_id" class="floating-label" v-html="placeholder" :title="placeholder_description" :style="placeholder_style"></span>
+                -->
+            </div>
+            <template v-else>
+                <input :list="'user-input2-list-'+_uid" :id="input2_id" v-model="input_value" @keyup="userInputKeyUp" @change="value_changed" @focus="focusenter" @focusout="focusout" :readonly="is_readonly" :type="type ? type:'text' " class="form-control inputText" :disabled="is_disabled" :style="input_style" required="" :title="placeholder_description">
+                <span :id="label_id" class="floating-label" v-html="placeholder" :title="placeholder_description" :style="placeholder_style"></span>
+           </template>      
         </div>
         <i v-if="placeholder_description"><small class="text-secondary" v-html="placeholder_description"> </small></i>
         <datalist v-if="datalist" :id="'user-input2-list-'+_uid" >
@@ -41,7 +56,9 @@
                 current_color:"",
                 label_id: 'ph-label-'+this._uid,
                 input_value: this.value,
-                input2_id: 'input2-'+this._uid
+                input2_id: 'input2-'+this._uid,
+
+                toggleEye:true
             }
         },
         methods: {
