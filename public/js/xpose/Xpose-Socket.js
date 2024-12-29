@@ -1,8 +1,15 @@
-window.XposeSocket = async function(url, cluster, app_id, key){
-    //var socket = new WebSocket(`${url}?cluster=${cluster}&app_id=${app_id}&key=${key}`);
+window.XposeSocket = async function(uri, cluster, app_id, key, is_guest = 0, account_id = 0){
     
     return ( async()=>{
-        const socket = await window.openWebSocketWithTimeout(`${url}?cluster=${cluster}&app_id=${app_id}&key=${key}`, 3000);
+        var url = `${uri}?cluster=${cluster}&app_id=${app_id}&key=${key}`;
+        if(is_guest){
+            url += `&is_guest=${is_guest}`;
+        }
+        if(account_id){
+            url += `&account_id=${account_id}`;
+        }
+
+        const socket = await window.openWebSocketWithTimeout(url, 3000);
         if(!socket){
             return;
         }
@@ -37,6 +44,24 @@ window.XposeSocket = async function(url, cluster, app_id, key){
             } )
             );
         } 
+
+        socket.onlineCheck = function(account_id){
+            socket.send(    
+                JSON.stringify( {
+                    account_id: account_id,
+                    type: 'online-check'
+                } )
+            );
+        }
+
+        socket.onlineCheckGuest = function(account_id){
+            socket.send( 
+                JSON.stringify( {
+                    account_id: account_id,
+                    type: 'online-check-guest'
+                } )
+            );
+        }
 
         return socket;
     })();
@@ -93,11 +118,6 @@ window.XposeSocketStatus = function(socket, app_id, status_cluster){
         socket.callBacks = [];
     socket.callBacks.push(res);
 
-    
-    //SET MESSAGE TRIGGER
-    //window.XposeSocketSetMessage(socket);
-
-
     //GET STATUS
     socket.send(JSON.stringify({
         type:'status',
@@ -126,6 +146,7 @@ window.XposeSocketSetMessage = function(socket){
         socket.onmessage = function(evt){
             
             const data = JSON.parse(evt.data);
+            
             if(!socket.callBacks){
                 return;
             }
@@ -144,6 +165,12 @@ window.XposeSocketSetMessage = function(socket){
                     }else{
                         console.error("Failed to subscribe on channel:"+data.channel+' at event:'+data.event);
                     }
+                }
+                else if(data.type == 'online-check-guest'){
+                    item.result_data(data);
+                }
+                else if(data.type == 'online-check'){
+                    item.result_data(data);
                 }
                 else if( data.channel == item.channel && item.event == data.event ){
                     if(item.then){ 
@@ -184,9 +211,6 @@ window.XposeChannelEvent = function(socket, channel, event){
         socket.callBacks = [];
     socket.callBacks.push(res);
 
-    //SET MESSAGE TRIGGER
-    //window.XposeSocketSetMessage(socket);
-
 
     //Subscribe HERE
     socket.send( JSON.stringify(
@@ -212,13 +236,17 @@ window.XposegetRandomString = function(length=36) {
 
 window.PusherSet = false;
 window.iProtekPusher = null;
-
-window.XposeSetSocket = function(fn){
+window.PusherFlag = false;
+window.CheckingInfo = false;
+window.XposeSetSocket = function(fn, waitFn=null, is_guest=0, account_id = 0){
     
     WebRequest2('GET', '/api/push-info').then(resp=>{
         resp.json().then(data=>{ 
-            if(fn)
+            if(fn){
+                data.is_guest = is_guest;
+                data.account_id = account_id;
                 fn(data);
+            }
 
             //Preventing from proceeding
             if(window.PusherSet || window.iProtekPusher) return;
@@ -226,13 +254,40 @@ window.XposeSetSocket = function(fn){
             //Triggers that to set its pushertypes
             if(data.is_active  && data.name == 'PUSHER.COM'){
                 window.PusherSet = true;
+                if(waitFn){
+                    waitFn(data);
+                }
             }
             else if(data.is_active && data.name == "iProtek WebSocket"){
                (async()=>{ 
                 if(!window.iProtekPusher)
-                    window.iProtekPusher = await window.XposeSocket(data.url, data.cluster, data.app_id, data.key);
-               })();
+                    window.iProtekPusher = await window.XposeSocket(data.url, data.cluster, data.app_id, data.key, is_guest, account_id);
+                    if(waitFn){
+                        waitFn(data);
+                    }
+                })();
+            }else{
+                //window.PusherFlag = false;
             }
         });
     });
+}
+
+window.GuestChatSocket = function(fn, waitFn = null){
+    if(window.PusherFlag || window.CheckingInfo){
+        return;
+    }
+    window.PusherFlag = true;
+    window.CheckingInfo = true; 
+    WebRequest2('GET', '/guest-chat/chat-info').then(resp=>{
+        window.CheckingInfo = false;
+        resp.json().then(data=>{
+            if(data.guest_check){
+                window.XposeSetSocket(fn, waitFn,  1, data.guest_chat_id);
+            }
+            else{
+                window.PusherFlag = false;
+            }
+        })
+    }); 
 }

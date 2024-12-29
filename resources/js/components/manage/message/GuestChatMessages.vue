@@ -145,6 +145,7 @@
             }
         },
         mounted:function(){
+            window.loadPusherInfo();
             this.loadMessage(); 
             window.guest_chat_messages = this;
         },
