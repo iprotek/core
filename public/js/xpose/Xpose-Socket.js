@@ -57,12 +57,6 @@ window.XposeSocket = async function(uri, cluster, app_id, key, is_guest = 0, acc
 
         socket.onlineCheckGuest = function(account_id){
             return window.CheckOnline(socket, account_id, 'online-check-guest');
-            socket.send( 
-                JSON.stringify( {
-                    account_id: account_id,
-                    type: 'online-check-guest'
-                } )
-            );
         }
 
         return socket;
@@ -329,7 +323,7 @@ window.GuestChatSocket = function(fn, waitFn = null){
     }); 
 }
 
-window.ChattSocket = function(fn, waitFn, account_id){
+window.ChatSocket = function(fn, waitFn, account_id){
     if(window.PusherFlag || window.CheckingInfo){
         return;
     }
