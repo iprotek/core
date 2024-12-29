@@ -46,6 +46,7 @@ window.XposeSocket = async function(uri, cluster, app_id, key, is_guest = 0, acc
         } 
 
         socket.onlineCheck = function(account_id){
+            return window.CheckOnline(socket, account_id, 'online-check');
             socket.send(    
                 JSON.stringify( {
                     account_id: account_id,
@@ -55,6 +56,7 @@ window.XposeSocket = async function(uri, cluster, app_id, key, is_guest = 0, acc
         }
 
         socket.onlineCheckGuest = function(account_id){
+            return window.CheckOnline(socket, account_id, 'online-check-guest');
             socket.send( 
                 JSON.stringify( {
                     account_id: account_id,
@@ -93,6 +95,40 @@ window.openWebSocketWithTimeout = function(url, timeout = 5000) {
     });
 }
 
+
+window.CheckOnline = function(socket, account_id, type){
+    var res = {
+        callback:null,
+        //This is trigger for then function
+        result_data:function(data){
+            if(!this.callback){
+                //console.log("Invalidate callback");
+                return;
+            }
+            this.callback(data);
+        },
+        //Triggering results for callbacks
+        then: function(fn){
+            this.callback = fn;
+        },
+        type:type,
+        account_id: account_id,
+        online_key: window.XposegetRandomString(36)
+    };
+
+    if(!socket.callBacks)
+        socket.callBacks = [];
+    socket.callBacks.push(res);
+
+    //GET STATUS
+    socket.send(JSON.stringify({
+        type:type,
+        account_id: res.account_id,
+        online_key: res.online_key
+    }));
+
+    return res;
+}
 
 window.XposeSocketStatus = function(socket, app_id, status_cluster){
     var res = {
@@ -146,7 +182,6 @@ window.XposeSocketSetMessage = function(socket){
         socket.onmessage = function(evt){
             
             const data = JSON.parse(evt.data);
-            
             if(!socket.callBacks){
                 return;
             }
@@ -166,11 +201,13 @@ window.XposeSocketSetMessage = function(socket){
                         console.error("Failed to subscribe on channel:"+data.channel+' at event:'+data.event);
                     }
                 }
-                else if(data.type == 'online-check-guest'){
-                    item.result_data(data);
+                else if(data.type == 'online-check-guest' && data.type == item.type){
+                    if(data.online_key == item.online_key)
+                        item.result_data(data);
                 }
-                else if(data.type == 'online-check'){
-                    item.result_data(data);
+                else if(data.type == 'online-check' && data.type == item.type){
+                    if(data.online_key == item.online_key )
+                        item.result_data(data);
                 }
                 else if( data.channel == item.channel && item.event == data.event ){
                     if(item.then){ 
@@ -290,4 +327,12 @@ window.GuestChatSocket = function(fn, waitFn = null){
             }
         })
     }); 
+}
+
+window.ChattSocket = function(fn, waitFn, account_id){
+    if(window.PusherFlag || window.CheckingInfo){
+        return;
+    }
+    window.XposeSetSocket(fn, waitFn,  0, account_id);
+
 }
