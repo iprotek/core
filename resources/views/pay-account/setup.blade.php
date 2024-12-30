@@ -6,7 +6,7 @@
     ?>
     <div id="main-content" class="contianer" style="min-height:85vh;">
         <div class="row mx-4 justify-content-center">
-            <div class="col-sm-5 text-dark mt-5">  
+            <div class="col-sm-4 text-dark mt-5" style="min-width:350px;">  
                     @include('iprotek_core::pay-account.login.design')
             </div>
         </div>
