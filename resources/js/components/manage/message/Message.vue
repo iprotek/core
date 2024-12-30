@@ -18,6 +18,7 @@
                     </div>
                     <div class="dropdown-divider" @click.stop=""></div>
                     <notification-container v-if="ai" :header="'Ask AI'" :data="ai"></notification-container>
+                    <notification-container v-if="sms" :header="'SMS Messages'" :data="sms"></notification-container>
                     <notification-container v-if="group" :header="'Group Messages'" :data="group"></notification-container>
                     <notification-container v-if="team" :header="'Team Messages'" :data="team"></notification-container>
                     <notification-container v-if="dm" :header="'Direct Messages'" :data="dm"></notification-container>
@@ -62,6 +63,13 @@
                 ai:null,
                 group:null,
                 team:null,
+                sms:{
+                    status:1,
+                    result:[],
+                    message:'',
+                    total:0,
+                    other_chat_count:0
+                },
                 notification_count:0,
                 
             }
