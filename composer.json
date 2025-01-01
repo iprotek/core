@@ -24,6 +24,7 @@
         "iprotek/data":">=1.0.0",
         "iprotek/sys-notification":">=1.0.0",
         "iprotek/sms-sender":">=1.0.0",
+        "iprotek/xrac":">=1.0.0",
         "pusher/pusher-php-server": "^7.2"
     },
     "type": "library",  
