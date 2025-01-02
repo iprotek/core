@@ -24,6 +24,12 @@
             }
         },
         methods: { 
+            queryString:function(params={}){ 
+                var queryString = Object.keys(params).map(function(key) {
+                    return key + '=' + params[key]
+                }).join('&');
+                return queryString;
+            },
 
         },
         mounted:function(){     

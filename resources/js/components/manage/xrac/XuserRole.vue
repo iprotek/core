@@ -3,47 +3,18 @@
         <a class="btn btn-outline-primary mb-2" href="/manage/xrac/xrole"> ROLE DEFAULTS </a>
         <div class="row justify-content-center">
             <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header">
-                        <label> USER </label>
-                    </div> 
-                    <div class="input-group text-sm">
-                        <span class="btn btn-default">
-                            <small title="Show" class="fa fa-search text-primary"></small>
-                        </span>
-                        <input type="text" class="form-control" placeholder="Search user.." />
-                    </div> 
-                    <table class="table m-0">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">
-                                    <input type="radio" />
-                                </td>
-                                <td colspan="2"><a >OR9842</a>
-                                    <div>
-                                        <small class="text-secondary" >Text Description</small>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button class="btn btn-outline-primary m-2"> 
-                        SAVE & SYNC USER XRAC
-                    </button>
-                </div>
+                <app-user-list />
             </div>
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-header">
                         <label> ROLES </label>
                     </div> 
+                    <label class="mb-0 mt-2 mx-2">Select Branch:</label>
+                    <select class="form-control form-input-sm">
+                        <option value="1"> -- DEFAULT BRANCH --</option>
+                        <option>BRANCH 1</option>
+                    </select>
                     <table class="table m-0">
                         <thead>
                             <tr>
@@ -57,9 +28,19 @@
                                 <td class="text-center">
                                     <input type="radio" />
                                 </td>
-                                <td colspan="2"><a >OR9842</a>
+                                <td colspan="2"><a > - NO ACCESS - </a>
                                     <div>
-                                        <small class="text-secondary" >Text Description</small>
+                                        <small class="text-secondary" > Disallow user to have access. </small>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <input type="radio" />
+                                </td>
+                                <td colspan="2"><a >Staff</a>
+                                    <div>
+                                        <small class="text-secondary" >Regular User</small>
                                     </div>
                                 </td>
                             </tr>
@@ -72,6 +53,7 @@
                     <div class="card-body">
                         <input type="radio"/> DEFAULT  
                         <input type="radio"/> CUSTOM  
+                        <button class="btn btn-outline-primary btn-sm text-nowrap"> SAVE & SYNC USER ROLE ACCESS </button>
                     </div>
                     <table class="table m-0">
                         <thead>
@@ -106,18 +88,26 @@
 </template>
 
 <script>
+    import AppUserListVue from './AppUserList.vue';
     export default {
         props:[  ],
-        components: { 
+        components: {
+            "app-user-list":AppUserListVue
         },
         data: function () {
-            return {    
+            return {
             }
         },
         methods: { 
+            queryString:function(params={}){ 
+                var queryString = Object.keys(params).map(function(key) {
+                    return key + '=' + params[key]
+                }).join('&');
+                return queryString;
+            }
 
         },
-        mounted:function(){     
+        mounted:function(){  
         },
         updated:function(){
 

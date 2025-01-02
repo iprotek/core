@@ -109,6 +109,7 @@ class PayHttp
 
     }
 
+    //SHARED TO ACCOUNTS
     public static function app_user_account($search, $page=1, $items_per_page=""){
         $queryString = http_build_query(["search"=>$search, "page"=>$page, "items_per_page"=>$items_per_page]);
         
@@ -165,6 +166,27 @@ class PayHttp
 
         }
 
+        return $result;
+    }
+
+    //ALL ACCOUNTS IN CLIENT
+    public static function app_accounts($search, $page=1, $items_per_page=10){
+        
+        $queryString = http_build_query(["search"=>$search, "page"=>$page, "items_per_page"=>$items_per_page]);
+        
+        $user = auth()->user();
+        $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+        if(!$pay_account)
+            return null;
+
+        $client = PayHttp::auth($pay_account->access_token);
+        $response = $client->get('app-user-account/list?'.$queryString);
+        
+        $response_code = $response->getStatusCode();
+        $result = json_decode($response->getBody(), true); 
+        if($response_code != 200 && $response_code != 201){
+            return response()->json($result, $response_code);
+        }
         return $result;
     }
 
