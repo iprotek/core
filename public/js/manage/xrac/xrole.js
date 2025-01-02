@@ -3205,7 +3205,12 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("div", {
+  return _c("div", [_c("a", {
+    staticClass: "btn btn-outline-primary mb-2",
+    attrs: {
+      href: "/manage/xrac/xrole/user-role-access"
+    }
+  }, [_vm._v(" USER ROLES ")]), _vm._v(" "), _c("div", {
     staticClass: "row justify-content-center"
   }, [_c("div", {
     staticClass: "col-md-3"

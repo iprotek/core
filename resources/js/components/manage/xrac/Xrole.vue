@@ -1,5 +1,6 @@
 <template>
     <div>
+        <a class="btn btn-outline-primary mb-2" href="/manage/xrac/xrole/user-role-access"> USER ROLES </a>
         <div class="row justify-content-center">
             <div class="col-md-3">
                 <div class="card">

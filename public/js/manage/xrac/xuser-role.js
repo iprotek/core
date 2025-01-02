@@ -3210,7 +3210,7 @@ var staticRenderFns = [function () {
     attrs: {
       href: "/manage/xrac/xrole"
     }
-  }), _vm._v(" "), _c("div", {
+  }, [_vm._v(" ROLE DEFAULTS ")]), _vm._v(" "), _c("div", {
     staticClass: "row justify-content-center"
   }, [_c("div", {
     staticClass: "col-md-3"
