@@ -65,9 +65,6 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button class="btn btn-outline-primary m-2"> 
-                        SAVE & SYNC XRAC
-                    </button>
                 </div>
             </div>
             <div class="col-md-6">
@@ -81,7 +78,7 @@
                             <tr>
                                 <th style="width: 50px;"></th>
                                 <th style="width: 50px;"></th>
-                                <th>CONTROL DESCRIPTION</th> 
+                                <th>ACCESS CONTROL DESCRIPTION</th> 
                             </tr>
                         </thead>
                         <tbody>

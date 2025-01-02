@@ -3269,9 +3269,7 @@ var staticRenderFns = [function () {
     }
   }, [_c("a", [_vm._v("OR9842")]), _vm._v(" "), _c("div", [_c("small", {
     staticClass: "text-secondary"
-  }, [_vm._v("Text Description")])])])])])]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-outline-primary m-2"
-  }, [_vm._v(" \n                    SAVE & SYNC XRAC\n                ")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Text Description")])])])])])])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("div", {
     staticClass: "card"
@@ -3295,7 +3293,7 @@ var staticRenderFns = [function () {
     staticStyle: {
       width: "50px"
     }
-  }), _vm._v(" "), _c("th", [_vm._v("CONTROL DESCRIPTION")])])]), _vm._v(" "), _c("tbody", [_c("tr", [_c("td", {
+  }), _vm._v(" "), _c("th", [_vm._v("ACCESS CONTROL DESCRIPTION")])])]), _vm._v(" "), _c("tbody", [_c("tr", [_c("td", {
     staticClass: "text-center"
   }, [_c("input", {
     attrs: {
