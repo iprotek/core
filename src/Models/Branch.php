@@ -21,10 +21,12 @@ class Branch extends Model
         "status_info",
         "pay_created_by",
         "pay_updated_by",
-        "pay_deleted_by"
+        "pay_deleted_by",
+        "deleted_at"
     ];
 
     protected $casts = [
-        "is_active"=>"boolean"
+        "is_active"=>"boolean",
+        "deleted_at"=>"datetime:Y-m-d H:i:s"
     ];
 }
