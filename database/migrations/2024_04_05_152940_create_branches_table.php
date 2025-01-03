@@ -21,6 +21,8 @@ class CreateBranchesTable extends Migration
             $table->id();
             $table->bigInteger('group_id');
             $table->string('name');
+            $table->boolean('is_active')->default(1);
+            $table->longText('data')->nullable();
             $table->text('address')->nullable();
             $table->text('coordinates')->nullable();
             $table->string('status')->nullable();

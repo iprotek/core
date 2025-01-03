@@ -1,54 +1,14 @@
 <template>
     <div>
         <a class="btn btn-outline-primary mb-2" href="/manage/xrac/xrole"> ROLE DEFAULTS </a>
-        <div class="row justify-content-center">
+        <div class="row">
             <div class="col-md-3">
-                <app-user-list />
+                <app-user-list @selected_app_user="selected_app_user" />
             </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header">
-                        <label> ROLES </label>
-                    </div> 
-                    <label class="mb-0 mt-2 mx-2">Select Branch:</label>
-                    <select class="form-control form-input-sm">
-                        <option value="1"> -- DEFAULT BRANCH --</option>
-                        <option>BRANCH 1</option>
-                    </select>
-                    <table class="table m-0">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">
-                                    <input type="radio" />
-                                </td>
-                                <td colspan="2"><a > - NO ACCESS - </a>
-                                    <div>
-                                        <small class="text-secondary" > Disallow user to have access. </small>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <input type="radio" />
-                                </td>
-                                <td colspan="2"><a >Staff</a>
-                                    <div>
-                                        <small class="text-secondary" >Regular User</small>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="col-md-3" v-if="selected_app_user_id">
+                <role-list :app_user_id="selected_app_user_id" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" v-if="selected_app_user_id && xrole_id">
                 <div class="card">
                     <div class="card-body">
                         <input type="radio"/> DEFAULT  
@@ -89,16 +49,28 @@
 
 <script>
     import AppUserListVue from './AppUserList.vue';
+    import RoleListVue from './RoleList.vue';
     export default {
         props:[  ],
         components: {
-            "app-user-list":AppUserListVue
+            "app-user-list":AppUserListVue,
+            "role-list":RoleListVue
         },
         data: function () {
             return {
+                selected_app_user_id:0,
+                xrole_id:0
             }
         },
         methods: { 
+            selected_app_user:function(id){
+                this.selected_app_user_id = 0;
+                this.xrole_id = 0;
+                var vm = this;
+                setTimeout(()=>{
+                    vm.selected_app_user_id = id;
+                }, 100);
+            },
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {
                     return key + '=' + params[key]

@@ -35,23 +35,25 @@ class PayHttp
         return $proxy_group_id;
     }
 
-    public static function http2($is_auth = true, $access_token=""){
+    public static function http2($is_auth = true, $access_token="", $headers=null){
         $pay_url = config('iprotek.pay_url');
         $client_id = config('iprotek.pay_client_id');
         $client_secret = config('iprotek.pay_client_secret'); 
 
-        $headers = [];
-        if($is_auth == false){
-            $headers = [
-                "Accept"=>"application/json",
-                "Authorization"=>"Bearer ".$client_id.":".$client_secret
-            ];
-        }
-        else{
-            $headers = [
-                "Accept"=>"application/json",
-                "Authorization"=>"Bearer ".$access_token
-            ];
+        if(!$headers){
+            $headers = [];
+            if($is_auth == false){
+                $headers = [
+                    "Accept"=>"application/json",
+                    "Authorization"=>"Bearer ".$client_id.":".$client_secret
+                ];
+            }
+            else{
+                $headers = [
+                    "Accept"=>"application/json",
+                    "Authorization"=>"Bearer ".$access_token
+                ];
+            }
         }
         
         $client = new \GuzzleHttp\Client([
@@ -167,6 +169,15 @@ class PayHttp
         }
 
         return $result;
+    }
+
+    public static function get_client( $url, $headers = null){
+        $client = static::http2(true, "", $headers);
+        return $client->get($url);
+    }
+
+    public static function post_client_header($url, $data , $headers){
+
     }
 
     //ALL ACCOUNTS IN CLIENT

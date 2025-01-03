@@ -16,9 +16,15 @@ class Branch extends Model
         "address",
         "coordinates",
         "status",
+        "is_active",
+        "data",
         "status_info",
         "pay_created_by",
         "pay_updated_by",
         "pay_deleted_by"
+    ];
+
+    protected $casts = [
+        "is_active"=>"boolean"
     ];
 }

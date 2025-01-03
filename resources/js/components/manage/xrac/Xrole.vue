@@ -3,41 +3,7 @@
         <a class="btn btn-outline-primary mb-2" href="/manage/xrac/xrole/user-role-access"> USER ROLES </a>
         <div class="row justify-content-center">
             <div class="col-md-3">
-                <div class="card">
-                    <div class="card-header">ROLES</div>
-                    <div class="card-body">
-                        <div class="input-group text-sm mb-1">
-                            <span class="btn btn-default">
-                                <small title="Show" class="fa fa-search text-primary"></small>
-                            </span>
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    <table class="table m-0">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">
-                                    <input type="radio" />
-                                </td>
-                                <td colspan="2"><a >OR9842</a>
-                                    <div>
-                                        <small class="text-secondary" >Text Description</small>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button class="btn btn-outline-primary m-2"> 
-                        SAVE & SYNC XRAC
-                    </button>
-                </div>
+                <role-list />
             </div>
             <div class="col-md-9">
                 <div class="card">
@@ -74,9 +40,11 @@
 </template>
 
 <script>
+    import RoleListVue from './RoleList.vue';
     export default {
         props:[  ],
-        components: { 
+        components: {
+            "role-list":RoleListVue
         },
         data: function () {
             return {    

@@ -19,6 +19,8 @@
         props:[  ],
         components: { 
         },
+        watch: { 
+        },
         data: function () {
             return {    
             }

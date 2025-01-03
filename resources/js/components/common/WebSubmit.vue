@@ -3,6 +3,7 @@
         <i v-if="is_submit" class="fa fa-spinner fa-pulse"></i>
         <i v-else-if="status == 2" class="fa fa-times text-danger"></i>
         <i v-else-if="status == 1" class="fa fa-check text-success"></i>
+        <i v-else :class="icon_class"></i>
         <span v-if="is_submit"> Submitting </span>
         <span v-else-if="status >= 1" v-text="message"></span>
         <span v-else v-html="label">
@@ -12,7 +13,7 @@
 
 <script>
     export default {
-        props:[ "el_class", "label","timeout", "action" ],
+        props:[ "el_class", "icon_class", "label","timeout", "action" ],
         components: { 
         },
         data: function () {
