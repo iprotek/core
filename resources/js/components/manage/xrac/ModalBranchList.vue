@@ -6,18 +6,19 @@
             </template> 
             <template slot="body" >
                 
-                <div class="input-group text-sm mt-2">
-                    <span class="btn btn-default">
-                        <small title="Search" class="fa fa-search text-primary"></small>
-                    </span>
-                    <input v-model="search" @keyup.enter="loadBranches()" type="text" class="form-control" placeholder="Search branch.." />
-                </div> 
                 <div v-if="view_mode == 'list'">
-                    <button class="btn btn-outline-primary my-2" @click="view_mode = 'add-edit'">
+                    <button class="btn btn-outline-primary my-2" @click="view_mode = 'add-edit'; addorEdit()">
                         <span class="fa fa-plus"></span> ADD BRANCH
                     </button>     
+
+                    <div class="input-group text-sm my-2">
+                        <span class="btn btn-default">
+                            <small title="Search" class="fa fa-search text-primary"></small>
+                        </span>
+                        <input v-model="search" @keyup.enter="loadBranches()" type="text" class="form-control" placeholder="Search branch.." />
+                    </div> 
                     
-                    <button type="button" class="btn btn-outline-success ml-2" @click="$refs.web_submit.submit()" >
+                    <button type="button" class="btn btn-outline-success my-1" @click="$refs.web_submit.submit()" >
                         <web-submit :action="syncBranches" ref="web_submit" :label="'Sync Branches'" :icon_class="'fa fa-refresh'" :timeout="3000" />
                     </button>
                     <div class="card">
@@ -49,8 +50,11 @@
                                         <span v-else class="text-danger">Inactive</span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-outline-warning btn-sm">
+                                        <button class="btn btn-outline-warning btn-sm" title="Update Branch" @click="view_mode = 'add-edit'; addorEdit(item)">
                                             <span class="fa fa-edit"></span>
+                                        </button>
+                                        <button class="btn btn-outline-danger btn-sm" title="Remove Branch">
+                                            <span class="fa fa-times"></span>
                                         </button>
                                     </td>
                                 </tr> 
@@ -69,7 +73,27 @@
                     <button class="btn btn-outline-danger my-2" @click="view_mode = 'list'">
                         <span class="fa fa-arrow-left"></span> BACK
                     </button>     
-
+                    <div class="card mx-4">
+                        <div class="card-header">
+                            Branch Info
+                        </div>
+                        <div class="card-body">
+                            <user-input2 v-if="branch_info.id" :value="branch_info.id"  :readonly="true"  :placeholder="'ID#'" :input_style="'height:40px;'" />
+                            <div class="mt-2">
+                                <switch2 v-model="branch_info.is_active" /> Is Active
+                            </div>
+                            <user-input2 v-model="branch_info.name"  :placeholder="'Branch Name(Required)'" :input_style="'height:40px;'" />
+                            <user-input2  v-model="branch_info.data.representative" :placeholder="'Representative'" :input_style="'height:40px;'" />
+                            <user-input2  v-model="branch_info.data.tel_no" :placeholder="'Tel#'" :input_style="'height:40px;'" />
+                            <user-input2  v-model="branch_info.data.mobile_no" :placeholder="'Mobile#'" :input_style="'height:40px;'" />
+                            <user-input2 v-model="branch_info.address" :placeholder="'Address'" :input_style="'height:40px;'" />
+                            
+                        </div>
+                        <div class="card-footer">
+                            <button v-if="branch_info.id" class="btn btn-outline-warning"> SAVE & SYNC </button>
+                            <button v-else class="btn btn-outline-primary"> ADD & SYNC </button>
+                        </div>
+                    </div>
                 </div>
             </template>
             <template slot="footer">
@@ -86,11 +110,15 @@
 <script>    
     import PageFooterVue from '../../common/PageFooter.vue';
     import WebSubmitVue from '../../common/WebSubmit.vue';
+    import UserInput2Vue from '../../common/UserInput2.vue';
+    import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
     export default {
         props:[  ],
         components: {
             "page-footer":PageFooterVue,
-            "web-submit":WebSubmitVue
+            "web-submit":WebSubmitVue,
+            "user-input2":UserInput2Vue,
+            "switch2":BoostrapSwitch2Vue
         },
         watch: { 
         },
@@ -102,10 +130,48 @@
                 current_page:1,
                 view_mode:'list',
                 search:'',
-                isLoading:false
+                isLoading:false,
+                branch_info:{
+                    id:0,
+                    is_active:true,
+                    name:'',
+                    address:'',
+                    data:{
+                        tel_no:'',
+                        mobile_no:'',
+                        representative:''
+                    }
+                }
            }
         },
         methods:{ 
+            addorEdit:function(branchInfo = null){
+                var vm = this; 
+                var b = vm.branch_info;
+                b.id = 0;
+                b.is_active = true;
+                b.name = '';
+                b.address = '';
+                b.data.tel_no = '';
+                b.data.mobile_no = '';
+                b.data.representative = ''
+
+                if(branchInfo){
+                    b.id = branchInfo.id;
+                    b.is_active = branchInfo.is_active;
+                    b.name = branchInfo.name;
+                    b.address = branchInfo.address;
+                    if(branchInfo.data){
+                        var data = JSON.parse(branchInfo.data);
+                        if(data){
+                            b.data.tel_no = data.tel_no;
+                            b.data.mobile_no = data.mobile_no;
+                            b.data.representative = data.representative;
+                        }
+                    }
+                }
+            },
+
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {
                     return key + '=' + params[key]
@@ -177,6 +243,7 @@
                     return resp.json().then(data=>{
                         if(data.status == 1){
                             vm.current_page = 1;
+                            vm.search = '';
                             setTimeout(()=>{
                                 vm.loadBranches();
                             },2000);
