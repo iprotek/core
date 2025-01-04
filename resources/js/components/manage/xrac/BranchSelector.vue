@@ -1,6 +1,6 @@
 <template> 
     <div :class="'input-group '+input_size">
-        <select v-if="hasLoaded == false" class="form-control" v-model="selected_branch_id">
+        <select v-if="hasLoaded == false" class="form-control" v-model="selected_branch_id" style="min-width: 200px;" >
             <option :value="1"> DEFAULT COMPANY/BRANCH </option>
         </select>
         <select v-else class="form-control" style="min-width: 200px;" @change="selection_changed" v-model="selected_branch_id">
