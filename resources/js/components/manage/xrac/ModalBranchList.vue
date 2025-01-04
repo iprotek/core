@@ -201,7 +201,7 @@
                     b.name = branchInfo.name;
                     b.address = branchInfo.address;
                     if(branchInfo.data){
-                        var data = JSON.parse(branchInfo.data);
+                        var data =  branchInfo.data;
                         if(data){
                             b.data.tel_no = data.tel_no;
                             b.data.mobile_no = data.mobile_no;
