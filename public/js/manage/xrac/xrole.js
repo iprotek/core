@@ -3560,10 +3560,39 @@ __webpack_require__.r(__webpack_exports__);
           mobile_no: '',
           representative: ''
         }
-      }
+      },
+      errors: []
     };
   },
   methods: {
+    addorSave: function addorSave() {
+      var vm = this;
+      if (this.branch_info.id == 0) {
+        return WebRequest2('POST', '/manage/xrac/branch/sync-add', JSON.stringify(this.branch_info)).then(function (resp) {
+          return resp.json().then(function (data) {
+            if (!resp.ok) {
+              vm.errors = data;
+              return;
+            }
+            setTimeout(function () {
+              vm.branch_info.id = data.branch.id;
+              vm.loadBranches();
+            }, 3000);
+            return data;
+          });
+        });
+      }
+      return WebRequest2('POST', '/manage/xrac/branch/sync-update', JSON.stringify(this.branch_info)).then(function (resp) {
+        return resp.json().then(function (data) {
+          if (!resp.ok) {
+            vm.errors = data;
+            return;
+          }
+          vm.loadBranches();
+          return data;
+        });
+      });
+    },
     addorEdit: function addorEdit() {
       var branchInfo = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
       var vm = this;
@@ -3605,6 +3634,23 @@ __webpack_require__.r(__webpack_exports__);
       var vm = this;
       vm.view_mode = 'list';
       this.$refs.modal.show();
+      return new Promise(function (promiseExec) {
+        vm.promiseExec = promiseExec;
+      });
+    },
+    remove: function remove(branch_id) {
+      var vm = this;
+      this.$refs.swal_prompt.alert('question', "Remove Branch", "Confirm", "POST", "/manage/xrac/branch/sync-remove", JSON.stringify({
+        id: branch_id
+      })).then(function (res) {
+        if (res.isConfirmed) {
+          if (res.value.status == 1) {
+            vm.loadBranches();
+            vm.promiseExec(res.value);
+          }
+          //vm.$emit('data_updated');
+        }
+      });
       return new Promise(function (promiseExec) {
         vm.promiseExec = promiseExec;
       });
@@ -4595,15 +4641,15 @@ var render = function render() {
     staticClass: "table m-0"
   }, [_c("thead", [_c("tr", [_c("th", {
     staticClass: "text-center"
-  }, [_vm._v("ID#")]), _vm._v(" "), _c("th", [_vm._v("Branch Name")]), _vm._v(" "), _c("th", [_vm._v("IsActive")]), _vm._v(" "), _c("th")])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
+  }, [_vm._v("ID#")]), _vm._v(" "), _c("th", [_vm._v("Branch Name")]), _vm._v(" "), _c("th", [_vm._v("Address")]), _vm._v(" "), _c("th", [_vm._v("IsActive")]), _vm._v(" "), _c("th")])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
     staticClass: "text-center",
     attrs: {
-      colspan: "4"
+      colspan: "5"
     }
   }, [_c("code", [_vm._v(" -- Loading Branches -- ")])])]) : _vm.itemList.length == 0 ? _c("tr", [_c("td", {
     staticClass: "text-center",
     attrs: {
-      colspan: "4"
+      colspan: "5"
     }
   }, [_c("code", [_vm._v(" -- No Branch Found -- ")])])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.itemList, function (item, index) {
     return _c("tr", {
@@ -4616,6 +4662,10 @@ var render = function render() {
     }), _vm._v(" "), _c("th", {
       domProps: {
         textContent: _vm._s(item.name)
+      }
+    }), _vm._v(" "), _c("th", {
+      domProps: {
+        textContent: _vm._s(item.address)
       }
     }), _vm._v(" "), _c("td", [item.is_active == 1 ? _c("span", {
       staticClass: "text-primary"
@@ -4638,13 +4688,18 @@ var render = function render() {
       staticClass: "btn btn-outline-danger btn-sm",
       attrs: {
         title: "Remove Branch"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.remove(item.id);
+        }
       }
     }, [_c("span", {
       staticClass: "fa fa-times"
     })])])]);
   })], 2), _vm._v(" "), _c("tfoot", [_c("tr", [_c("td", {
     attrs: {
-      colspan: "4"
+      colspan: "5"
     }
   }, [_c("page-footer", {
     on: {
@@ -4752,10 +4807,36 @@ var render = function render() {
   })], 1), _vm._v(" "), _c("div", {
     staticClass: "card-footer"
   }, [_vm.branch_info.id ? _c("button", {
-    staticClass: "btn btn-outline-warning"
-  }, [_vm._v(" SAVE & SYNC ")]) : _c("button", {
-    staticClass: "btn btn-outline-primary"
-  }, [_vm._v(" ADD & SYNC ")])])])]) : _vm._e()]), _vm._v(" "), _c("template", {
+    staticClass: "btn btn-outline-warning",
+    on: {
+      click: function click($event) {
+        return _vm.$refs.save_web_submit.submit();
+      }
+    }
+  }, [_c("web-submit", {
+    ref: "save_web_submit",
+    attrs: {
+      action: _vm.addorSave,
+      icon_class: "fa fa-save",
+      label: "UPDATE & SYNC",
+      timeout: 4000
+    }
+  })], 1) : _c("button", {
+    staticClass: "btn btn-outline-primary",
+    on: {
+      click: function click($event) {
+        return _vm.$refs.add_web_submit.submit();
+      }
+    }
+  }, [_c("web-submit", {
+    ref: "add_web_submit",
+    attrs: {
+      action: _vm.addorSave,
+      icon_class: "fa fa-plus",
+      label: "ADD & SYNC",
+      timeout: 4000
+    }
+  })], 1)])])]) : _vm._e()]), _vm._v(" "), _c("template", {
     slot: "footer"
   }, [_c("div", [_c("button", {
     staticClass: "btn btn-outline-dark mr-4",

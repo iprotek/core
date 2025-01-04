@@ -35,6 +35,7 @@ class _CommonController extends BaseController
              response()->json($validator->messages(), 403)->send();
             die();
         }
+        return $validator;
     }
 
     public function sort_filter(Request $request, $model){

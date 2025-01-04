@@ -27,6 +27,7 @@ class Branch extends Model
 
     protected $casts = [
         "is_active"=>"boolean",
-        "deleted_at"=>"datetime:Y-m-d H:i:s"
+        "deleted_at"=>"datetime:Y-m-d H:i:s",
+        "data"=>"json"
     ];
 }

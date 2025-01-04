@@ -27,24 +27,26 @@
                                 <tr> 
                                     <th class="text-center">ID#</th>
                                     <th>Branch Name</th> 
+                                    <th>Address</th> 
                                     <th>IsActive</th> 
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-if="isLoading">
-                                    <td class="text-center" colspan="4">
+                                    <td class="text-center" colspan="5">
                                         <code> -- Loading Branches -- </code>
                                     </td>
                                 </tr>
                                 <tr v-else-if="itemList.length == 0">
-                                    <td class="text-center" colspan="4">
+                                    <td class="text-center" colspan="5">
                                         <code> -- No Branch Found -- </code>
                                     </td>
                                 </tr>
                                 <tr v-for="(item,index) in itemList" v-bind:key="'item-'+item.id+'-'+index"> 
                                     <td class="text-center" v-text="item.id"></td>
                                     <th v-text="item.name"></th> 
+                                    <th v-text="item.address"></th> 
                                     <td>
                                         <span v-if="item.is_active ==1" class="text-primary">Active</span>
                                         <span v-else class="text-danger">Inactive</span>
@@ -53,7 +55,7 @@
                                         <button class="btn btn-outline-warning btn-sm" title="Update Branch" @click="view_mode = 'add-edit'; addorEdit(item)">
                                             <span class="fa fa-edit"></span>
                                         </button>
-                                        <button class="btn btn-outline-danger btn-sm" title="Remove Branch">
+                                        <button class="btn btn-outline-danger btn-sm" title="Remove Branch" @click="remove(item.id)">
                                             <span class="fa fa-times"></span>
                                         </button>
                                     </td>
@@ -61,7 +63,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="4">
+                                    <td colspan="5">
                                         <page-footer v-model="pageData" @page_changed="page_changed" />
                                     </td>
                                 </tr>
@@ -90,8 +92,12 @@
                             
                         </div>
                         <div class="card-footer">
-                            <button v-if="branch_info.id" class="btn btn-outline-warning"> SAVE & SYNC </button>
-                            <button v-else class="btn btn-outline-primary"> ADD & SYNC </button>
+                            <button v-if="branch_info.id" class="btn btn-outline-warning" @click="$refs.save_web_submit.submit()"> 
+                                <web-submit ref="save_web_submit" :action="addorSave" :icon_class="'fa fa-save'" :label="'UPDATE & SYNC'" :timeout="4000" />
+                            </button>
+                            <button v-else class="btn btn-outline-primary" @click="$refs.add_web_submit.submit()">
+                                <web-submit ref="add_web_submit" :action="addorSave" :icon_class="'fa fa-plus'" :label="'ADD & SYNC'" :timeout="4000" />
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -141,10 +147,43 @@
                         mobile_no:'',
                         representative:''
                     }
-                }
+                },
+                errors:[]
            }
         },
         methods:{ 
+
+            addorSave:function(){
+                var vm = this;
+                if(this.branch_info.id == 0){
+                    return WebRequest2('POST', '/manage/xrac/branch/sync-add', JSON.stringify(this.branch_info) ).then(resp=>{
+                        return resp.json().then(data=>{
+                            if(!resp.ok){
+                                vm.errors = data;
+                                return;
+                            }
+                            setTimeout(()=>{
+                                vm.branch_info.id = data.branch.id;
+                                vm.loadBranches();
+                            }, 3000);
+
+                            return data;
+                        });
+                    })
+                }
+                return WebRequest2('POST', '/manage/xrac/branch/sync-update', JSON.stringify(this.branch_info) ).then(resp=>{
+                    return resp.json().then(data=>{
+                        if(!resp.ok){
+                            vm.errors = data;
+                            return;
+                        }
+                    
+                        vm.loadBranches();
+                        return data;
+                    });
+                });
+            },
+
             addorEdit:function(branchInfo = null){
                 var vm = this; 
                 var b = vm.branch_info;
@@ -194,6 +233,29 @@
                     vm.promiseExec = promiseExec;
                 });
                 
+            },
+            remove:function(branch_id){
+                var vm = this;
+                this.$refs.swal_prompt.alert(
+                    'question',
+                    "Remove Branch", 
+                    "Confirm" , 
+                    "POST", 
+                    "/manage/xrac/branch/sync-remove", 
+                    JSON.stringify({id: branch_id})
+                ).then(res=>{
+                    if(res.isConfirmed){
+                        if(res.value.status == 1){
+                            vm.loadBranches();
+                            vm.promiseExec(res.value);
+                        }
+                        //vm.$emit('data_updated');
+                    }
+                });
+
+                return new Promise((promiseExec)=>{
+                    vm.promiseExec = promiseExec;
+                });
             },
             add:function(){
                 var vm = this;
