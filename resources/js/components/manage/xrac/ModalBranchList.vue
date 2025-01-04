@@ -27,6 +27,8 @@
                                 <tr> 
                                     <th class="text-center">ID#</th>
                                     <th>Branch Name</th> 
+                                    <th>Tel#</th> 
+                                    <th>Rep.</th> 
                                     <th>Address</th> 
                                     <th>IsActive</th> 
                                     <th></th>
@@ -34,19 +36,27 @@
                             </thead>
                             <tbody>
                                 <tr v-if="isLoading">
-                                    <td class="text-center" colspan="5">
+                                    <td class="text-center" colspan="7">
                                         <code> -- Loading Branches -- </code>
                                     </td>
                                 </tr>
                                 <tr v-else-if="itemList.length == 0">
-                                    <td class="text-center" colspan="5">
+                                    <td class="text-center" colspan="7">
                                         <code> -- No Branch Found -- </code>
                                     </td>
                                 </tr>
                                 <tr v-for="(item,index) in itemList" v-bind:key="'item-'+item.id+'-'+index"> 
                                     <td class="text-center" v-text="item.id"></td>
                                     <th v-text="item.name"></th> 
-                                    <th v-text="item.address"></th> 
+                                    <th >
+                                        <small v-if="item.data && item.data.tel_no" class="text-bold text-secondary" v-text="item.data.tel_no"></small>
+                                    </th> 
+                                    <th >
+                                        <small v-if="item.data && item.data.representative" class="text-bold text-secondary" v-text="item.data.representative"></small>
+                                    </th> 
+                                    <th >
+                                        <small class="text-bold text-secondary" v-text="item.address"></small>
+                                    </th> 
                                     <td>
                                         <span v-if="item.is_active ==1" class="text-primary">Active</span>
                                         <span v-else class="text-danger">Inactive</span>
@@ -63,7 +73,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="5">
+                                    <td colspan="7">
                                         <page-footer v-model="pageData" @page_changed="page_changed" />
                                     </td>
                                 </tr>
