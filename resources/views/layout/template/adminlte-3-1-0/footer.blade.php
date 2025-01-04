@@ -46,6 +46,7 @@
  
 <script src="/iprotek/js/manage/notification.js"></script> 
 <script src="/iprotek/js/manage/message.js"></script> 
+<script src="/iprotek/js/manage/branches.js"></script> 
 
 <script>
   

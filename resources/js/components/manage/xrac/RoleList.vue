@@ -10,7 +10,7 @@
                     <option value="1"> -- DEFAULT BRANCH --</option>
                     <option>BRANCH 1</option>
                 </select>
-                <span class="btn btn-default" @click="$refs.branch_list.show()">
+                <span class="btn btn-default" @click="modalBranch()">
                     <small title="Add/Show Branches" class="fa fa-list text-success"></small>
                 </span>
             </div>
@@ -25,9 +25,10 @@
                 <tbody>
                     <tr>
                         <td class="text-center">
-                            <input type="radio" />
+                            <switch2 v-model="allow_access" />
                         </td>
-                        <td colspan="2"><a > - NO ACCESS - </a>
+                        <td colspan="2">
+                            <code > - NO ACCESS - </code>
                             <div>
                                 <small class="text-secondary" > Disallow user to have access. </small>
                             </div>
@@ -45,25 +46,28 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-        <branch-list ref="branch_list" />
+        </div> 
     </div>
 </template>
 
-<script>
-    import ModalBranchListVue from './ModalBranchList.vue';
+<script> 
+    import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
     export default {
         props:[ "app_user_id", "branch_id" ],
-        components: { 
-            "branch-list":ModalBranchListVue
+        components: {  
+            "switch2":BoostrapSwitch2Vue
         },
         watch: { 
         },
         data: function () {
-            return {    
+            return { 
+                allow_access:true
             }
         },
         methods: { 
+            modalBranch:function(){
+                window.ModalBranchView.show();
+            },
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {
                     return key + '=' + params[key]

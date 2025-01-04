@@ -28,7 +28,8 @@
                                     <th class="text-center">ID#</th>
                                     <th>Branch Name</th> 
                                     <th>Tel#</th> 
-                                    <th>Rep.</th> 
+                                    <th>Rep.</th>  
+                                    <th>Mob#</th> 
                                     <th>Address</th> 
                                     <th>IsActive</th> 
                                     <th></th>
@@ -36,12 +37,12 @@
                             </thead>
                             <tbody>
                                 <tr v-if="isLoading">
-                                    <td class="text-center" colspan="7">
+                                    <td class="text-center" colspan="8">
                                         <code> -- Loading Branches -- </code>
                                     </td>
                                 </tr>
                                 <tr v-else-if="itemList.length == 0">
-                                    <td class="text-center" colspan="7">
+                                    <td class="text-center" colspan="8">
                                         <code> -- No Branch Found -- </code>
                                     </td>
                                 </tr>
@@ -53,6 +54,9 @@
                                     </th> 
                                     <th >
                                         <small v-if="item.data && item.data.representative" class="text-bold text-secondary" v-text="item.data.representative"></small>
+                                    </th> 
+                                    <th >
+                                        <small v-if="item.data && item.data.mobile_no" class="text-bold text-secondary" v-text="item.data.mobile_no"></small>
                                     </th> 
                                     <th >
                                         <small class="text-bold text-secondary" v-text="item.address"></small>
@@ -73,7 +77,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="7">
+                                    <td colspan="8">
                                         <page-footer v-model="pageData" @page_changed="page_changed" />
                                     </td>
                                 </tr>
@@ -95,6 +99,7 @@
                                 <switch2 v-model="branch_info.is_active" /> Is Active
                             </div>
                             <user-input2 v-model="branch_info.name"  :placeholder="'Branch Name(Required)'" :input_style="'height:40px;'" />
+                            <validation-view :errors="errors" :field="'name'" />
                             <user-input2  v-model="branch_info.data.representative" :placeholder="'Representative'" :input_style="'height:40px;'" />
                             <user-input2  v-model="branch_info.data.tel_no" :placeholder="'Tel#'" :input_style="'height:40px;'" />
                             <user-input2  v-model="branch_info.data.mobile_no" :placeholder="'Mobile#'" :input_style="'height:40px;'" />
@@ -128,9 +133,11 @@
     import WebSubmitVue from '../../common/WebSubmit.vue';
     import UserInput2Vue from '../../common/UserInput2.vue';
     import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
+    import ValidationVue from '../../common/Validation.vue';
     export default {
         props:[  ],
         components: {
+            "validation-view":ValidationVue,
             "page-footer":PageFooterVue,
             "web-submit":WebSubmitVue,
             "user-input2":UserInput2Vue,
@@ -165,6 +172,7 @@
 
             addorSave:function(){
                 var vm = this;
+                vm.errors = [];
                 if(this.branch_info.id == 0){
                     return WebRequest2('POST', '/manage/xrac/branch/sync-add', JSON.stringify(this.branch_info) ).then(resp=>{
                         return resp.json().then(data=>{

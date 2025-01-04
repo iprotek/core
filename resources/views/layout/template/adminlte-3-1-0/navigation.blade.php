@@ -33,9 +33,6 @@
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
       <li class="nav-item">
-        <select id="select-languagelist" class="form-control languagelist"> </select>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
         </a>
@@ -55,7 +52,21 @@
           <!--</form>-->
         </div>
       </li>
-
+      <!--
+      <li class="nav-item">
+        <select id="select-languagelist" class="form-control languagelist"> </select>
+      </li>
+      -->
+      <li class="nav-item">
+        <div class="input-group text-sm">
+          <select class="form-control">
+            <option>DEFAULT BRANCH 1</option>
+            <option>Brach 1</option>
+          </select>
+          <span class="btn btn-default" onclick="window.ModalBranchView.show();">
+            <small title="Search" class="fa fa-list text-primary" ></small>
+          </span> 
+      </li>
       <!-- Messages Dropdown Menu -->
       <li id="message-el" class="nav-item dropdown">
         <message-notification></message-notification>
