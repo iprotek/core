@@ -1,7 +1,7 @@
 <template> 
     <div :class="'input-group '+input_size">
         <select v-if="hasLoaded == false" class="form-control" v-model="selected_branch_id">
-            <option value="1">DEFAULT BRANCH</option>
+            <option :value="1">DEFAULT BRANCH</option>
         </select>
         <select v-else class="form-control" style="min-width: 200px;" @change="selection_changed" v-model="selected_branch_id">
             <option v-for="(item,itemIndex) in branchList" v-bind:key="'branch-'+item.id+'-'+itemIndex" :value="item.id" v-text="item.name" :selected="selected_branch_id == item.id">
