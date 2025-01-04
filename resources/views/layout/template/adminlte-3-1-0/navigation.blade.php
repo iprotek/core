@@ -58,14 +58,9 @@
       </li>
       -->
       <li class="nav-item">
-        <div class="input-group text-sm">
-          <select class="form-control">
-            <option>DEFAULT BRANCH 1</option>
-            <option>Brach 1</option>
-          </select>
-          <span class="btn btn-default" onclick="window.ModalBranchView.show();">
-            <small title="Search" class="fa fa-list text-primary" ></small>
-          </span> 
+        <div id="branch-selector" style="padding-top:5px;">
+          <branch-selector input_size="input-group-sm" :is_system_select="true"/>
+        </div>
       </li>
       <!-- Messages Dropdown Menu -->
       <li id="message-el" class="nav-item dropdown">

@@ -5,15 +5,7 @@
                 <label> ROLES </label>
             </div> 
             <label class="mb-0 mt-2 mx-2">Select Branch:</label>
-            <div class="input-group text-sm">
-                <select class="form-control form-input-sm">
-                    <option value="1"> -- DEFAULT BRANCH --</option>
-                    <option>BRANCH 1</option>
-                </select>
-                <span class="btn btn-default" @click="modalBranch()">
-                    <small title="Add/Show Branches" class="fa fa-list text-success"></small>
-                </span>
-            </div>
+            <branch-selector :is_system_select="false" :input_size="'input-group-lg'" />
             <table class="table m-0">
                 <thead>
                     <tr>
@@ -25,12 +17,14 @@
                 <tbody>
                     <tr>
                         <td class="text-center">
-                            <switch2 v-model="allow_access" />
+                            <switch2 v-model="allow_access" :off_color="'red'" />
                         </td>
                         <td colspan="2">
-                            <code > - NO ACCESS - </code>
+                            <code v-if="!allow_access"> - NO ACCESS - </code>
+                            <label class="text-primary" v-else>GRANT ACCESS</label>
                             <div>
-                                <small class="text-secondary" > Disallow user to have access. </small>
+                                <small v-if="!allow_access" class="text-secondary" > Disallow user to have access on selected branch. </small>
+                                <small v-else> Granting access based on role in a selected branch. </small>
                             </div>
                         </td>
                     </tr>
@@ -52,10 +46,12 @@
 
 <script> 
     import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
+    import BranchSelectorVue from './BranchSelector.vue';
     export default {
         props:[ "app_user_id", "branch_id" ],
         components: {  
-            "switch2":BoostrapSwitch2Vue
+            "switch2":BoostrapSwitch2Vue,
+            "branch-selector":BranchSelectorVue
         },
         watch: { 
         },
@@ -74,6 +70,9 @@
                 }).join('&');
                 return queryString;
             },
+            loadActiveBranches:function(){
+
+            }
 
         },
         mounted:function(){     

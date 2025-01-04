@@ -22,6 +22,7 @@ if(!window.Vue){
 
 //Vue.component('header-menus', require('./components/manage/HeaderMenu.vue').default);
 Vue.component('branch-modal-container', require('../components/manage/xrac/ModalBranchContainer').default);
+Vue.component('branch-selector', require('../components/manage/xrac/BranchSelector').default);
 
 Vue.component('modal-view', require('../components/common/Modal.vue').default); 
 Vue.component('swal_prompt', require('../components/common/Swal.vue').default); 
@@ -40,6 +41,10 @@ body.append(message_container);
 
  new Vue({
     el: '#branch-modal-container',
+});
+
+new Vue({
+    el: '#branch-selector',
 });
 
 
