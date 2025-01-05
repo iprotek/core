@@ -21,7 +21,7 @@ if(!window.Vue){
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 //Vue.component('header-menus', require('./components/manage/HeaderMenu.vue').default);
-Vue.component('branch-modal-container', require('../components/manage/xrac/ModalBranchContainer').default);
+Vue.component('branch-modal-container', require('../components/manage/xrac/modals/ModalBranchContainer').default);
 Vue.component('branch-selector', require('../components/manage/xrac/BranchSelector').default);
 
 Vue.component('modal-view', require('../components/common/Modal.vue').default); 

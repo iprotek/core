@@ -9,7 +9,7 @@
                 <branch-selector :is_system_select="false" :input_size="'input-group-lg'" />
             </div>
             <div v-else>
-                <button class="btn btn-outline-primary float-right" style="border-radius:0px;">
+                <button class="btn btn-outline-primary float-right" style="border-radius:0px;" @click="$refs.modal_role.show()">
                     <span class="fa fa-plus"></span> ADD ROLE
                 </button>
             </div>
@@ -20,6 +20,7 @@
                         <th>Name</th>
                         <th></th>
                         <th v-if="is_default_setting">Is Active</th>
+                        <th v-if="is_default_setting"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,21 +49,29 @@
                         <td v-if="is_default_setting" class="text-center" style="width:100px;">
                             <label class="text-success">YES</label>
                         </td>
+                        <td v-if="is_default_setting" class="text-center" style="width:100px;" >
+                            <button class="btn btn-outline-warning float-right" style="border-radius:0px;" @click="$refs.modal_role.show()">
+                                <span class="fa fa-edit"></span>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div> 
+        <modal-role ref="modal_role" />
     </div>
 </template>
 
 <script> 
     import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
     import BranchSelectorVue from './BranchSelector.vue';
+    import ModalAddEditRoleVue from './modals/ModalAddEditRole.vue';
     export default {
         props:[ "app_user_id", "is_default_setting" ],
         components: {  
             "switch2":BoostrapSwitch2Vue,
-            "branch-selector":BranchSelectorVue
+            "branch-selector":BranchSelectorVue,
+            "modal-role":ModalAddEditRoleVue
         },
         watch: { 
         },

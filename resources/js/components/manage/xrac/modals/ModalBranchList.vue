@@ -129,11 +129,11 @@
 </template>
 
 <script>    
-    import PageFooterVue from '../../common/PageFooter.vue';
-    import WebSubmitVue from '../../common/WebSubmit.vue';
-    import UserInput2Vue from '../../common/UserInput2.vue';
-    import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
-    import ValidationVue from '../../common/Validation.vue';
+    import PageFooterVue from '../../../common/PageFooter.vue';
+    import WebSubmitVue from '../../../common/WebSubmit.vue';
+    import UserInput2Vue from '../../../common/UserInput2.vue';
+    import BoostrapSwitch2Vue from '../../../common/BoostrapSwitch2.vue';
+    import ValidationVue from '../../../common/Validation.vue';
     export default {
         props:[  ],
         components: {
