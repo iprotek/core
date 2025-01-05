@@ -4,6 +4,7 @@ namespace iProtek\Core\Helpers;
 use Illuminate\Support\Facades\Session;
 use App\Models\UserAdminCompany;
 use DB;
+use iProtek\Core\Models\Branch;
 
 class BranchSelectionHelper
 {
@@ -69,5 +70,20 @@ class BranchSelectionHelper
         Session::put('branch-selection-id-'.$user->id, $id );
         return null; 
 
+    }
+
+    public static function active_branches(){
+
+        if(static::disable_multi_branch()){
+            return [
+                "id"=>1,
+                "name"=>"DEFAULT COMPANY/BRANCH",
+                "is_active"=>true
+            ];
+        }
+
+        $branches = Branch::on();
+        $branches->where('is_active', 1);
+        return $branches->get();
     }
 }

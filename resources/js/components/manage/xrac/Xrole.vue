@@ -6,34 +6,7 @@
                 <role-list :is_default_setting="true" />
             </div>
             <div class="col-md-8">
-                <div class="card">
-                    <table class="table m-0">
-                        <thead>
-                            <tr>
-                                <th style="width: 50px;"></th>
-                                <th style="width: 50px;"></th>
-                                <th>CONTROL DESCRIPTION</th> 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">
-                                    <input type="checkbox" />
-                                </td>
-                                <td colspan="2"> Control1  <small class="text-secondary"> cont1 </small>
-                                </td> 
-                            </tr> 
-                            <tr>
-                                <td></td>
-                                <td class="text-center ml-2" >
-                                    <input type="checkbox" />
-                                </td>
-                                <td> ACCESS 1  <small class="text-secondary"> access desc </small>
-                                </td> 
-                            </tr> 
-                        </tbody>
-                  </table>
-                </div>
+                <control-access />
             </div>
         </div>
     </div>
@@ -41,10 +14,12 @@
 
 <script>
     import RoleListVue from './RoleList.vue';
+    import ControlAccessListVue from './ControlAccessList.vue';
     export default {
         props:[  ],
         components: {
-            "role-list":RoleListVue
+            "role-list":RoleListVue,
+            "control-access":ControlAccessListVue
         },
         data: function () {
             return {    

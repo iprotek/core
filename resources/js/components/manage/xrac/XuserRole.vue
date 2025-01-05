@@ -9,39 +9,7 @@
                 <role-list :app_user_id="selected_app_user_id" />
             </div>
             <div class="col-md-5" v-if="selected_app_user_id && xrole_id">
-                <div class="card">
-                    <div class="card-body">
-                        <input type="radio"/> DEFAULT  
-                        <input type="radio"/> CUSTOM  
-                        <button class="btn btn-outline-primary btn-sm text-nowrap"> SAVE & SYNC USER ROLE ACCESS </button>
-                    </div>
-                    <table class="table m-0">
-                        <thead>
-                            <tr>
-                                <th style="width: 50px;"></th>
-                                <th style="width: 50px;"></th>
-                                <th>ACCESS CONTROL DESCRIPTION</th> 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">
-                                    <input type="checkbox" />
-                                </td>
-                                <td colspan="2"> Control1  <small class="text-secondary"> cont1 </small>
-                                </td> 
-                            </tr> 
-                            <tr>
-                                <td></td>
-                                <td class="text-center ml-2" >
-                                    <input type="checkbox" />
-                                </td>
-                                <td> ACCESS 1  <small class="text-secondary"> access desc </small>
-                                </td> 
-                            </tr> 
-                        </tbody>
-                  </table>
-                </div>
+                <control-access />
             </div>
         </div>
     </div>
@@ -50,11 +18,13 @@
 <script>
     import AppUserListVue from './AppUserList.vue';
     import RoleListVue from './RoleList.vue';
+    import ControlAccessListVue from './ControlAccessList.vue';
     export default {
         props:[  ],
         components: {
             "app-user-list":AppUserListVue,
-            "role-list":RoleListVue
+            "role-list":RoleListVue,
+            "control-access":ControlAccessListVue
         },
         data: function () {
             return {

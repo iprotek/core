@@ -1,16 +1,18 @@
 <template> 
-    <div :class="'input-group '+input_size">
-        <select v-if="hasLoaded == false" class="form-control" v-model="selected_branch_id" style="min-width: 200px;" >
-            <option :value="1">#1 DEFAULT COMPANY/BRANCH </option>
-        </select>
-        <select v-else class="form-control" style="min-width: 200px;" @change="selection_changed" v-model="selected_branch_id">
-            <option v-for="(item,itemIndex) in branchList" v-bind:key="'branch-'+item.id+'-'+itemIndex" :value="item.id" v-text="'#'+item.id+' '+item.name" :selected="selected_branch_id == item.id">
-            </option>
-        </select>
-        <span class="btn btn-default" @click="modalBranchList()">
-            <small title="Search" class="fa fa-list text-primary"></small>
-        </span> 
-    </div> 
+    <div >
+        <div v-if="hasLoaded" :class="'input-group '+input_size">
+            <select v-if="branchList.length == 0" class="form-control" v-model="selected_branch_id" style="min-width: 200px;" >
+                <option :value="1">#1 DEFAULT COMPANY/BRANCH </option>
+            </select>
+            <select v-else class="form-control" style="min-width: 200px;" @change="selection_changed" v-model="selected_branch_id">
+                <option v-for="(item,itemIndex) in branchList" v-bind:key="'branch-'+item.id+'-'+itemIndex" :value="item.id" v-text="'#'+item.id+' '+item.name" :selected="selected_branch_id == item.id">
+                </option>
+            </select>
+            <span class="btn btn-default" @click="modalBranchList()">
+                <small title="Search" class="fa fa-list text-primary"></small>
+            </span> 
+        </div> 
+    </div>
 </template>
 
 <script>
@@ -60,12 +62,8 @@
                     vm.isLoading = false;
                     resp.json().then(data=>{
                         vm.branchList = data.list;
-                        vm.selected_branch_id = data.selected_id;
-                        if(vm.branchList.length > 0){
-                            vm.hasLoaded = true;
-                        }else{
-                            vm.hasLoaded = false;
-                        } 
+                        vm.selected_branch_id = data.selected_id; 
+                        vm.hasLoaded = true; 
 
                     })
                 });

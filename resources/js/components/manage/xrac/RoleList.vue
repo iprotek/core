@@ -8,6 +8,11 @@
                 <label class="mb-0 mt-2 mx-2">Select Branch:</label>
                 <branch-selector :is_system_select="false" :input_size="'input-group-lg'" />
             </div>
+            <div v-else>
+                <button class="btn btn-outline-primary float-right" style="border-radius:0px;">
+                    <span class="fa fa-plus"></span> ADD ROLE
+                </button>
+            </div>
             <table class="table m-0">
                 <thead>
                     <tr>

@@ -34,7 +34,7 @@ mix//.js('resources/js/app.js', 'public/js')
     //.js('resources/js/sharedaccount.js', 'public/js')
 
     
-    //.js('resources/js/manage/branches.js', 'public/js/manage')
+    .js('resources/js/manage/branches.js', 'public/js/manage')
     .js('resources/js/manage/xrac/xrole.js', 'public/js/manage/xrac')
     .js('resources/js/manage/xrac/xuser-role.js', 'public/js/manage/xrac')
  
