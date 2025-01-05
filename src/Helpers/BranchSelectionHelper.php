@@ -11,6 +11,11 @@ class BranchSelectionHelper
 
     public static function get(){
         
+        if(static::disable_multi_branch()){
+            return 1;
+        }
+
+
        $user = auth()->user();
        //return $suggestions;
        $branch_id = Session::get('branch-selection-id-'.$user->id);
@@ -37,13 +42,25 @@ class BranchSelectionHelper
 
     private static function get_user_default($user){
         
+        if(static::disable_multi_branch()){
+            return 1;
+        }
         if(  $user->can('super-admin') ){
 
         }
         //return static::get();
     }
 
+    public static function disable_multi_branch(){
+    
+        return config('iprotek.disable_multi_branch') &&  !in_array( strtolower( config('iprotek.disable_multi_branch') ), [ 'false', 'no'] );
+    }
+
     public static function set( $id){
+
+        if(static::disable_multi_branch()){
+            return 1;
+        }
 
         $user = auth()->user();
         if( $user->can('super-admin') ){

@@ -2,10 +2,10 @@
     <div>
         <a class="btn btn-outline-primary mb-2" href="/manage/xrac/xrole/user-role-access"> USER ROLES </a>
         <div class="row justify-content-center">
-            <div class="col-md-3">
-                <role-list />
+            <div class="col-md-4">
+                <role-list :is_default_setting="true" />
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="card">
                     <table class="table m-0">
                         <thead>

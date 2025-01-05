@@ -4,18 +4,21 @@
             <div class="card-header">
                 <label> ROLES </label>
             </div> 
-            <label class="mb-0 mt-2 mx-2">Select Branch:</label>
-            <branch-selector :is_system_select="false" :input_size="'input-group-lg'" />
+            <div v-if="!is_default_setting">
+                <label class="mb-0 mt-2 mx-2">Select Branch:</label>
+                <branch-selector :is_system_select="false" :input_size="'input-group-lg'" />
+            </div>
             <table class="table m-0">
                 <thead>
                     <tr>
                         <th></th>
                         <th>Name</th>
                         <th></th>
+                        <th v-if="is_default_setting">Is Active</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr v-if="!is_default_setting">
                         <td class="text-center">
                             <switch2 v-model="allow_access" :off_color="'red'" />
                         </td>
@@ -37,6 +40,9 @@
                                 <small class="text-secondary" >Regular User</small>
                             </div>
                         </td>
+                        <td v-if="is_default_setting" class="text-center" style="width:100px;">
+                            <label class="text-success">YES</label>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -48,7 +54,7 @@
     import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
     import BranchSelectorVue from './BranchSelector.vue';
     export default {
-        props:[ "app_user_id", "branch_id" ],
+        props:[ "app_user_id", "is_default_setting" ],
         components: {  
             "switch2":BoostrapSwitch2Vue,
             "branch-selector":BranchSelectorVue

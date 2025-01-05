@@ -13,5 +13,7 @@ return [
     "pay_sms_report_url"=>env('PAY_SMS_REPORT_URL','www.iprotek.net'),
     'app_type'=>env('PAY_IPROTEK_TYPE',''),
     "cart_url"=>env('PAY_CART_URL', ''),
-    "google_map_key"=>env('PAY_GOOGLE_MAP_KEY', '')
+    "google_map_key"=>env('PAY_GOOGLE_MAP_KEY', ''),
+    'disable_multi_branch'=>env('PAY_DISABLE_MULTI_BRANCH', 0),
+
 ];

@@ -1,10 +1,10 @@
 <template> 
     <div :class="'input-group '+input_size">
         <select v-if="hasLoaded == false" class="form-control" v-model="selected_branch_id" style="min-width: 200px;" >
-            <option :value="1"> DEFAULT COMPANY/BRANCH </option>
+            <option :value="1">#1 DEFAULT COMPANY/BRANCH </option>
         </select>
         <select v-else class="form-control" style="min-width: 200px;" @change="selection_changed" v-model="selected_branch_id">
-            <option v-for="(item,itemIndex) in branchList" v-bind:key="'branch-'+item.id+'-'+itemIndex" :value="item.id" v-text="item.name" :selected="selected_branch_id == item.id">
+            <option v-for="(item,itemIndex) in branchList" v-bind:key="'branch-'+item.id+'-'+itemIndex" :value="item.id" v-text="'#'+item.id+' '+item.name" :selected="selected_branch_id == item.id">
             </option>
         </select>
         <span class="btn btn-default" @click="modalBranchList()">
@@ -59,15 +59,13 @@
                 WebRequest2('GET', '/manage/xrac/branch/active-list').then(resp=>{
                     vm.isLoading = false;
                     resp.json().then(data=>{
-                        setTimeout(()=>{
-                            vm.branchList = data.list;
-                            vm.selected_branch_id = data.selected_id;
-                            if(vm.branchList.length > 0){
-                                vm.hasLoaded = true;
-                            }else{
-                                vm.hasLoaded = false;
-                            }
-                        }, 100);
+                        vm.branchList = data.list;
+                        vm.selected_branch_id = data.selected_id;
+                        if(vm.branchList.length > 0){
+                            vm.hasLoaded = true;
+                        }else{
+                            vm.hasLoaded = false;
+                        } 
 
                     })
                 });
