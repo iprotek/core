@@ -64,7 +64,9 @@
                                 <small v-text="role.description" class="text-secondary" ></small>
                             </div>
                         </td>
-                        <th v-if="is_default_setting" class="text-center">8</th>
+                        <th v-if="is_default_setting" class="text-center">
+                            <code>-N/A-</code>
+                        </th>
                         <td v-if="is_default_setting" class="text-center">
                             <label v-if="role.is_active" class="text-success">YES</label>
                             <label v-else class="text-danger">NO</label>
