@@ -19,8 +19,13 @@
                         <th></th>
                         <th>Name</th>
                         <th></th>
-                        <th v-if="is_default_setting">Is Active</th>
-                        <th v-if="is_default_setting"></th>
+                        <th v-if="is_default_setting" style="width:80px;" class="text-center text-nowrap">Users
+                            <small class="text-nowrap">
+                                 (<span class="fa fa-question text-secondary" title="Number of users assigned to this role."></span>)
+                            </small>
+                        </th>
+                        <th v-if="is_default_setting" style="width:100px;" class="text-center">Is Active</th>
+                        <th v-if="is_default_setting"  style="width:30px;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,10 +51,11 @@
                                 <small class="text-secondary" >Regular User</small>
                             </div>
                         </td>
-                        <td v-if="is_default_setting" class="text-center" style="width:100px;">
+                        <th v-if="is_default_setting" class="text-center">8</th>
+                        <td v-if="is_default_setting" class="text-center">
                             <label class="text-success">YES</label>
                         </td>
-                        <td v-if="is_default_setting" class="text-center" style="width:100px;" >
+                        <td v-if="is_default_setting" class="text-center" >
                             <button class="btn btn-outline-warning float-right" style="border-radius:0px;" @click="$refs.modal_role.show()">
                                 <span class="fa fa-edit"></span>
                             </button>

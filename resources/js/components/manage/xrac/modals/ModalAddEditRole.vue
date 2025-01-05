@@ -10,8 +10,8 @@
                 </label>
             </template> 
             <template slot="body" >     
-                <user-input2 v-model="role_info.name" :placeholder="'Role Name'"  :input_style="'height:40px;'"/>
-                <user-input2 v-model="role_info.description" :placeholder="'Description info about the role'"  :input_style="'height:40px;'"/>
+                <user-input2 v-model="role_info.name" :placeholder="'Role Name'"  :input_style="'height:40px;'" :placeholder_description="'Unique role assigned to a user'"/>
+                <user-input2 v-model="role_info.description" :placeholder="'Description info about the role'" :placeholder_description="'Role summary info and its uses.'"  :input_style="'height:40px;'"/>
                 <div class="mt-3">
                     <switch2 v-model="role_info.is_active" :off_color="'red'" /> Is Active 
                 </div>
@@ -62,7 +62,7 @@
                 this.role_info.description = '';
                 this.role_info.is_active = true;
             },
-            show:function(id=0){ 
+            show:function(id=0, role_info=null){ 
                 var vm = this;
                 vm.reset();
 
