@@ -9,6 +9,9 @@
                 <branch-selector :is_system_select="false" :input_size="'input-group-lg'" />
             </div>
             <div v-else>
+                <button class="btn btn-outline-success float-right" style="border-radius:0px;" title="Sync roles" @click="$refs.sync_roles.submit()">
+                    <web-submit ref="sync_roles" :action="syncRoles" :icon_class="'fa fa-refresh'" :label="'SYNC'" :timeout="3000" />
+                </button>
                 <button class="btn btn-outline-primary float-right" style="border-radius:0px;" @click="$refs.modal_role.show()">
                     <span class="fa fa-plus"></span> ADD ROLE
                 </button>
@@ -42,21 +45,32 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="text-center">
-                            <input type="radio" />
+                    <tr v-if="isLoading">
+                        <td :colspan="is_default_setting ? 6: 3"  class="text-center">
+                            <code> Loading Roles</code>
                         </td>
-                        <td colspan="2"><a >Staff</a>
+                    </tr>
+                    <tr v-else-if="roleList.length == 0">
+                        <td :colspan="is_default_setting ? 6: 3"  class="text-center">
+                            <code> No Role Found. </code>
+                        </td>
+                    </tr>
+                    <tr v-for="(role, roleIndex) in roleList" v-bind:key="'role-item-'+role.id+'-'+roleIndex">
+                        <td class="text-center">
+                            <input :value="role.id" type="radio" name="role-selection" @click="$emit('selection_changed', role.id)" />
+                        </td>
+                        <td colspan="2"><a v-text="role.name"></a>
                             <div>
-                                <small class="text-secondary" >Regular User</small>
+                                <small v-text="role.description" class="text-secondary" ></small>
                             </div>
                         </td>
                         <th v-if="is_default_setting" class="text-center">8</th>
                         <td v-if="is_default_setting" class="text-center">
-                            <label class="text-success">YES</label>
+                            <label v-if="role.is_active" class="text-success">YES</label>
+                            <label v-else class="text-danger">NO</label>
                         </td>
                         <td v-if="is_default_setting" class="text-center" >
-                            <button class="btn btn-outline-warning float-right" style="border-radius:0px;" @click="$refs.modal_role.show()">
+                            <button class="btn btn-outline-warning float-right" style="border-radius:0px;" @click="$refs.modal_role.show(role.id, role)">
                                 <span class="fa fa-edit"></span>
                             </button>
                         </td>
@@ -64,12 +78,13 @@
                 </tbody>
             </table>
         </div> 
-        <modal-role ref="modal_role" />
+        <modal-role ref="modal_role" @modal_updated="loadRoles()" />
     </div>
 </template>
 
 <script> 
     import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
+    import WebSubmitVue from '../../common/WebSubmit.vue';
     import BranchSelectorVue from './BranchSelector.vue';
     import ModalAddEditRoleVue from './modals/ModalAddEditRole.vue';
     export default {
@@ -77,16 +92,28 @@
         components: {  
             "switch2":BoostrapSwitch2Vue,
             "branch-selector":BranchSelectorVue,
-            "modal-role":ModalAddEditRoleVue
+            "modal-role":ModalAddEditRoleVue,
+            "web-submit":WebSubmitVue
         },
         watch: { 
         },
         data: function () {
             return { 
-                allow_access:true
+                allow_access:true,
+                roleList:[],
+                isLoading:false
             }
         },
         methods: { 
+            syncRoles:function(){
+                var  vm = this;
+                return WebRequest2('GET', '/manage/xrac/role/sync-roles').then(resp=>{
+                    return  resp.json().then(data=>{
+                        vm.loadRoles();
+                        return data;
+                    })
+                })
+            },
             modalBranch:function(){
                 window.ModalBranchView.show();
             },
@@ -96,12 +123,21 @@
                 }).join('&');
                 return queryString;
             },
-            loadActiveBranches:function(){
-
+            loadRoles:function(){
+                var vm = this;
+                vm.isLoading = true;
+                vm.roleList = [];
+                WebRequest2('GET', '/manage/xrac/role/list').then(resp=>{
+                    vm.isLoading = false;
+                    resp.json().then(data=>{
+                        vm.roleList = data;
+                    })
+                });
             }
 
         },
         mounted:function(){     
+            this.loadRoles();
         },
         updated:function(){
 

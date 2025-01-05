@@ -6,7 +6,7 @@
                     <tr>
                         <th style="width: 50px;"></th>
                         <th style="width: 50px;"></th>
-                        <th>CONTROL DESCRIPTION</th> 
+                        <th>CONTROL ACCESS - DESCRIPTION</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -33,7 +33,7 @@
 
 <script>
     export default {
-        props:[ "is_default_setting" ],
+        props:[ "is_default_setting", "role_id" ],
         components: { 
         },
         watch: { 
