@@ -16,18 +16,22 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="text-center">
-                            <input type="checkbox" />
+                        <td class="text-center" style="min-width:30px;">
+                            <switch2 />
                         </td>
-                        <td colspan="3"> Control1  <small class="text-secondary"> cont1 </small>
+                        <td colspan="3">
+                            <label class="text-info mb-0"> <small>[ control1 ]</small> Control1 </label>  
+                            <small class="text-secondary"> cont1 </small>
                         </td> 
                     </tr> 
                     <tr>
                         <td></td>
                         <td class="text-center ml-2" >
-                            <input type="checkbox" />
+                            <switch2 />
                         </td>
-                        <td colspan="2"> ACCESS 1  <small class="text-secondary"> access desc </small>
+                        <td colspan="2">
+                              <b class="text-success"> <small>[ access1 ]</small> ACCESS 1 </b>  
+                             <small class="text-secondary"> access desc </small>
                         </td> 
                     </tr> 
                 </tbody>
@@ -37,9 +41,11 @@
 </template>
 
 <script>
+    import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
     export default {
         props:[ "is_default_setting", "role_id", "app_account_id" ],
-        components: { 
+        components: {
+            "switch2":BoostrapSwitch2Vue
         },
         watch: { 
         },
