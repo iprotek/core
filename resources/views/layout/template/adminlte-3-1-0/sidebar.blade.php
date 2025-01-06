@@ -49,27 +49,31 @@
                 <?php if(!empty($sidemenu->items)){?> 
                 <li class="nav-header" label-trans-id="group-menu-{{$sidemenu->id}}"><?=$sidemenu->group_text?></li>
                 <?php $menuitems = $sidemenu->items;?>
-                  @foreach($menuitems as $menuitem)
+                <?php foreach($menuitems as $menuitem){ ?>
                     @if($menuitem->type == 'combo')
                     <?php
                       $menuitemcombo = $menuitem;?>
                       <x-container.sidemenucombobox :x-text="$menuitem->menu_text" :x-icon="$menuitem->icon" :badges="json_encode([])">
                           <?php $badges = [];
                             $comboboxitems = $menuitemcombo->items;?>
-                          @foreach($comboboxitems as $comboboxitem)
-                            <?php //var_dump($comboboxitems); ?>
+                          <?php
+                          foreach($comboboxitems as $comboboxitem){
+                              if( $comboboxitem->menu_control_name && !$USER->can($comboboxitem->menu_control_name) ) continue;
+                             ?>
                             <x-container.sidemenu :x-text="$comboboxitem->menu_text" :x-icon="$comboboxitem->icon" :x-url="$comboboxitem->url" :badges="json_encode([])" x-label-trans-id="sub-menu-{{$comboboxitem->id}}"/>
-                          @endforeach
+                          <?php } ?>
                       </x-container.sidemenucombobox>
                     @elseif($menuitem->type == 'menu')
                       <?php //var_dump($menuitem); 
                         $user_types = explode(',', $menuitem->user_types);
                         if(in_array($USER->user_type, $user_types) || $USER->user_type == '0' || $USER->user_type == null){
+                          
+                          if( $menuitem->menu_control_name && !$USER->can($menuitem->menu_control_name) ) continue;
                       ?>
                       <x-container.sidemenu :x-text="$menuitem->menu_text" :x-icon="$menuitem->icon" :x-url="$menuitem->url" :badges="json_encode([])" x-label-trans-id="sub-menu-{{$menuitem->id}}-{{$menuitem->menu_text}}"/>
                       <?php } ?>
                       @endif
-                  @endforeach
+                  <?php } ?>
                 <?php }?>
             @endforeach 
         </ul>
