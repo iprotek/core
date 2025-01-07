@@ -19,25 +19,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="text-center" style="min-width:30px;">
-                                <switch2 />
-                            </td>
-                            <td colspan="3">
-                                <label class="text-info mb-0"> <small>[ control1 ]</small> Control1 </label>  
-                                <small class="text-secondary"> cont1 </small>
-                            </td> 
-                        </tr> 
-                        <tr>
-                            <td></td>
-                            <td class="text-center ml-2" >
-                                <switch2 />
-                            </td>
-                            <td colspan="2">
-                                <b class="text-success"> <small>[ access1 ]</small> ACCESS 1 </b>  
-                                <small class="text-secondary"> access desc </small>
-                            </td> 
-                        </tr> 
+                        <template  v-for="(control,rowIndex) in controlAccessList"  > 
+                            <tr v-bind:key="'row-control-'+control.id+'-'+rowIndex">
+                                <td class="text-center" style="min-width:30px;">
+                                    <switch2 />
+                                </td>
+                                <td colspan="3">
+                                    <label class="text-info mb-0"> <small>[ {{control.name}} ]</small> {{ control.title }} </label>  
+                                    <small class="text-secondary"> {{control.description}} </small>
+                                </td> 
+                            </tr> 
+                            <tr v-for="(access, AccessIndex) in control.accesses" v-bind:key="'row-access-'+control.id+'-'+rowIndex+'-'+access.id+'-'+AccessIndex">
+                                <td></td>
+                                <td class="text-center ml-2" >
+                                    <switch2 />
+                                </td>
+                                <td colspan="2">
+                                    <b class="text-success"> <small>[ {{access.name}} ]</small> {{ access.title }} </b>  
+                                    <small class="text-secondary">{{ access.description }} </small>
+                                </td> 
+                            </tr>  
+                        </template>
                     </tbody>
                 </table>
             </div>
@@ -57,7 +59,8 @@
         watch: { 
         },
         data: function () {
-            return {    
+            return {
+                controlAccessList:[]   
             }
         },
         methods: { 
@@ -67,9 +70,18 @@
                 }).join('&');
                 return queryString;
             },
+            loadControlAccess:function(){
+                var vm = this;
+                WebRequest2('GET', '/manage/xrac/control-access/list').then(resp=>{
+                    resp.json().then(data=>{
+                        vm.controlAccessList = data;
+                    });
+                })
+            }
 
         },
-        mounted:function(){     
+        mounted:function(){
+            this.loadControlAccess();
         },
         updated:function(){
 
