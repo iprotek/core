@@ -19,7 +19,8 @@
             <table class="table m-0">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th class="text-center">#</th>
+                        <th style="width:20px;min-width:40px;"></th>
                         <th>Name</th>
                         <th></th>
                         <th v-if="is_default_setting" style="width:80px;" class="text-center text-nowrap">Users
@@ -33,6 +34,7 @@
                 </thead>
                 <tbody>
                     <tr v-if="!is_default_setting">
+                        <td></td>
                         <td class="text-center">
                             <switch2 v-model="allow_access" :off_color="'red'" />
                         </td>
@@ -46,22 +48,24 @@
                         </td>
                     </tr>
                     <tr v-if="isLoading">
-                        <td :colspan="is_default_setting ? 6: 3"  class="text-center">
+                        <td :colspan="is_default_setting ? 7: 4"  class="text-center">
                             <code> Loading Roles</code>
                         </td>
                     </tr>
                     <tr v-else-if="roleList.length == 0">
-                        <td :colspan="is_default_setting ? 6: 3"  class="text-center">
+                        <td :colspan="is_default_setting ? 7: 4"  class="text-center">
                             <code> No Role Found. </code>
                         </td>
                     </tr>
                     <tr v-for="(role, roleIndex) in roleList" v-bind:key="'role-item-'+role.id+'-'+roleIndex">
+                        <th class="text-center" v-text="role.id"></th>
                         <td class="text-center">
-                            <input :value="role.id" type="radio" name="role-selection" @click="$emit('selection_changed', role.id)" />
+                            <input  style="width:40px;min-width:20px;" :id="'role-'+role.id" :value="role.id" :class="'form-control '+(role.id == role_id ? 'is-valid':'' )" type="radio" name="role-selection" @click=" role_id = role.id; $emit('selection_changed', role.id)" />
                         </td>
-                        <td colspan="2"><a v-text="role.name"></a>
+                        <td colspan="2" >
+                            <label class="mb-0" :for="'role-'+role.id" v-text="role.name"></label>
                             <div>
-                                <small v-text="role.description" class="text-secondary" ></small>
+                                <small  v-text="role.description" class="text-secondary" ></small>
                             </div>
                         </td>
                         <th v-if="is_default_setting" class="text-center">
@@ -103,7 +107,8 @@
             return { 
                 allow_access:true,
                 roleList:[],
-                isLoading:false
+                isLoading:false,
+                role_id:0
             }
         },
         methods: { 

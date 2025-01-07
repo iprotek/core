@@ -29,10 +29,12 @@
         methods: { 
             role_selection:function(id){
                 var vm = this;
-                vm.role_id = 0;
+                vm.role_id = id;
+                /*
                 setTimeout(()=>{
                     vm.role_id = id;
                 }, 100);
+                */
             }
         },
         mounted:function(){     
