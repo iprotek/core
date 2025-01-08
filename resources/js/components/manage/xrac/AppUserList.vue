@@ -2,7 +2,7 @@
     <div>
         <div class="card">
             <div class="card-header">
-                <label class="mb-0"> USER </label>
+                <label class="mb-0"> USER LIST </label>
             </div> 
             <div class="input-group text-sm">
                 <span class="btn btn-default">
@@ -27,7 +27,7 @@
                     </tr>
                     <tr v-for="(item, index) in dataList" v-bind:key="'item-'+item.id+'-'+index">
                         <td class="text-center p-1 pt-3">
-                            <input :id="'user-selection-'+item.id" @change="selected_app_user( item.id )" type="radio" :value="item.id" name="account-name" />
+                            <input :disabled="item.superadmin" :id="'user-selection-'+item.id" @change="selected_app_user( item.id )" type="radio" :value="item.id" name="account-name" />
                         </td>
                         <td colspan="2" class="px-1">
                             <div class="user-panel d-flex">
@@ -37,7 +37,8 @@
                                 <div class="info py-0 px-1">
                                     <label :for="'user-selection-'+item.id" v-text="item.name" :title="item.is_blocked? 'InActive':'Active'" :class="'text-sm mb-0 '+(item.is_blocked? 'text-secondary':'text-primary')"></label>
                                     <div>
-                                        <small class="text-secondary" v-text="item.email"></small>
+                                        <small v-if="item.superadmin" class="text-secondary" ><i class="text-danger">Superadmin</i> {{ item.email }} </small>
+                                        <small v-else class="text-secondary" v-text="item.email"></small> 
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +109,7 @@
                     items_per_page:10
                 })).then(resp=>{
                     vm.isLoading = false;
-                    resp.json().then(data=>{
+                    resp.json().then(data=>{ 
                         vm.pageData = data;
                         vm.dataList = data.data;
                     });

@@ -164,13 +164,10 @@
             loadAllowAccountDefaults:function(is_click = false, is_force = false){
                 var vm = this;
 
-                //CLICKING FOR AVOIDING RESET FROM CUSTOMIZATION
-                console.log(is_click, !vm.isDefault, !is_force);
+                //CLICKING FOR AVOIDING RESET FROM CUSTOMIZATION 
                 if(!is_force){
                     if(is_click && !vm.isDefault) return;
-                }
-                
-                console.log("Passed");
+                } 
 
                 WebRequest2('GET', '/manage/xrac/user-role/branch-access-list/'+this.branch_id+'?'+this.queryString({
                     role_id: vm.role_id,
