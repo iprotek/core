@@ -34,12 +34,14 @@
         },
         methods: { 
             selected_app_user:function(id){
-                this.selected_app_user_id = 0;
+                this.selected_app_user_id = id;
                 this.xrole_id = 0;
+                /*
                 var vm = this;
                 setTimeout(()=>{
                     vm.selected_app_user_id = id;
                 }, 100);
+                */
             },
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {

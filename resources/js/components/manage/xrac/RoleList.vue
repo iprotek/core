@@ -35,7 +35,7 @@
                 <tbody>
                     <tr v-if="!is_default_setting"> 
                         <td colspan="2" class="text-center px-0">
-                            <switch2 v-model="allow_access" :off_color="'red'" />
+                            <switch2 v-model="allow_access" :off_color="'red'" @value_changed="allow_access_changed" />
                         </td>
                         <td colspan="2">
                             <code v-if="!allow_access"> - NO ACCESS - </code>
@@ -101,6 +101,10 @@
             "web-submit":WebSubmitVue
         },
         watch: { 
+            app_user_id(val){
+                if(!val) return;
+                this.loadUserBranchPositionAccess();
+            }
         },
         data: function () {
             return { 
@@ -108,10 +112,24 @@
                 roleList:[],
                 isLoading:false,
                 role_id:0,
-                branch_id:0
+                branch_id:0,
+                isUserLoading:false
             }
         },
         methods: { 
+            allow_access_changed:function(is_allow){
+                console.log("GG");
+                var req = {
+                    branch_id: this.branch_id,
+                    app_account_id: this.app_user_id,
+                    is_allowed: is_allow
+                };
+                WebRequest2('POST', '/manage/xrac/user-role/set-branch-role', JSON.stringify(req)).then(resp=>{
+                    resp.json().then(data=>{
+                        console.log(data);
+                    });
+                });
+            },
             branch_changed:function(branch_id){
                 this.branch_id = branch_id;
                 this.loadUserBranchPositionAccess();
@@ -149,11 +167,17 @@
                 });
             },
             loadUserBranchPositionAccess:function(){
-                console.log("BranchInfo", this.branch_id, this.app_user_id);
-                if(!this.branch_id || !this.app_user_id) return;
-
-
-                console.log("LOADING INFO");
+                var vm = this;
+                vm.allow_access = false;
+                vm.role_id = 0;
+                if(!this.branch_id || !this.app_user_id || vm.isUserLoading) return;
+                vm.isUserLoading = true;
+                WebRequest2('GET', '/manage/xrac/user-role/role-info/'+this.branch_id+'/'+this.app_user_id).then(resp=>{
+                    resp.json().then(data=>{
+                        vm.isUserLoading = false;
+                        vm.allow_access = data.is_allowed === true;
+                    });
+                });
             }
 
         },
