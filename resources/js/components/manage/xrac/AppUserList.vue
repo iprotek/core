@@ -27,9 +27,9 @@
                     </tr>
                     <tr v-for="(item, index) in dataList" v-bind:key="'item-'+item.id+'-'+index">
                         <td class="text-center p-1 pt-3">
-                            <input :disabled="item.superadmin" :id="'user-selection-'+item.id" @change="selected_app_user( item.id )" type="radio" :value="item.id" name="account-name" />
+                            <input :checked="selected_app_user_id == item.id" :disabled="item.superadmin" :id="'user-selection-'+item.id" @change="selected_app_user( item.id )" type="radio" :value="item.id" name="account-name" />
                         </td>
-                        <td colspan="2" class="px-1">
+                        <td colspan="2" class="px-1" :style=" selected_app_user_id == item.id ? 'background-color:#a49f9f61;':''">
                             <div class="user-panel d-flex">
                                 <div class="image pl-0 mx-1">
                                     <img :for="'user-selection-'+item.id" src="/images/temp-image.png" class="img-circle elevation-2" alt="User Image">
