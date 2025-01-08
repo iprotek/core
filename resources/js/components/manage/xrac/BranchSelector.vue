@@ -1,10 +1,10 @@
 <template> 
     <div >
         <div v-if="hasLoaded" :class="'input-group '+input_size">
-            <select v-if="branchList.length == 0" class="form-control" v-model="selected_branch_id" style="min-width: 150px;" >
+            <select v-if="branchList.length == 0" class="form-control" v-model="selected_branch_id" style="min-width: 100px;" >
                 <option :value="1">#1 DEFAULT COMPANY/BRANCH </option>
             </select>
-            <select v-else class="form-control" style="min-width: 150px;" @change="selection_changed" v-model="selected_branch_id">
+            <select v-else class="form-control" style="min-width: 100px;" @change="selection_changed" v-model="selected_branch_id">
                 <option v-for="(item,itemIndex) in branchList" v-bind:key="'branch-'+item.id+'-'+itemIndex" :value="item.id" v-text="item.name" :selected="selected_branch_id == item.id">
                 </option>
             </select>
@@ -67,6 +67,8 @@
                         vm.branchList = data.list;
                         vm.selected_branch_id = data.selected_id; 
                         vm.hasLoaded = true; 
+                        if(vm.selected_branch_id)
+                            vm.$emit('selection_changed', vm.selected_branch_id);
 
                     })
                 });

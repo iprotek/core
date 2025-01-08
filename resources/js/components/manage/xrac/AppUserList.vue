@@ -29,13 +29,13 @@
                         <td class="text-center p-1 pt-3">
                             <input :id="'user-selection-'+item.id" @change="selected_app_user( item.id )" type="radio" :value="item.id" name="account-name" />
                         </td>
-                        <td colspan="2">
+                        <td colspan="2" class="px-1">
                             <div class="user-panel d-flex">
                                 <div class="image pl-0 mx-1">
                                     <img :for="'user-selection-'+item.id" src="/images/temp-image.png" class="img-circle elevation-2" alt="User Image">
                                 </div>
-                                <div class="info">
-                                    <label :for="'user-selection-'+item.id" v-text="item.name" :title="item.is_blocked? 'InActive':'Active'" :class="item.is_blocked? 'text-secondary':'text-primary'"></label>
+                                <div class="info py-0 px-1">
+                                    <label :for="'user-selection-'+item.id" v-text="item.name" :title="item.is_blocked? 'InActive':'Active'" :class="'text-sm mb-0 '+(item.is_blocked? 'text-secondary':'text-primary')"></label>
                                     <div>
                                         <small class="text-secondary" v-text="item.email"></small>
                                     </div>

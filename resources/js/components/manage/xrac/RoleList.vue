@@ -6,7 +6,7 @@
             </div> 
             <div v-if="!is_default_setting">
                 <label class="mb-0 mt-2 mx-2">Select Branch:</label>
-                <branch-selector :is_system_select="false" :input_size="'input-group-lg'" />
+                <branch-selector :is_system_select="false" :input_size="'input-group-lg'" @selection_changed="branch_changed" />
             </div>
             <div v-else>
                 <button class="btn btn-outline-success float-right" style="border-radius:0px;" title="Sync roles" @click="$refs.sync_roles.submit()">
@@ -107,10 +107,15 @@
                 allow_access:true,
                 roleList:[],
                 isLoading:false,
-                role_id:0
+                role_id:0,
+                branch_id:0
             }
         },
         methods: { 
+            branch_changed:function(branch_id){
+                this.branch_id = branch_id;
+                this.loadUserBranchPositionAccess();
+            },
             syncRoles:function(){
                 var  vm = this;
                 return WebRequest2('GET', '/manage/xrac/role/sync-roles').then(resp=>{
@@ -137,8 +142,18 @@
                     vm.isLoading = false;
                     resp.json().then(data=>{
                         vm.roleList = data;
+                        if(vm.app_user_id){
+                            vm.loadUserBranchPositionAccess();
+                        }
                     })
                 });
+            },
+            loadUserBranchPositionAccess:function(){
+                console.log("BranchInfo", this.branch_id, this.app_user_id);
+                if(!this.branch_id || !this.app_user_id) return;
+
+
+                console.log("LOADING INFO");
             }
 
         },

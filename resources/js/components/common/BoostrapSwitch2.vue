@@ -5,7 +5,7 @@
 </template>
 <script> 
     export default {
-        props:["off_color","on_color","value"],
+        props:["off_color","on_color","value",  "disabled"],
         components: {    
         },
         data: function () {
@@ -18,8 +18,11 @@
             value(newValue) {
                 this.input_value = newValue ? true:false;
                 this.input_check = this.input_value;
-                $('#'+this.switchID).bootstrapSwitch('state', this.input_value);          
+                $('#'+this.switchID).bootstrapSwitch('state', this.input_value);
             },
+            disabled(val){
+                $('#'+vm.switchID).bootstrapSwitch('disabled', val === true);
+            }
         },
         methods: { 
             value_changed:function(){
@@ -56,6 +59,7 @@
                             vm.input_check = data;
                             vm.value_changed();
                         });
+                        $('#'+vm.switchID).bootstrapSwitch('disabled', vm.disabled === true);
                     }, 300);
                 });
             } 
