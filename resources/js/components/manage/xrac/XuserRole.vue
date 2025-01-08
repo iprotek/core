@@ -2,14 +2,14 @@
     <div>
         <a class="btn btn-outline-primary mb-2" href="/manage/xrac/xrole"> ROLE DEFAULTS </a>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <app-user-list @selected_app_user="selected_app_user" />
             </div>
-            <div class="col-md-3" v-if="selected_app_user_id">
-                <role-list :app_user_id="selected_app_user_id" />
+            <div class="col-md-2" v-if="selected_app_user_id">
+                <role-list :app_user_id="selected_app_user_id" :is_default_setting="false" @selection_changed="(val)=>{ xrole_id = val }" />
             </div>
-            <div class="col-md-6" v-if="selected_app_user_id && xrole_id">
-                <control-access />
+            <div class="col-md-8" v-if="selected_app_user_id && xrole_id">
+                <control-access :is_default_setting="false" :app_account_id="selected_app_user_id" :role_id="xrole_id" />
             </div>
         </div>
     </div>

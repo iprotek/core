@@ -2,7 +2,7 @@
     <div>
         <div class="card">
             <div class="card-header">
-                <label> ROLES </label>
+                <label class="mb-0"> ROLES </label>
             </div> 
             <div v-if="!is_default_setting">
                 <label class="mb-0 mt-2 mx-2">Select Branch:</label>
@@ -176,6 +176,9 @@
                     resp.json().then(data=>{
                         vm.isUserLoading = false;
                         vm.allow_access = data.is_allowed === true;
+                        if(data.xrole_id > 0){
+                            vm.$emit('selection_changed', data.xrole_id);
+                        }
                     });
                 });
             }

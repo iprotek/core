@@ -2,7 +2,7 @@
     <div>
         <div class="card">
             <div class="card-header">
-                <label> USER </label>
+                <label class="mb-0"> USER </label>
             </div> 
             <div class="input-group text-sm">
                 <span class="btn btn-default">

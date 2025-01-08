@@ -1,9 +1,9 @@
 <template>
     <div class="row">
-        <div class="col-sm-4">
-            <role-menu :is_default_setting="true" :app_account_id="app_account_id" :role_id="role_id" />
+        <div :class="is_default_setting? 'col-sm-4':'col-sm-3'">
+            <role-menu :is_default_setting="is_default_setting" :app_account_id="app_account_id" :role_id="role_id" />
         </div>
-        <div class="col-sm-8">
+        <div :class="is_default_setting? 'col-sm-8':'col-sm-9'">
             <div class="card">
                 <table class="table m-0">
                     <thead class="sticky-top text-nowrap" style="background-color:white;  box-shadow: gray 0px 1px 0px;">
@@ -11,14 +11,25 @@
                             <th style="width: 50px;"></th>
                             <th style="width: 50px;"></th>
                             <th>CONTROL ACCESS</th> 
-                            <th @click="is_default_setting ? $refs.save_role_default.submit() : ''" :class=" is_default_setting ? 'btn btn-outline-primary btn-lg text-sm':'text-sm'" style="border-radius:0px;">
-                                <div v-if="is_default_setting">  
+                            <th v-if="is_default_setting" @click="$refs.save_role_default.submit() " :class=" is_default_setting ? 'btn btn-outline-primary btn-lg text-sm':'text-sm'" style="border-radius:0px;">
+                                <div >  
                                     <web-submit ref="save_role_default" :action="updateRoleAccess" :icon_class="'fa fa-save'" :label="'SAVE ROLE DEFAULTS'" :timeout="3000" />
+                                </div>
+                            </th>
+                            <th v-else   :class="'btn btn-outline-primary btn-lg text-sm'" style="border-radius:0px;">
+                                <div >  
+                                    <web-submit ref="save_role_default" :action="updateRoleAccess" :icon_class="'fa fa-save'" :label="'SAVE USER DEFAULTS'" :timeout="3000" />
                                 </div>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
+                        <tr v-if="!is_default_setting">
+                            <td colspan="4">
+                                <switch2 /> <label class="mb-0"> IS DEFAULT? </label>
+                            </td>
+                        </tr>
+
                         <template  v-for="(control,rowIndex) in controlAccessList"  > 
                             <tr v-bind:key="'row-control-'+control.id+'-'+rowIndex">
                                 <td class="text-center" style="min-width:10px;">

@@ -4,22 +4,22 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        MENU ACCESSIBILITY
+                        <label class="mb-0">  MENU ACCESSIBILITY </label>
                     </div>
                     <div class="card-body p-0">
                         <table class="table">
                             <tr v-for="(item,index) in menuItems" v-bind:key="'menu-item-'+item.id+'-'+index">
-                                <th class="py-0 pr-0" style="width:100px;">
+                                <th class="py-0 pr-0" style="width:100px;" v-if="is_default_setting">
                                     <switch2 v-model="item.is_allowed" />
                                 </th>
-                                <th class="py-0 pl-1 text-nowrap">
+                                <th class="py-0 pl-1 text-nowrap" v-if="is_default_setting || item.is_allowed">
                                     <span :class="'pr-0 fas '+item.icon"></span>
                                     <label class="mb-0 pl-1" v-text="item.menu_text"></label>
                                 </th>
                             </tr>
                         </table>
                     </div>
-                    <div class="card-footer text-center">
+                    <div class="card-footer text-center" v-if="is_default_setting">
                         <button class="btn btn-outline-primary btn-sm" @click="$refs.web_submit.submit()">
                             <web-submit ref="web_submit" :action="saveRole" :icon_class="'fa fa-save'" :label="'SAVE MENU DEFAULTS'"  :timeout="3000" />
                         </button>
@@ -71,8 +71,8 @@
             },
             loadRoleDefault:function(){
                 var vm = this;
-                var is_setting = this.is_default_setting;
-                if(is_setting){
+                //var is_setting = this.is_default_setting;
+                //if(is_setting){
                     WebRequest2('GET', '/manage/xrac/xrole/role-menus/'+this.role_id).then(resp=>{
                         resp.json().then(data=>{
                             //console.log("Role Menus",data);
@@ -84,7 +84,7 @@
                             }); 
                         })
                     })
-                }
+                //}
             },
             saveRole:function(){
                 var vm = this;
