@@ -11,9 +11,9 @@
                             <th style="width: 50px;"></th>
                             <th style="width: 50px;"></th>
                             <th>CONTROL ACCESS</th> 
-                            <th :class=" is_default_setting ? 'btn btn-outline-primary btn-lg text-sm':'text-sm'" style="border-radius:0px;">
-                                <div v-if="is_default_setting"> 
-                                    <span class="fa fa-save"></span> SAVE ROLE DEFAULTS 
+                            <th @click="is_default_setting ? $refs.save_role_default.submit() : ''" :class=" is_default_setting ? 'btn btn-outline-primary btn-lg text-sm':'text-sm'" style="border-radius:0px;">
+                                <div v-if="is_default_setting">  
+                                    <web-submit ref="save_role_default" :action="updateRoleAccess" :icon_class="'fa fa-save'" :label="'SAVE ROLE DEFAULTS'" :timeout="3000" />
                                 </div>
                             </th>
                         </tr>
@@ -21,21 +21,22 @@
                     <tbody>
                         <template  v-for="(control,rowIndex) in controlAccessList"  > 
                             <tr v-bind:key="'row-control-'+control.id+'-'+rowIndex">
-                                <td class="text-center" style="min-width:30px;">
-                                    <switch2 />
+                                <td class="text-center" style="min-width:10px;">
+                                    <!-- <switch2 /> 
+                                    <span class="fa fa-circle float-right text-success mt-1"></span>-->
                                 </td>
-                                <td colspan="3">
-                                    <label class="text-info mb-0"> <small>[ {{control.name}} ]</small> {{ control.title }} </label>  
+                                <td colspan="3" class="pl-0">
+                                    <label class="text-lg text-info mb-0" :title="'['+control.name+']'"> {{ control.title }} </label>  
                                     <small class="text-secondary"> {{control.description}} </small>
                                 </td> 
                             </tr> 
                             <tr v-for="(access, AccessIndex) in control.accesses" v-bind:key="'row-access-'+control.id+'-'+rowIndex+'-'+access.id+'-'+AccessIndex">
                                 <td></td>
                                 <td class="text-center ml-2" >
-                                    <switch2 />
+                                    <switch2 v-model="access.is_allow" />
                                 </td>
-                                <td colspan="2">
-                                    <b class="text-success"> <small>[ {{access.name}} ]</small> {{ access.title }} </b>  
+                                <td colspan="2" :title="'['+control.name+':'+access.name+']'">
+                                    <b class="text-success"> {{ access.title }} </b>  
                                     <small class="text-secondary">{{ access.description }} </small>
                                 </td> 
                             </tr>  
@@ -49,18 +50,25 @@
 
 <script>
     import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
+    import WebSubmitVue from '../../common/WebSubmit.vue';
     import RoleMenuAccessListVue from './RoleMenuAccessList.vue';
     export default {
         props:[ "is_default_setting", "role_id", "app_account_id" ],
         components: {
             "switch2":BoostrapSwitch2Vue,
-            "role-menu":RoleMenuAccessListVue
+            "role-menu":RoleMenuAccessListVue,
+            "web-submit":WebSubmitVue
         },
         watch: { 
+            role_id:function(newvalue){
+                this.allowedRoleAccess();
+            }
         },
         data: function () {
             return {
-                controlAccessList:[]   
+                controlAccessList:[],
+                accessList:[],
+                allowAccessList:[]
             }
         },
         methods: { 
@@ -72,11 +80,66 @@
             },
             loadControlAccess:function(){
                 var vm = this;
+                vm.accessList = [];
                 WebRequest2('GET', '/manage/xrac/control-access/list').then(resp=>{
                     resp.json().then(data=>{
+
+                        data.forEach(control => { 
+                            //Setting allow for v-model compliance
+                            control.accesses.forEach((access)=>{
+                                access.is_allow = false;
+                                vm.accessList.push(access);
+                            })
+                        });
+
                         vm.controlAccessList = data;
+                        vm.allowedRoleAccess();
+
                     });
                 })
+            },
+            allowedRoleAccess:function(){
+                var vm = this;
+                if(vm.is_default_setting){
+                    WebRequest2('GET', '/manage/xrac/control-access/allowed-default-role-list/'+this.role_id).then(resp=>{
+                        resp.json().then(data=>{
+                            vm.allowAccessList = data;
+
+                            //SET FOR ALLOW
+                            vm.accessList.forEach((access)=>{
+                                var hasAccess = vm.allowAccessList.filter(a=>a.xcontrol_access_id == access.id)[0];
+                                if(hasAccess){
+                                    access.is_allow = true;
+                                }else{
+                                    access.is_allow = false;
+                                }
+
+                            });
+                            //console.log("Access List",vm.accessList, vm.allowAccessList);
+
+
+                        })
+                    })
+                }
+            },
+            updateRoleAccess:function(){
+                var vm = this;
+                var allow_access_list = [];
+                vm.accessList.forEach((access)=>{
+                    if(access.is_allow){
+                        allow_access_list.push(access.id);
+                    }
+                });
+                console.log(allow_access_list);
+                if(vm.is_default_setting){
+                    return WebRequest2('POST', '/manage/xrac/control-access/update-default-role-access-list/'+this.role_id, JSON.stringify({allow_access_list:allow_access_list}) ).then(resp=>{
+                        return resp.json().then(data=>{
+                            return data;
+                        })
+                    })
+                }
+                //TODO: USER SETTING ACCESS
+
             }
 
         },

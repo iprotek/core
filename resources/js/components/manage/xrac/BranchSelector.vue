@@ -9,7 +9,7 @@
                 </option>
             </select>
             <span title="ID# of Branch" class="input-group-text text-primary" >
-                <b v-text="selected_branch_id"></b>
+                <b v-text="'#'+selected_branch_id"></b>
             </span>
             <span class="btn btn-default" @click="modalBranchList()">
                 <small title="Search" class="fa fa-list text-primary"></small>
