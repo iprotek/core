@@ -5,10 +5,10 @@
             <div class="col-md-3">
                 <app-user-list @selected_app_user="selected_app_user" />
             </div>
-            <div class="col-md-4" v-if="selected_app_user_id">
+            <div class="col-md-3" v-if="selected_app_user_id">
                 <role-list :app_user_id="selected_app_user_id" />
             </div>
-            <div class="col-md-5" v-if="selected_app_user_id && xrole_id">
+            <div class="col-md-6" v-if="selected_app_user_id && xrole_id">
                 <control-access />
             </div>
         </div>

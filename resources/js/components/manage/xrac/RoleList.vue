@@ -33,9 +33,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-if="!is_default_setting">
-                        <td></td>
-                        <td class="text-center">
+                    <tr v-if="!is_default_setting"> 
+                        <td colspan="2" class="text-center px-0">
                             <switch2 v-model="allow_access" :off_color="'red'" />
                         </td>
                         <td colspan="2">
@@ -59,7 +58,7 @@
                     </tr>
                     <tr v-for="(role, roleIndex) in roleList" v-bind:key="'role-item-'+role.id+'-'+roleIndex">
                         <th class="text-center" v-text="role.id"></th>
-                        <td class="text-center">
+                        <td class="text-center px-0">
                             <input  style="width:40px;min-width:20px;" :id="'role-'+role.id" :value="role.id" :class="'form-control '+(role.id == role_id ? 'is-valid':'' )" type="radio" name="role-selection" @click=" role_id = role.id; $emit('selection_changed', role.id)" />
                         </td>
                         <td colspan="2" >

@@ -13,7 +13,7 @@
             <table class="table m-0">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th class="text-center p-1"></th>
                         <th>Name</th>
                         <th></th>
                     </tr>
@@ -26,16 +26,16 @@
                         <th colspan="3" class="text-center"><code> -- No Accounts Found! -- </code></th>
                     </tr>
                     <tr v-for="(item, index) in dataList" v-bind:key="'item-'+item.id+'-'+index">
-                        <td class="text-center">
-                            <input @change="selected_app_user( item.id )" type="radio" :value="item.id" name="account-name" />
+                        <td class="text-center p-1 pt-3">
+                            <input :id="'user-selection-'+item.id" @change="selected_app_user( item.id )" type="radio" :value="item.id" name="account-name" />
                         </td>
                         <td colspan="2">
                             <div class="user-panel d-flex">
                                 <div class="image pl-0 mx-1">
-                                    <img src="/images/temp-image.png" class="img-circle elevation-2" alt="User Image">
+                                    <img :for="'user-selection-'+item.id" src="/images/temp-image.png" class="img-circle elevation-2" alt="User Image">
                                 </div>
                                 <div class="info">
-                                    <a v-text="item.name" :title="item.is_blocked? 'InActive':'Active'" :class="item.is_blocked? 'text-secondary':'text-primary'"></a>
+                                    <label :for="'user-selection-'+item.id" v-text="item.name" :title="item.is_blocked? 'InActive':'Active'" :class="item.is_blocked? 'text-secondary':'text-primary'"></label>
                                     <div>
                                         <small class="text-secondary" v-text="item.email"></small>
                                     </div>
