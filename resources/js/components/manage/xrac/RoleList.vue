@@ -133,6 +133,7 @@
             branch_changed:function(branch_id){
                 this.branch_id = branch_id;
                 this.loadUserBranchPositionAccess();
+                this.$emit('branch_changed', branch_id);
             },
             syncRoles:function(){
                 var  vm = this;
@@ -177,6 +178,7 @@
                         vm.isUserLoading = false;
                         vm.allow_access = data.is_allowed === true;
                         if(data.xrole_id > 0){
+                            vm.role_id = data.xrole_id;
                             vm.$emit('selection_changed', data.xrole_id);
                         }
                     });
