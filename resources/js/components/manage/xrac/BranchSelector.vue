@@ -1,17 +1,17 @@
 <template> 
     <div >
         <div v-if="hasLoaded" :class="'input-group '+input_size">
-            <select v-if="branchList.length == 0 && disable_multi_branch" class="form-control" v-model="selected_branch_id" style="min-width: 100px;" >
+            <select v-if="branchList.length == 0 && disable_multi_branch" class="form-control rounded-0" v-model="selected_branch_id" style="min-width: 100px;" >
                 <option :value="1">#1 DEFAULT COMPANY/BRANCH </option>
             </select>
-            <select v-else class="form-control" style="min-width: 100px;" @change="selection_changed" v-model="selected_branch_id">
+            <select v-else class="form-control rounded-0" style="min-width: 100px;" @change="selection_changed" v-model="selected_branch_id">
                 <option v-for="(item,itemIndex) in branchList" v-bind:key="'branch-'+item.id+'-'+itemIndex" :value="item.id" v-text="item.name" :selected="selected_branch_id == item.id">
                 </option>
             </select>
-            <span title="ID# of Branch" class="input-group-text text-primary" >
+            <span title="ID# of Branch" class="input-group-text text-primary rounded-0" >
                 <b v-text="'#'+selected_branch_id"></b>
             </span>
-            <span v-if="can_manage_branch" class="btn btn-default" @click="modalBranchList()">
+            <span v-if="can_manage_branch" class="btn btn-default rounded-0" @click="modalBranchList()">
                 <small title="Search" class="fa fa-list text-primary"></small>
             </span> 
         </div> 
