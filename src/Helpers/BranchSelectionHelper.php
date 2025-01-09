@@ -26,11 +26,18 @@ class BranchSelectionHelper
             //GET ALL Branches that is active
             if( $user->can('super-admin') ){
                 //$companyDetail =  CompanyDetail::first();
+                $branches = static::active_branches();
+
+
             }else{
                 
 
             }
-
+            $branches = static::active_branches();
+            if( count($branches) > 0){
+                static::set($branches[0]['id']);
+                return $branches[0]['id'];
+            }
             //GET 1 as default
             return 1;
         }
@@ -86,6 +93,13 @@ class BranchSelectionHelper
         $branchList = Branch::on();
         $branchList->where('is_active', 1);
         $branches = $branchList->get();
+        if(count($branches) <= 0){
+            return [
+                "id"=>1,
+                "name"=>"DEFAULT COMPANY/BRANCH",
+                "is_active"=>true
+            ];
+        }
 
         
         $user = auth()->user();
