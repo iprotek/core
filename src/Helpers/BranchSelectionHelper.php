@@ -6,6 +6,7 @@ use App\Models\UserAdminCompany;
 use DB;
 use iProtek\Core\Models\Branch;
 use iProtek\Xrac\Models\XuserRole;
+use Illuminate\Support\Facades\Log;
 
 class BranchSelectionHelper
 {
@@ -35,8 +36,10 @@ class BranchSelectionHelper
             }
             $branches = static::active_branches();
             if( count($branches) > 0){
-                static::set($branches[0]['id']);
-                return $branches[0]['id'];
+                Log::error($branches);
+                $branch_id = $branches[0]['id'];
+                static::set($branch_id);
+                return $branch_id;
             }
             //GET 1 as default
             return 1;
@@ -83,10 +86,10 @@ class BranchSelectionHelper
     public static function active_branches(){
 
         if(static::disable_multi_branch()){
-            return [
+            return [ [
                 "id"=>1,
                 "name"=>"DEFAULT COMPANY/BRANCH",
-                "is_active"=>true
+                "is_active"=>true]
             ];
         }
 
@@ -94,11 +97,11 @@ class BranchSelectionHelper
         $branchList->where('is_active', 1);
         $branches = $branchList->get();
         if(count($branches) <= 0){
-            return [
+            return [ [
                 "id"=>1,
                 "name"=>"DEFAULT COMPANY/BRANCH",
                 "is_active"=>true
-            ];
+            ]];
         }
 
         
@@ -115,9 +118,15 @@ class BranchSelectionHelper
                 $allowBranchIds[] = $allow->branch_id;
             }
             
-            $branches = $branches->filter( function($a)use($allowBranchIds){
-                return in_array($a->id, $allowBranchIds);
-            });
+            //FILTERED BRANCHES
+            $filterBranches = [];
+            foreach($branches as $branch){
+                if(in_array($branch->id, $allowBranchIds)){
+                    $filterBranches[] = $branch;
+                }
+            }
+            return $filterBranches;
+
 
         }
         return $branches;
