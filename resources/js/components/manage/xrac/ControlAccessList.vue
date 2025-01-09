@@ -26,7 +26,9 @@
                     <tbody>
                         <tr v-if="!is_default_setting">
                             <td colspan="4">
-                                <switch2 v-model="isDefault" @value_changed="loadAllowAccountDefaults(true)" /> <label class="mb-0"> IS DEFAULT? </label>
+                                <switch2 v-model="isDefault" @value_changed="loadAllowAccountDefaults(true)" /> 
+                                <label class="mb-0" v-if="isDefault"> IS DEFAULT? </label>
+                                <label class="mb-0 text-danger" v-else> CUSTOMIZE </label>
                             </td>
                         </tr>
 

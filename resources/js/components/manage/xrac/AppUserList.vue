@@ -8,7 +8,7 @@
                 <span class="btn btn-default">
                     <small title="Show" class="fa fa-search text-primary"></small>
                 </span>
-                <input v-model="search" @keyup.enter="loadAppUserAccounts()" type="text" class="form-control" placeholder="Search user.." />
+                <input v-model="search" @keyup.enter="loadAppUserAccounts()" type="text" class="form-control" placeholder="Search email, user, name.." />
             </div> 
             <table class="table m-0">
                 <thead>

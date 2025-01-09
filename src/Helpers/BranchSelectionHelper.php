@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\UserAdminCompany;
 use DB;
 use iProtek\Core\Models\Branch;
+use iProtek\Xrac\Models\XuserRole;
 
 class BranchSelectionHelper
 {
@@ -82,8 +83,29 @@ class BranchSelectionHelper
             ];
         }
 
-        $branches = Branch::on();
-        $branches->where('is_active', 1);
-        return $branches->get();
+        $branchList = Branch::on();
+        $branchList->where('is_active', 1);
+        $branches = $branchList->get();
+
+        
+        $user = auth()->user();
+        if($user->id != 1){
+            //FILTER BRANCHES BASED ON ALLOWED ACCESS
+            $allowedBranches = XuserRole::where([
+                "app_account_id"=>PayHttp::pay_account_id(),
+                "is_allowed"=>true
+            ])->get();
+            //GETTING IDS
+            $allowBranchIds=[];
+            foreach($allowedBranches as $allow){
+                $allowBranchIds[] = $allow->branch_id;
+            }
+            
+            $branches = $branches->filter( function($a)use($allowBranchIds){
+                return in_array($a->id, $allowBranchIds);
+            });
+
+        }
+        return $branches;
     }
 }

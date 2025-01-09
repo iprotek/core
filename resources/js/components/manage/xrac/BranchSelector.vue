@@ -1,7 +1,7 @@
 <template> 
     <div >
         <div v-if="hasLoaded" :class="'input-group '+input_size">
-            <select v-if="branchList.length == 0" class="form-control" v-model="selected_branch_id" style="min-width: 100px;" >
+            <select v-if="branchList.length == 0 && disable_multi_branch" class="form-control" v-model="selected_branch_id" style="min-width: 100px;" >
                 <option :value="1">#1 DEFAULT COMPANY/BRANCH </option>
             </select>
             <select v-else class="form-control" style="min-width: 100px;" @change="selection_changed" v-model="selected_branch_id">
@@ -30,7 +30,8 @@
                 branchList:[],
                 selected_branch_id:1,
                 isLoading:false,
-                hasLoaded:false
+                hasLoaded:false,
+                disable_multi_branch:false
             }
         },
         methods: { 
@@ -64,9 +65,11 @@
                 WebRequest2('GET', '/manage/xrac/branch/active-list').then(resp=>{
                     vm.isLoading = false;
                     resp.json().then(data=>{
+                        console.log("Branch Data", data);
                         vm.branchList = data.list;
                         vm.selected_branch_id = data.selected_id; 
-                        vm.hasLoaded = true; 
+                        vm.hasLoaded = true;
+                        vm.disable_multi_branch = data.disable_multi_branch;
                         if(vm.selected_branch_id)
                             vm.$emit('selection_changed', vm.selected_branch_id);
 
