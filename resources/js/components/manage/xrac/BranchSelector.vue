@@ -11,7 +11,7 @@
             <span title="ID# of Branch" class="input-group-text text-primary" >
                 <b v-text="'#'+selected_branch_id"></b>
             </span>
-            <span class="btn btn-default" @click="modalBranchList()">
+            <span v-if="can_manage_branch" class="btn btn-default" @click="modalBranchList()">
                 <small title="Search" class="fa fa-list text-primary"></small>
             </span> 
         </div> 
@@ -31,7 +31,8 @@
                 selected_branch_id:1,
                 isLoading:false,
                 hasLoaded:false,
-                disable_multi_branch:false
+                disable_multi_branch:false,
+                can_manage_branch:false
             }
         },
         methods: { 
@@ -65,7 +66,8 @@
                 WebRequest2('GET', '/manage/xrac/branch/active-list').then(resp=>{
                     vm.isLoading = false;
                     resp.json().then(data=>{
-                        console.log("Branch Data", data);
+                        //console.log("Branch Data", data);
+                        vm.can_manage_branch = data.can_manage_branch;
                         vm.branchList = data.list;
                         vm.selected_branch_id = data.selected_id; 
                         vm.hasLoaded = true;
