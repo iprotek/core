@@ -1,3 +1,5 @@
+@section('nav_bar_color', 'navbar-dark shadow-sm')
+
 @extends('iprotek_core::layouts.app')
 
 @section('content')
