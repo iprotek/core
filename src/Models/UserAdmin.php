@@ -42,7 +42,11 @@ class UserAdmin extends Model
         "created_from",
         //'user_factories',
         "recovery_requested_from",
-        "default_image"
+        "default_image",
+    ];
+
+    protected $casts = [
+        "is_active"=>"boolean"
     ];
 
     public function getDefaultImageAttribute(){

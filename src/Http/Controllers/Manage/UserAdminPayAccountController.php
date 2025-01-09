@@ -36,7 +36,24 @@ class UserAdminPayAccountController extends _CommonController
 
 
     public function login_pay_account(Request $request){
+        
  
+        $checkUser = \iProtek\Core\Models\Auths\Admin::where('email', $request->email )->first();
+        //CHECK IF USER IS ALLOWED
+        if( $checkUser && !$checkUser->is_active ){
+            return redirect()->back()->with('error', 'Disabled.')->withErrors([ 
+                'email' => 'You are currently disabled. Please contact your administrator.'
+            ])->withInput($request->only('email'));
+        }
+        //CHECK BRANCHES
+        else if($checkUser){
+            $allowedBranches = \iProtek\Core\Helpers\BranchSelectionHelper::active_branches($checkUser);
+            if( count($allowedBranches) <= 0 ){
+                return redirect()->back()->with('error', 'No Access.')->withErrors([ 
+                    'email' => 'Please contact your administrator to gain access on any branch.'
+                ])->withInput($request->only('email'));
+            }
+        }
  
         $client = PayHttp::client();
         
@@ -112,15 +129,6 @@ class UserAdminPayAccountController extends _CommonController
 
         }
         $user = \iProtek\Core\Models\Auths\Admin::find($userAdmin->id);
-        
-        //CHECK BRANCHES
-        $allowedBranches = \iProtek\Core\Helpers\BranchSelectionHelper::active_branches($user);
-        if( count($allowedBranches) <= 0 ){
-            Auth::logout();
-            return redirect()->back()->with('error', 'No Access.')->withErrors([ 
-                'email' => 'Please contact your administrator to gain access on any branch.'
-            ])->withInput($request->only('email'));
-        }
 
         //CHECK IF USER HAS BRANCH ACCESS
         Auth::login($user, true);

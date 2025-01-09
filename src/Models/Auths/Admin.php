@@ -48,7 +48,6 @@ class Admin extends Authenticatable
         "default_image"
     ];
 
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -66,6 +65,7 @@ class Admin extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        "is_active"=>"boolean"
     ];
 
     public function getDefaultImageAttribute(){
