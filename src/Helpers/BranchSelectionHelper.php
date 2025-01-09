@@ -83,7 +83,7 @@ class BranchSelectionHelper
 
     }
 
-    public static function active_branches(){
+    public static function active_branches($user_admin=null){
 
         if(static::disable_multi_branch()){
             return [ [
@@ -104,12 +104,13 @@ class BranchSelectionHelper
             ]];
         }
 
-        
-        $user = auth()->user();
+        //IF CUSTOM $user_admin is null then this will focus on the current auth
+        $user = $user_admin ?? auth()->user();
+         
         if($user->id != 1){
             //FILTER BRANCHES BASED ON ALLOWED ACCESS
             $allowedBranches = XuserRole::where([
-                "app_account_id"=>PayHttp::pay_account_id(),
+                "app_account_id"=>PayHttp::pay_account_id($user),
                 "is_allowed"=>true
             ])->get();
             //GETTING IDS

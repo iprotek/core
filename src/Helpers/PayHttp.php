@@ -9,9 +9,17 @@ use iProtek\Core\Models\UserAdminPayAccount;
 class PayHttp
 {
     
-    public static function pay_account_id(){
+    public static function pay_account_id($user_admin =null){
         $pay_account_id = 0;
-        if(auth('admin')->check()){
+
+        if($user_admin){
+            $user_admin_id = $user_admin->id;
+            $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
+            if($user_admin){
+                $pay_account_id = $user_admin->pay_app_user_account_id;
+            } 
+        }
+        else if(auth('admin')->check()){
             $user_admin_id = auth('admin')->user()->id;
             $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
             if($user_admin){

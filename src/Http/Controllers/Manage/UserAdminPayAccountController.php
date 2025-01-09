@@ -112,7 +112,19 @@ class UserAdminPayAccountController extends _CommonController
 
         }
         $user = \iProtek\Core\Models\Auths\Admin::find($userAdmin->id);
+        
+        //CHECK BRANCHES
+        $allowedBranches = \iProtek\Core\Helpers\BranchSelectionHelper::active_branches($user);
+        if( count($allowedBranches) <= 0 ){
+            Auth::logout();
+            return redirect()->back()->with('error', 'No Access.')->withErrors([ 
+                'email' => 'Please contact your administrator to gain access on any branch.'
+            ])->withInput($request->only('email'));
+        }
+
+        //CHECK IF USER HAS BRANCH ACCESS
         Auth::login($user, true);
+
         
         $sub_account_group_id = null; 
         $sub_account = SuperAdminSubAccount::where('email', $user->email)->first();

@@ -27,12 +27,12 @@
                   <span class="fas fa-envelope"></span>
                 </div>
               </div>
+              @error('email')
+                <span class="invalid-feedback d-block" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
             </div>
-            @error('email')
-              <span class="invalid-feedback d-block" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-            @enderror
           </div>
           <div>
             <div class="input-group mb-3">
