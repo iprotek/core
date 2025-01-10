@@ -237,7 +237,8 @@ class PayHttp
     public static function send_reconvery_link($email){
         
         $data = [
-            "email"=>$email
+            "email"=>$email,
+            "redirect_url"=>config('app.url')
         ];
         $client = static::client();
         $response = $client->post('send-recovery', [
