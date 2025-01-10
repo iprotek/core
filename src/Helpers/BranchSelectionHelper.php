@@ -107,7 +107,7 @@ class BranchSelectionHelper
         //IF CUSTOM $user_admin is null then this will focus on the current auth
         $user = $user_admin ?? auth()->user();
          
-        if($user->id != 1){
+        if(!$user->can('superadmin')){
             //FILTER BRANCHES BASED ON ALLOWED ACCESS
             $allowedBranches = XuserRole::where([
                 "app_account_id"=>PayHttp::pay_account_id($user),

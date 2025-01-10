@@ -45,7 +45,8 @@ class Admin extends Authenticatable
         'is_active'
     ];
     protected $appends=[
-        "default_image"
+        "default_image",
+        "super_admin"
     ];
 
     /**
@@ -55,7 +56,7 @@ class Admin extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
+        'remember_token'
     ];
 
     /**
@@ -67,6 +68,10 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         "is_active"=>"boolean"
     ];
+
+    public function getSuperAdminAttribute(){
+        return $this->can('superadmin');
+    }
 
     public function getDefaultImageAttribute(){
         $fileUpload = FileUpload::where('target_name', 'user_admins')->where('target_id', $this->id)->orderBy('is_default','DESC')->first();

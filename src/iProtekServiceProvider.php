@@ -5,6 +5,8 @@ namespace iProtek\Core;
 use Illuminate\Support\ServiceProvider;
 
 use iProtek\Core\Http\Kernel;
+use iProtek\Core\Helpers\PayHttp;
+use Illuminate\Support\Facades\Gate;
 
 class iProtekServiceProvider extends ServiceProvider
 {
@@ -26,17 +28,33 @@ class iProtekServiceProvider extends ServiceProvider
     public function boot()
     {
         // Bootstrap package services
-        
-        //$this->publishes([
-        //    __DIR__.'/../database/migrations' => database_path('migrations'),
-        //], 'migrations');
+        //SUPERADMIN SETUP
+        Gate::define('super_admin', function ($user) {
+            return $user->can('superadmin');
+        });
+        Gate::define('super-admin', function ($user) {
+            return $user->can('superadmin');
+        });
+        Gate::define('superadmin', function ($user) {
 
-        
-        /*
-        $this->publishes([
-            __DIR__.'/../public' => public_path('vendor/iprotek'),
-        ], 'public');
-        */
+            //1st PRIORITY IS THE APP ACCOUNT ID
+            //iprotek.sa_app_account_id
+            if(config('iprotek.sa_app_account_id')){
+                return config('iprotek.sa_app_account_id') == PayHttp::pay_account_id($user);
+            }
+            
+            //2nd PRIORITY IS THE USERADMIN ID
+            //iprotek.sa_user_admin_id
+            if(config('iprotek.sa_user_admin_id')){
+                return config('iprotek.sa_user_admin_id') ==  $user->id;
+            }
+
+            return $user->id == 1;
+        });
+
+
+
+
         //Create link instead
         $target = __DIR__.'/../public';
         $link = public_path('iprotek');
