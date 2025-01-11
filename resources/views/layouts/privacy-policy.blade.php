@@ -1,3 +1,6 @@
+<?php
+use iProtek\Core\Helpers\AppVarHelper;
+?>
 <div class="header">
   <div class="container">
     <p class="title">Privacy Policy for <?=config('app.name')?></p>
@@ -54,8 +57,8 @@
         <li>
           <p>
             <strong>Company</strong> (referred to as either "the Company", "We",
-            "Us" or "Our" in this Agreement) refers to <?=config('app.name')?>,
-            Alegria Cordova Cebu.
+            "Us" or "Our" in this Agreement) refers to {{ AppVarHelper::get('business_name',  config('app.name') ) }},
+            {{ AppVarHelper::get('business_address', ' Purok Kamatis, Alegria , Cordova, Cebu, Philippines 6017')  }}.
           </p>
         </li>
         <li>
@@ -506,10 +509,13 @@
           </p>
         </li>
         <li>
-          <p>By phone number: 09081703461</p>
+          <p>By phone number: {{ AppVarHelper::get('business_mobile', '09081703461') }}</p>
         </li>
         <li>
-          <p>By mail: Alegria, Cordova, Cebu</p>
+          <p>By email: {{ AppVarHelper::get('business_email', 'info@iprotek.net') }}</p>
+        </li>
+        <li>
+          <p>By mail: {{ AppVarHelper::get('business_address', '09081703461') }}</p>
         </li>
       </ul>
     </div>

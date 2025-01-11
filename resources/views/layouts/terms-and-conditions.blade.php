@@ -1,3 +1,6 @@
+<?php
+use iProtek\Core\Helpers\AppVarHelper;
+?>
 <strong>TERMS OF USE, SERVICE AND CONDITIONS</strong>
 <div class="MsoNormal" style="line-height: 1.5;">
   <br />
@@ -53,7 +56,7 @@
     ?>
 
 
-      We are <?=config('app.name')?>, doing business as <?=$firstWord(config('app.name'))?>
+      We are  {{ AppVarHelper::get('business_name',  config('app.name') ) }}, doing business as {{ $firstWord( AppVarHelper::get('business_name', config('app.name'))) }}
       ("<strong>Company</strong>," "<strong>we</strong>," "<strong>us</strong>,"
       "<strong>our</strong>")
       <span
@@ -69,43 +72,7 @@
               style="font-size:11.0pt;line-height:115%; Arial;mso-fareast-font-family:Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
             ></span
             >, a company registered in the
-            <span
-              style="font-size:11.0pt;line-height:115%;Arial;mso-fareast-font-family:Calibri;color:#595959;mso-themecolor:text1;
-mso-themetint:166;"
-              >Philippines</span
-            ><span
-              style="font-size:11.0pt;line-height:115%;Arial;mso-fareast-font-family:Calibri;color:#595959;mso-themecolor:text1;
-mso-themetint:166;"
-              ><span
-                style="font-size:11.0pt;line-height:115%;Arial;mso-fareast-font-family:Calibri;color:#595959;mso-themecolor:text1;
-mso-themetint:166;"
-              ></span></span></span
-        ></span>
-        at Purok Kamatis, Alegria<span
-          style="font-size:11.0pt;line-height:115%;
-Arial;mso-fareast-font-family:Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
-          ><span
-            style="font-size:11.0pt;line-height:115%;
-Arial;mso-fareast-font-family:Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
-          ></span></span
-        >, Cordova</span
-      ></span
-    ><span style="font-size: 15px;"
-      ><span data-custom-class="body_text"
-        ><span style="font-size: 15px;"
-          ><span data-custom-class="body_text"
-            ><span style="color: rgb(89, 89, 89);">, Cebu 6017</span></span
-          ></span
-        ></span
-      ></span
-    ><span
-      style="font-size:11.0pt;line-height:115%;
-Arial;mso-fareast-font-family:Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
-      ><span
-        style="font-size:11.0pt;line-height:115%;
-Arial;mso-fareast-font-family:Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
-      ></span></span
-    >.
+             {{ AppVarHelper::get('business_address', 'Philippines at Purok Kamatis, Alegria , Cordova, Cebu 6017')  }}.
   </div>
 </div>
 <div align="center" style="line-height: 1;"><br /></div>
@@ -161,9 +128,8 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     <span
       style="font-size:11.0pt;line-height:115%;font-family:Arial;
 Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
-      >You can contact us by phone at 09081703461, email at info@iprotek.com, or
-      by mail to Purok Kamatis, Alegria, Cordova, Cebu
-      6017,&nbsp;Philippines.</span
+      >You can contact us by phone at {{ AppVarHelper::get('business_mobile', '639081703461') }}, email at {{ AppVarHelper::get('business_email','info@iprotek.net') }}, or
+      by mail to {{ AppVarHelper::get('business_address', 'Philippines at Purok Kamatis, Alegria , Cordova, Cebu 6017')  }}</span
     >
   </div>
   <div class="MsoNormal" style="line-height: 1;"><br /></div>
@@ -3454,8 +3420,8 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
 >
   <span style="font-size: 15px;"
     >If you have any questions or need assistance regarding our SMS
-    communications, please email us at info@iprotek.com or call at
-    09081703461.<br
+    communications, please email us at {{ AppVarHelper::get('business_email', 'info@iprotek.net') }} or call at
+    {{ AppVarHelper::get('business_mobile', '09081703461') }}.<br
   /></span>
 </div>
 <div class="MsoNormal" style="line-height: 1.5; text-align: left;"><br /></div>
@@ -3571,56 +3537,8 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
 >
   <span style="font-size: 15px;"
     ><span style="color: rgb(89, 89, 89);"
-      ><strong><?=config('app.name')?></strong><strong></strong></span
+      ><strong>{{   AppVarHelper::get('business_name',  config('app.name') )  }}</strong><strong></strong></span
   ></span>
-</div>
-<div
-  class="MsoNormal"
-  data-custom-class="body_text"
-  style="line-height: 1.5; text-align: left;"
->
-  <span style="font-size: 15px;"
-    ><span
-      style="line-height: 115%; font-family: Arial; color: rgb(89, 89, 89);"
-      ><strong>Purok Kamatis</strong
-      ><span
-        style="line-height: 115%; font-family: Arial; color: rgb(89, 89, 89);"
-      ></span></span
-  ></span>
-</div>
-<div
-  class="MsoNormal"
-  data-custom-class="body_text"
-  style="line-height: 1.5; text-align: left;"
->
-  <span style="font-size: 15px;"
-    ><span
-      style="line-height: 115%; font-family: Arial; color: rgb(89, 89, 89);"
-      ><strong>Alegria</strong
-      ><span
-        style="line-height: 115%; font-family: Arial; color: rgb(89, 89, 89);"
-        ><span
-          style="line-height: 115%; font-family: Arial; color: rgb(89, 89, 89);"
-        ></span></span></span
-  ></span>
-</div>
-<div
-  class="MsoNormal"
-  data-custom-class="body_text"
-  style="line-height: 1.5; text-align: left;"
->
-  <span style="font-size: 15px;"
-    ><strong
-      ><span style="color: rgb(89, 89, 89);">Cordova, Cebu 6017</span></strong
-    ><strong><span style="color: rgb(89, 89, 89);"></span></strong
-  ></span>
-</div>
-<div
-  class="MsoNormal"
-  data-custom-class="body_text"
-  style="line-height: 1.5; text-align: left;"
->
-  <strong></strong><strong>Philippines</strong><strong></strong>
 </div>
 <div
   class="MsoNormal"
@@ -3631,7 +3549,22 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
     ><span
       style="font-size:11.0pt;line-height:115%;font-family:Arial;
 Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
-      ><strong>Phone: 09081703461</strong></span
+      ><strong>
+ADDRESS: {{ AppVarHelper::get('business_address', 'Alegria, Cordova, Cebu, Philippines 66017' ) }}
+    </strong></span
+    >&nbsp;</strong
+  >
+</div>
+<div
+  class="MsoNormal"
+  data-custom-class="body_text"
+  style="line-height: 1.5; text-align: left;"
+>
+  <strong
+    ><span
+      style="font-size:11.0pt;line-height:115%;font-family:Arial;
+Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
+      ><strong>Phone:{{ AppVarHelper::get('business_mobile', '09081703461') }}</strong></span
     >&nbsp;</strong
   >
 </div>
@@ -3651,6 +3584,6 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
   ><span
     style="font-size:11.0pt;line-height:115%;font-family:Arial;
 Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;"
-    ><strong>info@iprotek.com</strong></span
+    ><strong>{{ AppVarHelper::get('business_email', 'info@iprotek.net') }}</strong></span
   ></strong
 >
