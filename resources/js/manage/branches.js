@@ -42,12 +42,10 @@ body.append(message_container);
  new Vue({
     el: '#branch-modal-container',
 });
-
-if(document.querySelector('#branch-selector')){
-    new Vue({
-        el: '#branch-selector',
-    });
-}
+ 
+new Vue({
+    el: '#branch-selector',
+}); 
 
 
 

@@ -57,13 +57,13 @@
         <select id="select-languagelist" class="form-control languagelist"> </select>
       </li>
       -->
-      @if(!\iProtek\Core\Helpers\BranchSelectionHelper::disable_multi_branch())
         <li class="nav-item">
           <div id="branch-selector" style="padding-top:5px;">
-            <branch-selector input_size="input-group-sm" :is_system_select="true"/>
+            @if(!\iProtek\Core\Helpers\BranchSelectionHelper::disable_multi_branch())
+                  <branch-selector input_size="input-group-sm" :is_system_select="true"/>
+            @endif
           </div>
         </li>
-      @endif
       <!-- Messages Dropdown Menu -->
       <li id="message-el" class="nav-item dropdown">
         <message-notification></message-notification>
