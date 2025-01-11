@@ -4,12 +4,10 @@
             <div class="card-header">
                 <label class="mb-0"> ROLES </label>
             </div> 
-            <div v-if="!is_default_setting">
-                <div v-if="!disable_multi_branch">
-                    <label class="mb-0 mt-2 mx-2">Select Branch:</label>
+            <div v-if="!is_default_setting"> 
+                    <label v-if="!disable_multi_branch" class="mb-0 mt-2 mx-2">Select Branch:</label>
                     <branch-selector :is_system_select="false" :input_size="'input-group-lg'" @selection_changed="branch_changed" />
-                </div>
-            </div>
+           </div>
             <div v-else>
                 <button class="btn btn-outline-success float-right" style="border-radius:0px;" title="Sync roles" @click="$refs.sync_roles.submit()">
                     <web-submit ref="sync_roles" :action="syncRoles" :icon_class="'fa fa-refresh'" :label="'SYNC'" :timeout="3000" />
@@ -121,7 +119,7 @@
         },
         methods: { 
             allow_access_changed:function(is_allow){
-                console.log("GG");
+                //console.log("GG");
                 var req = {
                     branch_id: this.branch_id,
                     app_account_id: this.app_user_id,
