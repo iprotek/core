@@ -66,13 +66,13 @@
                     @elseif($menuitem->type == 'menu')
                       <?php //var_dump($menuitem); 
                         $user_types = explode(',', $menuitem->user_types);
-                        if(in_array($USER->user_type, $user_types) || $USER->user_type == '0' || $USER->user_type == null){
+                        if( $USER->can('superadmin') || in_array($USER->user_type, $user_types) ){
                           
                           if( $menuitem->menu_control_name && !$USER->can($menuitem->menu_control_name) ) continue;
                       ?>
                       <x-container.sidemenu :x-text="$menuitem->menu_text" :x-icon="$menuitem->icon" :x-url="$menuitem->url" :badges="json_encode([])" x-label-trans-id="sub-menu-{{$menuitem->id}}-{{$menuitem->menu_text}}"/>
                       <?php } ?>
-                      @endif
+                    @endif
                   <?php } ?>
                 <?php }?>
             @endforeach 
