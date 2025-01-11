@@ -52,7 +52,7 @@ class UserAdmin extends Model
     public function getDefaultImageAttribute(){
         $fileUpload = FileUpload::where('target_name', 'user_admins')->where('target_id', $this->id)->orderBy('is_default','DESC')->first();
         if($fileUpload){
-            return "/image-preview/".$fileUpload->id;
+            return $fileUpload->link;
         }
         return "/images/temp-image.png";
     }
