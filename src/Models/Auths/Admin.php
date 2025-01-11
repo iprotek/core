@@ -12,6 +12,7 @@ use iProtek\Core\Models\FileUpload;
 use iProtek\Core\Helpers\BranchSelectionHelper;
 use iProtek\Core\Helpers\PayHttp;
 use iProtek\Xrac\Models\XuserRole;
+use iProtek\Xrac\Models\Xrole;
 
 
 class Admin extends Authenticatable
@@ -52,7 +53,8 @@ class Admin extends Authenticatable
     protected $appends=[
         "default_image",
         "super_admin",
-        "branch_user_type_id"
+        "branch_user_type_id",
+        "branch_user_type_name"
     ];
 
     /**
@@ -91,6 +93,30 @@ class Admin extends Authenticatable
         }
 
         return null;
+    }
+
+    public function getBranchUserTypeNameAttribute(){
+
+        if($this->can('superadmin')){
+            return "SuperAdmin";
+        }
+
+
+        $branch_id = BranchSelectionHelper::get();
+        $pay_account_id = PayHttp::pay_account_id($this);
+
+        $role = XuserRole::where(["app_account_id"=>$pay_account_id, "branch_id"=>$branch_id])->first();
+        if($role){
+
+            $xrole = Xrole::find($role->xrole_id);
+            if($xrole){
+                return ($role->is_default ? "": "Customized-").$xrole->name;
+            }
+
+        }
+
+        return "None";
+
     }
 
     public function getSuperAdminAttribute(){

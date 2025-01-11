@@ -97,7 +97,7 @@
                 console.log(menuIds);
 
                 if(is_setting){
-                    return  WebRequest2("POST", "http://localhost:9014/manage/xrac/xrole/update-role-menu/"+vm.role_id, {menu_ids:menuIds}).then(resp=>{
+                    return  WebRequest2("POST", "/manage/xrac/xrole/update-role-menu/"+vm.role_id, {menu_ids:menuIds}).then(resp=>{
                         return resp.json().then(data=>{
                             //console.log(data);
                             if(!resp.ok){
