@@ -29,14 +29,14 @@ mix//.js('resources/js/app.js', 'public/js')
     //.js('resources/js/manage/iprotek-data/model-fields.js', 'public/js/manage/iprotek-data')
     //.js('resources/js/manage/iprotek-data/searches.js', 'public/js/manage/iprotek-data')
     //.js('resources/js/manage/settings.js', 'public/js/manage')
-    .js('resources/js/pay-forgot-password.js', 'public/js')
+    //.js('resources/js/pay-forgot-password.js', 'public/js')
     //.js('resources/js/branch.js', 'public/js')
     //.js('resources/js/sharedaccount.js', 'public/js')
 
     
     //.js('resources/js/manage/branches.js', 'public/js/manage')
-    //.js('resources/js/manage/xrac/xrole.js', 'public/js/manage/xrac')
-    //.js('resources/js/manage/xrac/xuser-role.js', 'public/js/manage/xrac')
+    .js('resources/js/manage/xrac/xrole.js', 'public/js/manage/xrac')
+    .js('resources/js/manage/xrac/xuser-role.js', 'public/js/manage/xrac')
  
     //.js('resources/js/homepage.js', 'public/js')
     .vue();
