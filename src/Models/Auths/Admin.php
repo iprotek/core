@@ -9,6 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use iProtek\Core\Models\FileUpload;
+use iProtek\Core\Helpers\BranchSelectionHelper;
+use iProtek\Core\Helpers\PayHttp;
+use iProtek\Xrac\Models\XuserRole;
+
+
 class Admin extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
@@ -46,7 +51,8 @@ class Admin extends Authenticatable
     ];
     protected $appends=[
         "default_image",
-        "super_admin"
+        "super_admin",
+        "branch_user_type_id"
     ];
 
     /**
@@ -68,6 +74,24 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         "is_active"=>"boolean"
     ];
+
+    public function getBranchUserTypeIdAttribute(){
+
+        if($this->can('superadmin')){
+            return 0;
+        }
+
+
+        $branch_id = BranchSelectionHelper::get();
+        $pay_account_id = PayHttp::pay_account_id($this);
+
+        $role = XuserRole::where(["app_account_id"=>$pay_account_id, "branch_id"=>$branch_id])->first();
+        if($role){
+            return $role->xrole_id;
+        }
+
+        return null;
+    }
 
     public function getSuperAdminAttribute(){
         return $this->can('superadmin');

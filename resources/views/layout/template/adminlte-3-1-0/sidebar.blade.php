@@ -45,37 +45,39 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            @foreach($SIDEMENUS as $sidemenu)
-                <?php if(!empty($sidemenu->items)){?> 
-                <li class="nav-header" label-trans-id="group-menu-{{$sidemenu->id}}"><?=$sidemenu->group_text?></li>
-                <?php $menuitems = $sidemenu->items;?>
-                <?php foreach($menuitems as $menuitem){ ?>
-                    @if($menuitem->type == 'combo')
-                    <?php
-                      $menuitemcombo = $menuitem;?>
-                      <x-container.sidemenucombobox :x-text="$menuitem->menu_text" :x-icon="$menuitem->icon" :badges="json_encode([])">
-                          <?php $badges = [];
-                            $comboboxitems = $menuitemcombo->items;?>
-                          <?php
-                          foreach($comboboxitems as $comboboxitem){
-                              if( $comboboxitem->menu_control_name && !$USER->can($comboboxitem->menu_control_name) ) continue;
-                             ?>
-                            <x-container.sidemenu :x-text="$comboboxitem->menu_text" :x-icon="$comboboxitem->icon" :x-url="$comboboxitem->url" :badges="json_encode([])" x-label-trans-id="sub-menu-{{$comboboxitem->id}}"/>
-                          <?php } ?>
-                      </x-container.sidemenucombobox>
-                    @elseif($menuitem->type == 'menu')
-                      <?php //var_dump($menuitem); 
-                        $user_types = explode(',', $menuitem->user_types);
-                        if( $USER->can('superadmin') || in_array($USER->user_type, $user_types) ){
-                          
-                          if( $menuitem->menu_control_name && !$USER->can($menuitem->menu_control_name) ) continue;
-                      ?>
-                      <x-container.sidemenu :x-text="$menuitem->menu_text" :x-icon="$menuitem->icon" :x-url="$menuitem->url" :badges="json_encode([])" x-label-trans-id="sub-menu-{{$menuitem->id}}-{{$menuitem->menu_text}}"/>
-                      <?php } ?>
-                    @endif
-                  <?php } ?>
-                <?php }?>
-            @endforeach 
+            @if($USER->branch_user_type_id !== null)
+              @foreach($SIDEMENUS as $sidemenu)
+                  <?php if(!empty($sidemenu->items)){?> 
+                  <li class="nav-header" label-trans-id="group-menu-{{$sidemenu->id}}"><?=$sidemenu->group_text?></li>
+                  <?php $menuitems = $sidemenu->items;?>
+                  <?php foreach($menuitems as $menuitem){ ?>
+                      @if($menuitem->type == 'combo')
+                      <?php
+                        $menuitemcombo = $menuitem;?>
+                        <x-container.sidemenucombobox :x-text="$menuitem->menu_text" :x-icon="$menuitem->icon" :badges="json_encode([])">
+                            <?php $badges = [];
+                              $comboboxitems = $menuitemcombo->items;?>
+                            <?php
+                            foreach($comboboxitems as $comboboxitem){
+                                if( $comboboxitem->menu_control_name && !$USER->can($comboboxitem->menu_control_name) ) continue;
+                              ?>
+                              <x-container.sidemenu :x-text="$comboboxitem->menu_text" :x-icon="$comboboxitem->icon" :x-url="$comboboxitem->url" :badges="json_encode([])" x-label-trans-id="sub-menu-{{$comboboxitem->id}}"/>
+                            <?php } ?>
+                        </x-container.sidemenucombobox>
+                      @elseif($menuitem->type == 'menu')
+                        <?php //var_dump($menuitem); 
+                          $user_types = explode(',', $menuitem->user_types);
+                          if( $USER->can('superadmin') || in_array($USER->branch_user_type_id, $user_types) ){
+                            
+                            if( $menuitem->menu_control_name && !$USER->can($menuitem->menu_control_name) ) continue;
+                        ?>
+                        <x-container.sidemenu :x-text="$menuitem->menu_text" :x-icon="$menuitem->icon" :x-url="$menuitem->url" :badges="json_encode([])" x-label-trans-id="sub-menu-{{$menuitem->id}}-{{$menuitem->menu_text}}"/>
+                        <?php } ?>
+                      @endif
+                    <?php } ?>
+                  <?php }?>
+              @endforeach 
+            @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
