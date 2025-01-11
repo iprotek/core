@@ -5,8 +5,10 @@
                 <label class="mb-0"> ROLES </label>
             </div> 
             <div v-if="!is_default_setting">
-                <label class="mb-0 mt-2 mx-2">Select Branch:</label>
-                <branch-selector :is_system_select="false" :input_size="'input-group-lg'" @selection_changed="branch_changed" />
+                <div v-if="!disable_multi_branch">
+                    <label class="mb-0 mt-2 mx-2">Select Branch:</label>
+                    <branch-selector :is_system_select="false" :input_size="'input-group-lg'" @selection_changed="branch_changed" />
+                </div>
             </div>
             <div v-else>
                 <button class="btn btn-outline-success float-right" style="border-radius:0px;" title="Sync roles" @click="$refs.sync_roles.submit()">
@@ -113,7 +115,8 @@
                 isLoading:false,
                 role_id:0,
                 branch_id:0,
-                isUserLoading:false
+                isUserLoading:false,
+                disable_multi_branch:true
             }
         },
         methods: { 
@@ -130,8 +133,9 @@
                     });
                 });
             },
-            branch_changed:function(branch_id){
+            branch_changed:function(branch_id, disable_multi_branch){
                 this.branch_id = branch_id;
+                this.disable_multi_branch = disable_multi_branch;
                 this.loadUserBranchPositionAccess();
                 this.$emit('branch_changed', branch_id);
             },

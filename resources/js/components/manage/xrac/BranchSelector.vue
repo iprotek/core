@@ -1,6 +1,6 @@
 <template> 
     <div >
-        <div v-if="hasLoaded" :class="'input-group '+input_size">
+        <div v-if="hasLoaded && !disable_multi_branch" :class="'input-group '+input_size">
             <select v-if="branchList.length == 0 && disable_multi_branch" class="form-control rounded-0" v-model="selected_branch_id" style="min-width: 100px;" >
                 <option :value="1">#1 DEFAULT COMPANY/BRANCH </option>
             </select>
@@ -31,7 +31,7 @@
                 selected_branch_id:1,
                 isLoading:false,
                 hasLoaded:false,
-                disable_multi_branch:false,
+                disable_multi_branch:true,
                 can_manage_branch:false
             }
         },
@@ -73,7 +73,7 @@
                         vm.hasLoaded = true;
                         vm.disable_multi_branch = data.disable_multi_branch;
                         if(vm.selected_branch_id)
-                            vm.$emit('selection_changed', vm.selected_branch_id);
+                            vm.$emit('selection_changed', vm.selected_branch_id, data.disable_multi_branch);
 
                     })
                 });
