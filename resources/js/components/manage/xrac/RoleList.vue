@@ -118,8 +118,7 @@
             }
         },
         methods: { 
-            allow_access_changed:function(is_allow){
-                //console.log("GG");
+            allow_access_changed:function(is_allow){ 
                 var req = {
                     branch_id: this.branch_id,
                     app_account_id: this.app_user_id,
@@ -127,7 +126,7 @@
                 };
                 WebRequest2('POST', '/manage/xrac/user-role/set-branch-role', JSON.stringify(req)).then(resp=>{
                     resp.json().then(data=>{
-                        console.log(data);
+                        //console.log(data);
                     });
                 });
             },
@@ -171,12 +170,16 @@
             },
             loadUserBranchPositionAccess:function(){
                 var vm = this;
-                vm.allow_access = false;
+                //vm.allow_access = false;
                 vm.role_id = 0;
                 if(!this.branch_id || !this.app_user_id || vm.isUserLoading) return;
                 vm.isUserLoading = true;
                 WebRequest2('GET', '/manage/xrac/user-role/role-info/'+this.branch_id+'/'+this.app_user_id).then(resp=>{
                     resp.json().then(data=>{
+                        if(!resp.ok){
+                            vm.allow_access = false;
+                        }
+
                         vm.isUserLoading = false;
                         vm.allow_access = data.is_allowed === true;
                         if(data.xrole_id > 0){

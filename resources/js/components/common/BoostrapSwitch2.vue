@@ -11,11 +11,13 @@
         data: function () {
             return {
                 switchID:'switch-id-'+this._uid,
-                input_check:false
+                input_check:false,
+                outside_trigger:false
             }
         },
         watch: {
             value(newValue) {
+                this.outside_trigger = true;
                 this.input_value = newValue ? true:false;
                 this.input_check = this.input_value;
                 $('#'+this.switchID).bootstrapSwitch('state', this.input_value);
@@ -25,9 +27,12 @@
             }
         },
         methods: { 
-            value_changed:function(){
+            value_changed:function(event){
+                //console.log("Event onchange", event);
                 this.$emit("input", this.input_check);
+                if(!this.outside_trigger)
                 this.$emit("value_changed", this.input_check);
+                this.outside_trigger = false;
             },
             setOn:function(check){
                 this.input_value = check ? true:false;
@@ -45,6 +50,7 @@
         mounted:function(){     
             var vm = this;  
             var exists = document.querySelector('#'+vm.switchID);
+            
             if(exists){ 
                 $(function(){
                     setTimeout(()=>{
