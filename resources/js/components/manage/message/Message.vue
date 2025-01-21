@@ -9,20 +9,25 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <template v-if="has_chat">
                     <div class="p-1" @click.stop="">
-                        <div class="input-group text-sm mb-1">
+                        <div class="input-group text-sm">
                             <span class="btn btn-default">
                                 <small title="Show" class="fa fa-search text-primary"></small>
                             </span> 
-                            <input type="text" class="form-control" placeholder="Search chats here..">
+                            <input v-model="search" type="text" class="form-control" placeholder="Search chats here.." @keyup.enter="loadNotification()">
                         </div>
                     </div>
                     <div class="dropdown-divider" @click.stop=""></div>
-                    <notification-container v-if="ai" :header="'Ask AI'" :data="ai"></notification-container>
-                    <notification-container v-if="sms" :header="'SMS Messages'" :data="sms"></notification-container>
-                    <notification-container v-if="group" :header="'Group Messages'" :data="group"></notification-container>
-                    <notification-container v-if="team" :header="'Team Messages'" :data="team"></notification-container>
-                    <notification-container v-if="dm" :header="'Direct Messages'" :data="dm"></notification-container>
-                    <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                    <div v-if="isLoading" class="text-center mb-2">
+                        <code> -- <span class="fa fa-spinner fa-pulse"></span>  Searching Chat --   </code>
+                    </div>
+                    <div v-else>
+                        <notification-container :type="'ai'" v-if="ai" :header="'Ask AI'" :data="ai"></notification-container>
+                        <notification-container :type="'sms'" v-if="sms" :header="'SMS Messages'" :data="sms"></notification-container>
+                        <notification-container :type="'group'" v-if="group" :header="'Group Messages'" :data="group"></notification-container>
+                        <notification-container :type="'team'" v-if="team" :header="'Team Messages'" :data="team"></notification-container>
+                        <notification-container :type="'dm'" v-if="dm" :header="'Direct Messages'" :data="dm"></notification-container>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                    </div>
                 </template>
                 <template v-else-if="isLoading">
                     <a href="#" class="dropdown-item" >
@@ -63,14 +68,10 @@
                 ai:null,
                 group:null,
                 team:null,
-                sms:{
-                    status:1,
-                    result:[],
-                    message:'',
-                    total:0,
-                    other_chat_count:0
-                },
+                sms:null,
                 notification_count:0,
+                search:'',
+                is_error:false
                 
             }
         },
@@ -78,30 +79,38 @@
             clicktChatNotif:function(chatInfo){
                 window.addChatMessage({});
             },
+            queryString:function(params={}){ 
+                var queryString = Object.keys(params).map(function(key) {
+                    return key + '=' + params[key]
+                }).join('&');
+                return queryString;
+            },
             loadNotification:function(){
                 var vm = this;
                 vm.isLoading = true;
-                WebRequest2('GET', '/manage/message/notifications').then(resp=>{
+                WebRequest2('GET', '/manage/message/notifications?'+this.queryString({q: vm.search})).then(resp=>{
                     vm.isLoading = false;
                     resp.json().then(data=>{
                         console.log("Chat Settings", data);
                         if(data.status == 1){
                             
-                            if(data.result.client){
+                            //if(data.result.client){
+                            if(data && data.result){
                                 var result = data.result;
                                 vm.has_chat = true;
                                 vm.dm = result.dm;
                                 vm.ai = result.ai;
                                 vm.group = result.group;
                                 vm.team = result.team;
+                                vm.sms = result.sms;
                                 if(result.notification_details){
                                     vm.notification_count = result.notification_details.total;
                                 }
-                                vm.loadPusherInfo();
                             }else if(data.result.message){
-                               vm.error_message = "Chat Settings Invalidated.";
+                                vm.is_error = true;
+                                vm.error_message = "Chat Settings Invalidated.";
                                //vm.error_message = data.result.message;
-                            }
+                           }
 
                             
                         }else{
@@ -151,6 +160,7 @@
         },
         mounted:function(){     
             this.loadNotification();
+            //TODO: LOAD PUSHER HERE
             /*
             Pusher.logToConsole = true;
 

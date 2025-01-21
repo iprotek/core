@@ -52,8 +52,17 @@
 
 <script>
     export default {
-        props:[ "header", "data" ],
+        props:[ "header", "data", "type" ],
         components: { 
+        },
+        watch:{
+            data:function(newVal){
+                if(newVal  && newVal.result){
+                    this.users = newVal.result;
+                }else{
+                    this.users = [];
+                }
+            }
         },
         data: function () {
             return { 
@@ -62,7 +71,7 @@
         },
         methods: { 
             clicktChatNotif:function(chatInfo){
-                window.addChatMessage(chatInfo);
+                window.addChatMessage(chatInfo, this.type);
             },
             limitString:function(text){
                 if(text && text.length > 20)

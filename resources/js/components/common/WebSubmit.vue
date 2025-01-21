@@ -35,6 +35,11 @@
                 vm.is_submit =  true;
 
                 var result = vm.action();
+                if(!result){
+                    vm.add_class = '';
+                    vm.is_submit = false;
+                    return;
+                }
                 
 
                 result.then(data=>{

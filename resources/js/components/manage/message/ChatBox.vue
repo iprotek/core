@@ -1,11 +1,11 @@
 <template> 
-    <div>
+    <div :id="value.type+'-chatbox-item-'+value.id">
         <div v-if="value" @click="setActive()" :class="'card '+(is_active ? 'card-primary':'card-secondary')+' card-outline direct-chat '+(is_active ? 'direct-chat-primary':'direct-chat-secondary')+' '+(is_minimize ? 'collapsed-card':'')" style="min-width:300px;">
             <div class="card-header">
                 <img :data-card-widget="(is_minimize?'collapse':'')" class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image" style="width:30px; height:30px;" @click=" (is_minimize ? isMinimizeClick():'')" :style="(is_minimize ? 'cursor:pointer;':'')"> 
                 &nbsp;
-                <h3 :class="'card-title py-1 ml-1 '+(is_active ? 'text-primary':'')" :data-card-widget="(is_minimize?'collapse':'')" @click=" (is_minimize ? isMinimizeClick():'')" :style="(is_minimize ? 'cursor:pointer;':'')">
-                        {{ value.name }}
+                <h3 :title="value.email" :class="'card-title py-1 ml-1 '+(is_active ? 'text-primary':'')" :data-card-widget="(is_minimize?'collapse':'')" @click=" (is_minimize ? isMinimizeClick():'')" :style="(is_minimize ? 'cursor:pointer;':'')">
+                    ({{value.type}}{{value.is_self ? '/Self':''}}) {{ value.name }}
                 </h3>
                 <div class="card-tools">
                     <span v-if="value.count_unseen" title="3 New Messages" :class="'badge '+(is_active ? 'bg-danger':'bg-warning')" v-text="value.count_unseen"></span>
@@ -80,33 +80,19 @@
                     <div class="text-center" v-if="errorMessage">
                         <code v-text="errorMessage"></code>
                     </div>
-                </div> 
-                <!--
-                <div class="direct-chat-contacts">
-                    <ul class="contacts-list">
-                        <li>
-                            <a href="#">
-                                <img class="contacts-list-img" src="/iprotek/images/temp-image.png" alt="User Avatar">
-                                <div class="contacts-list-info">
-                                    <span class="contacts-list-name"> Count Dracula
-                                        <small class="contacts-list-date float-right">2/28/2015</small>
-                                    </span>
-                                    <span class="contacts-list-msg">How have you been? I was...</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul> 
-                </div> 
-                -->
+                </div>
             </div> 
             <div  class="card-footer" :style="'display: '+(is_minimize ? 'none;':'block;')"> 
                 <div class="input-group" v-if="!errorMessage">
                     <span class="input-group-text p-2 px-3">
                         <span :class="'fa fa-paperclip text-lg '+(is_active ? 'text-primary':'')" style="cursor:pointer;"></span>
                     </span>
-                    <input v-model="sendText" @keyup.enter="sendContactMessage()" :id="chat_id" type="text" name="message" placeholder="Type Message ..." class="form-control" :readonly="isSend">
-                    <span class="input-group-append">
+                    <input v-model="sendText" @keyup.enter=" sendText.trim() ? $refs.web_submit_send.submit():''" :id="chat_id" type="text" name="message" placeholder="Type Message ..." class="form-control" :readonly="isSend">
+                    <span :class="'btn btn-primary '+(sendText.trim() ? '':'disabled')">
+                        <!--
                         <button @click="sendContactMessage()" type="submit" :class="'btn '+(is_active ? 'btn-primary':'btn-secondary')+' '+(isSend ? 'disabled':'')">Send</button>
+                        -->
+                        <web-submit ref="web_submit_send" :action="sendContactMessage" :el_class="''" :icon_class="'fa fa-paper-plane'" :label="'Submit'" :timeout="3000" />
                     </span>
                 </div> 
             </div>
@@ -117,10 +103,12 @@
 
 <script>
     import SwalAlertVue from '../../common/SwalAlert.vue';
+    import WebSubmitVue from '../../common/WebSubmit.vue';
     export default {
-        props:[ "value" ],
+        props:[ "value"],
         components: { 
-            "swal-alert":SwalAlertVue
+            "swal-alert":SwalAlertVue,
+            "web-submit":WebSubmitVue
         },
         data: function () {
             return {
@@ -144,6 +132,7 @@
                 }, 500);
             },
             removeChatItem:function(chatItem){
+                //this.messages = [];
                 window.removeChatMessage(chatItem);
             },
             setActive:function(){
@@ -167,7 +156,7 @@
                 vm.errorMessage = '';
                 WebRequest2('GET', '/manage/message/dm/contact/'+this.value.app_user_account_id).then(resp=>{
                     resp.json().then(data=>{
-                        console.log(data);
+                        //console.log(data);
                         if(data.status == 1){
                             if(is_add == false){
                                 vm.messages = data.result.data.reverse();
@@ -210,16 +199,39 @@
                 var request = {
                     message:vm.sendText
                 }
-                WebRequest2('POST', '/manage/message/dm/contact/'+this.value.app_user_account_id, request).then(resp=>{
-                    resp.json().then(data=>{
-                        console.log(data);
-                        vm.isSend = false;
+                
+                if(this.value.type == 'dm'){
+                    return  this.sendByDm(request);
+                }
+
+                return;
+
+            },
+
+            sendByDm(request){
+                var vm = this;
+                return  WebRequest2('POST', '/manage/message/dm/contact/'+this.value.app_user_account_id, request).then(resp=>{
+                    return resp.json().then(data=>{
+                        //console.log(data);
+                        setTimeout(()=>{
+                            vm.isSend = false;
+                        }, 3000);
                         if(data.status == 1){
+                            data.message = "Submit";
                             if(data.result.status == 1){
                                 vm.sendText = '';
+                                //DONT LOAD CONTACT JUST USE WEBSUMIT
                                 vm.loadContactMessages();
                             }
+                        }else{
+                            data.message = "Failed";
                         }
+                        if(!resp.ok){
+                            return;
+                        }
+
+
+                        return data;
                     })
                 });
 
@@ -227,11 +239,13 @@
             
         },
         mounted:function(){     
-            if(this.value)
+            if(this.value){
                 this.value.setInActive = this.setInActive;
-            this.setActive();
+                this.value.setActive = this.setActive;
+            }
+            //this.setActive();
             
-            console.log( "Chat info",this.value);
+            //console.log( "Chat info",this.value);
 
             this.loadContactMessages();
         },

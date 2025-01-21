@@ -25,7 +25,7 @@ class _CommonAuths extends _CommonController
 
     public function __construct()
     {
-        $this->middleware(['guest', 'throttle:5,1'] )->except('logout');
+        $this->middleware(['guest', 'throttle:10,1'] )->except('logout');
     }
     
     //email, password, noreload, remember

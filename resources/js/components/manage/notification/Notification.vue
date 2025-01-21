@@ -66,6 +66,9 @@
         props:[  ],
         components: { 
         },
+        watch:{
+            
+        },
         data: function () {
             return {    
                 summary:{

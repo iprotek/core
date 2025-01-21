@@ -19,7 +19,7 @@ mix//.js('resources/js/app.js', 'public/js')
     //.js('resources/js/manage/header-footers.js', 'public/js/manage')
     //.js('resources/js/manage.js', 'public/js/manage')
     //.js('resources/js/manage/notification.js', 'public/js/manage')
-    //.js('resources/js/manage/message.js', 'public/js/manage')
+    .js('resources/js/manage/message.js', 'public/js/manage')
     //.js('resources/js/manage/sms-sender.js', 'public/js/manage/sms-sender')
     //.js('resources/js/guest-chat.js', 'public/js')
     //.js('resources/js/manage/company-details.js', 'public/js/manage')
@@ -34,9 +34,9 @@ mix//.js('resources/js/app.js', 'public/js')
     //.js('resources/js/sharedaccount.js', 'public/js')
 
     
-    .js('resources/js/manage/branches.js', 'public/js/manage')
-    .js('resources/js/manage/xrac/xrole.js', 'public/js/manage/xrac')
-    .js('resources/js/manage/xrac/xuser-role.js', 'public/js/manage/xrac')
+    //.js('resources/js/manage/branches.js', 'public/js/manage')
+    //.js('resources/js/manage/xrac/xrole.js', 'public/js/manage/xrac')
+    //.js('resources/js/manage/xrac/xuser-role.js', 'public/js/manage/xrac')
  
     //.js('resources/js/homepage.js', 'public/js')
     .vue();
