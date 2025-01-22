@@ -26,14 +26,16 @@
               $EMPLOYEEPHOTO = "/iprotek/design/templates/adminlte3.1.0/dist/img/user2-160x160.jpg";
             }
           ?>
-          @if(trim($EMPLOYEEPHOTO))
-            <img src="<?=$EMPLOYEEPHOTO?>" class="img-circle elevation-2" alt="User Image">
-          @else
-            <img src="/images/temp-image.png" class="img-circle elevation-2" alt="User Image">
-          @endif
+          <a href="/manage/my-details">
+            @if(trim($EMPLOYEEPHOTO))
+              <img src="<?=$EMPLOYEEPHOTO?>" class="img-circle elevation-2" alt="User Image">
+            @else
+              <img src="/images/temp-image.png" class="img-circle elevation-2" alt="User Image">
+            @endif
+          </a>
         </div>
         <div class="info">
-          <a href="#" class="d-block"><?=$USERFULLNAME?></a>
+          <a href="/manage/my-details" class="d-block"><?=$USERFULLNAME?></a>
           <small class="text-secondary">
             <i>{{ $USER->branch_user_type_name }}</i>
           </small>

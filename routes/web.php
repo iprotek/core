@@ -68,6 +68,10 @@ Route::middleware('web')->group(function(){
     /**Company Details */ 
     include(__DIR__.'/manage/company-details.php'); 
 
+    
+    /**My Details */ 
+    include(__DIR__.'/manage/my-info.php'); 
+
     /**SMS Sender */
     //include(__DIR__.'/manage/sms-sender.php'); 
 

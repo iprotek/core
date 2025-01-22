@@ -87,9 +87,9 @@
           <i class="fas fa-th-large"></i>
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" title="Logout Now!">
         <a class="nav-link" href="/logout" role="button">
-          <i class="far fa-user"></i>
+          <i class="fa fa-sign-out"></i>
         </a>
       </li>
     </ul>

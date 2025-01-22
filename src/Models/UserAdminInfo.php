@@ -23,4 +23,8 @@ class UserAdminInfo extends Model
         'status_id',
         'region'
     ];
+
+    public function user_admin(){
+        return $this->belongsTo(UserAdmin::class, 'user_admin_id');
+    }
 }
