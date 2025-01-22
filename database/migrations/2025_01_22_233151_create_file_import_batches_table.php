@@ -15,6 +15,12 @@ class CreateFileImportBatchesTable extends Migration
     {
         Schema::create('file_import_batches', function (Blueprint $table) {
             $table->id();
+            
+            $table->bigInteger('group_id')->nullable();
+            $table->bigInteger('pay_created_by')->nullable();
+            $table->bigInteger('pay_updated_by')->nullable();
+            $table->bigInteger('pay_deleted_by')->nullable();
+
             $table->string('file_name');
             $table->string('target_field');
             $table->text('settings'); //JSON SETTINGS LIKE BRANCH etch.
@@ -25,6 +31,7 @@ class CreateFileImportBatchesTable extends Migration
             //0-Pending, 1-Completed, 2-Failed, 3-Processing, 4-Stopped, 5-Reset, 6-Restart
             $table->integer('status_id')->default(0);
             $table->longText('status_info')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

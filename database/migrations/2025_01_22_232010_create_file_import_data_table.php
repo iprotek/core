@@ -20,10 +20,10 @@ class CreateFileImportDataTable extends Migration
             $table->bigInteger('pay_created_by')->nullable();
             $table->bigInteger('pay_updated_by')->nullable();
             $table->bigInteger('pay_deleted_by')->nullable();
-            
+
             $table->longText('json_data');
             $table->integer('file_import_batch_id');
-            $table->integer('status'); //0-Pending, 1-Success, 2-Failed
+            $table->integer('status_id'); //0-Pending, 1-Success, 2-Failed
             $table->longText('status_info')->nullable();
             $table->softDeletes();
             $table->timestamps();
