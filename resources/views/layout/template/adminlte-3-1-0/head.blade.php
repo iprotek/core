@@ -8,7 +8,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="/iprotek/css/icons.css">
+    <link rel="stylesheet" href="/iprotek/css/icons.css?v=1.2">
     <link rel="stylesheet" href="/iprotek/css/ribbon.css">
     <?php
       //Customise icon
