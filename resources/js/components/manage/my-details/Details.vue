@@ -12,7 +12,7 @@
                                 <user-input2 v-model="middle_name" :input_style="'height:40px;'" :placeholder="'Middle Name'" />
                                 <user-input2 v-model="last_name" :input_style="'height:40px;'" :placeholder="'Last Name'" />
                                 <button class="btn btn-outline-primary mt-2" @click="save">SAVE</button>
-                                <button class="btn btn-outline-warning mt-2">Change Password</button>
+                                <button class="btn btn-outline-warning mt-2" @click="$refs.modal_change_pass.show()">Change Password</button>
                             </div>
                             <div class="col-sm-6"> 
                                 <file-uploads v-if="user_admin_id" :gallery_title="'My Profile Image Gallery'" :target_name="'user_admins'" :value="user_admin_id"></file-uploads>
@@ -22,6 +22,7 @@
                 </div>
             </div>
         </div>
+        <modal-change-pass v-if="email" ref="modal_change_pass" :email="email" />
         <swal ref="swal_prompt"></swal> 
     </div>
 </template>
@@ -29,11 +30,13 @@
 <script>
     import FileUploadsVue from '../../common/FileUploads.vue';
     import UserInput2Vue from '../../common/UserInput2.vue';
+    import ModalChangePasswordVue from './ModalChangePassword.vue';
     export default {
         props:[ "group_id", "user_admin_id" ],
         components: { 
             "file-uploads":FileUploadsVue,
-            "user-input2":UserInput2Vue
+            "user-input2":UserInput2Vue,
+            "modal-change-pass":ModalChangePasswordVue
         },
         watch: { 
         },
