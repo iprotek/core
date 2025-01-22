@@ -88,8 +88,8 @@
         </a>
       </li>
       <li class="nav-item" title="Logout Now!">
-        <a class="nav-link" href="/logout" role="button">
-          <i class="la--sign-out-alt text-danger" style="height:25px;"></i>
+        <a class="nav-link bg-danger px-0" href="/logout" role="button">
+          <i class="la--sign-out-alt text-white" style="height:25px;"></i>
         </a>
       </li>
     </ul>
