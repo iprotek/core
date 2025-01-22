@@ -89,7 +89,7 @@
       </li>
       <li class="nav-item" title="Logout Now!">
         <a class="nav-link" href="/logout" role="button">
-          <i class="fa fa-sign-out text-danger"></i>
+          <i class="la--sign-out-alt text-danger" style="height:25px;"></i>
         </a>
       </li>
     </ul>
