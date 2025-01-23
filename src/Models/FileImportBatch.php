@@ -5,6 +5,7 @@ namespace iProtek\Core\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class FileImportBatch extends Model
 {
@@ -30,4 +31,20 @@ class FileImportBatch extends Model
         "status_info"
 
     ];
+
+    public $appends = [
+        "file_path"
+    ];
+
+    public $hidden = [
+        "file_path"
+    ];
+
+    public function getFilePathAttribute(){
+        try{
+           return  Storage::path('imports/'. $this->id.".".$this->file_ext) ;
+        }catch(\Exception $ex){ 
+        }
+        return "";
+    }
 }

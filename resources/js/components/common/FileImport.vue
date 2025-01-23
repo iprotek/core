@@ -4,7 +4,7 @@
             <div class="card-header">
                 <label class="mb-0" v-text="importTitle"></label>
             </div> 
-            <input @change="file_changed($event)" :id="import_file_name" type="file" style="display:none;" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+            <input @change="file_changed($event)" :id="import_file_name" type="file" style="display:none;" accept=".csv" />
             <div class="card-body p-1">
                 <div class="input-group text-sm"> 
                     <span class="btn btn-primary" @click="fileUploadClick">
@@ -32,10 +32,10 @@
                             <small> UploadedBy </small>
                         </th>
                         <th>
-                            <small> Processing/Total Lines </small> 
+                            <small> Valid/Processing/Total Lines </small> 
                         </th>
                         <th>
-                            <small> Succeed / Failed/ Valid Lines </small>
+                            <small> Processed/Succeed / Failed  </small>
                         </th>
                         <th>
                             <small> Status </small>
@@ -55,9 +55,9 @@
                         <td v-text="imp.file_name"></td>
                         <td v-text="imp.target_field"></td>
                         <td ></td>
-                        <td v-text="imp.line_processing+'/'+imp.total_lines"></td>
+                        <td v-text="imp.line_valid+'/'+imp.line_processing+'/'+imp.total_lines"></td>
                         <td class="text-nowrap" >
-                            <span v-text=" imp.line_succeed+'/'+imp.line_failed+'/'+imp.line_valid"></span>
+                            <span v-text=" '0/'+imp.line_succeed+'/'+imp.line_failed"></span>
                             <button  class="btn btn-outline-primary btn-sm float-right" title="View Details"> <span class="fa fa-eye"></span> </button>
                         </td> 
                         <td >

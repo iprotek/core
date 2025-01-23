@@ -19,6 +19,7 @@ class FileImportData extends Model
 
         "json_data",
         "file_import_batch_id",
+        "line_no",
         "status_id", //0-Pending, 1-Success, 2-Failed
         "status_info"
         

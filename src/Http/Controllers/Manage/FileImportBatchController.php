@@ -27,7 +27,7 @@ class FileImportBatchController extends _CommonController
 
         //FILE VALIDATION
         $this->validate($request, [ 
-            "file"=>"required|file|mimes:csv,xlsx,xls|max:5120"
+            "file"=>"required|file|mimes:csv|max:5120"
         ]);
 
         //DETAILS VALIDATION

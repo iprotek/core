@@ -23,6 +23,7 @@ class CreateFileImportDataTable extends Migration
 
             $table->longText('json_data');
             $table->integer('file_import_batch_id');
+            $table->integer('line_no');
             $table->integer('status_id')->default(0); //0-Pending, 1-Success, 2-Failed
             $table->longText('status_info')->nullable();
             $table->softDeletes();
