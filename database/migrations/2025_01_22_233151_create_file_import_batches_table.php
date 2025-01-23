@@ -33,6 +33,7 @@ class CreateFileImportBatchesTable extends Migration
             //0-Pending, 1-Completed, 2-Failed, 3-Processing, 4-Stopped, 5-Reset, 6-Restart
             $table->integer('status_id')->default(0);
             $table->longText('status_info')->nullable();
+            $table->dateTime('interfer_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -14,6 +14,8 @@ class FileImportBatchController extends _CommonController
     public function list(Request $request){
         $fileImports = FileImportBatch::with(['created_by'=>function($q){
             $q->select('id', 'user_admin_id', 'pay_app_user_account_id');
+        },'updated_by'=>function($q){
+            $q->select('id', 'user_admin_id', 'pay_app_user_account_id');
         }]);
         
         //return "Hello";
@@ -72,6 +74,7 @@ class FileImportBatchController extends _CommonController
         $impBatch->status_id = 0;
         $impBatch->pay_updated_by = PayHttp::pay_account_id();
         $impBatch->status_info ="Retried for Pending import.";
+        $impBatch->interfer_at = \Carbon\Carbon::now();
         $impBatch->save();
         return ["status"=>1, "message"=>"Retried Successfully"];
     }
@@ -88,13 +91,15 @@ class FileImportBatchController extends _CommonController
 
         FileImportBatch::where('status_id',3)->update([
             "status_id"=>0,
-            "status_info"=>"On queued for prioritizing Batch#".$impBatch->id
+            "status_info"=>"On queued for prioritizing Batch#".$impBatch->id,
+            "interfer_at"=>\Carbon\Carbon::now()
         ]);
 
 
         $impBatch->status_id = 3;
         $impBatch->pay_updated_by = PayHttp::pay_account_id();
         $impBatch->status_info ="Start Manually.";
+        $impBatch->interfer_at = \Carbon\Carbon::now();
         $impBatch->save();
 
         return ["status"=>1, "message"=>"Start Successfully".$request->file_import_batch_id];
@@ -112,6 +117,7 @@ class FileImportBatchController extends _CommonController
         $impBatch->status_id = 4;
         $impBatch->pay_updated_by = PayHttp::pay_account_id();
         $impBatch->status_info ="Stopped Manually.";
+        $impBatch->interfer_at = \Carbon\Carbon::now();
         $impBatch->save();
 
 

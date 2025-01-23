@@ -20,6 +20,7 @@ class FileImportBatch extends _CommonModel
 
         "file_name",
         "file_ext",
+        "interfer_at",
         "target_field", //Name of the table or any for the purpose of table
         "settings",
         "total_lines",
@@ -34,7 +35,8 @@ class FileImportBatch extends _CommonModel
 
     public $casts = [
         "created_at"=>"datetime:Y-m-d H:i:s A",
-        "updated_at"=>"datetime:Y-m-d H:i:s A"
+        "updated_at"=>"datetime:Y-m-d H:i:s A",
+        "interfer_at"=>"datetime:Y-m-d H:i:s A",
     ];
 
     public $appends = [
@@ -58,5 +60,13 @@ class FileImportBatch extends _CommonModel
         return $this->hasOne(UserAdminPayAccount::class, 'pay_app_user_account_id', 'pay_created_by')->with(['user_admin'=>function($q){
             $q->select('id', 'name');
         }]);
+    }
+
+    public function updated_by(){
+
+        return $this->hasOne(UserAdminPayAccount::class, 'pay_app_user_account_id', 'pay_updated_by')->with(['user_admin'=>function($q){
+            $q->select('id', 'name');
+        }]);
+
     }
 }

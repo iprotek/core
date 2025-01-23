@@ -31,6 +31,9 @@
                         <th>
                             <small> UploadedBy </small>
                         </th>
+                        <th>
+                            <small> InterferBy </small>
+                        </th>
                         <th class="text-nowrap">
                             <small> Valid/Processing/Total Lines </small> 
                         </th>
@@ -45,10 +48,10 @@
                 </thead>
                 <tbody>
                     <tr v-if="isLoading">
-                        <td colspan="8" class="text-center"> <code> -- LOADING IMPORT -- </code> </td>
+                        <td colspan="9" class="text-center"> <code> -- LOADING IMPORT -- </code> </td>
                     </tr>
                     <tr v-else-if="importList.length == 0">
-                        <td colspan="8" class="text-center"> <code> -- NO IMPORT FOUND -- </code> </td>
+                        <td colspan="9" class="text-center"> <code> -- NO IMPORT FOUND -- </code> </td>
                     </tr>
                     <tr v-for="(imp, importIndex) in importList"  v-bind:key="'import-'+imp.id+'-'+importIndex">
                         <td v-text="imp.id"></td>
@@ -57,6 +60,10 @@
                         <td >
                             <div v-if="imp.created_by && imp.created_by.user_admin" v-text="imp.created_by.user_admin.name"></div>
                             <small class="text-nowrap text-secondary" v-text="imp.created_at"></small>
+                        </td>
+                        <td >
+                            <div v-if="imp.updated_by && imp.updated_by.user_admin" v-text="imp.updated_by.user_admin.name"></div>
+                            <small class="text-nowrap text-secondary" v-text="imp.interfer_at"></small>
                         </td>
                         <td v-text="imp.line_valid+'/'+imp.line_processing+'/'+imp.total_lines"></td>
                         <td class="text-nowrap" >
@@ -91,7 +98,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="8">
+                        <td colspan="9">
                             <page-footer v-model="pageData" @page_changed="page_changed"></page-footer>
                         </td>
                     </tr>
