@@ -40,11 +40,27 @@ class FileImportHelper
 
             // Get all rows starting from the second row
             $rows = $sheet->toArray(null, true, true, true); // Returns data and headers
-            $headers = $sheet->rangeToArray('A1:ZZ1', null, true, true, false)[0];
-            $headers = array_filter( $headers );
-        
-            $line_process = $file_batch->line_processing;
+            //$headers = $rows[0]; //$sheet->rangeToArray('A1:ZZ1', null, true, true, false)[0];
+            $headers = [];
+            foreach( $rows[1] as  $val ){
+                $headers[] = $val;
+            }
 
+            if(count($headers)<=0){ 
+
+                $file_batch->status_id = 2;
+                
+                $file_batch->status_info = "No headers found!";
+
+                $file_batch->save();
+
+                return;
+            
+            }
+
+            //FOR REUSABILITY VARIABLE
+            $line_process = $file_batch->line_processing;
+            
             // Create a new array with the custom headers
             $data = array_map(function($row) use ($headers) {
                 return array_combine($headers, $row);  // Combine headers and data into an array
@@ -84,12 +100,7 @@ class FileImportHelper
                 $file_batch->save();
             }
 
-            //return response()->json($data);
-            return ["status"=>0,"message"=>"Please add some vital processing"];
-
         }
-
-
 
     }
 }

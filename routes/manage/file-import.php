@@ -13,7 +13,7 @@ Route::prefix('/file-imports')->name('.file-import')->group(function(){
         Route::get('get', [FileImportBatchController::class, function(Request $request){
             //return "Hello";
             return \iProtek\Core\Helpers\FileImportHelper::startProcessing();
-        }])->name('.add');
+        }])->name('.get');
     });
 
     Route::prefix('data')->name('.data')->group(function(){

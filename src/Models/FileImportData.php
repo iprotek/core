@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class FileImportData extends Model
+class FileImportData extends _CommonModel
 {
     use HasFactory, SoftDeletes;
     
@@ -23,6 +23,10 @@ class FileImportData extends Model
         "status_id", //0-Pending, 1-Success, 2-Failed
         "status_info"
         
+    ];
+
+    protected $casts = [
+        "json_data"=>"json"
     ];
 
 }

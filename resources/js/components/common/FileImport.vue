@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="card">
+        <div v-if="view_mode == 'batch-view'" class="card">
             <div class="card-header">
                 <label class="mb-0" v-text="importTitle"></label>
             </div> 
@@ -8,7 +8,7 @@
             <div class="card-body p-1">
                 <div class="input-group text-sm"> 
                     <span class="btn btn-primary" @click="fileUploadClick">
-                        <small title="Show" class="fa fa-upload"> </small> IMPORT FILE
+                        <small title="Show" class="fa fa-upload"> </small> IMPORT .CSV
                     </span> 
                     <span class="btn btn-default">
                         <small title="Show" class="fa fa-search text-primary"></small>
@@ -16,7 +16,7 @@
                     <input v-model="search" @keyup.enter="current_page=1; loadFileImportList();" type="text" class="form-control">
                 </div>
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered mb-0">
                 <thead>
                     <tr>
                         <th>
@@ -31,11 +31,11 @@
                         <th>
                             <small> UploadedBy </small>
                         </th>
-                        <th>
+                        <th class="text-nowrap">
                             <small> Valid/Processing/Total Lines </small> 
                         </th>
-                        <th>
-                            <small> Processed/Succeed / Failed  </small>
+                        <th class="text-nowrap">
+                            <small> Processed/Succeed/Failed  </small>
                         </th>
                         <th>
                             <small> Status </small>
@@ -54,25 +54,31 @@
                         <td v-text="imp.id"></td>
                         <td v-text="imp.file_name"></td>
                         <td v-text="imp.target_field"></td>
-                        <td ></td>
+                        <td >
+                            <div v-if="imp.created_by && imp.created_by.user_admin" v-text="imp.created_by.user_admin.name"></div>
+                            <small class="text-nowrap text-secondary" v-text="imp.created_at"></small>
+                        </td>
                         <td v-text="imp.line_valid+'/'+imp.line_processing+'/'+imp.total_lines"></td>
                         <td class="text-nowrap" >
                             <span v-text=" '0/'+imp.line_succeed+'/'+imp.line_failed"></span>
-                            <button  class="btn btn-outline-primary btn-sm float-right" title="View Details"> <span class="fa fa-eye"></span> </button>
+                            <button @click="selected_file_import_batch_id = imp.id ;selected_status_id = -1 ;view_mode = 'data-view'" class="btn btn-outline-primary btn-sm float-right" title="View Details"> <span class="fa fa-eye"></span> </button>
                         </td> 
                         <td >
-                            <span v-if="imp.status_id == 0" class="text-warning">Pending to Import</span>
-                            <span v-if="imp.status_id == 1" class="text-success">Completed</span>
-                            <span v-if="imp.status_id == 2" class="text-danger">Failed</span>
-                            <span v-if="imp.status_id == 3" class="text-primary">Processing</span>
-                            <span v-if="imp.status_id == 4" class="text-secondary">Stopped</span>
+                            <span v-if="imp.status_id == 0" class="text-warning" :title="imp.status_info" >Pending to Import</span>
+                            <span v-if="imp.status_id == 1" class="text-success" :title="imp.status_info" >Completed</span>
+                            <span v-if="imp.status_id == 2" class="text-danger" :title="imp.status_info" >Failed</span>
+                            <span v-if="imp.status_id == 3" class="text-primary" :title="imp.status_info" >Processing</span>
+                            <span v-if="imp.status_id == 4" class="text-secondary" :title="imp.status_info" >Stopped</span>
                         </td>
                         <td class="text-nowrap" >
-                            <button class="btn btn-danger btn-sm">
+                            <button v-if="imp.status_id == 3 || imp.status_id == 3" class="btn btn-danger btn-sm">
                                 <span class="fa fa-times"></span>
                             </button>
-                            <button class="btn btn-success btn-sm" title="Force to Start replacing processing">
+                            <button v-if="imp.status_id == 0" class="btn btn-primary btn-sm" title="Force to Start replacing processing">
                                 <span class="fa fa-play"></span>
+                            </button>
+                            <button  v-if="imp.status_id == 2 || imp.status_id == 4" class="btn btn-success btn-sm" title="Restart">
+                                <span class="fa fa-redo"></span>
                             </button>
                         </td>
                     </tr>
@@ -86,22 +92,30 @@
                 </tfoot>
             </table> 
         </div>
+        <div v-else>
+            <file-import @close_file_import_data="view_mode='batch-view'" :file_import_batch_id="selected_file_import_batch_id" :has_close="true" :status_id="selected_status_id" />
+        </div>
         <swal ref="swal_prompt"></swal>
     </div>
 </template>
 <script>
     import SwalVue from './Swal.vue';
     import PageFooterVue from './PageFooter.vue';
+    import FileImportDataVue from './FileImportData.vue';
     export default {
-        props:[ "title", "target_field", "settings", "view_mode" ],
+        props:[ "title", "target_field", "settings"  ],
         components: { 
             "page-footer":PageFooterVue,
-            "swal":SwalVue
+            "swal":SwalVue,
+            "file-import":FileImportDataVue
         },
         watch: { 
         },
         data: function () {
             return {
+                selected_file_import_batch_id:0,
+                selected_status_id:-1,
+                view_mode:'batch-view',
                 importTitle:'File Import',
                 pageData:null,
                 importList:[],
@@ -163,6 +177,7 @@
             loadFileImportList:function(){
                 var vm = this;
                 vm.isLoading = true;
+                vm.importList = [];
                 WebRequest2('GET', '/manage/file-imports/batch/list?'+this.queryString({
                     search: vm.search,
                     page: vm.current_page,

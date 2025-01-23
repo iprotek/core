@@ -12,13 +12,19 @@ class FileImportBatchController extends _CommonController
     public $guard = 'admin';
 
     public function list(Request $request){
-        $fileImports = FileImportBatch::on();
+        $fileImports = FileImportBatch::with(['created_by'=>function($q){
+            $q->select('id', 'user_admin_id', 'pay_app_user_account_id');
+        }]);
         
         //return "Hello";
         if($request->search){
             $search = '%'.$request->search.'%';
             $fileImports->whereRaw(" concat('#',id,'#', file_name, 'target_field') like ? ", [$search]);
         }
+
+        $fileImports->orderByRaw(' FIELD(status_id, 0, 3 )  DESC');
+
+        $fileImports->orderByRaw(' created_at  DESC ');
 
         return $fileImports->paginate(10);
     }
@@ -28,6 +34,8 @@ class FileImportBatchController extends _CommonController
         //FILE VALIDATION
         $this->validate($request, [ 
             "file"=>"required|file|mimes:csv|max:5120"
+        ], [
+            'file.mimes' => 'Only CSV file is allowed and Please also double check the header that should be at first line.' 
         ]);
 
         //DETAILS VALIDATION

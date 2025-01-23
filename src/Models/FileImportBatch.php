@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
-class FileImportBatch extends Model
+class FileImportBatch extends _CommonModel
 {
     use HasFactory, SoftDeletes;
 
@@ -32,6 +32,10 @@ class FileImportBatch extends Model
 
     ];
 
+    public $casts = [
+        "created_at"=>"datetime:Y-m-d H:i:s A"
+    ];
+
     public $appends = [
         "file_path"
     ];
@@ -42,9 +46,16 @@ class FileImportBatch extends Model
 
     public function getFilePathAttribute(){
         try{
-           return  Storage::path('imports/'. $this->id.".".$this->file_ext) ;
+           return Storage::path('imports/'. $this->id.".".$this->file_ext) ;
         }catch(\Exception $ex){ 
         }
         return "";
+    }
+
+    public function created_by(){ 
+
+        return $this->hasOne(UserAdminPayAccount::class, 'pay_app_user_account_id', 'pay_created_by')->with(['user_admin'=>function($q){
+            $q->select('id', 'name');
+        }]);
     }
 }

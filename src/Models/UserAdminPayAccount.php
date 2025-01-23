@@ -23,4 +23,13 @@ class UserAdminPayAccount extends Model
         "sub_account_group_id",
     ];
 
+    public $hidden = [
+        "access_token",
+        "refresh_token"
+    ];
+
+    public function user_admin(){
+        return $this->belongsTo(UserAdmin::class,'user_admin_id');
+    }
+
 }
