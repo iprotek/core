@@ -33,7 +33,8 @@ class FileImportBatch extends _CommonModel
     ];
 
     public $casts = [
-        "created_at"=>"datetime:Y-m-d H:i:s A"
+        "created_at"=>"datetime:Y-m-d H:i:s A",
+        "updated_at"=>"datetime:Y-m-d H:i:s A"
     ];
 
     public $appends = [

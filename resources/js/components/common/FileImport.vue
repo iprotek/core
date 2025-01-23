@@ -60,7 +60,7 @@
                         </td>
                         <td v-text="imp.line_valid+'/'+imp.line_processing+'/'+imp.total_lines"></td>
                         <td class="text-nowrap" >
-                            <span v-text=" '0/'+imp.line_succeed+'/'+imp.line_failed"></span>
+                            <span v-text=" (imp.line_succeed+imp.line_failed)+'/'+imp.line_succeed+'/'+imp.line_failed"></span>
                             <button @click="selected_file_import_batch_id = imp.id ;selected_status_id = -1 ;view_mode = 'data-view'" class="btn btn-outline-primary btn-sm float-right" title="View Details"> <span class="fa fa-eye"></span> </button>
                         </td> 
                         <td >
@@ -69,15 +69,21 @@
                             <span v-if="imp.status_id == 2" class="text-danger" :title="imp.status_info" >Failed</span>
                             <span v-if="imp.status_id == 3" class="text-primary" :title="imp.status_info" >Processing</span>
                             <span v-if="imp.status_id == 4" class="text-secondary" :title="imp.status_info" >Stopped</span>
+                            <div>
+                                <small class="text-secondary" v-text="imp.updated_at"></small>
+                            </div>
+                            <div v-if="imp.status_info">
+                                <small class="text-secondary" v-text="imp.status_info"></small>
+                            </div>
                         </td>
                         <td class="text-nowrap" >
-                            <button v-if="imp.status_id == 3 || imp.status_id == 3" class="btn btn-danger btn-sm">
+                            <button @click="action_prompt(imp,'stop', 'Do you want to Stop this'+(imp.status_id == 0?' from queue':'')+'?')" v-if="imp.status_id == 3 || imp.status_id == 0" class="btn btn-danger btn-sm">
                                 <span class="fa fa-times"></span>
                             </button>
-                            <button v-if="imp.status_id == 0" class="btn btn-primary btn-sm" title="Force to Start replacing processing">
+                            <button @click="action_prompt(imp,'start', 'Do you want to Start this?')"  v-if="imp.status_id == 0" class="btn btn-primary btn-sm" title="Force to Start replacing processing">
                                 <span class="fa fa-play"></span>
                             </button>
-                            <button  v-if="imp.status_id == 2 || imp.status_id == 4" class="btn btn-success btn-sm" title="Restart">
+                            <button @click="action_prompt(imp,'retry', 'Do you want to Retry this?')"  v-if="imp.status_id == 2 || imp.status_id == 4" class="btn btn-success btn-sm" title="Retry">
                                 <span class="fa fa-redo"></span>
                             </button>
                         </td>
@@ -92,8 +98,8 @@
                 </tfoot>
             </table> 
         </div>
-        <div v-else>
-            <file-import @close_file_import_data="view_mode='batch-view'" :file_import_batch_id="selected_file_import_batch_id" :has_close="true" :status_id="selected_status_id" />
+        <div v-else-if="view_mode == 'data-view'">
+            <file-import @close_file_import_data=" view_mode='batch-view'" :file_import_batch_id="selected_file_import_batch_id" :has_close="true" :status_id="selected_status_id" />
         </div>
         <swal ref="swal_prompt"></swal>
     </div>
@@ -126,6 +132,26 @@
             }
         },
         methods: {  
+            action_prompt:function(item, action, title ){
+                var vm =this;
+                var request = {
+                    file_import_batch_id:item.id
+                }
+                 this.$refs.swal_prompt.alert(
+                    'question',
+                    title, 
+                    "Confirm" , 
+                    "POST", 
+                    "/manage/file-imports/batch/action/"+action, 
+                    JSON.stringify(request)
+                ).then(res=>{
+                    if(res.isConfirmed){
+                        //if(res.value.status == 1){
+                        vm.loadFileImportList();
+                        //} 
+                    }
+                });
+            },
             getFileExt:function(filename){
                 return filename.split('.').pop();
             },
@@ -158,7 +184,9 @@
                         "multipart/form-data"
                     ).then(resp=>{
                         if(resp.isConfirmed ){
-
+                            if(resp.value.status == 1){
+                                vm.loadFileImportList();
+                            }
                         } 
                     }); 
             },
@@ -172,6 +200,7 @@
                 return queryString;
             },
             page_changed:function(page){
+                this.current_page = page;
                 this.loadFileImportList();
             },
             loadFileImportList:function(){
@@ -195,7 +224,7 @@
             if(this.title){
                 this.importTitle = this.title;
             }    
-            this.loadFileImportList();
+            this.loadFileImportList(); 
         }
     }
 </script>

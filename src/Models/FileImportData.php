@@ -29,4 +29,7 @@ class FileImportData extends _CommonModel
         "json_data"=>"json"
     ];
 
+    public function file_import_batch(){
+        return $this->belongsTo(FileImportBatch::class, 'file_import_batch_id');
+    }
 }

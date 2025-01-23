@@ -19,7 +19,7 @@ class FileImportBatchController extends _CommonController
         //return "Hello";
         if($request->search){
             $search = '%'.$request->search.'%';
-            $fileImports->whereRaw(" concat('#',id,'#', file_name, 'target_field') like ? ", [$search]);
+            $fileImports->whereRaw(" concat('#',id,'#', file_name, target_field) like ? ", [$search]);
         }
 
         $fileImports->orderByRaw(' FIELD(status_id, 0, 3 )  DESC');
@@ -59,6 +59,63 @@ class FileImportBatchController extends _CommonController
 
         $file->storeAs("imports", $fileBatch->id.".". $request->file_ext);
         return ["status"=>1, "message"=>"Successfully Imported"];
+    }
+
+    public function action_retry(Request $request){
+        $impBatch = FileImportBatch::find($request->file_import_batch_id);
+        if(!$impBatch ){
+            return ["status"=>0, "message"=>"Batch not found."]; 
+        }
+        else if($impBatch->status_id == 0){
+            return ["status"=>0, "message"=>"Already on queue."]; 
+        }
+        $impBatch->status_id = 0;
+        $impBatch->pay_updated_by = PayHttp::pay_account_id();
+        $impBatch->status_info ="Retried for Pending import.";
+        $impBatch->save();
+        return ["status"=>1, "message"=>"Retried Successfully"];
+    }
+
+    public function action_start(Request $request){
+        
+        $impBatch = FileImportBatch::find($request->file_import_batch_id);
+        if(!$impBatch ){
+            return ["status"=>0, "message"=>"Batch not found."]; 
+        }
+        else if($impBatch->status_id == 4){
+            return ["status"=>0, "message"=>"Already Stopped."]; 
+        }
+
+        FileImportBatch::where('status_id',3)->update([
+            "status_id"=>0,
+            "status_info"=>"On queued for prioritizing Batch#".$impBatch->id
+        ]);
+
+
+        $impBatch->status_id = 3;
+        $impBatch->pay_updated_by = PayHttp::pay_account_id();
+        $impBatch->status_info ="Start Manually.";
+        $impBatch->save();
+
+        return ["status"=>1, "message"=>"Start Successfully".$request->file_import_batch_id];
+
+    }
+
+    public function action_stop(Request $request){
+        $impBatch = FileImportBatch::find($request->file_import_batch_id);
+        if(!$impBatch ){
+            return ["status"=>0, "message"=>"Batch not found."]; 
+        }
+        else if($impBatch->status_id == 4){
+            return ["status"=>0, "message"=>"Already Stopped."]; 
+        }
+        $impBatch->status_id = 4;
+        $impBatch->pay_updated_by = PayHttp::pay_account_id();
+        $impBatch->status_info ="Stopped Manually.";
+        $impBatch->save();
+
+
+        return ["status"=>1, "message"=>"Stopped Successfully".$request->file_import_batch_id]; 
     }
 
 

@@ -14,10 +14,17 @@ Route::prefix('/file-imports')->name('.file-import')->group(function(){
             //return "Hello";
             return \iProtek\Core\Helpers\FileImportHelper::startProcessing();
         }])->name('.get');
+
+        Route::prefix('action')->name('.action')->group(function(){
+            Route::post('retry', [FileImportBatchController::class, 'action_retry'])->name('.retry');
+            Route::post('start', [FileImportBatchController::class, 'action_start'])->name('.start');
+            Route::post('stop', [FileImportBatchController::class, 'action_stop'])->name('.stop');
+        });
+
     });
 
     Route::prefix('data')->name('.data')->group(function(){
-
+        Route::get('/list', [FileImportDataController::class, 'list'])->name('.list');
     });
 
   });
