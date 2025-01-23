@@ -71,11 +71,11 @@
                             <button @click="selected_file_import_batch_id = imp.id ;selected_status_id = -1 ;view_mode = 'data-view'" class="btn btn-outline-primary btn-sm float-right" title="View Details"> <span class="fa fa-eye"></span> </button>
                         </td> 
                         <td >
-                            <span v-if="imp.status_id == 0" class="text-warning" :title="imp.status_info" >Pending to Import</span>
-                            <span v-if="imp.status_id == 1" class="text-success" :title="imp.status_info" >Completed</span>
-                            <span v-if="imp.status_id == 2" class="text-danger" :title="imp.status_info" >Failed</span>
-                            <span v-if="imp.status_id == 3" class="text-primary" :title="imp.status_info" >Processing</span>
-                            <span v-if="imp.status_id == 4" class="text-secondary" :title="imp.status_info" >Stopped</span>
+                            <span v-if="imp.status_id == BatchStatus.PENDING" class="text-warning" :title="imp.status_info" >Pending to Import</span>
+                            <span v-if="imp.status_id == BatchStatus.SUCCEED" class="text-success" :title="imp.status_info" >Completed</span>
+                            <span v-if="imp.status_id == BatchStatus.FAILED" class="text-danger" :title="imp.status_info" >Failed</span>
+                            <span v-if="imp.status_id == BatchStatus.PROCESSING" class="text-primary" :title="imp.status_info" >Processing</span>
+                            <span v-if="imp.status_id == BatchStatus.STOPPED" class="text-secondary" :title="imp.status_info" >Stopped</span>
                             <div>
                                 <small class="text-secondary" v-text="imp.updated_at"></small>
                             </div>
@@ -115,7 +115,10 @@
     import SwalVue from './Swal.vue';
     import PageFooterVue from './PageFooter.vue';
     import FileImportDataVue from './FileImportData.vue';
-    export default {
+ 
+    import {FileImportBatchStatus} from './enums/common_const';
+
+    export default { 
         props:[ "title", "target_field", "settings"  ],
         components: { 
             "page-footer":PageFooterVue,
@@ -135,7 +138,8 @@
                 search:'',
                 current_page:1,
                 isLoading:false,
-                import_file_name:'file-import-'+this._uid
+                import_file_name:'file-import-'+this._uid,
+                BatchStatus: FileImportBatchStatus
             }
         },
         methods: {  
