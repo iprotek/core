@@ -14,7 +14,7 @@ class FileImportHelper
 
     public static $uploadPerMinute = 300;
 
-    public static function startProcessing(){
+    public static function startBatchProcessing(){
 
         //Priority the processing..
         $file_batch = FileImportBatch::whereIn('status_id', [0, 3])->orderBy('status_id', 'DESC')->first();
@@ -102,5 +102,9 @@ class FileImportHelper
 
         }
 
+    }
+
+    public static function getBatchProcessing(){
+          return FileImportBatch::where('status_id', 3)->first();
     }
 }

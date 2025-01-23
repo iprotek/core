@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use iProtek\Core\Http\Controllers\_Common\_CommonController;
 use iProtek\Core\Models\FileImportBatch;
 use iProtek\Core\Helpers\PayHttp;
+use iProtek\Core\Enums\FileImportBatchStatus as BatchStatus;
+
 class FileImportBatchController extends _CommonController
 {
     //
@@ -68,10 +70,10 @@ class FileImportBatchController extends _CommonController
         if(!$impBatch ){
             return ["status"=>0, "message"=>"Batch not found."]; 
         }
-        else if($impBatch->status_id == 0){
+        else if($impBatch->status_id == BatchStatus::PENDING ){
             return ["status"=>0, "message"=>"Already on queue."]; 
         }
-        $impBatch->status_id = 0;
+        $impBatch->status_id = BatchStatus::PENDING;
         $impBatch->pay_updated_by = PayHttp::pay_account_id();
         $impBatch->status_info ="Retried for Pending import.";
         $impBatch->interfer_at = \Carbon\Carbon::now();
@@ -85,18 +87,18 @@ class FileImportBatchController extends _CommonController
         if(!$impBatch ){
             return ["status"=>0, "message"=>"Batch not found."]; 
         }
-        else if($impBatch->status_id == 4){
-            return ["status"=>0, "message"=>"Already Stopped."]; 
+        else if($impBatch->status_id == BatchStatus::PROCESSING ){
+            return ["status"=>0, "message"=>"Already Started."]; 
         }
 
-        FileImportBatch::where('status_id',3)->update([
+        FileImportBatch::where('status_id', BatchStatus::PROCESSING )->update([
             "status_id"=>0,
             "status_info"=>"On queued for prioritizing Batch#".$impBatch->id,
             "interfer_at"=>\Carbon\Carbon::now()
         ]);
 
 
-        $impBatch->status_id = 3;
+        $impBatch->status_id = BatchStatus::PROCESSING;
         $impBatch->pay_updated_by = PayHttp::pay_account_id();
         $impBatch->status_info ="Start Manually.";
         $impBatch->interfer_at = \Carbon\Carbon::now();
@@ -111,10 +113,10 @@ class FileImportBatchController extends _CommonController
         if(!$impBatch ){
             return ["status"=>0, "message"=>"Batch not found."]; 
         }
-        else if($impBatch->status_id == 4){
+        else if($impBatch->status_id == BatchStatus::STOPPED){
             return ["status"=>0, "message"=>"Already Stopped."]; 
         }
-        $impBatch->status_id = 4;
+        $impBatch->status_id = BatchStatus::STOPPED;
         $impBatch->pay_updated_by = PayHttp::pay_account_id();
         $impBatch->status_info ="Stopped Manually.";
         $impBatch->interfer_at = \Carbon\Carbon::now();
