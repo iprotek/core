@@ -1,0 +1,186 @@
+<template>
+    <div>
+        <div class="card">
+            <div class="card-header">
+                <label class="mb-0" v-text="importTitle"></label>
+            </div> 
+            <input @change="file_changed($event)" :id="import_file_name" type="file" style="display:none;" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+            <div class="card-body p-1">
+                <div class="input-group text-sm"> 
+                    <span class="btn btn-primary" @click="fileUploadClick">
+                        <small title="Show" class="fa fa-upload"> </small> IMPORT FILE
+                    </span> 
+                    <span class="btn btn-default">
+                        <small title="Show" class="fa fa-search text-primary"></small>
+                    </span> 
+                    <input v-model="search" @keyup.enter="current_page=1; loadFileImportList();" type="text" class="form-control">
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            <small> Batch# </small>
+                        </th>
+                        <th>
+                            <small> Filename </small>
+                        </th>
+                        <th>
+                            <small> TargetField </small>
+                        </th>
+                        <th>
+                            <small> UploadedBy </small>
+                        </th>
+                        <th>
+                            <small> Processing/Total Lines </small> 
+                        </th>
+                        <th>
+                            <small> Succeed / Failed/ Valid Lines </small>
+                        </th>
+                        <th>
+                            <small> Status </small>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-if="isLoading">
+                        <td colspan="8" class="text-center"> <code> -- LOADING IMPORT -- </code> </td>
+                    </tr>
+                    <tr v-else-if="importList.length == 0">
+                        <td colspan="8" class="text-center"> <code> -- NO IMPORT FOUND -- </code> </td>
+                    </tr>
+                    <tr v-for="(imp, importIndex) in importList"  v-bind:key="'import-'+imp.id+'-'+importIndex">
+                        <td v-text="imp.id"></td>
+                        <td v-text="imp.file_name"></td>
+                        <td v-text="imp.target_field"></td>
+                        <td ></td>
+                        <td v-text="imp.line_processing+'/'+imp.total_lines"></td>
+                        <td class="text-nowrap" >
+                            <span v-text=" imp.line_succeed+'/'+imp.line_failed+'/'+imp.line_valid"></span>
+                            <button  class="btn btn-outline-primary btn-sm float-right" title="View Details"> <span class="fa fa-eye"></span> </button>
+                        </td> 
+                        <td >
+                            <span v-if="imp.status_id == 0" class="text-warning">Pending to Import</span>
+                            <span v-if="imp.status_id == 1" class="text-success">Completed</span>
+                            <span v-if="imp.status_id == 2" class="text-danger">Failed</span>
+                            <span v-if="imp.status_id == 3" class="text-primary">Processing</span>
+                            <span v-if="imp.status_id == 4" class="text-secondary">Stopped</span>
+                        </td>
+                        <td class="text-nowrap" >
+                            <button class="btn btn-danger btn-sm">
+                                <span class="fa fa-times"></span>
+                            </button>
+                            <button class="btn btn-success btn-sm" title="Force to Start replacing processing">
+                                <span class="fa fa-play"></span>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <page-footer v-model="pageData" @page_changed="page_changed"></page-footer>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table> 
+        </div>
+        <swal ref="swal_prompt"></swal>
+    </div>
+</template>
+<script>
+    import SwalVue from './Swal.vue';
+    import PageFooterVue from './PageFooter.vue';
+    export default {
+        props:[ "title", "target_field", "settings", "view_mode" ],
+        components: { 
+            "page-footer":PageFooterVue,
+            "swal":SwalVue
+        },
+        watch: { 
+        },
+        data: function () {
+            return {
+                importTitle:'File Import',
+                pageData:null,
+                importList:[],
+                search:'',
+                current_page:1,
+                isLoading:false,
+                import_file_name:'file-import-'+this._uid
+            }
+        },
+        methods: {  
+            getFileExt:function(filename){
+                return filename.split('.').pop();
+            },
+            file_changed:function(evt){
+
+                var vm = this;
+                const formData = new FormData();
+                var file = evt.target.files[0];
+                var file_ext = this.getFileExt(file.name);
+                
+                formData.append('target_name', vm.target_name);
+                formData.append('target_id', vm.target_id); 
+                formData.append('file', file);
+                formData.append('file_name', file.name);
+                formData.append('file_type', file.type);
+                formData.append('file_ext', file_ext);
+                formData.append('target_field', vm.target_field);
+                formData.append('settings', '{}' );
+
+                var url = "/manage/file-imports/batch/add";
+                
+                vm.$refs.swal_prompt.alert(
+                        'question', 
+                        "Import File", 
+                        "Confirm" , 
+                        "POST", 
+                        url, 
+                        formData,
+                        null,
+                        "multipart/form-data"
+                    ).then(resp=>{
+                        if(resp.isConfirmed ){
+
+                        } 
+                    }); 
+            },
+            fileUploadClick:function(){
+                document.querySelector('#'+this.import_file_name).click();
+            },
+            queryString:function(params={}){ 
+                var queryString = Object.keys(params).map(function(key) {
+                    return key + '=' + params[key]
+                }).join('&');
+                return queryString;
+            },
+            page_changed:function(page){
+                this.loadFileImportList();
+            },
+            loadFileImportList:function(){
+                var vm = this;
+                vm.isLoading = true;
+                WebRequest2('GET', '/manage/file-imports/batch/list?'+this.queryString({
+                    search: vm.search,
+                    page: vm.current_page,
+                    items_per_page: 10
+                })).then(resp=>{
+                    vm.isLoading = false;
+                    resp.json().then(data=>{
+                        vm.pageData = data;
+                        vm.importList = data.data;
+                    });
+                })
+            }
+        },
+        mounted:function(){  
+            if(this.title){
+                this.importTitle = this.title;
+            }    
+            this.loadFileImportList();
+        }
+    }
+</script>

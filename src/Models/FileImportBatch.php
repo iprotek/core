@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace iProtek\Core\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,12 +18,14 @@ class FileImportBatch extends Model
         "pay_deleted_by",
 
         "file_name",
+        "file_ext",
         "target_field", //Name of the table or any for the purpose of table
         "settings",
         "total_lines",
         "line_processing",
         "line_succeed",
         "line_failed",
+        "line_valid",
         "status_id", //0-Pending, 1-Completed, 2-Failed, 3-Processing, 4-Stopped, 5-Reset, 6-Restart
         "status_info"
 
