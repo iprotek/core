@@ -73,14 +73,14 @@
                                     <label v-if="batch" class="mb-0" v-text="batch.target_field"></label>
                                 </td>
                                 <td>
-                                    <small v-if="batch" class="text-secondary" v-text="setting_info(batch.settings)"></small>
-                                </td>
-                                <td>
                                     <button @click="toggle_view(item)" class="btn btn-outline-primary btn-sm">
                                         <span v-if="item.view === false" :class=" item.view === false ?  'fa fa-eye':'' "></span>
                                         <span v-else  v-text="json_data(item.json_data)"></span> 
                                     </button>
                                  </td>
+                                <td>
+                                    <small v-if="batch" class="text-secondary" v-text="setting_info(batch.settings)"></small>
+                                </td>
                                 <td>
                                     <small v-if="item.status_id == 0" class="text-warning">
                                         PENDING

@@ -34,7 +34,7 @@
                         <th>
                             <small> InterferBy </small>
                         </th>
-                        <th>Settings</th>
+                        <th><small> Settings </small></th>
                         <th class="text-nowrap">
                             <small> Valid/Processing/Total Lines </small> 
                         </th>

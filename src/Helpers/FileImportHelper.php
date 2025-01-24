@@ -88,7 +88,7 @@ class FileImportHelper
                         $line_process++;
                         $line_valid++;
                         FileImportData::create( [
-                            "json_data"=>json_encode($row),
+                            "json_data"=>$row,
                             "file_import_batch_id"=>$file_batch->id,
                             "status_id"=>0,
                             "line_no"=>$line_process

@@ -19,7 +19,8 @@ class FileImportDataController extends _CommonController
             'target_field',
             'line_succeed', 
             'line_failed',
-            'line_valid'
+            'line_valid',
+            'settings'
         )->find($request->file_import_batch_id);
 
         $importData = FileImportData:: where([ 
