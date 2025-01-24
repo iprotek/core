@@ -16,23 +16,23 @@
                     <input v-model="search" @keyup.enter="current_page=1; loadFileImportList();" type="text" class="form-control">
                 </div>
             </div>
-            <div>
-                <button :class="'btn btn'+(search_status_id == -1 ? '':'-outline')+'-primary mr-1'" @click="search_status_id=-1; loadFileImportList();" > 
+            <div class="card-body p-1">
+                <button :class="'btn btn-sm btn'+(search_status_id == -1 ? '':'-outline')+'-primary mr-1'" @click="search_status_id=-1; loadFileImportList();" > 
                     ALL <span v-text="'('+countStatus.all+')'"></span>
                 </button>
-                <button :class="'btn btn'+(search_status_id == BatchStatus.PENDING ? '':'-outline')+'-warning mr-1'" @click="search_status_id = BatchStatus.PENDING; loadFileImportList();"> 
+                <button :class="'btn btn-sm btn'+(search_status_id == BatchStatus.PENDING ? '':'-outline')+'-warning mr-1'" @click="search_status_id = BatchStatus.PENDING; loadFileImportList();"> 
                     PENDING <span v-text="'('+countStatus.pending+')'"></span>
                  </button>
-                <button :class="'btn btn'+(search_status_id == BatchStatus.PROCESSING ? '':'-outline')+'-primary mr-1'"  @click="search_status_id = BatchStatus.PROCESSING; loadFileImportList();"> 
+                <button :class="'btn btn-sm btn'+(search_status_id == BatchStatus.PROCESSING ? '':'-outline')+'-primary mr-1'"  @click="search_status_id = BatchStatus.PROCESSING; loadFileImportList();"> 
                     PROCESSING <span v-text="'('+countStatus.processing+')'"></span>
                 </button>
-                <button :class="'btn btn'+(search_status_id == BatchStatus.SUCCEED ? '':'-outline')+'-success mr-1'" @click="search_status_id = BatchStatus.SUCCEED; loadFileImportList();"> 
+                <button :class="'btn btn-sm btn'+(search_status_id == BatchStatus.SUCCEED ? '':'-outline')+'-success mr-1'" @click="search_status_id = BatchStatus.SUCCEED; loadFileImportList();"> 
                     SUCCEED <span v-text="'('+countStatus.succeed+')'"></span>
                 </button>
-                <button :class="'btn btn'+(search_status_id == BatchStatus.FAILED ? '':'-outline')+'-danger mr-1'"  @click="search_status_id = BatchStatus.FAILED; loadFileImportList();"> 
+                <button :class="'btn btn-sm btn'+(search_status_id == BatchStatus.FAILED ? '':'-outline')+'-danger mr-1'"  @click="search_status_id = BatchStatus.FAILED; loadFileImportList();"> 
                     FAILED <span v-text="'('+countStatus.failed+')'"></span>
                 </button>
-                <button :class="'btn btn'+(search_status_id == BatchStatus.STOPPED ? '':'-outline')+'-secondary mr-1'"  @click="search_status_id = BatchStatus.STOPPED; loadFileImportList();">
+                <button :class="'btn btn-sm btn'+(search_status_id == BatchStatus.STOPPED ? '':'-outline')+'-secondary mr-1'"  @click="search_status_id = BatchStatus.STOPPED; loadFileImportList();">
                     STOPPED <span v-text="'('+countStatus.stopped+')'"></span>
                 </button>
             </div>

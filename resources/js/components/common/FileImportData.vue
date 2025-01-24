@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">Import Data</div>
-                    <div class="card-body"> 
+                    <div class="card-body p-1"> 
                         <button v-if="has_close" class="btn btn-outline-secondary" @click="$emit('close_file_import_data')">
                             <span class="fa fa-arrow-left"></span>  CLOSE 
                         </button>
