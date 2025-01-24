@@ -61,6 +61,10 @@ class AuthWebPayChecker
 
             }
         }
+        
+        $request->attributes->add([
+            'proxy_group_id'=>PayHttp::proxy_group_id() 
+        ]);
  
          return $next($request);
          

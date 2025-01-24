@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use iProtek\Core\Http\Controllers\_Common\_CommonController;
 use iProtek\Core\Models\FileImportBatch;
 use iProtek\Core\Helpers\PayHttp;
-use iProtek\Core\Enums\FileImportBatchStatus as BatchStatus;
+use iProtek\Core\Enums\FileImportBatchStatus as BatchStatus; 
 
 class FileImportBatchController extends _CommonController
 {
@@ -81,6 +81,9 @@ class FileImportBatchController extends _CommonController
 
         $countLines = count( file($file->getRealPath()) );
         $data["total_lines"] = $countLines;
+
+        //GROUP_ID
+        $data['group_id'] = $request->get('proxy_group_id');
 
         //SET THE IMPORTER
         $data['pay_created_by'] = PayHttp::pay_account_id();
