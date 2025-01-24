@@ -47,6 +47,9 @@
                             <th>
                                 <small>Data</small>
                             </th>
+                            <th>
+                                <small>Settings</small>
+                            </th>
                             <th style="width:80px;">
                                 <small>Status</small>
                             </th>
@@ -56,10 +59,10 @@
                         </thead>
                         <tbody>
                             <tr v-if="isLoading">
-                                <th colspan="6" class="text-center"> <code> -- LOADING IMPORT DATA -- </code> </th>
+                                <th colspan="7" class="text-center"> <code> -- LOADING IMPORT DATA -- </code> </th>
                             </tr>
                             <tr v-else-if="importDataList.length == 0">
-                                <th colspan="6" class="text-center"> <code> -- NO IMPORT DATA FOUND! -- </code> </th>
+                                <th colspan="7" class="text-center"> <code> -- NO IMPORT DATA FOUND! -- </code> </th>
                             </tr>
                             <tr v-for="(item, itemIndex) in importDataList" v-bind:key="'import-data-'+item.id+'-'+itemIndex">
                                 <th class="text-center text-danger" v-text="item.id" ></th>
@@ -68,6 +71,9 @@
                                 </td>
                                 <td class="text-nowrap">
                                     <label v-if="batch" class="mb-0" v-text="batch.target_field"></label>
+                                </td>
+                                <td>
+                                    <small v-if="batch" class="text-secondary" v-text="setting_info(batch.settings)"></small>
                                 </td>
                                 <td>
                                     <button @click="toggle_view(item)" class="btn btn-outline-primary btn-sm">
@@ -125,6 +131,9 @@
             }
         },
         methods: { 
+            setting_info:function(val){
+                return JSON.stringify(val);
+            },
             toggle_view:function(item){ 
                 item.view = !item.view; 
                 this.importDataList = this.importDataList.filter(a=>a); 
