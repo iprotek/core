@@ -84,7 +84,7 @@ class FileImportBatchController extends _CommonController
         $data["total_lines"] = $countLines;
 
         //GROUP_ID
-        $data['group_id'] = PayHttp::target_own_group_id();//$request->group_id; //$request->get('proxy_group_id');
+        $data['group_id'] = PayHttp::target_group_id();//$request->group_id; //$request->get('proxy_group_id');
 
         //SET THE IMPORTER
         $data['pay_created_by'] = PayHttp::pay_account_id();
