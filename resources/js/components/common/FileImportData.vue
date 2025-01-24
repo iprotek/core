@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Import Data</div>
+                    <div v-if="title" class="card-header" v-text="title"></div>
                     <div class="card-body p-1"> 
                         <button v-if="has_close" class="btn btn-outline-secondary" @click="$emit('close_file_import_data')">
                             <span class="fa fa-arrow-left"></span>  CLOSE 
@@ -30,7 +30,7 @@
                             <input v-model="search" @keyup.enter="loadFileImportList()" type="text" class="form-control">
                         </div>
                     </div>
-                    <table class="table table-bordered d-block overflow-auto">
+                    <table class="w-100 table table-bordered d-block overflow-auto">
                         <thead>
                             <th style="width:80px;">
                                 <small>ReF#</small>
@@ -107,7 +107,7 @@
 <script>
     import PageFooterVue from './PageFooter.vue'; 
     export default {
-        props:[ "file_import_batch_id", "status_id", "has_close" ],
+        props:[ "file_import_batch_id", "status_id", "has_close", "title" ],
         components: {
             "page-footer":PageFooterVue
         },

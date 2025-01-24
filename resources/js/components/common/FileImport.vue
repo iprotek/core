@@ -75,7 +75,7 @@
                         <td colspan="10" class="text-center"> <code> -- NO IMPORT FOUND -- </code> </td>
                     </tr>
                     <tr v-for="(imp, importIndex) in importList"  v-bind:key="'import-'+imp.id+'-'+importIndex">
-                        <td v-text="imp.id"></td>
+                        <td class="text-center text-red" v-text="imp.id"></td>
                         <td v-text="imp.file_name"></td>
                         <td v-text="imp.target_field"></td>
                         <td >
