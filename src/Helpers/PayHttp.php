@@ -48,7 +48,7 @@ class PayHttp
         //Check if SubAccount
         $user_admin = UserAdminPayAccount::where('user_admin_id', auth('admin')->user()->id)->first();
         if( $user_admin && $user_admin->sub_account_group_id){
-            $parentAdmin = UserAdminPayAccount::where('pay_app_user_group_id', $user_admin->sub_account_group_id)->first();
+            $parentAdmin = UserAdminPayAccount::where('pay_app_user_account_id', $user_admin->sub_account_group_id)->first();
             if($parentAdmin){
                 return $parentAdmin->own_proxy_group_id;
             }
