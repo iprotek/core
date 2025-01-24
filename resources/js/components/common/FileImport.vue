@@ -1,8 +1,8 @@
 <template>
     <div>
         <div v-if="view_mode == 'batch-view'" class="card">
-            <div v-if="importTitle" class="card-header">
-                <label class="mb-0" v-text="importTitle"></label>
+            <div v-if="title" class="card-header">
+                <label class="mb-0" v-text="title"></label>
             </div> 
             <input v-if="current_enable_import_btn" @change="file_changed($event)" :id="import_file_name" type="file" style="display:none;" accept=".csv" />
             <div class="card-body p-1">
