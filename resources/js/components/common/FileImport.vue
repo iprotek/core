@@ -101,16 +101,15 @@
                             <button @click="selected_file_import_batch_id = imp.id ;selected_status_id = -1 ;view_mode = 'data-view'" class="btn btn-outline-primary btn-sm float-right" title="View Details"> <span class="fa fa-eye"></span> </button>
                         </td> 
                         <td >
-                            <span v-if="imp.status_id == BatchStatus.PENDING" class="text-warning" :title="imp.status_info" >Pending to Import</span>
-                            <span v-if="imp.status_id == BatchStatus.SUCCEED" class="text-success" :title="imp.status_info" >Completed</span>
-                            <span v-if="imp.status_id == BatchStatus.FAILED" class="text-danger" :title="imp.status_info" >Failed</span>
-                            <span v-if="imp.status_id == BatchStatus.PROCESSING" class="text-primary" :title="imp.status_info" >Processing</span>
-                            <span v-if="imp.status_id == BatchStatus.STOPPED" class="text-secondary" :title="imp.status_info" >Stopped</span>
+                            <span :title="imp.status_info">
+                                <span v-if="imp.status_id == BatchStatus.PENDING" class="text-warning" :title="imp.status_info" >Pending to Import</span>
+                                <span v-if="imp.status_id == BatchStatus.SUCCEED" class="text-success" :title="imp.status_info" >Completed</span>
+                                <span v-if="imp.status_id == BatchStatus.FAILED" class="text-danger" :title="imp.status_info" >Failed</span>
+                                <span v-if="imp.status_id == BatchStatus.PROCESSING" class="text-primary" :title="imp.status_info" >Processing</span>
+                                <span v-if="imp.status_id == BatchStatus.STOPPED" class="text-secondary" :title="imp.status_info" >Stopped</span>
+                            </span>
                             <div>
                                 <small class="text-secondary" v-text="imp.updated_at"></small>
-                            </div>
-                            <div v-if="imp.status_info">
-                                <small class="text-secondary" v-text="imp.status_info"></small>
                             </div>
                         </td>
                         <td class="text-nowrap" >
