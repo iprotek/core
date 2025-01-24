@@ -13,8 +13,8 @@ use ReflectionFunction;
 class FileImportHelper
 {
 
-    public static $uploadPerMinute = 300;
-    public static $processPerMinute = 100;
+    public static $uploadPerMinute = 100;
+    public static $processPerMinute = 50;
 
     public static function startBatchProcessing(){
 
