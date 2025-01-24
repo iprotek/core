@@ -131,7 +131,7 @@
             </div>
         </div>
         <div v-else-if="view_mode == 'data-view'">
-            <file-import @close_file_import_data="view_mode='batch-view'" :title="'Data Processing'" :file_import_batch_id="selected_file_import_batch_id" :has_close="true" :status_id="selected_status_id" />
+            <file-import  :group_id="group_id" @close_file_import_data="view_mode='batch-view'" :title="'Data Processing'" :file_import_batch_id="selected_file_import_batch_id" :has_close="true" :status_id="selected_status_id" />
         </div>
         <swal ref="swal_prompt"></swal>
     </div>

@@ -5,6 +5,7 @@ namespace iProtek\Core\Helpers;
 use DB; 
 use Illuminate\Support\Facades\Log;
 use iProtek\Core\Models\UserAdminPayAccount;
+use iProtek\Core\Models\SuperAdminSubAccount;
 
 class PayHttp
 {
@@ -41,6 +42,19 @@ class PayHttp
             }
         }
         return $proxy_group_id;
+    }
+
+    public static function target_own_group_id(){
+        //Check if SubAccount
+        $useradmin = UserAdminPayAccount::where('user_admin_id', auth()->user()->id)->first();
+        if($user_admin->sub_account_group_id){
+            $parentAdmin = UserAdminPayAccount::where('pay_app_user_group_id', $user_admin->sub_account_group_id)->first();
+            if($parentAdmin){
+                return $parentAdmin->own_proxy_group_id;
+            }
+            return 0;
+        }
+        return $user_admin->own_proxy_group_id;
     }
 
     public static function http2($is_auth = true, $access_token="", $headers=null){
