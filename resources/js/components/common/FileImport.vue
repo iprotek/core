@@ -56,10 +56,10 @@
                         </th>
                         <th><small> Settings </small></th>
                         <th class="text-nowrap">
-                            <small> Valid/Processing/Total Lines </small> 
+                            <small> Lines </small> 
                         </th>
                         <th class="text-nowrap">
-                            <small> Processed/Succeed/Failed  </small>
+                            <small> Processing  </small>
                         </th>
                         <th>
                             <small> Status </small>
@@ -89,9 +89,15 @@
                         <td>
                             <small v-text="settings_info(imp.settings)"></small>
                         </td>
-                        <td v-text="imp.line_valid+'/'+imp.line_processing+'/'+imp.total_lines"></td>
+                        <td >
+                            <span title="Valid Lines" v-text="imp.line_valid"></span> / 
+                            <span title="Processing Lines" v-text="imp.line_processing"></span> / 
+                            <span title="Total Lines" v-text="imp.total_lines"></span>
+                        </td>
                         <td class="text-nowrap" >
-                            <span v-text=" (imp.line_succeed+imp.line_failed)+'/'+imp.line_succeed+'/'+imp.line_failed"></span>
+                            <span title="Processed" v-text="(imp.line_succeed+imp.line_failed)"></span> /
+                            <span title="Succeed" v-text="imp.line_succeed"></span> /
+                            <span title="Failed" v-text="imp.line_failed"></span>
                             <button @click="selected_file_import_batch_id = imp.id ;selected_status_id = -1 ;view_mode = 'data-view'" class="btn btn-outline-primary btn-sm float-right" title="View Details"> <span class="fa fa-eye"></span> </button>
                         </td> 
                         <td >
