@@ -30,7 +30,7 @@
                             <input v-model="search" @keyup.enter="loadFileImportList()" type="text" class="form-control">
                         </div>
                     </div>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered d-block overflow-auto">
                         <thead>
                             <th style="width:80px;">
                                 <small>ReF#</small>

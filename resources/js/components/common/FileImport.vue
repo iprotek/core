@@ -36,7 +36,7 @@
                     STOPPED <span v-text="'('+countStatus.stopped+')'"></span>
                 </button>
             </div>
-            <table class="table table-bordered mb-0">
+            <table class="table table-bordered mb-0 d-block overflow-auto">
                 <thead>
                     <tr>
                         <th>
