@@ -107,7 +107,7 @@
 <script>
     import PageFooterVue from './PageFooter.vue'; 
     export default {
-        props:[ "file_import_batch_id", "status_id", "has_close", "title" ],
+        props:[ "group_id", "file_import_batch_id", "status_id", "has_close", "title" ],
         components: {
             "page-footer":PageFooterVue
         },

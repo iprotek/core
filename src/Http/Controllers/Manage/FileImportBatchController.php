@@ -74,7 +74,8 @@ class FileImportBatchController extends _CommonController
             "file_name"=>"required",
             "file_ext"=>"required",
             "target_field"=>"required",
-            "settings"=>"required"
+            "settings"=>"required",
+            "group_id"=>"required"
         ])->validated();
 
         $file = $request->file('file');
@@ -83,7 +84,7 @@ class FileImportBatchController extends _CommonController
         $data["total_lines"] = $countLines;
 
         //GROUP_ID
-        $data['group_id'] = $request->get('proxy_group_id');
+        $data['group_id'] = $request->group_id; //$request->get('proxy_group_id');
 
         //SET THE IMPORTER
         $data['pay_created_by'] = PayHttp::pay_account_id();

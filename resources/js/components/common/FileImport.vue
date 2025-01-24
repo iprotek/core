@@ -144,7 +144,7 @@
     import {FileImportBatchStatus} from './enums/common_const';
 
     export default { 
-        props:[ "title", "target_field", "settings", "enable_import_btn"  ],
+        props:[ "group_id", "title", "target_field", "settings", "enable_import_btn"  ],
         components: { 
             "page-footer":PageFooterVue,
             "swal":SwalVue,
@@ -228,6 +228,7 @@
                 formData.append('file_ext', file_ext);
                 formData.append('target_field', vm.target_field);
                 formData.append('settings', vm.current_settings );
+                formData.append('group_id', vm.group_id );
 
                 var url = "/manage/file-imports/batch/add";
                 
