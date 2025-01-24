@@ -10,19 +10,16 @@
                         </button>
 
                         <button @click="current_page=1; selected_status_id = -1; loadFileImportList();" :class="'btn btn'+(selected_status_id == -1 ? '':'-outline')+'-primary btn-sm'"> 
-                           <span v-if="batch" v-text="'('+batch.line_valid+')'"></span> ALL 
+                            ALL <span v-if="batch" v-text="'('+batch.line_valid+')'"></span>
                         </button>
                         <button @click="current_page=1; selected_status_id = 0; loadFileImportList();" :class="'btn btn'+(selected_status_id == 0 ? '':'-outline')+'-warning btn-sm'">
-                             <span v-if="pending_count !== null" v-text="'('+pending_count+')'"></span>
-                             PENDING 
+                             PENDING <span v-if="pending_count !== null" v-text="'('+pending_count+')'"></span>
                         </button>
                         <button @click="current_page=1; selected_status_id = 1; loadFileImportList();" :class="'btn btn'+(selected_status_id == 1 ? '':'-outline')+'-success btn-sm'">
-                            <span v-if="succeed_count !== null" v-text="'('+succeed_count+')'"></span>
-                            SUCCEED
+                            SUCCEED <span v-if="succeed_count !== null" v-text="'('+succeed_count+')'"></span>
                         </button>
                         <button @click="current_page=1; selected_status_id = 2; loadFileImportList();" :class="'btn btn'+(selected_status_id == 2 ? '':'-outline')+'-danger btn-sm'">
-                            <span v-if="failed_count !== null" v-text="'('+failed_count+')'"></span>
-                            FAILED 
+                            FAILED <span v-if="failed_count !== null" v-text="'('+failed_count+')'"></span>
                         </button>
                     </div>
                     <div class="card-body p-1">

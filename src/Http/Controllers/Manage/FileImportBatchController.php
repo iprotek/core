@@ -14,11 +14,7 @@ class FileImportBatchController extends _CommonController
     public $guard = 'admin';
 
     public function list(Request $request){
-        $fileImports = FileImportBatch::with(['created_by'=>function($q){
-            $q->select('id', 'user_admin_id', 'pay_app_user_account_id');
-        },'updated_by'=>function($q){
-            $q->select('id', 'user_admin_id', 'pay_app_user_account_id');
-        }]);
+        $fileImports = FileImportBatch::on();
         
         //return "Hello";
         if($request->search){
@@ -30,7 +26,38 @@ class FileImportBatchController extends _CommonController
 
         $fileImports->orderByRaw(' created_at  DESC ');
 
-        return $fileImports->paginate(10);
+
+        //CLONE COUNT FOR OTHER STATUS HERE
+        $all_count = (clone $fileImports)->count();
+        $pending_count = (clone $fileImports)->where('status_id', BatchStatus::PENDING)->count();
+        $succeed_count = (clone $fileImports)->where('status_id', BatchStatus::SUCCEED)->count();
+        $failed_count = (clone $fileImports)->where('status_id', BatchStatus::FAILED)->count();
+        $processing_count = (clone $fileImports)->where('status_id', BatchStatus::PROCESSING)->count();
+        $stopped_count = (clone $fileImports)->where('status_id', BatchStatus::STOPPED)->count();
+
+        //SELECT BY STATUS
+        if(isset($request->status_id)){
+            if($request->status_id >= 0){
+                $fileImports->where('status_id', $request->status_id);
+            }
+        }
+
+        $fileImports->with(['created_by'=>function($q){
+            $q->select('id', 'user_admin_id', 'pay_app_user_account_id');
+        },'updated_by'=>function($q){
+            $q->select('id', 'user_admin_id', 'pay_app_user_account_id');
+        }]);
+
+
+        return [ 
+            "all_count"=>$all_count,
+            "pending_count"=>$pending_count,
+            "succeed_count"=>$succeed_count,
+            "failed_count"=>$failed_count,
+            "processing_count"=>$processing_count,
+            "stopped_count"=>$stopped_count,
+            "paginate" =>$fileImports->paginate(10)
+        ];
     }
 
     public function add(Request $request){
