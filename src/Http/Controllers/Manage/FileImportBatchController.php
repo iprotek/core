@@ -58,6 +58,9 @@ class FileImportBatchController extends _CommonController
         //SET THE IMPORTER
         $data['pay_created_by'] = PayHttp::pay_account_id();
  
+        //RECONFIGURE SETTINGS
+        $data['settings'] = json_decode($data['settings']);
+
         //CREATE FILE
         $fileBatch = FileImportBatch::create($data); 
 
