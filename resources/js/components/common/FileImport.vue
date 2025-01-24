@@ -89,7 +89,7 @@
                         <td>
                             <small v-text="settings_info(imp.settings)"></small>
                         </td>
-                        <td >
+                        <td class="text-nowrap" > 
                             <span title="Valid Lines" v-text="imp.line_valid"></span> / 
                             <span title="Processing Lines" v-text="imp.line_processing"></span> / 
                             <span title="Total Lines" v-text="imp.total_lines"></span>
