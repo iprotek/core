@@ -23,7 +23,7 @@ class FileImportBatchCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Update the PHP Value';
+    protected $description = 'Preparation for import batch file.';
 
     /**
      * Create a new command instance.

@@ -1,13 +1,13 @@
 <template>
     <div>
         <div v-if="view_mode == 'batch-view'" class="card">
-            <div class="card-header">
+            <div v-if="importTitle" class="card-header">
                 <label class="mb-0" v-text="importTitle"></label>
             </div> 
-            <input @change="file_changed($event)" :id="import_file_name" type="file" style="display:none;" accept=".csv" />
+            <input v-if="current_enable_import_btn" @change="file_changed($event)" :id="import_file_name" type="file" style="display:none;" accept=".csv" />
             <div class="card-body p-1">
                 <div class="input-group text-sm"> 
-                    <span class="btn btn-primary" @click="fileUploadClick">
+                    <span :class="'btn btn-primary '+(current_enable_import_btn?'':'disabled')" @click="fileUploadClick">
                         <small title="Show" class="fa fa-upload"> </small> IMPORT .CSV
                     </span> 
                     <span class="btn btn-default">
@@ -119,16 +119,24 @@
     import {FileImportBatchStatus} from './enums/common_const';
 
     export default { 
-        props:[ "title", "target_field", "settings"  ],
+        props:[ "title", "target_field", "settings", "enable_import_btn"  ],
         components: { 
             "page-footer":PageFooterVue,
             "swal":SwalVue,
             "file-import":FileImportDataVue
         },
-        watch: { 
+        watch: {
+            settings:function(val){
+                this.current_settings = JSON.stringify(val);
+            },
+            enable_import_btn:function(val){
+                this.current_enable_import_btn = val;
+            }
         },
         data: function () {
             return {
+                current_enable_import_btn:true,
+                current_settings:'{}',
                 selected_file_import_batch_id:0,
                 selected_status_id:-1,
                 view_mode:'batch-view',
@@ -180,7 +188,7 @@
                 formData.append('file_type', file.type);
                 formData.append('file_ext', file_ext);
                 formData.append('target_field', vm.target_field);
-                formData.append('settings', '{}' );
+                formData.append('settings', vm.current_settings );
 
                 var url = "/manage/file-imports/batch/add";
                 
@@ -236,6 +244,11 @@
                 this.importTitle = this.title;
             }    
             this.loadFileImportList(); 
+            if( this.settings !== undefined )
+                this.current_settings = JSON.stringify( this.settings );
+            if( this.enable_import_btn !== undefined )
+                this.current_enable_import_btn = this.enable_import_btn;
+
         }
     }
 </script>
