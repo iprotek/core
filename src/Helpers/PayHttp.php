@@ -46,15 +46,17 @@ class PayHttp
 
     public static function target_own_group_id(){
         //Check if SubAccount
-        $useradmin = UserAdminPayAccount::where('user_admin_id', auth()->user()->id)->first();
-        if($user_admin->sub_account_group_id){
+        $user_admin = UserAdminPayAccount::where('user_admin_id', auth('admin')->user()->id)->first();
+        if( $user_admin && $user_admin->sub_account_group_id){
             $parentAdmin = UserAdminPayAccount::where('pay_app_user_group_id', $user_admin->sub_account_group_id)->first();
             if($parentAdmin){
                 return $parentAdmin->own_proxy_group_id;
             }
             return 0;
         }
-        return $user_admin->own_proxy_group_id;
+        else if( $user_admin )
+            return $user_admin->own_proxy_group_id;
+        return 0;
     }
 
     public static function http2($is_auth = true, $access_token="", $headers=null){
