@@ -8,11 +8,13 @@ use iProtek\Core\Models\FileImportData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use ReflectionFunction;
 
 class FileImportHelper
 {
 
     public static $uploadPerMinute = 300;
+    public static $processPerMinute = 100;
 
     public static function startBatchProcessing(){
 
@@ -31,10 +33,19 @@ class FileImportHelper
             //START UPLOADING 100 item per minute
             $file_path = $file_batch->file_path;
 
-            
+            try{
             $reader = IOFactory::createReader('Csv');
             $spreadsheet = $reader->load($file_path);
+            }catch(\Exception $ex){
+                
+                $file_batch->status_id = 2;
+                
+                $file_batch->status_info = "Error: The file is invalid. Please try another.";
 
+                $file_batch->save();
+
+                return;
+            }
             // Get the active sheet
             $sheet = $spreadsheet->getActiveSheet();
 
@@ -104,7 +115,33 @@ class FileImportHelper
 
     }
 
-    public static function getBatchProcessing(){
-          return FileImportBatch::where('status_id', 3)->first();
+    public static function getBatchProcessing($fn){
+        
+        $file_batch = FileImportBatch::where('status_id', 3)->first();
+        if(!$file_batch)
+            return;
+
+
+        if(is_callable($fn)){ 
+
+            $reflection = new ReflectionFunction($fn);
+            if($reflection){
+                $numberOfParameters = $reflection->getNumberOfParameters();
+                if($numberOfParameters == 2){
+                    $data = FileImportData::where(['file_import_batch_id'=> $file_batch->id, "status_id"=>0])->limit( static::$processPerMinute)->get();
+                    $fn($file_batch, $data);
+                    return;
+                }
+            }
+            $file_batch->status_id = 2;
+            $file_batch->status_info = "Error: Invalid take at least 2 parameters for batch processing call.";
+            $file_batch->save();
+            return;
+        }
+        $file_batch->status_id = 2;
+        $file_batch->status_info = "Error: Please use a callable function.";
+        $file_batch->save();
+        return;
+
     }
 }

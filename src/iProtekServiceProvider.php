@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use iProtek\Core\Http\Kernel;
 use iProtek\Core\Helpers\PayHttp;
 use Illuminate\Support\Facades\Gate;
+use iProtek\Core\Console\Commands\FileImportBatch;
 
 class iProtekServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,14 @@ class iProtekServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        //COMMANDS REGISTRATIONS PREPARATIONS 
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                FileImportBatch::class,
+            ]);
+        }
+
+
         // Bootstrap package services
         //SUPERADMIN SETUP
         Gate::define('super_admin', function ($user) {
