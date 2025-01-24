@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
 use iProtek\Core\Helpers\FileImportHelper;
 
-class FileImportBatch extends Command
+class FileImportBatchCommand extends Command
 {
     /**
      * The name and signature of the console command.

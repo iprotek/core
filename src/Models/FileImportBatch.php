@@ -37,6 +37,7 @@ class FileImportBatch extends _CommonModel
         "created_at"=>"datetime:Y-m-d H:i:s A",
         "updated_at"=>"datetime:Y-m-d H:i:s A",
         "interfer_at"=>"datetime:Y-m-d H:i:s A",
+        "settings"=>"json"
     ];
 
     public $appends = [

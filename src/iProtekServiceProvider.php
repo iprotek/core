@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use iProtek\Core\Http\Kernel;
 use iProtek\Core\Helpers\PayHttp;
 use Illuminate\Support\Facades\Gate;
-use iProtek\Core\Console\Commands\FileImportBatch;
+use iProtek\Core\Console\Commands\FileImportBatchCommand;
 
 class iProtekServiceProvider extends ServiceProvider
 {
@@ -31,7 +31,7 @@ class iProtekServiceProvider extends ServiceProvider
         //COMMANDS REGISTRATIONS PREPARATIONS 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                FileImportBatch::class,
+                FileImportBatchCommand::class,
             ]);
         }
 
