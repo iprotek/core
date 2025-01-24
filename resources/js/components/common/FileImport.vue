@@ -120,14 +120,10 @@
                         </td>
                     </tr>
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="10">
-                            <page-footer v-model="pageData" @page_changed="page_changed"></page-footer>
-                        </td>
-                    </tr>
-                </tfoot>
             </table> 
+            <div class="p-1">
+                <page-footer v-model="pageData" @page_changed="page_changed"></page-footer>
+            </div>
         </div>
         <div v-else-if="view_mode == 'data-view'">
             <file-import @close_file_import_data=" view_mode='batch-view'" :file_import_batch_id="selected_file_import_batch_id" :has_close="true" :status_id="selected_status_id" />
