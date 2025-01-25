@@ -189,7 +189,7 @@
                     order_no: this.order_no,
                     model_field_id: this.value.model_field_id,
                     data_model_id: this.value.data_model_id,
-                    value2: this.input_value
+                    value: this.input_value
                 } );
             },
             remove_item:function(item){
