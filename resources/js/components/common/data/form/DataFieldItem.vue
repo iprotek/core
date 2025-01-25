@@ -98,8 +98,7 @@
             "swal-alert":SwalAlertVue
         },
         watch: {
-            value(newValue) {
-                //console.log("Watched",newValue);
+            value(newValue) { 
                 this.id = newValue.id;
                 this.name = newValue.name;
                 this.type = newValue.type;
@@ -125,8 +124,7 @@
                 //$refs.data_form.show(dataItem.id,dataItem)
                 window.DataFormView.show(dataItem.id, dataItem);
             },
-            edit_el:function(){
-                console.log("Data ID:",this.data_id);
+            edit_el:function(){ 
                 document.querySelector('#el-'+this._uid).focus();
             },
             save_input:function(){
@@ -134,15 +132,13 @@
                 var req = {
                     data_id: this.data_id,
                     value: this.input_value
-                }
-                console.log(req);
+                } 
                 var data_src = "projects-monitoring";
                 if(this.is_data){
                     data_src = "iprotek-data";
                 }
                 WebRequest2('POST', '/manage/'+data_src+'/searches/data/data-value/'+this.id, JSON.stringify(req) ).then(resp=>{
-                    resp.json().then(data=>{
-                        console.log(data);
+                    resp.json().then(data=>{ 
                         if(data.status == 1){
                             vm.old_input_value = vm.input_value;
                             vm.is_edit = false;
@@ -161,8 +157,7 @@
                 window.ModalAddDataView.show(this.data_id, this.id, this.add_data_result);
 
             },
-            add_data_result:function(data){
-                console.log("Result:",data);
+            add_data_result:function(data){ 
                 this.data_values.push(data);
             },
             field_add:function(field){ 
@@ -258,9 +253,7 @@
             },
 
         },
-        mounted:function(){     
-            //console.log( "loaded",this.value);
-            //this.$emit("input", this.value);
+        mounted:function(){      
             if(this.value){
                 this.id = this.value.id;
                 this.name = this.value.name;
