@@ -146,6 +146,10 @@
                         if(data.status == 1){
                             vm.old_input_value = vm.input_value;
                             vm.is_edit = false;
+
+                            //FOR CHECKING
+                            vm.update_input();
+
                         }
                     });
                 });
@@ -184,7 +188,8 @@
                     fields: this.fields,
                     order_no: this.order_no,
                     model_field_id: this.value.model_field_id,
-                    data_model_id: this.value.data_model_id
+                    data_model_id: this.value.data_model_id,
+                    value1: this.input_value
                 } );
             },
             remove_item:function(item){
