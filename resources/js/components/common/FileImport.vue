@@ -95,9 +95,9 @@
                             <span title="Total Lines" v-text="imp.total_lines"></span>
                         </td>
                         <td class="text-nowrap" >
-                            <span title="Processed" v-text="(imp.line_succeed+imp.line_failed)"></span> /
-                            <span title="Succeed" v-text="imp.line_succeed"></span> /
-                            <span title="Failed" v-text="imp.line_failed"></span>
+                            <span title="Processed" class="text-primary" v-text="(imp.line_succeed+imp.line_failed)"></span> /
+                            <span title="Succeed" :class="imp.line_succeed>0 ? 'text-success' :'text-secondary'" v-text="imp.line_succeed"></span> /
+                            <span title="Failed" :class="imp.line_failed>0 ? 'text-danger' :'text-secondary'" v-text="imp.line_failed"></span>
                             <button @click="selected_file_import_batch_id = imp.id ;selected_status_id = -1 ;view_mode = 'data-view'" class="btn btn-outline-primary btn-sm float-right" title="View Details"> <span class="fa fa-eye"></span> </button>
                         </td> 
                         <td >
