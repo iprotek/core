@@ -69,6 +69,13 @@
     <link rel="stylesheet" href="/iprotek/css/w3school/preview-image.css">
     
     <style>
+      
+        @if( config('iprotek.is_demo') )
+          .nav-item a i {
+            color:red;
+          }
+        @endif
+
         .sidebar-collapse .brand-link .brand-text b{
             display:none;
         }
