@@ -13,8 +13,15 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>@yield('site-title','Sample')</h1>
+          <div class="col-sm-6 @if( config('iprotek.is_demo') ) text-danger @endif">
+            <h1> 
+              
+            @if( config('iprotek.is_demo') )
+              DEMO
+            @endif
+              @yield('site-title','Sample')
+            
+            </h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
