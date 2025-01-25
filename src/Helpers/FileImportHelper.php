@@ -111,6 +111,9 @@ class FileImportHelper
                 $file_batch->save();
             }
 
+        }else if($file_batch){
+            $file_batch->status_id = 3;
+            $file_batch->save();
         }
 
     }
