@@ -36,12 +36,23 @@
         watch: {
             target_id:function(val){
                 this.targetId = val;
-            }, 
+                this.loadContent();
+            },
+            target_name:function(newVal){
+                this.targetName = newVal;
+                this.loadContent();
+            },
+            type:function(newVal){
+                this.targetType = newVal;
+                this.loadContent();
+            }
         },
         data: function () {
             return {
+                targetType:'text',
                 CmsType:CmsType,
                 targetId:0,
+                targetName:'',
                 content:'',
                 prev_content:''
  
@@ -76,12 +87,15 @@
                    return  resp.json().then(data=>{
                         if(data){
                             vm.content = data.content;
-                        }
+                        } 
                     })
                 });
             }
         },
         mounted:function(){   
+            this.targetType = this.type;
+            this.targetId = this.target_id;
+            this.targetName = this.target_name;
             this.loadContent();
         }
     }
