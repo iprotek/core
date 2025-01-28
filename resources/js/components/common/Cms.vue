@@ -10,7 +10,7 @@
                     <!--<span class="fa fa-save"></span> SAVE-->
                     <web-submit ref="web_submit" :action="saveContent"  :icon_class="'fa fa-save'"  :label="'Save'"  />
                 </button>
-                <button class="btn btn-outline-secondary btn-sm" @click="content = prev_content"> 
+                <button class="btn btn-outline-secondary btn-sm" @click="loadContent()"> 
                     <span class="fa fa-save"></span> REVERT
                 </button>
             </div>
@@ -66,11 +66,23 @@
             },
 
             loadContent:function(){
-                
+                var vm = this;
+                var req = {
+                    type: this.type,
+                    target_name: this.target_name,
+                    target_id: this.target_id,
+                };
+                WebRequest2('POST','/api/group/'+this.group_id+'/cms/get-content', JSON.stringify(req)).then(resp=>{
+                   return  resp.json().then(data=>{
+                        if(data){
+                            vm.content = data.content;
+                        }
+                    })
+                });
             }
         },
         mounted:function(){   
-
+            this.loadContent();
         }
     }
 </script>

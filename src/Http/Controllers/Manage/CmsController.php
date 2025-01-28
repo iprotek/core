@@ -8,6 +8,7 @@ use iProtek\Core\Models\Cms;
 use iProtek\Core\Helpers\PayModelHelper;
 use iProtek\Core\Enums\CmsType;
 use iProtek\Core\Enums\FileImportBatchStatus;
+use iProtek\Core\Helpers\CmsHelper;
 
 class CmsController extends _CommonController
 {
@@ -55,6 +56,15 @@ class CmsController extends _CommonController
 
     public function get_cms(Request $request){
         
+        $data = $this->validate($request, [
+            "type"=>"required",
+            "target_name"=>"required",
+            "target_id"=>"required"
+        ])->validated();
+
+        return [
+            "content"=> \iProtek\Core\Helpers\CmsHelper::getContentByDetail($request->target_name, $request->target_id, $request->type)
+        ];
     }
 
 
