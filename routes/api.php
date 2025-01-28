@@ -25,6 +25,9 @@ Route::middleware('api')->group(function(){
 
             //FILE UPLOADS
             include(__DIR__.'/api/meta-data.php');
+            
+            //FILE UPLOADS
+            include(__DIR__.'/api/cms.php');
 
         });
 

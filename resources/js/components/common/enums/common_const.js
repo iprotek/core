@@ -5,3 +5,16 @@ export const FileImportBatchStatus = {
     PROCESSING:3,
     STOPPED:4
 };
+
+export const CmsType = {
+    
+    TEXT : 'text',
+    HTML : 'html', 
+    JSON : 'json', 
+    CSS : 'css',
+    JS : 'js', 
+    URL : 'url', 
+    PHP : 'php',
+    PYTHON : 'python'
+    
+}

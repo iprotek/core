@@ -3,7 +3,7 @@ namespace iProtek\Core\Enums;
 
 use DB;  
 
-class FileImportBatchStatus
+class FileImportBatchStatus extends _CommonEnum
 {
     public const PENDING = 0;
     public const SUCCEED = 1; 
