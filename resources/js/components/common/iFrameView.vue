@@ -39,6 +39,7 @@
 
                 if(style && frame_doc){
                     frame_doc.head.removeChild(style);
+                    console.log(style);
                 }
 
             },
