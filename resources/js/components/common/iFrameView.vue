@@ -27,7 +27,11 @@
                 var frame_doc = null;
                 if(this.print_size){
                     const printSize = `
-                    @page { size: `+this.print_size+`; }
+                    @page { size: `+this.print_size+`; background: white; }
+                    body{ 
+                        background: white !important;
+                        color: black; 
+                    }
                     `;
                     frame_doc = frame_window.document;
                     style = frame_doc.createElement('style');
