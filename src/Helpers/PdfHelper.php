@@ -26,10 +26,7 @@ class PdfHelper
         $dompdf->loadHtml($html);
 
         // (Optional) Set paper size and orientation
-        if(is_array($size))
-            $dompdf->setPaper($size);
-        else
-            $dompdf->setPaper($size, $orientation);
+        $dompdf->setPaper($size, $orientation);
 
         // Render the PDF
         $dompdf->render();
