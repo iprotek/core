@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Storage;
 
 class PdfHelper
 { 
@@ -31,8 +32,10 @@ class PdfHelper
         $dompdf->render();
         $pdfPath = "";
         if($saveAsName && trim($saveAsName)){
-            $pdfPath = storage_path('app/pdf/'.$saveAsName);
-            file_put_contents($pdfPath, $dompdf->output());
+            Storage::disk('local')->put("pdf/".$saveAsName, $dompdf->output());
+            $pdfPath = Storage::disk('local')->path("pdf/".$saveAsName);
+            //$pdfPath = storage_path('app/pdf/'.$saveAsName);
+            //file_put_contents($pdfPath, $dompdf->output());
         }
 
         return [ "path"=>$pdfPath, "dompdf"=> $dompdf ];
