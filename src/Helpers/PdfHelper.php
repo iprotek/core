@@ -5,12 +5,13 @@ use DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Dompdf\Dompdf;
+use Illuminate\Support\Facades\View;
 
 class PdfHelper
 { 
-    public static function loadPdf($view, $data, $size="A4", $orientation = "portrait", $saveAsName=""){
+    public static function loadPdf($controller,$view, $data, $size="A4", $orientation = "portrait", $saveAsName=""){
         
-        $html = $this->view($view, $data)->render();
+        $html = View::make($view, $data)->render();
 
                 
         $options = new \Dompdf\Options();
