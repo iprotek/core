@@ -33,6 +33,7 @@
                     style = frame_doc.createElement('style');
                     style.innerHTML = printSize;
                     frame_doc.head.appendChild(style);
+                    console.log(style);
                 }
 
                 frame_window.print();
