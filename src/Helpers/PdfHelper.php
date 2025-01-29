@@ -27,7 +27,7 @@ class PdfHelper
 
         // (Optional) Set paper size and orientation
         if(is_array($size))
-            $dompdf->setPaper($size);
+            $dompdf->setPaper([[500, 700]]);
         else
             $dompdf->setPaper($size, $orientation);
 
