@@ -10,7 +10,7 @@
 
 <script>
     export default {
-        props:[ "src", "has_print", "scrolling",'frame_style', "is_post", "post_data", "print_size" ],
+        props:[ "src", "has_print", "scrolling",'frame_style', "is_post", "post_data", "print_size", "is_print_url" ],
         components: { 
         },
         data: function () {
@@ -21,7 +21,25 @@
             }
         },
         methods: { 
+            printPage:function(url) {
+                var printWindow = window.open(url, '_blank');
+                printWindow.onload = function () {
+                    printWindow.focus();
+                    printWindow.print();
+                    printWindow.onafterprint = function () {
+                        printWindow.close();
+                    };
+                };
+            },
+
             iframePrint:function(){
+            
+                if(this.is_print_url){
+                    this.printPage(this.src);
+                    return;
+                }
+
+
                 var frame_window =  window.document.querySelector('#'+this.iframeId).contentWindow;
                 var style = null;
                 var frame_doc = null;
