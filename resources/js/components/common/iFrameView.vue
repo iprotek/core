@@ -24,11 +24,13 @@
             printPage:function(url) {
                 var printWindow = window.open(url, '_blank');
                 printWindow.onload = function () {
-                    printWindow.focus();
-                    printWindow.print();
-                    printWindow.onafterprint = function () {
-                        printWindow.close();
-                    };
+                    setTimeout(()=>{
+                        printWindow.focus();
+                        printWindow.print();
+                        printWindow.onafterprint = function () {
+                            printWindow.close();
+                        };
+                    }, 2000);
                 };
             },
 
