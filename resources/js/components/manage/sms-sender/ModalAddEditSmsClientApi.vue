@@ -16,20 +16,34 @@
                 <div class="card">
                     <div class="card-header">Credential Info (Required and Most Important)</div>
                     <div class="card-body pt-0">
-                        <user-input2 v-model="api_name" :placeholder="'Name/Company'" :input_style="'height:37px;'"></user-input2>
-                        <user-input2 v-model="api_username" :placeholder="'Username'" :input_style="'height:37px;'"></user-input2>
-                        <user-input2 :type="'password'" v-model="api_password" :placeholder="'Password'" :input_style="'height:37px;'"></user-input2>
-                        <user-input2 v-model="api_url" :placeholder="'API URL'" :input_style="'height:37px;'"></user-input2> 
+                        <label class="mb-0">SMS Sender Type</label>
+                        <select class="form-control" v-model="sender_type">
+                            <option :value="'iprotek'"> IPROTEK SMS </option>
+                            <option :value="'m360'"> M360 </option>
+                            <option :value="'iprotek-messenger'"> IPROTEK MESSENGER </option>
+                        </select>
+                        <div v-if="sender_type == 'iprotek' || sender_type == 'm360'">
+                            <user-input2 v-model="api_name" :placeholder=" (sender_type == 'iprotek' ? 'Name/Company' : 'Registered Sender ID')" :input_style="'height:37px;'"></user-input2>
+                            <user-input2 v-model="api_username" :placeholder="(sender_type == 'iprotek' ? 'Username' : 'App Key')" :input_style="'height:37px;'"></user-input2>
+                            <user-input2 :type="'password'" v-model="api_password" :placeholder=" (sender_type == 'iprotek' ? 'Password':'App Secret')" :input_style="'height:37px;'"></user-input2>
+                            <user-input2 v-model="api_url" :placeholder="'API URL'" :input_style="'height:37px;'"></user-input2> 
+                        </div>
+                        <div v-else>
+                            <label class="mb-0"> -- MESSENGER SELECTION -- </label>
+                        </div>
                     </div>
                 </div>
-                <div>
+                <div class="my-1">
+                    <switch2 v-model="is_default"></switch2> is Default
+                </div>
+                <div class="my-1">
                     <switch2 v-model="is_active"></switch2> is Active
                 </div>
-                <div v-if="is_active == false && inactive_reason">
+                <div class="my-1" v-if="is_active == false && inactive_reason">
                     <code v-text="inactive_reason"></code>
                 </div>
                 
-                <div v-if="id">
+                <div class="my-1" v-if="id">
                     <switch2 v-model="is_webhook_active"></switch2> Active webhook?
                 </div>
                 <div v-if="id">
@@ -63,6 +77,8 @@
         data: function () {
             return {        
                 id:0,
+                is_default:false,
+                sender_type:'iprotek',
                 promiseExec:null,
                 name:'',
                 api_name:'',
