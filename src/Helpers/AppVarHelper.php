@@ -161,7 +161,7 @@ class AppVarHelper
             $appvar->value = $new_value;
             if($appvar->isDirty()){
                 
-                $toDel = AppVariable::where('name', $var_name)->delete();
+                $toDel = AppVariable::where('name', $var_name);
                 if($target_id == null)
                     $toDel->whereRaw( ' target_id IS NULL ' );
                 else 
