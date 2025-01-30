@@ -27,7 +27,7 @@
                 //For v-model
                 this.$emit("input", this.data_value);
                 //For emits
-                this.$emit('selected', this.data_value );
+                this.$emit('selected', this.data_value, this.is_checked );
             }
         },
         mounted:function(){  
