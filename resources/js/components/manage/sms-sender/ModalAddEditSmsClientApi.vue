@@ -26,7 +26,13 @@
                             <user-input2 v-model="api_name" :placeholder=" (sender_type == 'iprotek' ? 'Name/Company' : 'Registered Sender ID')" :input_style="'height:37px;'"></user-input2>
                             <user-input2 v-model="api_username" :placeholder="(sender_type == 'iprotek' ? 'Username' : 'App Key')" :input_style="'height:37px;'"></user-input2>
                             <user-input2 :type="'password'" v-model="api_password" :placeholder=" (sender_type == 'iprotek' ? 'Password':'App Secret')" :input_style="'height:37px;'"></user-input2>
-                            <user-input2 v-model="api_url" :placeholder="'API URL'" :input_style="'height:37px;'"></user-input2> 
+                            <user-input2 v-if="sender_type == 'iprotek'" v-model="api_url" :placeholder="'API URL'" :input_style="'height:37px;'"></user-input2> 
+                            <div v-if="sender_type  == 'm360'">
+                                <label class="mb-0">Api Version</label>
+                                <select class="form-control" v-model="api_version">
+                                    <option :value="'3.4.9'">3.4.9</option>
+                                </select>
+                            </div>
                         </div>
                         <div v-else>
                             <label class="mb-0"> -- MESSENGER SELECTION -- </label>
@@ -77,8 +83,15 @@
         data: function () {
             return {        
                 id:0,
+                
+                api_version:'3.4.9',
                 is_default:false,
                 sender_type:'iprotek',
+                messenger_sms_api_request_link_id:0,
+                sms_api_info:{
+                    id:0,
+                    text:'-- Select API from iProtek Messenger --'
+                },
                 promiseExec:null,
                 name:'',
                 api_name:'',
@@ -97,6 +110,9 @@
                 
                 this.id = 0; 
                 this.name = '';
+                this.sender_type = 'iprotek';
+                this.is_default = false;
+                this.api_version = '3.4.9';
                 this.api_name = '';
                 this.api_username= '';
                 this.api_password= '';
@@ -105,7 +121,13 @@
                 this.inactive_reason= '';
                 this.priority= 1;
                 this.webhook_response_url= '';
-                this.is_webhook_active= ''
+                this.is_webhook_active= '';
+
+                this.messenger_sms_api_request_link_id = 0;
+                this.sms_api_info = {
+                    id:0,
+                    text:'-- Select API from iProtek Messenger --'
+                }
             },
             show:function(id = 0, is_reload=false){ 
                 var vm = this;
@@ -138,6 +160,12 @@
                         vm.priority = data.priority;
                         vm.webhook_response_url = data.webhook_response_url;
                         vm.is_webhook_active = data.is_webhook_active;
+                        vm.sender_type = data.sender_type;
+                        vm.is_default = data.is_default;
+                        vm.sms_api_info = {
+                            id: data.messenger_sms_api_request_link_id,
+                            text: data.name
+                        }
                         vm.promiseExec(data);
                     });
                 });
@@ -152,7 +180,13 @@
                     api_url: this.api_url,
                     is_active: this.is_active,
                     priority: this.priority,
-                    is_webhook_active: this.is_webhook_active
+                    is_webhook_active: this.is_webhook_active,
+                    
+                    sender_type: this.type,
+                    api_version: this.api_version,
+                    messenger_sms_api_request_link_id: this.messenger_sms_api_request_link_id,
+                    is_default: this.is_default
+
                 };
                 if(vm.id == 0){
                     vm.$refs.swal_prompt.alert(
