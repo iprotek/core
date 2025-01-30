@@ -17,6 +17,7 @@
         watch:{
             checked:function(val){
                 this.is_checked = val === true;
+                document.querySelector('#'+this.radioId).checked = this.is_checked;
             }
         },
         data: function () {
@@ -32,7 +33,8 @@
                 //For v-model
                 this.$emit("input", this.data_value);
                 //For emits
-                this.$emit('selected', this.data_value, this.is_checked );
+                var is_checked = document.querySelector('#'+this.radioId).checked;
+                this.$emit('selected', this.data_value, is_checked );
             }
         },
         mounted:function(){  
