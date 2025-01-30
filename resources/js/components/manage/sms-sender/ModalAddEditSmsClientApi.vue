@@ -35,7 +35,8 @@
                             </div>
                         </div>
                         <div v-else>
-                            <label class="mb-0"> -- MESSENGER SELECTION -- </label>
+                            <label class="mb-0"> AVAILABLE MESSENGER SMS SENDERS </label>
+                            <select2 v-model="sms_api_info" :placeholder="'-- Select SMS API --'" :modal_selector="true" :url="'/manage/sms-sender/service-list'" :has_clear="true" />
                         </div>
                     </div>
                 </div>
@@ -72,13 +73,15 @@
 <script>    
     import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
     import ButtonCopyVue from '../../common/ButtonCopy.vue';
+    import Select2Vue from '../../common/Select2.vue';
     import UserInput2Vue from '../../common/UserInput2.vue';
     export default {
         props:[ "group_id" ],
         components: {
             "user-input2":UserInput2Vue,
             "switch2":BoostrapSwitch2Vue,
-            "button-copy":ButtonCopyVue
+            "button-copy":ButtonCopyVue,
+            "select2":Select2Vue
         },
         data: function () {
             return {        
@@ -164,7 +167,7 @@
                         vm.is_default = data.is_default;
                         vm.sms_api_info = {
                             id: data.messenger_sms_api_request_link_id,
-                            text: data.name
+                            text: data.api_name
                         }
                         vm.promiseExec(data);
                     });
@@ -173,8 +176,8 @@
             add:function(){
                 var vm = this;
                 var request = {
-                    name: this.name,
-                    api_name: this.api_name,
+                    name:  this.name,
+                    api_name: this.sender_type == 'iprotek-messenger' ? this.sms_api_info.text : this.api_name,
                     api_username: this.api_username,
                     api_password: this.api_password,
                     api_url: this.api_url,
@@ -184,7 +187,7 @@
                     
                     sender_type: this.sender_type,
                     api_version: this.api_version,
-                    messenger_sms_api_request_link_id: this.messenger_sms_api_request_link_id,
+                    messenger_sms_api_request_link_id: this.sms_api_info.id,
                     is_default: this.is_default
 
                 };
