@@ -34,8 +34,8 @@
                 this.$emit("input", this.data_value);
                 //For emits
                 var is_checked = document.querySelector('#'+this.radioId).checked;
-                this.$emit('selected', this.data_value, is_checked );
                 this.$emit('update:checked', is_checked);
+                this.$emit('selected', this.data_value, is_checked );
             }
         },
         mounted:function(){  
