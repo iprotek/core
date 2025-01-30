@@ -16,17 +16,18 @@
                                     <th style="width:80px;">Priority</th>
                                     <th>API/COMPANY NAME</th>
                                     <th>STATUS</th>
+                                    <th>TYPE</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-if="isLoading == true">
-                                    <td class="text-center" colspan="6">
+                                    <td class="text-center" colspan="7">
                                         LOADIING CLIENT APIs
                                     </td>
                                 </tr>
                                 <tr v-else-if="clientItems.length == 0">
-                                    <td class="text-center" colspan="6">
+                                    <td class="text-center" colspan="7">
                                         <code> No CLIENT APIs </code>
                                     </td>
                                 </tr>
@@ -43,6 +44,7 @@
                                             <small class="text-secondary" v-text="clientItem.last_sending_at"></small>
                                         </div>
                                     </td>
+                                    <td v-text="clientItem.type"></td>
                                     <td>
                                         <button class="btn btn-outline-warning btn-sm" @click="$refs.modal_add_edit_sms.show(clientItem.id)">
                                             <span class="fa fa-edit"></span>

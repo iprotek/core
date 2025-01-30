@@ -160,7 +160,7 @@
                         vm.priority = data.priority;
                         vm.webhook_response_url = data.webhook_response_url;
                         vm.is_webhook_active = data.is_webhook_active;
-                        vm.sender_type = data.sender_type;
+                        vm.sender_type = data.type;
                         vm.is_default = data.is_default;
                         vm.sms_api_info = {
                             id: data.messenger_sms_api_request_link_id,
@@ -182,7 +182,7 @@
                     priority: this.priority,
                     is_webhook_active: this.is_webhook_active,
                     
-                    sender_type: this.type,
+                    sender_type: this.sender_type,
                     api_version: this.api_version,
                     messenger_sms_api_request_link_id: this.messenger_sms_api_request_link_id,
                     is_default: this.is_default
