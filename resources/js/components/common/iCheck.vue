@@ -18,7 +18,7 @@
             checked:function(val){
                 this.is_checked = val === true;
                 document.querySelector('#'+this.radioId).checked = this.is_checked;
-                console.log(val, this.is_checked);
+                //console.log(val, this.is_checked);
             }
         },
         data: function () {
