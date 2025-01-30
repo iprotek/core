@@ -10,14 +10,23 @@ use iProtek\Core\Models\AppVariable;
 class AppVarHelper
 {
 
-    public static function get($var_name, $default = null)
+    public static function get($var_name, $default = null, $target_id = null)
     {   
         if(is_array($var_name)){
             $var_name =  array_map('trim', array_values($var_name) );
             if(count($var_name) <= 0){
                 return null;
             }
-            $appvars = AppVariable::whereIn('name', $var_name)->get();
+
+            $pre_appvars = AppVariable::whereIn('name', $var_name);
+            if($target_id === null){
+                $pre_appvars->whereRaw(' target_id IS NULL ');
+            }
+            else{
+                $pre_appvars->where('target_id', $target_id);
+            }
+            $appvars =  $pre_appvars->get();
+
             $result = [];
             foreach($var_name as $var){
                 if(!$var){
@@ -38,7 +47,16 @@ class AppVarHelper
             return $result;
         }
         $var_name = trim( strtolower( $var_name) );
-        $appvar = AppVariable::where('name', $var_name)->first();
+        
+        $pre_appvar = AppVariable::where('name', $var_name);
+        if($target_id === null){
+            $pre_appvar->whereRaw(' target_id IS NULL ');
+        }
+        else{
+            $pre_appvar->where('target_id', $target_id);
+        }
+        $appvar = $pre_appvar->first();
+
         if(!$appvar){
             return $default;
         }
@@ -48,7 +66,7 @@ class AppVarHelper
         return $appvar->value;
     } 
 
-    public static function set($var_name, $new_value = null)
+    public static function set( $var_name, $new_value = null, $target_id = null )
     {
         if(!auth()->check()){
             return;
@@ -62,9 +80,20 @@ class AppVarHelper
             if(count($var_name) <= 0){
                 return null;
             }
+
             $var_names = array_keys($var_name) ;
             $temp_names = array_map('trim', array_keys($var_name) );
-            $appvars = AppVariable::whereIn('name', $temp_names)->get();
+            
+            $pre_appvars = AppVariable::whereIn('name', $temp_names);
+            if($target_id === null){
+                $pre_appvars->whereRaw(' target_id IS NULL ');
+            }
+            else{
+                $pre_appvars->where('target_id', $target_id);
+            }
+
+            $appvars = $pre_appvars->get();
+
             foreach($var_names as $var){
                 if(!$var){
                     continue;
@@ -83,11 +112,18 @@ class AppVarHelper
                         $appvar->value = $var_name[$orignalVarName];
                         if($appvar->isDirty()){
                             //$appvar->delete();                            
-                            AppVariable::where('name', $var)->delete();
+                            $toDel = AppVariable::where('name', $var);
+                            if($target_id == null)
+                                $toDel->whereRaw( ' target_id IS NULL ' );
+                            else 
+                                $toDel->where('target_id', $target_id); 
+                             $toDel->delete();
+
                             $appvar = AppVariable::create([
                                 "name"=>$var,
                                 "value"=>$var_name[$orignalVarName],
-                                "updated_by"=>auth()->user()->id
+                                "updated_by"=>auth()->user()->id,
+                                "target_id"=>$target_id
                             ]);
                         }
                         break;
@@ -98,27 +134,45 @@ class AppVarHelper
                     $appvar = AppVariable::create([
                         "name"=>$var,
                         "value"=>$var_name[$orignalVarName],
-                        "updated_by"=>auth()->user()->id
+                        "updated_by"=>auth()->user()->id,
+                        "target_id"=>$target_id
                     ]);
                 }
             }
-            return null;
+            return $new_value;
         }
 
         $var_name = trim( strtolower( $var_name) );
+
         //GET THE VARIABLE
-        $appvar = AppVariable::where('name', $var_name)->first();
+        $pre_appvar = AppVariable::where('name', $var_name);
+        if($target_id === null){
+            $pre_appvar->whereRaw(' target_id IS NULL ');
+        }
+        else{
+            $pre_appvar->where('target_id', $target_id);
+        }
+        $appvar = $pre_appvar->first();
+
+
         //IF EXISTS COMPARE VALUES
         if($appvar){
             //IF Same values.. don't touch.. delete old and create new
             $appvar->value = $new_value;
             if($appvar->isDirty()){
-                //$appvar->delete();
-                AppVariable::where('name', $var_name)->delete();
+                
+                $toDel = AppVariable::where('name', $var_name)->delete();
+                if($target_id == null)
+                    $toDel->whereRaw( ' target_id IS NULL ' );
+                else 
+                    $toDel->where('target_id', $target_id); 
+                $toDel->delete();
+
                 $appvar = AppVariable::create([
                     "name"=>$var_name,
                     "value"=>$new_value,
-                    "updated_by"=>auth()->user()->id
+                    "updated_by"=>auth()->user()->id,
+                    "target_id"=>$target_id
                 ]);
             }
         }
@@ -127,7 +181,8 @@ class AppVarHelper
             $appvar = AppVariable::create([
                 "name"=>$var_name,
                 "value"=>$new_value,
-                "updated_by"=>auth()->user()->id
+                "updated_by"=>auth()->user()->id,
+                "target_id"=>$target_id
             ]);
         }
         return $appvar->value;

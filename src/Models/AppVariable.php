@@ -12,6 +12,7 @@ class AppVariable extends Model
     public $fillable = [
         "name",
         "value", 
+        "target_id",
         //"created_by",
         "updated_by"
     ];
