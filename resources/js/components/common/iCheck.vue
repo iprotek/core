@@ -35,6 +35,7 @@
                 //For emits
                 var is_checked = document.querySelector('#'+this.radioId).checked;
                 this.$emit('selected', this.data_value, is_checked );
+                this.$emit('update:checked', is_checked);
             }
         },
         mounted:function(){  
