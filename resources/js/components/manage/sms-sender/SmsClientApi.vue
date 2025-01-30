@@ -17,6 +17,7 @@
                                     <th>API/COMPANY NAME</th>
                                     <th>STATUS</th>
                                     <th>TYPE</th>
+                                    <th>IS DEFAULT</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -45,6 +46,10 @@
                                         </div>
                                     </td>
                                     <td v-text="clientItem.type"></td>
+                                    <td  >
+                                        <small class="text-primary" v-if="clientItem.is_default">IS DEFAULT</small>
+
+                                    </td>
                                     <td>
                                         <button class="btn btn-outline-warning btn-sm" @click="$refs.modal_add_edit_sms.show(clientItem.id)">
                                             <span class="fa fa-edit"></span>

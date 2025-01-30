@@ -191,6 +191,7 @@
                     is_default: this.is_default
 
                 };
+                console.log(request);
                 if(vm.id == 0){
                     vm.$refs.swal_prompt.alert(
                         'question',

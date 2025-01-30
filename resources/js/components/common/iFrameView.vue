@@ -68,6 +68,8 @@
                 window.iframeLoaded = this.iframeLoaded;
                 document.querySelector('#'+this.iframeId).onload = function(){
                     vm.resizeIframe(this);
+                    vm.$emit('frameloaded', this.iframeId);
+                    
                 } 
                 this.iframeSource = this.src;
             }
