@@ -14,6 +14,11 @@
         props:[ "type", "label", "name", "checked", "data_value", "value"],
         components: {    
         },
+        watch:{
+            checked:function(val){
+                this.is_checked = val === true;
+            }
+        },
         data: function () {
             return {
                 radioId:'icheck-'+this._uid,
