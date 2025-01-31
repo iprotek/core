@@ -57,19 +57,19 @@
                     style = frame_doc.createElement('style');
                     style.innerHTML = printSize;
                     frame_doc.head.appendChild(style);
-                    console.log(style);
+                    //console.log(style);
                 }
 
                 frame_window.print();
 
                 if(style && frame_doc){
                     frame_doc.head.removeChild(style);
-                    console.log(style);
+                    //console.log(style);
                 }
 
             },
             iframeLoaded:function(){
-                console.log("frame loaded");
+                //console.log("frame loaded");
             },
             resizeIframe: function(iframe) {
                 var vm = this; 
