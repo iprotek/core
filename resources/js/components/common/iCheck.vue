@@ -14,11 +14,12 @@
         props:[ "type", "label", "name", "checked", "data_value", "value"],
         components: {    
         },
+        emits: ["update:checked", "selected"], //For hint purpose
         watch:{
             checked:function(val){
                 this.is_checked = val === true;
                 document.querySelector('#'+this.radioId).checked = this.is_checked;
-                //console.log(val, this.is_checked);
+                //console.log( "icheck_trigger", val, this.is_checked);
             }
         },
         data: function () {
@@ -31,12 +32,15 @@
         },
         methods: { 
             selected:function(){
+                var vm = this;
                 //For v-model
                 this.$emit("input", this.data_value);
                 //For emits
                 var is_checked = document.querySelector('#'+this.radioId).checked;
                 this.$emit('update:checked', is_checked);
-                this.$emit('selected', this.data_value, is_checked );
+                setTimeout(()=>{
+                    vm.$emit('selected', vm.data_value, is_checked );
+                }, 50);
             }
         },
         mounted:function(){  
