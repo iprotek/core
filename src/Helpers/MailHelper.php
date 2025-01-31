@@ -13,13 +13,50 @@ class MailHelper
     public static function send($to,$mailable,$cc=null, $replyTo=null, $smtpConnection = null)
     {
 
+        //CC Coverstion
+        if( $cc && is_string( $cc )){
+            $cc = explode( ',', $cc );
+        }
+        $toList = null;
+
+
+        //To and carbon copy
+        if(is_string($to)){
+            //breakdown to
+            $toList = explode(',', $to);
+        }
+        else if(is_array($to)){
+            $toList = $to;
+        }
+        else{
+            return null;
+        }
+
+        //Constraint to and cc array
+        $to = null;
+        for($i=0; $i < count($toList); $i++ ){
+            if( $to == null && filter_var($toList[$i], FILTER_VALIDATE_EMAIL) ){
+                $to = $toList[$i];
+                continue;
+            }
+            else if($cc == null){
+                $cc = [];
+            }
+            else if( is_array($cc) ){
+                $cc[] = $toList[$i];
+            }
+        }
+        if(!$to){
+            return null;
+        }
+        
+        //VALIDATIONS
         $valid_to = "";
         if(filter_var($to, FILTER_VALIDATE_EMAIL)){
             $valid_to = $to;
         }
-        $valid_ccs = array();
-
-        if($cc != null){
+        $valid_ccs = array(); 
+        if( $cc != null && is_array($cc) ){
             foreach($cc as $cItem){
                 if(filter_var( $cItem, FILTER_VALIDATE_EMAIL)){
                     $valid_ccs[] = $cItem;
@@ -33,7 +70,7 @@ class MailHelper
         if(!empty($valid_ccs))
             $valid_ccs = array_filter($valid_ccs);
         
-        if( !empty($valid_to) && !empty($valid_ccs))
+        if( !empty($valid_to) && count($valid_ccs) > 0 )
         {
             $mail = \Mail::to($valid_to)->cc($valid_ccs);
             if($smtpConnection){
