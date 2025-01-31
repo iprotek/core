@@ -1,5 +1,5 @@
 <template>
-    <div class="form-group clearfix">
+    <div class="form-group clearfix mb-0">
         <div class="icheck-primary d-inline">
             <input :type="default_type" :id="radioId" :name="name" :checked="is_checked" :value="data_value" @click="selected">
             <label :for="radioId" v-text="default_label"> </label>
