@@ -149,6 +149,14 @@
 
         },
         mounted:function(){  
+            if(this.set_branch_source){
+                this.branch_source = this.set_branch_source;
+            }
+            if(this.set_branch_source_url){
+                this.branch_source_url = this.set_branch_source_url;
+            }
+
+
             this.loadBranchList();    
         },
         updated:function(){

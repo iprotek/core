@@ -80,9 +80,7 @@
             "modal-add-device":ModalAddDeviceVue
         },
         data: function () {
-            return { 
-                branch_source:"branches",
-                branch_source_url:""
+            return {
             }
         },
         methods: { 
@@ -95,7 +93,9 @@
             },
         },
         mounted:function(){ 
-            console.log("GROUPID", this.group_id);
+            //console.log("GROUPID", this.group_id);
+            
+
             if(this.set_branch_source){
                 this.branch_source = this.set_branch_source;
             } 
