@@ -28,7 +28,7 @@ class CreateDeviceAccessesTable extends Migration
             $table->string('user');
             $table->string('password');
             $table->integer('port')->default(0);
-            $table->text('branch_ids')->default('[]');
+            $table->string('branch_ids',255)->default('[]');
             $table->string('branch_source')->default('branches');
             $table->boolean('is_app_execute')->default(0);
             $table->boolean('is_active')->default(0);
