@@ -43,6 +43,13 @@ class BranchController extends _CommonOwnGroupController
         
         $result->select('id','name as text');
         $result->orderBy('name','ASC');
+
+        if($request->is_all == "yes"){
+            $request->where('is_active', 1);
+            return $result->get();
+        }
+
+
         return $result->paginate(10);
 
     }

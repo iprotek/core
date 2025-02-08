@@ -5,8 +5,10 @@
                 <div class="card">
                     <div class="card-header">List of Devices</div>
                     <div class="card-body">
-                        <button></button>
-                        <table class="table table-bordered w-100">
+                        <button class="btn btn-outline-primary" @click="$refs.modal_device.show()">
+                            <span class="fa fa-plus"></span> ADD DEVICE
+                        </button>
+                        <table class="table table-bordered w-100 mt-1">
                             <thead>
                                 <tr>
                                     <th class="text-center">
@@ -48,7 +50,17 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm" title="Trigger Logs">
+                                            <span class="fa fa-list"></span>
+                                        </button>
+                                        <button class="btn btn-warning btn-sm" title="Edit">
+                                            <span class="fa fa-edit"></span>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" title="Remove">
+                                            <span class="fa fa-times"></span>
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -56,13 +68,16 @@
                 </div>
             </div>
         </div>
+        <modal-add-device ref="modal_device"  :group_id="group_id" :set_branch_source="set_branch_source" :set_branch_source_url="set_branch_source_url" />
     </div>
 </template>
 
 <script>
+    import ModalAddDeviceVue from './ModalAddDevice.vue';
     export default {
-        props:[ "set_branch_source", "set_branch_source_url" ],
-        components: { 
+        props:[ "group_id", "set_branch_source", "set_branch_source_url" ],
+        components: {
+            "modal-add-device":ModalAddDeviceVue
         },
         data: function () {
             return { 
@@ -80,6 +95,7 @@
             },
         },
         mounted:function(){ 
+            console.log("GROUPID", this.group_id);
             if(this.set_branch_source){
                 this.branch_source = this.set_branch_source;
             } 
