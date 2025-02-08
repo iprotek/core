@@ -8,7 +8,7 @@ use iProtek\Xrac\Http\Controllers\XbranchController;
 //use App\Http\Controllers\Manage\BillingSharedAccountDefaultBranchController;
 
  
-Route::prefix('/branches')->name('.branches')->group(function(){
+Route::prefix('/branch')->name('.branch')->group(function(){
     
     //Route::post('/save', [ CmsController::class ,'save_cms'])->name('.save'); 
     //Route::post('/get-content', [ CmsController::class ,'get_cms'])->name('.get'); 

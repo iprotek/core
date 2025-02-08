@@ -89,7 +89,7 @@
                 is_check_before_saving:true,
                 branch_source:'branches',
                 branchList:[],
-                branch_source_url:'/api/group/'+this.group_id+'/branches/list?is_all=yes',
+                branch_source_url:'/api/group/'+this.group_id+'/branch/list?is_all=yes',
                 device_info:{
                     name:'',
                     host:'',
@@ -121,7 +121,7 @@
                 var vm = this;
                 WebRequest2('GET', this.branch_source_url).then(resp=>{
                     resp.json().then(data=>{
-                        console.log(vm.group_id,data);
+                        //console.log(vm.group_id,data);
                         vm.branchList = data;
                     });
                 });
