@@ -27,7 +27,8 @@
         "iprotek/sms-sender":">=1.0.0",
         "iprotek/xrac":">=1.0.0",
         "pusher/pusher-php-server": "^7.2",
-        "phpoffice/phpspreadsheet": "^3.8"
+        "phpoffice/phpspreadsheet": "^3.8",
+        "nunenuh/mikrotik-api": "dev-master"
     },
     "type": "library",  
     "license": "MIT", 
