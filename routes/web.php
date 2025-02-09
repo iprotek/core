@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 Route::middleware('web')->group(function(){
   
-  Route::middleware('guest')->group(function(){
-    Auth::routes(["register"=>false,"login"=>false]);
-  });
-
   Route::middleware(['web-visits'])->group(function(){
 
     Route::get('/home', [iProtek\Core\Http\Controllers\MainPageController::class, 'index'])->name('mainpage2');
