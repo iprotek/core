@@ -24,6 +24,7 @@ class CreateDeviceAccessesTable extends Migration
 
             $table->string('type'); //microtik/windows/ssh
             $table->string('name');
+            $table->longText('description')->nullable();
             $table->string('host');
             $table->string('user');
             $table->string('password');
