@@ -37,7 +37,7 @@
                 this.$emit("input", this.data_value);
                 //For emits
                 var is_checked = document.querySelector('#'+this.radioId).checked;
-                this.$emit('update:checked', is_checked);
+                this.$emit('update:checked', is_checked, vm.data_value);
                 setTimeout(()=>{
                     vm.$emit('selected', vm.data_value, is_checked );
                 }, 50);

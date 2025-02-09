@@ -18,6 +18,7 @@ class DeviceAccess extends Model
 
         "type",
         "name",
+        "description",
         "host",
         "user",
         "password",
