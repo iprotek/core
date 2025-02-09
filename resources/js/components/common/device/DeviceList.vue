@@ -76,7 +76,7 @@
                                         <button class="btn btn-warning btn-sm" title="Edit" @click="$refs.modal_device.show(device.id)">
                                             <span class="fa fa-edit"></span>
                                         </button>
-                                        <button class="btn btn-danger btn-sm" title="Remove">
+                                        <button class="btn btn-danger btn-sm" title="Remove" @click="$refs.modal_device.remove(device.id)">
                                             <span class="fa fa-times"></span>
                                         </button>
                                     </td>

@@ -143,7 +143,7 @@
                     is_app_execute:false,
                     branch_ids:[]
                 };
-                this.is_check_before_saving = 0;
+                this.is_check_before_saving = true;
 
             },
             hasBranch:function(branch_id){
@@ -170,7 +170,19 @@
                 WebRequest2('GET', '/api/group/'+this.group_id+'/devices/get?device_access_id='+device_access_id).then(resp=>{
                     resp.json().then(data=>{
                         //console.log(data);
-                        vm.device_info = data;
+                        vm.device_info ={
+                            name: data.name,
+                            description: data.description,
+                            host: data.host,
+                            user: data.user,
+                            password:'',
+                            port: data.port,
+                            type: data.type,
+                            is_active: data.is_active,
+                            is_app_execute: data.is_app_execute,
+                            branch_ids: data.branch_ids
+                        };
+
                     });
                 })
             },
@@ -188,14 +200,13 @@
                 var request = vm.device_info;
                 request.is_check_before_saving = vm.is_check_before_saving;
                 request.device_access_id = vm.device_id;
-
-                console.log(vm.device_info, vm.is_check_before_saving);
+                
                 this.$refs.swal_prompt.alert(
                     'question',
                    this.device_id ? 'Update Device':"Add Device", 
                     "Confirm" , 
-                    this.device_id? "PUT":"POST", 
-                    '/api/group/'+this.group_id+'/devices/'+(this.device_id ? 'update':'add'), 
+                     "POST", 
+                    '/api/group/'+this.group_id+'/devices/'+(this.device_id ? 'save':'add'), 
                     JSON.stringify(request)
                 ).then(res=>{
                     if(res.isConfirmed){
@@ -208,6 +219,26 @@
                 return new Promise((promiseExec)=>{
                     vm.promiseExec = promiseExec;
                 });
+            },
+
+            remove:function(device_access_id){
+                var vm = this;
+                this.$refs.swal_prompt.alert(
+                    'question',
+                    "Remove this device?", 
+                    "Confirm" , 
+                     "POST", 
+                    '/api/group/'+this.group_id+'/devices/delete', 
+                    JSON.stringify({
+                        device_access_id: device_access_id
+                    })
+                ).then(res=>{
+                    if(res.isConfirmed){
+                        if(res.value.status == 1){
+                            vm.$emit('data_updated');
+                        }
+                    }
+                }); 
             }
 
         },

@@ -10,6 +10,7 @@ use iProtek\Core\Helpers\Console\MikrotikHelper;
 
 class DeviceAccessController extends _CommonController
 {
+    public $guard = "admin";
     //
     public function list(Request $request){
         $deviceList = PayModelHelper::get(DeviceAccess::class, $request, []);
@@ -23,6 +24,18 @@ class DeviceAccessController extends _CommonController
 
 
         return $deviceList->paginate(10);
+    }
+
+    public function device_connection_check( array $data){
+
+        if($data['type'] == "mikrotik"){
+            $result =  MikrotikHelper::credential_login_check($data);
+            if(!$result){
+                return ["status"=>0, "message"=>"Mikrotik Device Credential failed."];
+            }
+        } 
+
+        return ["status"=>0, "message"=>"Type [".$data['type']."] not supported for checking yet."];
     }
 
     public function add(Request $request){
@@ -58,12 +71,10 @@ class DeviceAccessController extends _CommonController
         //CHECKING DEVICE SUCCESS LOGIN ACCOUNT VALIDATION
         if($request->is_check_before_saving){ 
             //IF FAILED
-            if($request->type == "mikrotik"){
-                $result =  MikrotikHelper::credential_login_check($data);
-                if(!$result){
-                    return ["status"=>0, "message"=>"Mikrotik Device Credential failed."];
-                }
-            } 
+            $result = $this->device_connection_check($data);
+            if($result["status"] == 0){
+                return $result;
+            }
         }
         if(!$data["password"]){
             $data["password"] = "";
@@ -93,8 +104,8 @@ class DeviceAccessController extends _CommonController
         
     }
 
-    public function update(Request $request){
 
+    public function save(Request $request){
         
         //CHECK IF NAME EXISTTED
         $requiredId = $this->validate($request, [
@@ -105,7 +116,7 @@ class DeviceAccessController extends _CommonController
         $device_access_id = $requiredId['device_access_id'];
 
         //CHECK IF YOU CAN MANAGE THE ID
-        $can_manage = PayModelHelper::get(DeviceAccess::class, $request,[])->find($device_access_id);
+        $can_manage = PayModelHelper::get(DeviceAccess::class, $request, [])->find($device_access_id);
         if(!$can_manage){
             return ["status"=>0, "message"=>"Access Device Forbidden access"];
         }
@@ -128,20 +139,23 @@ class DeviceAccessController extends _CommonController
         }
 
         //CHECK IF ALREADY EXISTS
-        $exists = PayModelHelper::get(DeviceAccess::class, $request,[])->whereRaw(' name = ? AND id NOT IN(?) ',[$data['nane'], $device_access_id])->first();
+        $exists = PayModelHelper::get(DeviceAccess::class, $request,[])->whereRaw(' name = ? AND id NOT IN(?) ',[$data['name'], $device_access_id])->first();
         if($exists){
             return["status"=>0, "message"=>"Device custom name already exists"];
+        }
+
+        //Render password form existing.
+        if(!$data['password']){
+            $data['password'] = $can_manage['password'];
         }
         
         //CHECKING DEVICE SUCCESS LOGIN ACCOUNT VALIDATION
         if($request->is_check_before_saving){ 
             //IF FAILED
-            if($request->type == "mikrotik"){
-                $result =  MikrotikHelper::credential_login_check($data);
-                if(!$result){
-                    return ["status"=>0, "message"=>"Mikrotik Device Credential failed."];
-                }
-            } 
+            $result = $this->device_connection_check($data);
+            if($result["status"] == 0){
+                return $result;
+            }
         }
 
 
@@ -151,6 +165,27 @@ class DeviceAccessController extends _CommonController
 
 
         return ["status"=>1, "message"=>"Successfully updated", "data"=>$can_manage];
+
+    }
+
+    public function remove(Request $request){
+        
+        //CHECK IF NAME EXISTTED
+        $requiredId = $this->validate($request, [
+            "device_access_id"=>"required"
+        ])->validate();
+
+        //VALIDATE NAME EXCEPT THE ID
+        $device_access_id = $requiredId['device_access_id'];
+
+        //CHECK IF YOU CAN MANAGE THE ID
+        $can_manage = PayModelHelper::get(DeviceAccess::class, $request, [])->find($device_access_id);
+        if(!$can_manage){
+            return ["status"=>0, "message"=>"Access Device Forbidden access"];
+        }
+        PayModelHelper::delete($can_manage, $request);
+        
+        return ["status"=>1, "message"=>"Successfully removed."];
 
     }
 }

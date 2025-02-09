@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 //use iProtek\Core\Http\Controllers\Manage\CmsController;
 //use App\Http\Controllers\Manage\BillingSharedAccountDefaultBranchController;
 use iProtek\Core\Http\Controllers\Manage\DeviceAccessController;
+use Illuminate\Http\Request; 
 
  
 Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group(function(){
@@ -23,9 +24,10 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
     Route::post('add', [DeviceAccessController::class, 'add'])->name('.add');
 
     //UPDATE
-    Route::put('update', [DeviceAccessController::class, 'update'])->name('.update');
+    Route::post('save', [DeviceAccessController::class, 'save'])->name('.save');
 
     //DELETE
+    Route::post('delete', [DeviceAccessController::class, 'remove'])->name('.remove');
 
 
 });
