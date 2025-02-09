@@ -10,7 +10,9 @@ use iProtek\Core\Helpers\UISettingHelper;
 
 Route::middleware('web')->group(function(){
   
-  Auth::routes(["register"=>false,"login"=>false]);
+  Route::middleware('auth:guest')->group(function(){
+    Auth::routes(["register"=>false,"login"=>false]);
+  });
 
   Route::middleware(['web-visits'])->group(function(){
 
