@@ -7,7 +7,7 @@ use iProtek\Core\Helpers\UISettingHelper;
   //  Route::get('/', [SmsController::class, 'index'])->name('.index');
 //});
 
-Auth::routes(["register"=>false,"login"=>false]);
+//Auth::routes(["register"=>false,"login"=>false]);
 
 Route::middleware('web')->group(function(){
 
