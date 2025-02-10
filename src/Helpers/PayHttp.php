@@ -94,6 +94,16 @@ class PayHttp
                 ];
             }
         }
+
+        //ADD FILTER HEADER
+        $headers["CLIENT-ID"] = $client_id;
+        $headers["SOURCE-URL"] = config('app.url'); 
+        $headers["SOURCE-NAME"] = config('app.name'); 
+        $headers["SOURCE-TYPE"] = config('iprotek.app_type');
+        $headers["SYSTEM-ID"] = config('iprotek.system_id'); 
+        $headers["SYSTEM-URL"] = config('iprotek.system');
+        $headers["PAY-USER-ACCOUNT-ID"] = 0;
+        $headers["PAY-PROXY-ID"] = 0;
         
         $client = new \GuzzleHttp\Client([
             'base_uri' => $pay_url,
