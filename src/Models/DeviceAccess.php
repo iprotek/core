@@ -29,6 +29,7 @@ class DeviceAccess extends Model
         "is_error",
         "is_app_execute",
         "error_info",
+        "is_ssl"
     ];
 
     protected $hidden = [
@@ -40,6 +41,7 @@ class DeviceAccess extends Model
         "branch_ids"=> "json",
         "is_active" => "boolean",
         "is_error"  => "boolean",
-        "is_app_execute" => "boolean"
+        "is_app_execute" => "boolean",
+        "is_ssl" => "boolean"
     ];
 }

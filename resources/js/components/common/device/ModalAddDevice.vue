@@ -25,6 +25,9 @@
                         <user-input2 v-model="device_info.port" :type="'number'" :placeholder="'Port'" :input_style="'height:35px;'" />
                         <user-input2 v-model="device_info.password" :type="'password'" :placeholder="'Password'" :input_style="'height:35px;'" />
                         <div class="my-1">
+                            <switch2 v-model="device_info.is_ssl" /> SSL?
+                        </div>
+                        <div class="my-1">
                             <switch2 v-model="device_info.is_active" /> IS ACTIVE
                         </div>
                         <div class="my-1">
@@ -115,7 +118,8 @@
                     type:'mikrotik',
                     is_active:true,
                     is_app_execute:false,
-                    branch_ids:[]
+                    branch_ids:[],
+                    is_ssl:false
                 },
                 promiseExec:null
            }
@@ -141,7 +145,8 @@
                     type:'mikrotik',
                     is_active:true,
                     is_app_execute:false,
-                    branch_ids:[]
+                    branch_ids:[],
+                    is_ssl:false
                 };
                 this.is_check_before_saving = true;
 
@@ -180,7 +185,8 @@
                             type: data.type,
                             is_active: data.is_active,
                             is_app_execute: data.is_app_execute,
-                            branch_ids: data.branch_ids
+                            branch_ids: data.branch_ids,
+                            is_ssl:data.is_ssl
                         };
 
                     });

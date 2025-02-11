@@ -7,6 +7,7 @@ use iProtek\Core\Http\Controllers\_Common\_CommonController;
 use iProtek\Core\Models\DeviceAccess;
 use iProtek\Core\Helpers\PayModelHelper;
 use iProtek\Core\Helpers\Console\MikrotikHelper;
+use iProtek\Core\Helpers\Console\SshHelper;
 
 class DeviceAccessController extends _CommonController
 {
@@ -30,10 +31,21 @@ class DeviceAccessController extends _CommonController
 
         if($data['type'] == "mikrotik"){
             $result =  MikrotikHelper::credential_login_check($data);
-            if(!$result){
-                return ["status"=>0, "message"=>"Mikrotik Device Credential failed."];
+            
+            if($result["status"] == 0 ){
+                return ["status"=>0, "message"=>$result["message"]];
             }
-        } 
+            return $result;
+        }
+        else if($data['type'] == "ssh"){
+            $result =  SshHelper::credential_login_check($data);
+            
+            if($result["status"] == 0 ){
+                return ["status"=>0, "message"=>$result["message"]];
+            }
+            return $result;
+            
+        }
 
         return ["status"=>0, "message"=>"Type [".$data['type']."] not supported for checking yet."];
     }
@@ -53,7 +65,8 @@ class DeviceAccessController extends _CommonController
             "branch_ids"=>"required",
             "password"=>"nullable",
             "is_active"=>"required",
-            "is_app_execute"=>"required"
+            "is_app_execute"=>"required",
+            "is_ssl"=>"required"
         ])->validate();
 
         $exists = PayModelHelper::get(DeviceAccess::class, $request, [
@@ -131,7 +144,8 @@ class DeviceAccessController extends _CommonController
             "branch_ids"=>"required",
             "password"=>"nullable",
             "is_active"=>"required",
-            "is_app_execute"=>"required"
+            "is_app_execute"=>"required",
+            "is_ssl"=>"required"
         ])->validate();
         
         if(!in_array($request->type, ["mikrotik", "windows", "ssh"])){
