@@ -43,11 +43,11 @@ class MikrotikHelper
             //$query = new Query('/system/identity/print');
             //$response = $client->write($query)->read();
         
-            //$response = $client->query('/export');
-            $response = $client->export();
+            $response = $client->query('/system/identity/print')->read();
+            //$response = $client->export();
 
 
-            //Log::error($response);
+            Log::error($response);
             //print_r($response);
             return [ "status"=>0, "message"=> json_encode($response)];
         } catch (\Exception $e) {
