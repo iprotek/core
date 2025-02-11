@@ -15,7 +15,7 @@
                         <div class="mt-2">
                             <label class="mb-0">Type:</label>
                             <select v-model="device_info.type" class="form-control">
-                                <option value="mikrotik">Mikrotik</option>
+                                <option value="mikrotik">Mikrotik API</option>
                                 <option value="windows">Windows</option>
                                 <option value="ssh">SSH</option>
                             </select>
