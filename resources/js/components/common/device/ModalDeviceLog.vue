@@ -15,6 +15,8 @@
                     <table class="w-100 table table-bordered">
                         <thead>
                             <th>#</th>
+                            <th>Target</th>
+                            <th>TargetRef#</th>
                             <th>Command</th>
                             <th>Log Info</th>
                             <th>Status</th>
@@ -24,6 +26,8 @@
                         <tbody>
                             <tr v-for="(item,itemIndex) in itemList" v-bind:key="'item-'+item.id+'-'+itemIndex">
                                 <th v-text="item.id"></th>
+                                <td v-text="item.target_name"></td>
+                                <td v-text="item.target_id"></td>
                                 <td v-text="item.command"></td>
                                 <td v-text="item.log_info"></td>
                                 <td >
@@ -35,12 +39,12 @@
                                 <td></td>
                             </tr>
                             <tr v-if="isLoading">
-                                <td colspan="6" class="text-center">
+                                <td colspan="8" class="text-center">
                                     <code> -- Loading Device Logs -- </code>
                                 </td>
                             </tr>
                             <tr v-else-if="itemList.length == 0">
-                                <td colspan="6" class="text-center">
+                                <td colspan="8" class="text-center">
                                     <code> -- No Device Logs Found! -- </code>
                                 </td>
                             </tr>
