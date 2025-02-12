@@ -6,7 +6,7 @@
             </template> 
             <template slot="body" >
                 <div v-if="device_id">
-                    <div class="input-group text-sm mb-1"> 
+                    <div class="input-group text-sm mb-1 mt-2"> 
                         <span class="btn btn-default" @click="current_page=1;loadDeviceLogs()">
                             <small title="Show" class="fa fa-search text-primary"></small>
                         </span> 
