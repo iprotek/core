@@ -7,8 +7,8 @@ use Illuminate\Support\Facades\Session;
 use iProtek\Core\Models\Cms;
 use iProtek\Core\Enums\CmsType;
 use MikrotikAPI\MikrotikAPI;
-use RouterOS\Client;
-use RouterOS\Query;
+use RouterOS\Client as MikroTikClient;
+use RouterOS\Query as MikroTikQuery;
 
 class MikrotikHelper
 {  
@@ -29,33 +29,33 @@ class MikrotikHelper
         
         //EVILFREELANCER
 
+        $command = '/system/identity/print';
+
         try {
             // Establish connection to MikroTik
-            $client = new Client([
+            $client = new MikroTikClient([
                 'host' => $host,  // Change to your MikroTik IP
                 'user' => $user,          // Change to your MikroTik username
                 'pass' => $pass,       // Change to your MikroTik password
                 'port' => $port,             // API port (8728 for HTTP, 8729 for HTTPS)
                 "ssl" => $is_ssl,
             ]);
+
         
             // Example: Get router identity
-            //$query = new Query('/system/identity/print');
-            //$response = $client->write($query)->read();
+            $query = new MikroTikQuery( $command );
+            $response = $client->query($query)->read();
         
-            $response = $client->query('/system/identity/print')->read();
+            //$response = $client->query(  $command )->read();
             //$response = $client->export();
 
-
-            Log::error($response);
+            //Log::error($response);
             //print_r($response);
-            return [ "status"=>0, "message"=> json_encode($response)];
+            return [ "status"=>1, "message"=> json_encode($response), "command"=>$command ];
         } catch (\Exception $e) {
             //Log::error( $e->getMessage() );
-            return [ "status"=>0, "message"=> $e->getMessage() ];
+            return [ "status"=>0, "message"=> $e->getMessage(), "command"=>$command ];
         }
-
-        return ["status"=>0, "message"=>"Unable to connect to mikrotik"];
 
     }
 

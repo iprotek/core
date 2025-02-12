@@ -8,6 +8,7 @@ use iProtek\Core\Models\DeviceAccess;
 use iProtek\Core\Helpers\PayModelHelper;
 use iProtek\Core\Helpers\Console\MikrotikHelper;
 use iProtek\Core\Helpers\Console\SshHelper;
+use iProtek\Core\Models\DeviceAccessTriggerLog;
 
 class DeviceAccessController extends _CommonController
 {
@@ -27,14 +28,10 @@ class DeviceAccessController extends _CommonController
         return $deviceList->paginate(10);
     }
 
-    public function device_connection_check( array $data){
+    public function device_connection_check( Request $request, array $data){
 
         if($data['type'] == "mikrotik"){
             $result =  MikrotikHelper::credential_login_check($data);
-            
-            if($result["status"] == 0 ){
-                return ["status"=>0, "message"=>$result["message"]];
-            }
             return $result;
         }
         else if($data['type'] == "ssh"){
@@ -81,21 +78,53 @@ class DeviceAccessController extends _CommonController
             return ["status"=>0, "message"=>"Device Custom Name already exists"];
         }
 
+        
+        $log = PayModelHelper::create(DeviceAccessTriggerLog::class, $request, [
+            "target_name"=>$data['type']."-connect",
+            "target_id"=>0,
+            "device_access_id"=>0,
+            "command"=>"",
+            "response"=>"",
+            "log_info"=>""
+        ]);
+
         //CHECKING DEVICE SUCCESS LOGIN ACCOUNT VALIDATION
         if($request->is_check_before_saving){ 
+            
             //IF FAILED
-            $result = $this->device_connection_check($data);
+            $result = $this->device_connection_check( $request, $data);
+
+            //COMMON RESULT
+            if(isset($result['command']))
+                $log->command = $result['command'];
+            $log->response = $result['message'];
+
             if($result["status"] == 0){
+            
+                $log->status_id = 2;
+                $log->save();
+                
                 return $result;
-            }
+            } 
+            $log->status_id = 1;
         }
+        else{
+
+            $log->log_info = "Bypass connection checking..";
+
+        }
+
         if(!$data["password"]){
             $data["password"] = "";
         }
 
         //ADDING
         $device_access = PayModelHelper::create(DeviceAccess::class, $request, $data);
-
+        
+        if( isset($log) ){
+            $log->device_access_id = $device_access->id;
+            $log->save();
+        }
 
 
         return ["status"=>1, "message"=>"Successfully Added.", "data"=>$device_access];
@@ -163,19 +192,48 @@ class DeviceAccessController extends _CommonController
             $data['password'] = $can_manage['password'];
         }
         
+        
+        $log = PayModelHelper::create(DeviceAccessTriggerLog::class, $request, [
+            "target_name"=>$data['type']."-connect",
+            "target_id"=>0,
+            "device_access_id"=>$can_manage->id,
+            "command"=>"",
+            "response"=>"",
+            "log_info"=>""
+        ]);
+
+
         //CHECKING DEVICE SUCCESS LOGIN ACCOUNT VALIDATION
         if($request->is_check_before_saving){ 
             //IF FAILED
-            $result = $this->device_connection_check($data);
+            $result = $this->device_connection_check( $request, $data);
+            
+            //COMMON RESULT
+            if(isset($result['command']))
+                $log->command = $result['command'];
+            $log->response = $result['message'];
+
             if($result["status"] == 0){
+            
+                $log->status_id = 2;
+                $log->save();
+                
                 return $result;
-            }
+            } 
+            $log->status_id = 1;
         }
+        else{
 
+            $log->log_info = "Bypass connection checking..";
 
+        }
 
         PayModelHelper::update($can_manage, $request, $data);
 
+        if( isset($log) ){
+            $log->device_access_id = $can_manage->id;
+            $log->save();
+        }
 
 
         return ["status"=>1, "message"=>"Successfully updated", "data"=>$can_manage];
