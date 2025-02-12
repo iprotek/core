@@ -23,4 +23,11 @@ class DeviceAccessTriggerLog extends Model
         "pay_deleted_by",
         "status_id"
     ];
+
+
+    protected $casts = [
+        "created_at"=>"datetime:F j, Y h:i A"
+    ];
+
+
 }

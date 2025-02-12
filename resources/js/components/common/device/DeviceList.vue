@@ -70,7 +70,7 @@
                                         <span v-else class="text-danger">Inactive</span>
                                     </td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm" title="Trigger Logs">
+                                        <button @click="$refs.device_log.show(device.id)" class="btn btn-primary btn-sm" title="Trigger Logs">
                                             <span class="fa fa-list"></span>
                                         </button>
                                         <button class="btn btn-warning btn-sm" title="Edit" @click="$refs.modal_device.show(device.id)">
@@ -89,17 +89,20 @@
             </div>
         </div>
         <modal-add-device @data_updated="loadDeviceList()" ref="modal_device"  :group_id="group_id" :set_branch_source="set_branch_source" :set_branch_source_url="set_branch_source_url" />
+        <modal-device-log ref="device_log" :group_id="group_id" />
     </div>
 </template>
 
 <script>
     import ModalAddDeviceVue from './ModalAddDevice.vue';
     import PageFooterVue from '../PageFooter.vue';
+    import ModalDeviceLogVue from './ModalDeviceLog.vue';
     export default {
         props:[ "group_id", "set_branch_source", "set_branch_source_url" ],
         components: {
             "modal-add-device":ModalAddDeviceVue,
-            "page-footer":PageFooterVue
+            "page-footer":PageFooterVue,
+            "modal-device-log":ModalDeviceLogVue
         },
         data: function () {
             return {

@@ -102,11 +102,13 @@ class DeviceAccessController extends _CommonController
             if($result["status"] == 0){
             
                 $log->status_id = 2;
+                $log->log_info = "Checking credential failed..";
                 $log->save();
                 
                 return $result;
             } 
             $log->status_id = 1;
+            $log->log_info = "Checking credential successful..";
         }
         else{
 
@@ -215,12 +217,14 @@ class DeviceAccessController extends _CommonController
 
             if($result["status"] == 0){
             
+                $log->log_info = "Checking credential failed..";
                 $log->status_id = 2;
                 $log->save();
                 
                 return $result;
             } 
             $log->status_id = 1;
+            $log->log_info = "Checking credential successful..";
         }
         else{
 

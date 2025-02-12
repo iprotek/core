@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 //use iProtek\Core\Http\Controllers\Manage\CmsController;
 //use App\Http\Controllers\Manage\BillingSharedAccountDefaultBranchController;
 use iProtek\Core\Http\Controllers\Manage\DeviceAccessController;
+use iProtek\Core\Http\Controllers\Manage\DeviceAccessTriggerLogController;
 use Illuminate\Http\Request; 
 
  
@@ -28,6 +29,8 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
 
     //DELETE
     Route::post('delete', [DeviceAccessController::class, 'remove'])->name('.remove');
+
+    Route::get('logs', [DeviceAccessTriggerLogController::class, 'list'])->name('.list');
 
 
 });
