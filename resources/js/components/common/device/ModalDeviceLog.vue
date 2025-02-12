@@ -6,6 +6,12 @@
             </template> 
             <template slot="body" >
                 <div v-if="device_id">
+                    <div class="input-group text-sm mb-1"> 
+                        <span class="btn btn-default" @click="current_page=1;loadDeviceLogs()">
+                            <small title="Show" class="fa fa-search text-primary"></small>
+                        </span> 
+                        <input v-model="search" type="text" class="form-control" @keyup.enter="current_page=1; loadDeviceLogs();" >
+                    </div>
                     <table class="w-100 table table-bordered">
                         <thead>
                             <th>#</th>
@@ -46,7 +52,7 @@
             </template>
             <template slot="footer">
                 <div>
-                    <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                 </div>
             </template>
         </modal-view> 
@@ -71,7 +77,8 @@
                 pageData:null,
                 itemList:[],
                 current_page:1,
-                isLoading:false
+                isLoading:false,
+                search:''
            }
         },
         methods:{ 
@@ -107,9 +114,10 @@
             loadDeviceLogs:function(){
                 var vm = this;
                 vm.isLoading = true;
+                vm.itemList = [];
                 WebRequest2('GET', ('/api/group/'+this.group_id+'/devices/logs?')+vm.queryString({
                     device_access_id:vm.device_id,
-                    search_text:'',
+                    search_text:vm.search,
                     page:vm.current_page,
                     items_per_page: 10
                 })).then(resp=>{

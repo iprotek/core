@@ -25,8 +25,7 @@ class DeviceAccessTriggerLogController extends _CommonController
 
         if($request->search_text){
             $search_text = '%'.str_replace(' ', '%', $request->search_text).'%';
-           $deviceList->whereRaw(' CONCAT(target_name, command, log_info) LIKE ?', [$search_text]);
-
+            $deviceList->whereRaw(' CONCAT(target_name, command, log_info) LIKE ?', [$search_text]); 
         } 
 
         return $deviceList->paginate(10);
