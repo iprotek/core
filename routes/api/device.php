@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\Manage\BillingSharedAccountDefaultBranchController;
 use iProtek\Core\Http\Controllers\Manage\DeviceAccessController;
 use iProtek\Core\Http\Controllers\Manage\DeviceAccessTriggerLogController;
+use iProtek\Core\Http\Controllers\Manage\DeviceTemplateTriggerController;
 use Illuminate\Http\Request; 
 
  
@@ -32,5 +33,21 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
 
     Route::get('logs', [DeviceAccessTriggerLogController::class, 'list'])->name('.list');
 
+    Route::prefix('trigger')->name('.trigger')->group(function(){
+        
+        //LIST
+        Route::get('list', [DeviceTemplateTriggerController::class, 'list'])->name('.list');
+
+        //ADD
+        Route::get('add', [DeviceTemplateTriggerController::class, 'add'])->name('.add');
+
+        //REMOVE
+        Route::get('remove', [DeviceTemplateTriggerController::class, 'remove'])->name('.remove');
+
+        //UPDATE
+        Route::get('update', [DeviceTemplateTriggerController::class, 'update'])->name('.update');
+
+
+    });
 
 });
