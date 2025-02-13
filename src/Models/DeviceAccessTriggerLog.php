@@ -16,12 +16,14 @@ class DeviceAccessTriggerLog extends Model
         "log_info",
         "target_name",
         "target_id",
+        "status_id",
+        "device_template_trigger_id",
+        "device_template_trigger_action",
 
         "group_id",
         "pay_created_by",
         "pay_updated_by",
-        "pay_deleted_by",
-        "status_id"
+        "pay_deleted_by"
     ];
 
 
