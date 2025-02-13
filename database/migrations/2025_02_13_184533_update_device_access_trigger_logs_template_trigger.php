@@ -16,7 +16,7 @@ class UpdateDeviceAccessTriggerLogsTemplateTrigger extends Migration
         //
         Schema::table('device_access_trigger_logs', function (Blueprint $table) {
             $table->integer('device_template_trigger_id')->default(0); //0 -pending, 1-success, 2-failed
-            $table->integer('device_template_trigger_action')->nullable(); 
+            $table->string('device_template_trigger_action')->nullable(); 
         });
     }
 
