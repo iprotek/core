@@ -46,4 +46,8 @@ class DeviceTemplateTrigger extends Model
         "enable_active"=>"boolean",
         "enable_remove"=>"boolean"
     ];
+
+    public function device_access(){
+        $this->belongsTo(DeviceAccess::class, 'device_access_id');
+    }
 }

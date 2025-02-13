@@ -12,6 +12,14 @@ class DeviceTemplateTriggerController extends _CommonController
     //
     public function list(Request $request){
 
+        $data = $this->validate($request,[
+            "target_name"=>"required",
+            "target_id"=>"required"
+        ])->validated();
+
+
+        return DeviceTemplateTrigger::where($data)->get();
+
     }
     public function add(Request $request){
 
