@@ -77,13 +77,13 @@
                                 </small>
                             </th>
                             <th class="text-center" style="width:200px;" >
-                                <button class="btn btn-outline-primary btn-sm mx-1" title="Logs" >
+                                <button class="btn btn-outline-primary btn-sm mx-1 px-1 py-0" title="Logs" >
                                     <span class="fa fa-list"></span>
                                 </button>
-                                <button class="btn btn-outline-warning btn-sm mx-1">
+                                <button class="btn btn-outline-warning btn-sm mx-1 px-1 py-0" @click="$refs.modal_trigger_add.show(item.id)">
                                     <span class="fa fa-edit"></span>
                                 </button>
-                                <button class="btn btn-outline-danger btn-sm mx-1">
+                                <button class="btn btn-outline-danger btn-sm mx-1 px-1 py-0">
                                     <span class="fa fa-times"></span>
                                 </button>
                             </th>

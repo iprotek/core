@@ -39,6 +39,8 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
         
         //LIST
         Route::get('list', [DeviceTemplateTriggerController::class, 'list'])->name('.list');
+        //LIST
+        Route::get('get-one', [DeviceTemplateTriggerController::class, 'get_one'])->name('.get-one');
 
         //ADD
         Route::post('add', [DeviceTemplateTriggerController::class, 'add'])->name('.add');

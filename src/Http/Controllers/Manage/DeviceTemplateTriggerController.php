@@ -26,6 +26,22 @@ class DeviceTemplateTriggerController extends _CommonController
         return $template->get();
 
     }
+
+    public function get_one(Request $request){
+        
+        $data = $this->validate($request,[ 
+            "id"=>"required"
+        ])->validated();
+        
+        $template = PayModelHelper::get(DeviceTemplateTrigger::class, $request)->with(['device_access'=>function($q){
+            $q->select('id', 'name', 'type', \DB::raw(" CONCAT(name,' - [ ', type, ' ] ' ) as text"));
+        }])->where($data);
+
+        return $template->first();
+
+    }
+
+
     public function add(Request $request){
         $data = $this->validate($request, [
             "trigger_name"=>"required",
@@ -58,6 +74,7 @@ class DeviceTemplateTriggerController extends _CommonController
 
         return ["status"=>1, "message"=>"Successfully Added","data"=> $created];
     }
+
     public function update(Request $request){
         $data = $this->validate($request, [
             "id"=>"required",
@@ -79,6 +96,7 @@ class DeviceTemplateTriggerController extends _CommonController
         ])->validated();
 
     }
+
     public function remove(Request $request){
 
     }

@@ -206,11 +206,27 @@
                 vm.device_trigger_id = device_trigger_id;
 
                 this.$refs.modal.show();
+                if(vm.device_trigger_id){
+                    this.get_one();
+                }
 
                 return new Promise((promiseExec)=>{
                     vm.promiseExec = promiseExec;
                 });
                 
+            },
+            get_one:function(){
+                var vm = this;
+                WebRequest2('GET', '/api/group/'+this.group_id+'/devices/trigger/get-one?id='+this.device_trigger_id).then(resp=>{
+                    resp.json().then(data=>{
+                        //console.log(data);
+                        vm.selected_device = data.device_access;
+                        
+                        //TODO:: Update selected fields
+                    
+                    
+                    })
+                });
             },
             save:function(){
                 var vm = this;
