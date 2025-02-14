@@ -40,35 +40,35 @@
                             <th class="text-center">
                                 <small v-text="item.id"> </small>
                             </th>
-                            <th></th>
+                            <th v-text="item.trigger_name"></th>
                             <th>
-                                <span >
-                                    <i class="fa fa-check"></i>
-                                    ADD
-                                </span>
-                                <span>
-                                    <i class="fa fa-check"></i>
+                                <small class="mx-1 text-nowrap">
+                                    <i :class="'fa fa-'+(item.enable_register? 'check text-success':'times text-danger')"></i>
+                                    REGISTER
+                                </small>
+                                <small class="mx-1 text-nowrap">
+                                    <i :class="'fa fa-'+(item.enable_update? 'check text-success':'times text-danger')"></i>
                                     UPDATE
-                                </span>
-                                <span>
-                                    <i class="fa fa-check"></i>
+                                </small>
+                                <small class="mx-1 text-nowrap">
+                                    <i :class="'fa fa-'+(item.enable_active? 'check text-success':'times text-danger')"></i>
                                     ACTIVE
-                                </span>
-                                <span>
-                                    <i class="fa fa-check"></i>
+                                </small>
+                                <small class="mx-1 text-nowrap">
+                                    <i :class="'fa fa-'+(item.enable_inactive? 'check text-success':'times text-danger')"></i>
                                     INACTIVE
-                                </span>
-                                <span>
-                                    <i class="fa fa-check"></i>
+                                </small>
+                                <small class="mx-1 text-nowrap">
+                                    <i :class="'fa fa-'+(item.enable_remove? 'check text-success':'times text-danger')"></i>
                                     DELETE
-                                </span>
+                                </small>
 
                             </th>
                             <th></th>
                             <th>
                                 <small>
-                                    <span class="text-success">ACTIVE</span>
-                                    <span class="text-danger">INACTIVE</span>
+                                    <span v-if="item.is_active" class="text-success text-primary">ACTIVE</span>
+                                    <span v-else class="text-danger textt-danger">INACTIVE</span>
                                 </small>
                             </th>
                             <th class="text-center" style="width:200px;" >
@@ -87,7 +87,7 @@
                 </table>
             </div>
         </div>
-        <modal-trigger-add ref="modal_trigger_add" :group_id="group_id" :target_id="target_id" :target_name="target_name" />
+        <modal-trigger-add @data_updated="loadDeviceTrigger()" ref="modal_trigger_add" :group_id="group_id" :target_id="target_id" :target_name="target_name" />
     </div>
 </template>
 

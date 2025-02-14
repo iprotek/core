@@ -11,14 +11,14 @@
                         
                         <user-input2 v-model="device_trigger_info.trigger_name" :placeholder="'Trigger Name'" :input_style="'height:40px;'" />
                         <div class="mt-2">
-                            <label class="mb-0" > Device Trigger </label>
+                            <label class="mb-0" > Device ACCES ID </label>
                         </div>
-                        <select2 v-model="device_trigger_info.selected_device" :query_filters="{only_active:'yes'}"   :placeholder="'-- SELECT DEVICE --'" :url="'/api/group/'+group_id+'/devices/list-selection?only_active=yes'" :has_clear="true"  />
+                        <select2 v-model="selected_device" :query_filters="{only_active:'yes'}"   :placeholder="'-- SELECT DEVICE --'" :url="'/api/group/'+group_id+'/devices/list-selection?only_active=yes'" :has_clear="true"  />
                         <div class="mt-1">
                             <switch2 v-model="device_trigger_info.is_active" /> <label class="mb-0"> IS ACTIVE </label>
                         </div>
                         <div class="mt-1" v-if="!device_trigger_info.is_active">
-                            <textarea class="form-control" style="min-height:50px;" placeholder="Inactive trigger reason."></textarea>
+                            <textarea class="form-control" style="min-height:50px;" placeholder="Inactive trigger reason." v-model="device_trigger_info.inactive_reason"></textarea>
                         </div>
                         <div class="card mt-2">
                             <div class="card-header">
@@ -35,6 +35,7 @@
                                         <label class="mb-1">SELECT SOURCE</label>
                                     </div>
                                 </div>
+                                <small class="text-primary">*use this dynamic variable to replace your command on the current instance value.</small>
                                 <div>
                                     <code>[account field="id" ]</code> - get the data id
                                 </div>
@@ -167,9 +168,14 @@
                 promiseExec:null,
                 show_preview:false,
                 device_trigger_id:0,
+                selected_device:{
+                    id:0,
+                    text:' -- SELECT DEVICE -- '
+                },
                 device_trigger_info:{
                     trigger_name:'',
                     is_active:true,
+                    device_access_id:0,
                     
                     enable_register:false,
                     register_command_template:'',
@@ -186,10 +192,6 @@
                     enable_remove:false,
                     remove_command_template:'',
                     
-                    selected_device:{
-                        id:0,
-                        text:' -- SELECT DEVICE -- '
-                    },
                     target_name: this.target_name,
                     target_id: this.target_id
                 }
@@ -215,9 +217,11 @@
                 //'/api/group/'+this.group_id+'/devices/trigger/add'
                 var request = this.device_trigger_info;
                 request.id = this.device_trigger_id;
+                request.device_access_id = this.selected_device.id ? this.selected_device.id : ''
+                //vm.device_access_id = this.selected_device.id ? this.selected_device.id : ''
 
-                console.log("REQUEST: ",request);
-                return;
+                //console.log("REQUEST: ",request, this.selected_device);
+                //return;
                 
                 this.$refs.swal_prompt.alert(
                     'question',
@@ -227,8 +231,10 @@
                     '/api/group/'+this.group_id+'/devices/trigger/'+(this.device_trigger_id ? 'update' : 'add'), 
                     JSON.stringify(request)
                 ).then(res=>{
-                    if(res.isConfirmed){
+                    if(res.isConfirmed && res.value.status == 1){
                         vm.$emit('data_updated');
+                        vm.device_trigger_id = res.value.data.id;
+
                     }
                 });
                 

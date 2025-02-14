@@ -40,12 +40,21 @@ class DeviceTemplateTriggerController extends _CommonController
             "active_command_template"=>"nullable",
             "enable_remove"=>"required",
             "remove_command_template"=>"nullable",
-            "is_active"=>"required"
+            "is_active"=>"required",
+            "inactive_reason"=>"nullable"
         ])->validated();
 
 
+        //CHECK IF TRIGGER NAME EXISTS
+        $exists = PayModelHelper::get(DeviceTemplateTrigger::class, $request)->where('trigger_name', $request->trigger_name)->first();
+        if($exists){
+            return ["status"=>0, "message"=>"Trigger Name Already exists"];
+        }
+
+        $created = PayModelHelper::create(DeviceTemplateTrigger::class, $request, $data);
 
 
+        return ["status"=>1, "message"=>"Successfully Added","data"=> $created];
     }
     public function update(Request $request){
         $data = $this->validate($request, [

@@ -41,13 +41,13 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
         Route::get('list', [DeviceTemplateTriggerController::class, 'list'])->name('.list');
 
         //ADD
-        Route::get('add', [DeviceTemplateTriggerController::class, 'add'])->name('.add');
+        Route::post('add', [DeviceTemplateTriggerController::class, 'add'])->name('.add');
 
         //REMOVE
-        Route::get('remove', [DeviceTemplateTriggerController::class, 'remove'])->name('.remove');
+        Route::delete('remove', [DeviceTemplateTriggerController::class, 'remove'])->name('.remove');
 
         //UPDATE
-        Route::get('update', [DeviceTemplateTriggerController::class, 'update'])->name('.update');
+        Route::put('update', [DeviceTemplateTriggerController::class, 'update'])->name('.update');
 
 
     });
