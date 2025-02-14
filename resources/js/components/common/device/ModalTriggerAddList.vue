@@ -2,34 +2,39 @@
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :vw="70">
             <template slot="header" >
-                ADD Trigger
+                <label v-if="device_trigger_id == 0">ADD TRIGGER</label>
+                <label v-else>UPDATE TRIGGER</label>
             </template> 
             <template slot="body" >     
                 <div class="row">
                     <div class="col-sm-5">
                         
-                        <user-input2 :placeholder="'Trigger Name'" :input_style="'height:40px;'" />
+                        <user-input2 v-model="device_trigger_info.trigger_name" :placeholder="'Trigger Name'" :input_style="'height:40px;'" />
                         <div class="mt-2">
                             <label class="mb-0" > Device Trigger </label>
                         </div>
-                        <select2 :query_filters="{only_active:'yes'}"   :placeholder="'-- SELECT DEVICE --'" :url="'/api/group/'+group_id+'/devices/list-selection?only_active=yes'" :has_clear="true"  />
+                        <select2 v-model="device_trigger_info.selected_device" :query_filters="{only_active:'yes'}"   :placeholder="'-- SELECT DEVICE --'" :url="'/api/group/'+group_id+'/devices/list-selection?only_active=yes'" :has_clear="true"  />
                         <div class="mt-1">
-                            <switch2 v-model="is_active" /> <label class="mb-0"> IS ACTIVE </label>
+                            <switch2 v-model="device_trigger_info.is_active" /> <label class="mb-0"> IS ACTIVE </label>
                         </div>
-                        <div class="mt-1" v-if="!is_active">
+                        <div class="mt-1" v-if="!device_trigger_info.is_active">
                             <textarea class="form-control" style="min-height:50px;" placeholder="Inactive trigger reason."></textarea>
-                        </div>
-                        <div class="mt-1">
-                            <switch2 v-model="show_preview" /> <label class="mb-0">SHOW PREVIEW </label>
-                        </div>
-                        <div v-if="show_preview" class="mt-1">
-                            <label class="mb-1">SELECT SOURCE</label>
                         </div>
                         <div class="card mt-2">
                             <div class="card-header">
-                                DYNAMIC VARIABLE DETAILS
+                                <b>
+                                    DYNAMIC VARIABLES
+                                </b>
                             </div>
                             <div class="card-body text-sm">
+                                <div class="mb-4">
+                                    <div class="mt-1">
+                                        <switch2 v-model="show_preview" /> <label class="mb-0">SHOW PREVIEW </label>
+                                    </div>
+                                    <div v-if="show_preview" class="mt-1">
+                                        <label class="mb-1">SELECT SOURCE</label>
+                                    </div>
+                                </div>
                                 <div>
                                     <code>[account field="id" ]</code> - get the data id
                                 </div>
@@ -56,10 +61,10 @@
                             <div class="card-body p-1">
                                 <div class="pb-1">
                                     <small>
-                                        <icheck :checked="enable_register" @update:checked="(is_checked)=>{ enable_register = is_checked; }" :label="'Enable Register / New Entry'" />
+                                        <icheck :checked="device_trigger_info.enable_register" @update:checked="(is_checked)=>{ device_trigger_info.enable_register = is_checked; }" :label="'Enable Register / New Entry'" />
                                     </small>
                                 </div>
-                                <textarea v-if="enable_register" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <textarea v-if="device_trigger_info.enable_register" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
                             </div>
                         </div>
                         <div class="card mt-2">
@@ -71,10 +76,10 @@
                             <div class="card-body p-1">
                                 <div class="pb-1">
                                     <small>
-                                    <icheck :checked="enable_update" @update:checked="(is_checked)=>{ enable_update = is_checked; }" :label="'Enable Updates'" />
+                                    <icheck :checked="device_trigger_info.enable_update" @update:checked="(is_checked)=>{ device_trigger_info.enable_update = is_checked; }" :label="'Enable Updates'" />
                                     </small>
                                 </div>
-                                <textarea v-if="enable_update" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <textarea v-if="device_trigger_info.enable_update" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
                             </div>
                         </div>
                         <div class="card mt-2">
@@ -86,10 +91,10 @@
                             <div class="card-body p-1">
                                 <div class="pb-1">
                                     <small>
-                                    <icheck :checked="enable_active" @update:checked="(is_checked)=>{ enable_active = is_checked; }" :label="'Enable ACTIVE'" />
+                                    <icheck :checked="device_trigger_info.enable_active" @update:checked="(is_checked)=>{ device_trigger_info.enable_active = is_checked; }" :label="'Enable ACTIVE'" />
                                     </small>
                                 </div>
-                                <textarea v-if="enable_active" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <textarea v-if="device_trigger_info.enable_active" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
                             </div>
                         </div>
                         <div class="card mt-2">
@@ -101,10 +106,10 @@
                             <div class="card-body p-1">
                                 <div class="pb-1">
                                     <small>
-                                    <icheck :checked="enable_inactive" @update:checked="(is_checked)=>{ enable_inactive = is_checked; }" :label="'Enable Inactive'" />
+                                    <icheck :checked="device_trigger_info.enable_inactive" @update:checked="(is_checked)=>{ device_trigger_info.enable_inactive = is_checked; }" :label="'Enable Inactive'" />
                                     </small>
                                 </div>
-                                <textarea v-if="enable_inactive" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <textarea v-if="device_trigger_info.enable_inactive" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
                            </div>
                         </div>
                         <div class="card mt-2">
@@ -116,10 +121,10 @@
                             <div class="card-body p-1">
                                 <div class="pb-1">
                                     <small>
-                                    <icheck :checked="enabe_delete" @update:checked="(is_checked)=>{ enabe_delete = is_checked; }" :label="'Enable Delete/Removal'" />
+                                    <icheck :checked="device_trigger_info.enable_remove" @update:checked="(is_checked)=>{ device_trigger_info.enable_remove = is_checked; }" :label="'Enable Delete/Removal'" />
                                     </small>
                                 </div>
-                                <textarea v-if="enabe_delete" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <textarea v-if="device_trigger_info.enable_remove" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
                             </div>
                         </div>
                     </div>
@@ -128,7 +133,12 @@
             </template>
             <template slot="footer">
                 <div>
-                    <button type="button" class="btn btn-outline-primary"  >ADD / SAVE</button> 
+                    <button v-if="device_trigger_id == 0" @click="save" class="btn btn-outline-primary"  >
+                        <span class="fa fa-plus"></span> ADD
+                    </button> 
+                    <button v-else type="button" class="btn btn-outline-primary"  @click="save" >
+                        <span class="fa fa-save"></span> SAVE
+                    </button> 
                 </div>
             </template>
         </modal-view> 
@@ -154,22 +164,44 @@
         },
         data: function () {
             return {
-                is_active:true,
+                promiseExec:null,
                 show_preview:false,
-                enable_register:false,
-                enable_update:false,
-                enable_active:false,
-                enable_inactive:false,
-                enabe_delete:false,
-                promiseExec:null
+                device_trigger_id:0,
+                device_trigger_info:{
+                    trigger_name:'',
+                    is_active:true,
+                    
+                    enable_register:false,
+                    register_command_template:'',
+
+                    enable_update:false,
+                    update_command_template:'',
+
+                    enable_active:false,
+                    active_command_template:'',
+
+                    enable_inactive:false,
+                    inactive_command_template:'',
+
+                    enable_remove:false,
+                    remove_command_template:'',
+                    
+                    selected_device:{
+                        id:0,
+                        text:' -- SELECT DEVICE -- '
+                    },
+                    target_name: this.target_name,
+                    target_id: this.target_id
+                }
            }
         },
         methods:{ 
             reset:function(){
 
             },
-            show:function(){ 
+            show:function(device_trigger_id = 0){ 
                 var vm = this;
+                vm.device_trigger_id = device_trigger_id;
 
                 this.$refs.modal.show();
 
@@ -178,22 +210,28 @@
                 });
                 
             },
-            add:function(){
+            save:function(){
                 var vm = this;
-                /*
-                    this.$refs.swal_prompt.alert(
-                        'question',
-                        "Add Event", 
-                        "Confirm" , 
-                        "POST", 
-                        "/manage/dashboard/resort-events/add", 
-                        JSON.stringify(request)
-                    ).then(res=>{
-                        if(res.isConfirmed){
-                            vm.$emit('data_updated');
-                        }
-                    });
-                */
+                //'/api/group/'+this.group_id+'/devices/trigger/add'
+                var request = this.device_trigger_info;
+                request.id = this.device_trigger_id;
+
+                console.log("REQUEST: ",request);
+                return;
+                
+                this.$refs.swal_prompt.alert(
+                    'question',
+                    this.device_trigger_id? "Update Trigger?":"Add Trigger?" , 
+                    "Confirm" , 
+                     this.device_trigger_id ? "PUT":"POST", 
+                    '/api/group/'+this.group_id+'/devices/trigger/'+(this.device_trigger_id ? 'update' : 'add'), 
+                    JSON.stringify(request)
+                ).then(res=>{
+                    if(res.isConfirmed){
+                        vm.$emit('data_updated');
+                    }
+                });
+                
                 return new Promise((promiseExec)=>{
                     vm.promiseExec = promiseExec;
                 });

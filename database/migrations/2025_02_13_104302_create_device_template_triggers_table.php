@@ -15,6 +15,8 @@ class CreateDeviceTemplateTriggersTable extends Migration
     {
         Schema::create('device_template_triggers', function (Blueprint $table) {
 
+            $table->id();
+            
             $table->bigInteger('group_id'); 
             $table->bigInteger('pay_created_by')->nullable(); 
             $table->bigInteger('pay_updated_by')->nullable();
@@ -31,7 +33,7 @@ class CreateDeviceTemplateTriggersTable extends Migration
 
             //ACCOUNT CHANGES
             $table->boolean('enable_update')->default(0);
-            $table->text('active_command_update')->nullable();
+            $table->text('update_command_template')->nullable();
 
             //ACCOUTN INACTIVE/DISABLE
             $table->boolean('enable_inactive')->default(0);
