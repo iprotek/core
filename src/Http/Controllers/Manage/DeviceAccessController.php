@@ -19,13 +19,28 @@ class DeviceAccessController extends _CommonController
 
         if($request->search_text){
             $search_text = '%'.str_replace(' ', '%', $request->search_text).'%';
-           $deviceList->whereRaw(' CONCAT(type,name,user,port) LIKE ?', [$search_text]);
+            $deviceList->whereRaw(' CONCAT(type,name,user,port) LIKE ?', [$search_text]);
+        }
+        return $deviceList->paginate(10);
+    }
 
+    public function list_selection(Request $request){
+        $deviceList = PayModelHelper::get(DeviceAccess::class, $request, []);
+
+        if($request->search_text){
+            $search_text = '%'.str_replace(' ', '%', $request->search_text).'%';
+           $deviceList->whereRaw(' CONCAT(type,name,user,port) LIKE ?', [$search_text]); 
         }
 
+        if($request->only_active == 'yes'){
+            $deviceList->where('is_active', 1);
+        }
+
+        $deviceList->select('id', \DB::raw("CONCAT(name, ' - [ ', type, ' ]') as text"), 'is_active');
 
 
         return $deviceList->paginate(10);
+
     }
 
     public function device_connection_check( Request $request, array $data){

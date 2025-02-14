@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header"> {{ title }} </div>
             <div class="card-body pt-1"> 
-                <button class="btn btn-outline-primary btn-sm mb-1"> ADD Trigger</button>
+                <button class="btn btn-outline-primary btn-sm mb-1" @click="$refs.modal_trigger_add.show()"> ADD Trigger</button>
                 <table class="w-100 table table-bordered">
                     <thead>
                         <tr>
@@ -72,7 +72,7 @@
                                 </small>
                             </th>
                             <th class="text-center" style="width:200px;" >
-                                <button class="btn btn-outline-primary btn-sm mx-1">
+                                <button class="btn btn-outline-primary btn-sm mx-1" title="Logs" >
                                     <span class="fa fa-list"></span>
                                 </button>
                                 <button class="btn btn-outline-warning btn-sm mx-1">
@@ -87,13 +87,17 @@
                 </table>
             </div>
         </div>
+        <modal-trigger-add ref="modal_trigger_add" :group_id="group_id" :target_id="target_id" :target_name="target_name" />
     </div>
 </template>
 
 <script>
+    import ModalTriggerAddListVue from './ModalTriggerAddList.vue';
+
     export default {
         props:[ "group_id" , "title", "target_name", "target_id" ],
-        components: { 
+        components: {
+            "modal-trigger-add":ModalTriggerAddListVue
         },
         data: function () {
             return {

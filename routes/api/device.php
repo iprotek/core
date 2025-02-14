@@ -19,6 +19,8 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
     //LIST & GET
     Route::get('/list', [DeviceAccessController::class, 'list'])->name('.list');
 
+    Route::get('list-selection', [DeviceAccessController::class, 'list_selection'])->name('.list-selection');
+
     //GET
     Route::get('get', [DeviceAccessController::class, 'get'])->name('.get');
 
