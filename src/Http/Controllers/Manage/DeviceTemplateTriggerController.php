@@ -18,10 +18,12 @@ class DeviceTemplateTriggerController extends _CommonController
             "target_id"=>"required"
         ])->validated();
 
-        $template = PayModelHelper::get(DeviceTemplateTrigger::class, $request)->where($data);
+        $template = PayModelHelper::get(DeviceTemplateTrigger::class, $request)->with(['device_access'=>function($q){
+            $q->select('id', 'name', 'type');
+        }])->where($data);
         
 
-        return DeviceTemplateTrigger::where($data)->get();
+        return $template->get();
 
     }
     public function add(Request $request){

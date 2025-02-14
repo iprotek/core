@@ -64,7 +64,12 @@
                                 </small>
 
                             </th>
-                            <th></th>
+                            <th>
+                                <small class="text-nowrap">
+                                    <span v-if="item.device_access"  v-text="item.device_access.name+' [ '+item.device_access.type+' ]'"></span> 
+                                </small>
+
+                            </th>
                             <th>
                                 <small>
                                     <span v-if="item.is_active" class="text-success text-primary">ACTIVE</span>
@@ -126,6 +131,7 @@
                     vm.isLoading = false;
                     resp.json().then(data=>{
                         vm.itemList = data;
+                        console.log(vm.itemList);
                     });
                 });
                 

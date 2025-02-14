@@ -48,6 +48,6 @@ class DeviceTemplateTrigger extends Model
     ];
 
     public function device_access(){
-        $this->belongsTo(DeviceAccess::class, 'device_access_id');
+        return $this->belongsTo(DeviceAccess::class, 'device_access_id');
     }
 }
