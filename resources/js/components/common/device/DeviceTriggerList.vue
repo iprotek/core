@@ -66,7 +66,8 @@
                             </th>
                             <th>
                                 <small class="text-nowrap">
-                                    <span v-if="item.device_access"  v-text="item.device_access.name+' [ '+item.device_access.type+' ]'"></span> 
+                                    <span v-if="item.device_access"  v-text="item.device_access.text"></span> 
+                                    <code v-else >Deleted/Removed</code> 
                                 </small>
 
                             </th>

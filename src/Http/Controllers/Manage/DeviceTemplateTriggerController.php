@@ -19,7 +19,7 @@ class DeviceTemplateTriggerController extends _CommonController
         ])->validated();
 
         $template = PayModelHelper::get(DeviceTemplateTrigger::class, $request)->with(['device_access'=>function($q){
-            $q->select('id', 'name', 'type');
+            $q->select('id', 'name', 'type', \DB::raw(" CONCAT(name,' - [ ', type, ' ] ' ) as text"));
         }])->where($data);
         
 
