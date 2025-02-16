@@ -199,16 +199,47 @@
         },
         methods:{ 
             reset:function(){
+                this.show_preview = false;
+                this.device_trigger_id = 0;
+                this.selected_device = {
+                    id:0,
+                    text:' -- SELECT DEVICE -- '
+                } 
+                this.device_trigger_info = {
+                    trigger_name:'',
+                    is_active:true,
+                    device_access_id:0,
+                    
+                    enable_register:false,
+                    register_command_template:'',
 
+                    enable_update:false,
+                    update_command_template:'',
+
+                    enable_active:false,
+                    active_command_template:'',
+
+                    enable_inactive:false,
+                    inactive_command_template:'',
+
+                    enable_remove:false,
+                    remove_command_template:'',
+                    
+                    target_name: this.target_name,
+                    target_id: this.target_id
+                };
             },
             show:function(device_trigger_id = 0){ 
                 var vm = this;
-                vm.device_trigger_id = device_trigger_id;
+                vm.reset();
 
                 this.$refs.modal.show();
-                if(vm.device_trigger_id){
-                    this.get_one();
-                }
+                setTimeout(()=>{
+                    vm.device_trigger_id = device_trigger_id;
+                    if(vm.device_trigger_id){
+                        vm.get_one();
+                    }
+                }, 50);
 
                 return new Promise((promiseExec)=>{
                     vm.promiseExec = promiseExec;
@@ -223,6 +254,30 @@
                         vm.selected_device = data.device_access;
                         
                         //TODO:: Update selected fields
+                        
+                        vm.device_trigger_info = {
+                            trigger_name: data.trigger_name,
+                            is_active: data.is_active,
+                            device_access_id: data.device_access_id,
+                            
+                            enable_register:data.enable_register,
+                            register_command_template:data.register_command_template,
+
+                            enable_update:data.enable_update,
+                            update_command_template:data.update_command_template,
+
+                            enable_active:data.enable_active,
+                            active_command_template:data.active_command_template,
+
+                            enable_inactive:data.enable_inactive,
+                            inactive_command_template:data.inactive_command_template,
+
+                            enable_remove:data.enable_remove,
+                            remove_command_template:data.remove_command_template,
+                            
+                            target_name: vm.target_name,
+                            target_id: vm.target_id
+                        };
                     
                     
                     })
