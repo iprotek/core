@@ -78,7 +78,7 @@
                                 </small>
                             </th>
                             <th class="text-center" style="width:200px;" >
-                                <button class="btn btn-outline-primary btn-sm mx-1 px-1 py-0" title="Logs" @click="$refs.modal_device_log.show(item.device_access_id, item.id, 'device-template-trigger' )" >
+                                <button class="btn btn-outline-primary btn-sm mx-1 px-1 py-0" title="Logs" @click="$refs.modal_device_log.show(item.device_access_id, 0, '')" >
                                     <span class="fa fa-list"></span>
                                 </button>
                                 <button class="btn btn-outline-warning btn-sm mx-1 px-1 py-0" @click="$refs.modal_trigger_add.show(item.id)">
