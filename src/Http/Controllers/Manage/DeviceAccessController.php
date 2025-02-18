@@ -24,6 +24,22 @@ class DeviceAccessController extends _CommonController
         return $deviceList->paginate(10);
     }
 
+    public function dynamic_selection(Request $request){
+
+        $data_schema = $request->data_schema;
+
+        $dynamic_table = \DB::table($data_schema);
+
+        if($request->search_text && trim($request->search_text)){
+            $search_text = '%'.str_replace(' ','%', trim($request->search_text)).'%';
+            $dynamic_table->whereRaw(' name like ? ', [$search_text]);
+        }
+
+        $dynamic_table->select('id', 'name as text','name');
+
+        return $dynamic_table->paginate(10);
+    }
+
     public function list_selection(Request $request){
         $deviceList = PayModelHelper::get(DeviceAccess::class, $request, []);
 

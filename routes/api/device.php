@@ -35,6 +35,9 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
 
     Route::get('logs', [DeviceAccessTriggerLogController::class, 'list'])->name('.list');
 
+    Route::get('dynamic-selection', [DeviceAccessController::class, 'dynamic_selection'])->name('.dynamic-selection');
+
+
     Route::prefix('trigger')->name('.trigger')->group(function(){
         
         //LIST

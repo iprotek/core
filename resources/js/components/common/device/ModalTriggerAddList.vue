@@ -33,6 +33,7 @@
                                     </div>
                                     <div v-if="show_preview" class="mt-1">
                                         <label class="mb-1">SELECT SOURCE</label>
+                                        <select2 v-if="show_preview" :query_filters="{data_schema: target_name}" v-model="selected_preview" :modal_selector="true" :url="'/api/group/'+group_id+'/devices/dynamic-selection'" :placeholder="'--Select Source--'"  />
                                     </div>
                                 </div>
                                 <small class="text-primary">*use this dynamic variable to replace your command on the current instance value.</small>
@@ -184,6 +185,10 @@
                 promiseExec:null,
                 show_preview:false,
                 device_trigger_id:0,
+                selected_preview:{
+                    id:0,
+                    text:' -- Select Preview -- '
+                },
                 selected_device:{
                     id:0,
                     text:' -- SELECT DEVICE -- '
