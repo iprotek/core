@@ -77,7 +77,7 @@ class DeviceTemplateTriggerController extends _CommonController
 
     public function update(Request $request){
         $data = $this->validate($request, [
-            "id"=>"required",
+            //"id"=>"required",
             "trigger_name"=>"required",
             "target_name"=>"required",
             "target_id"=>"required",
@@ -94,6 +94,13 @@ class DeviceTemplateTriggerController extends _CommonController
             "remove_command_template"=>"nullable",
             "is_active"=>"required"
         ])->validated();
+        $template = PayModelHelper::get(DeviceTemplateTrigger::class, $request)->find($request->id);
+
+        PayModelHelper::update($template, $request, $data);
+
+
+        
+        return ["status"=>1, "message"=>"Successfully Updated","data"=> $template];
 
     }
 
