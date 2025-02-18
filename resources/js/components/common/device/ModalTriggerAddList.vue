@@ -312,6 +312,21 @@
                 return new Promise((promiseExec)=>{
                     vm.promiseExec = promiseExec;
                 });
+            },
+
+            remove:function(trigger_id){
+                var vm = this;
+                this.$refs.swal_prompt.alert(
+                    'question',
+                    "Remove DeviceTrigger?" , 
+                    "Confirm" , 
+                    "DELETE", 
+                    '/api/group/'+this.group_id+'/devices/trigger/remove/'+trigger_id
+                ).then(res=>{
+                    if(res.isConfirmed && res.value.status == 1){
+                        vm.$emit('data_updated');
+                    }
+                });
             }
 
         },

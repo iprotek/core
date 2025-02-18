@@ -84,7 +84,7 @@
                                 <button class="btn btn-outline-warning btn-sm mx-1 px-1 py-0" @click="$refs.modal_trigger_add.show(item.id)">
                                     <span class="fa fa-edit"></span>
                                 </button>
-                                <button class="btn btn-outline-danger btn-sm mx-1 px-1 py-0">
+                                <button class="btn btn-outline-danger btn-sm mx-1 px-1 py-0" @click="$refs.modal_trigger_add.remove(item.id)">
                                     <span class="fa fa-times"></span>
                                 </button>
                             </th>
@@ -132,7 +132,7 @@
                     vm.isLoading = false;
                     resp.json().then(data=>{
                         vm.itemList = data;
-                        console.log(vm.itemList);
+                        //console.log(vm.itemList);
                     });
                 });
                 

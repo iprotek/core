@@ -46,7 +46,7 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
         Route::post('add', [DeviceTemplateTriggerController::class, 'add'])->name('.add');
 
         //REMOVE
-        Route::delete('remove', [DeviceTemplateTriggerController::class, 'remove'])->name('.remove');
+        Route::delete('remove/{trigger_device_id}', [DeviceTemplateTriggerController::class, 'remove'])->name('.remove');
 
         //UPDATE
         Route::put('update', [DeviceTemplateTriggerController::class, 'update'])->name('.update');

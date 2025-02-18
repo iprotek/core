@@ -96,6 +96,10 @@ class DeviceTemplateTriggerController extends _CommonController
         ])->validated();
         $template = PayModelHelper::get(DeviceTemplateTrigger::class, $request)->find($request->id);
 
+        if(!$template){
+            return ["status"=>0, "message"=>"Permssion Denied"];
+        }
+
         PayModelHelper::update($template, $request, $data);
 
 
@@ -105,7 +109,16 @@ class DeviceTemplateTriggerController extends _CommonController
     }
 
     public function remove(Request $request){
+        $trigger_device_id = $request->trigger_device_id;
+        $template = PayModelHelper::get(DeviceTemplateTrigger::class, $request)->find($trigger_device_id);
 
+        if(!$template){
+            return ["status"=>0, "message"=>"Permssion Denied"];
+        }
+
+        PayModelHelper::delete($template, $request);
+
+        return ["status"=>1, "message"=>"Successfully deleted."];
     }
 
 }
