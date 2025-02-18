@@ -23,12 +23,12 @@ class DeviceAccessTriggerLogController extends _CommonController
 
         $deviceList = PayModelHelper::get(DeviceAccessTriggerLog::class, $request, $data);
         
-        if($request->trigger_name){
-            $deviceList->where('target_name', $request->trigger_name);
+        if($request->target_name){
+            $deviceList->where('target_name', $request->target_name);
         }
 
-        if($request->trigger_id){
-            $deviceList->where('target_id', $request->trigger_id);
+        if($request->target_id){
+            $deviceList->where('target_id', $request->target_id);
             
         }
 
