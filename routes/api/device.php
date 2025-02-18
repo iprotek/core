@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use iProtek\Core\Http\Controllers\Manage\DeviceAccessController;
 use iProtek\Core\Http\Controllers\Manage\DeviceAccessTriggerLogController;
 use iProtek\Core\Http\Controllers\Manage\DeviceTemplateTriggerController;
+use iProtek\Core\Http\Controllers\Manage\DeviceAccountController;
 use Illuminate\Http\Request; 
 
  
@@ -36,6 +37,27 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
     Route::get('logs', [DeviceAccessTriggerLogController::class, 'list'])->name('.list');
 
     Route::get('dynamic-selection', [DeviceAccessController::class, 'dynamic_selection'])->name('.dynamic-selection');
+
+    Route::prefix('accounts')->name('.accounts')->group(function(){
+
+        //LIST
+        Route::get('list-device-triggers', [DeviceAccountController::class, 'list_device_triggers'])->name('.list-device-triggers');
+
+        //REGISTER
+        Route::post('register-account', [DeviceAccountController::class, 'register_account'])->name('.register');
+
+        //INACTIVE
+        Route::put('set-inactive', [DeviceAccountController::class, 'set_inactive_account'])->name('.set-inactive');
+
+        //ACTIVE
+        Route::put('set-active', [DeviceAccountController::class, 'set_active_account'])->name('.set-active');
+
+        //REMOVE
+        Route::delete('remove', [DeviceAccountController::class, 'remove_account'])->name('.remove');
+
+
+
+    });
 
 
     Route::prefix('trigger')->name('.trigger')->group(function(){
