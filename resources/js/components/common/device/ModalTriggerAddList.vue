@@ -65,7 +65,7 @@
                                         <icheck :checked="device_trigger_info.enable_register" @update:checked="(is_checked)=>{ device_trigger_info.enable_register = is_checked; }" :label="'Enable Register / New Entry'" />
                                     </small>
                                 </div>
-                                <textarea v-if="device_trigger_info.enable_register" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <textarea v-if="device_trigger_info.enable_register" v-model="device_trigger_info.register_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
                             </div>
                         </div>
                         <div class="card mt-2">
@@ -80,7 +80,7 @@
                                     <icheck :checked="device_trigger_info.enable_update" @update:checked="(is_checked)=>{ device_trigger_info.enable_update = is_checked; }" :label="'Enable Updates'" />
                                     </small>
                                 </div>
-                                <textarea v-if="device_trigger_info.enable_update" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <textarea v-if="device_trigger_info.enable_update" v-model="device_trigger_info.update_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
                             </div>
                         </div>
                         <div class="card mt-2">
@@ -95,7 +95,7 @@
                                     <icheck :checked="device_trigger_info.enable_active" @update:checked="(is_checked)=>{ device_trigger_info.enable_active = is_checked; }" :label="'Enable ACTIVE'" />
                                     </small>
                                 </div>
-                                <textarea v-if="device_trigger_info.enable_active" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <textarea v-if="device_trigger_info.enable_active" v-model="device_trigger_info.active_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
                             </div>
                         </div>
                         <div class="card mt-2">
@@ -110,7 +110,7 @@
                                     <icheck :checked="device_trigger_info.enable_inactive" @update:checked="(is_checked)=>{ device_trigger_info.enable_inactive = is_checked; }" :label="'Enable Inactive'" />
                                     </small>
                                 </div>
-                                <textarea v-if="device_trigger_info.enable_inactive" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <textarea v-if="device_trigger_info.enable_inactive" v-model="device_trigger_info.inactive_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
                            </div>
                         </div>
                         <div class="card mt-2">
@@ -125,7 +125,7 @@
                                     <icheck :checked="device_trigger_info.enable_remove" @update:checked="(is_checked)=>{ device_trigger_info.enable_remove = is_checked; }" :label="'Enable Delete/Removal'" />
                                     </small>
                                 </div>
-                                <textarea v-if="device_trigger_info.enable_remove" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <textarea v-if="device_trigger_info.enable_remove" v-model="device_trigger_info.remove_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
                             </div>
                         </div>
                     </div>
