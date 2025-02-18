@@ -66,6 +66,10 @@
                                     </small>
                                 </div>
                                 <textarea v-if="device_trigger_info.enable_register" v-model="device_trigger_info.register_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <div v-if="show_preview && device_trigger_info.enable_register" >
+                                    <code>Preview:</code>
+                                </div>
+                            
                             </div>
                         </div>
                         <div class="card mt-2">
@@ -81,6 +85,9 @@
                                     </small>
                                 </div>
                                 <textarea v-if="device_trigger_info.enable_update" v-model="device_trigger_info.update_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <div v-if="show_preview && device_trigger_info.enable_update" >
+                                    <code>Preview:</code>
+                                </div>
                             </div>
                         </div>
                         <div class="card mt-2">
@@ -96,6 +103,9 @@
                                     </small>
                                 </div>
                                 <textarea v-if="device_trigger_info.enable_active" v-model="device_trigger_info.active_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <div v-if="show_preview && device_trigger_info.enable_active" >
+                                    <code>Preview:</code>
+                                </div>
                             </div>
                         </div>
                         <div class="card mt-2">
@@ -111,6 +121,9 @@
                                     </small>
                                 </div>
                                 <textarea v-if="device_trigger_info.enable_inactive" v-model="device_trigger_info.inactive_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <div v-if="show_preview && device_trigger_info.enable_inactive" >
+                                    <code>Preview:</code>
+                                </div>
                            </div>
                         </div>
                         <div class="card mt-2">
@@ -126,6 +139,9 @@
                                     </small>
                                 </div>
                                 <textarea v-if="device_trigger_info.enable_remove" v-model="device_trigger_info.remove_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <div v-if="show_preview && device_trigger_info.enable_remove" >
+                                    <code>Preview:</code>
+                                </div>
                             </div>
                         </div>
                     </div>
