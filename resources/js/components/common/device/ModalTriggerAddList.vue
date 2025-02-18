@@ -152,7 +152,7 @@
     import UserInput2Vue from '../UserInput2.vue'; 
     import Select2Vue from '../Select2.vue';
     import iCheckVue from '../iCheck.vue';
-    import BoostrapSwitch2Vue from '../BoostrapSwitch2.vue';
+    import BoostrapSwitch2Vue from '../BoostrapSwitch2.vue'; 
     export default {
         props:[ "group_id", "target_name", "target_id" ],
         components: { 

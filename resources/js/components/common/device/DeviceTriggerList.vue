@@ -42,23 +42,23 @@
                             </th>
                             <th v-text="item.trigger_name"></th>
                             <th>
-                                <small class="mx-1 text-nowrap">
+                                <small class="mx-2 text-nowrap">
                                     <i :class="'fa fa-'+(item.enable_register? 'check text-success':'times text-danger')"></i>
                                     REGISTER
                                 </small>
-                                <small class="mx-1 text-nowrap">
+                                <small class="mx-2 text-nowrap">
                                     <i :class="'fa fa-'+(item.enable_update? 'check text-success':'times text-danger')"></i>
                                     UPDATE
                                 </small>
-                                <small class="mx-1 text-nowrap">
+                                <small class="mx-2 text-nowrap">
                                     <i :class="'fa fa-'+(item.enable_active? 'check text-success':'times text-danger')"></i>
                                     ACTIVE
                                 </small>
-                                <small class="mx-1 text-nowrap">
+                                <small class="mx-2 text-nowrap">
                                     <i :class="'fa fa-'+(item.enable_inactive? 'check text-success':'times text-danger')"></i>
                                     INACTIVE
                                 </small>
-                                <small class="mx-1 text-nowrap">
+                                <small class="mx-2 text-nowrap">
                                     <i :class="'fa fa-'+(item.enable_remove? 'check text-success':'times text-danger')"></i>
                                     DELETE
                                 </small>
@@ -78,7 +78,7 @@
                                 </small>
                             </th>
                             <th class="text-center" style="width:200px;" >
-                                <button class="btn btn-outline-primary btn-sm mx-1 px-1 py-0" title="Logs" >
+                                <button class="btn btn-outline-primary btn-sm mx-1 px-1 py-0" title="Logs" @click="$refs.modal_device_log.show(item.device_access_id, item.id, 'device-template-trigger' )" >
                                     <span class="fa fa-list"></span>
                                 </button>
                                 <button class="btn btn-outline-warning btn-sm mx-1 px-1 py-0" @click="$refs.modal_trigger_add.show(item.id)">
@@ -94,16 +94,19 @@
             </div>
         </div>
         <modal-trigger-add @data_updated="loadDeviceTrigger()" ref="modal_trigger_add" :group_id="group_id" :target_id="target_id" :target_name="target_name" />
+        <modal-device-log ref="modal_device_log" :group_id="group_id" />
     </div>
 </template>
 
 <script>
+    import ModalDeviceLogVue from './ModalDeviceLog.vue';
     import ModalTriggerAddListVue from './ModalTriggerAddList.vue';
 
     export default {
         props:[ "group_id" , "title", "target_name", "target_id" ],
         components: {
-            "modal-trigger-add":ModalTriggerAddListVue
+            "modal-trigger-add":ModalTriggerAddListVue,
+            "modal-device-log":ModalDeviceLogVue
         },
         data: function () {
             return {

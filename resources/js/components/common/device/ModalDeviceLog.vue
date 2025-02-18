@@ -68,7 +68,7 @@
 <script>    
     import PageFooterVue from '../PageFooter.vue';
     export default {
-        props:[ "group_id" ],
+        props:[ "group_id", ],
         components: {
             "page-footer":PageFooterVue
         },
@@ -78,6 +78,10 @@
             return {        
                 promiseExec:null,
                 device_id:0,
+                target_id:'',
+                target_name:'',
+
+
                 pageData:null,
                 itemList:[],
                 current_page:1,
@@ -99,16 +103,19 @@
             reset:function(){
 
             },
-            show:function(device_id){ 
+            show:function(device_id, target_id = 0, target_name = ''){ 
                 var vm = this;
+
                 vm.device_id = 0;
+                vm.target_id = target_id;
+                vm.target_name = target_name;
 
                 this.$refs.modal.show();
 
                 setTimeout(()=>{
                     vm.device_id = device_id;
                     vm.loadDeviceLogs();
-                })
+                }, 50);
 
                 return new Promise((promiseExec)=>{
                     vm.promiseExec = promiseExec;
@@ -123,7 +130,9 @@
                     device_access_id:vm.device_id,
                     search_text:vm.search,
                     page:vm.current_page,
-                    items_per_page: 10
+                    items_per_page: 10,
+                    target_id: vm.target_id,
+                    target_name: vm.target_name
                 })).then(resp=>{
                     vm.isLoading = false;
                     resp.json().then(data=>{
