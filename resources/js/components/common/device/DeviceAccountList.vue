@@ -49,7 +49,12 @@
                                     <td v-text="item.id"></td>
                                     <td v-text="item.trigger_name"></td>
                                     <td>
-                                        <b v-if="item.device_access" v-text="item.device_access.name"></b>
+                                        <b v-if="item.device_access" >
+                                            <span v-text="item.device_access.name"></span>
+                                            <div v-if="!item.device_access.is_active">
+                                                <small class="text-danger">inactive device</small>
+                                            </div>
+                                        </b>
                                         <code v-else>N/A</code>
                                     </td>
                                     <td>
@@ -65,17 +70,23 @@
                                         <span class="text-primary" v-if="item.device_accounts.length > 0" v-text="item.device_accounts.updated_at" ></span>
                                     </td>
                                     <td>
-                                        <template v-if="item.device_accounts.length <= 0">
-                                            <button :class="'btn btn-sm '+( item.enable_register ? 'btn-outline-primary' : 'btn-outline-danger disabled')">
-                                                <template v-if="item.enable_register">
-                                                    <span class="fa fa-user-plus"></span>
-                                                    REGISTER
-                                                </template>
-                                                <template v-else>
-                                                    REGISTER NOT AVAILABLE
-                                                </template>
-                                            </button>
-                                        </template>
+                                        <div v-if="item.device_access && item.device_access.is_active">
+                                            <template v-if="item.device_accounts.length <= 0">
+                                                <button :class="'btn btn-sm '+( item.enable_register ? 'btn-outline-primary' : 'btn-outline-danger disabled')">
+                                                    <template v-if="item.enable_register">
+                                                        <span class="fa fa-user-plus"></span>
+                                                        REGISTER
+                                                    </template>
+                                                    <template v-else>
+                                                        REGISTER NOT AVAILABLE
+                                                    </template>
+                                                </button>
+                                            </template>
+                                        </div>
+                                        <div v-else>
+                                            <code> -- Device currently Unavailable -- </code>
+                                        </div>
+                                
                                     </td>
                                 </tr>
                             </tbody>
