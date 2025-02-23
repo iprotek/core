@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use iProtek\Core\Http\Controllers\_Common\_CommonController;
 use iProtek\Core\Models\DeviceTemplateTrigger;
 use iProtek\Core\Models\DeviceAccess;
+use iProtek\Core\Models\DeviceAccount;
 use iProtek\Core\Helpers\PayModelHelper;
 
 class DeviceAccountController extends _CommonController
@@ -28,6 +29,7 @@ class DeviceAccountController extends _CommonController
         $list->where('target_name', $request->target_name);
         $list->with(['device_access','device_accounts'=>function($q)use($request){
             $q->where('target_id', $request->target_id);
+            $q->limit(1);
         }]);
 
         return $list->get();
@@ -42,14 +44,45 @@ class DeviceAccountController extends _CommonController
 
         //TODO:: device_template_trigger_id
 
+        //CHECK IF EXISTS
+        $deviceAccount = PayModelHelper::get(DeviceAccount::class, $request)->where([
+            "target_id"=>$request->target_id,
+            "target_name"=>$request->target_name,
+            "device_template_trigger_id"=>$request->device_template_trigger_id
+        ])->first();
+
+        if($deviceAccount){
+            return ["status"=>0,"message"=>"Account already exists"];
+        }
+
+
+        //target_id
+        //target_name
+        //device_template_trigger_id
+
+        //CHECK 
+
         
         //Check if template has enabled registration
 
         //Check if account already existed
 
     }
+    public function register_account_preview(Request $request){
+
+        
+    }
+
     
     public function set_active_account(Request $request){ 
+
+        //TODO:: device_template_trigger_id
+
+        //check account if existed
+
+
+    }    
+    public function set_active_account_preview(Request $request){ 
 
         //TODO:: device_template_trigger_id
 
@@ -66,8 +99,23 @@ class DeviceAccountController extends _CommonController
 
 
     }
+    public function set_inactive_account_preview(Request $request){
+
+        //TODO:: device_template_trigger_id
+
+        //check account if existed
+
+
+    }
     
     public function remove_account(Request $request){
+
+        //TODO:: device_template_trigger_id
+
+
+
+    }
+    public function remove_account_preview(Request $request){
 
         //TODO:: device_template_trigger_id
 
