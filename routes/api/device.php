@@ -43,6 +43,9 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
         //LIST
         Route::get('list-device-triggers', [DeviceAccountController::class, 'list_device_triggers'])->name('.list-device-triggers');
 
+        //GET ONE
+        Route::get('get-one', [DeviceAccountController::class, 'get_one'])->name('.get-one');
+
         //REGISTER
         Route::post('register-account', [DeviceAccountController::class, 'register_account'])->name('.register');
 
@@ -59,7 +62,7 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
 
     });
 
-
+    //DEVICE TRIIGERS
     Route::prefix('trigger')->name('.trigger')->group(function(){
         
         //LIST

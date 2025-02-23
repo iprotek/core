@@ -63,7 +63,8 @@
         watch: { 
         },
         data: function () {
-            return {    
+            return {
+                triggerList:[]
             }
         },
         methods: { 
@@ -73,9 +74,25 @@
                 }).join('&');
                 return queryString;
             },
-
+            loadDeviceAccounts:function(){
+                var vm = this;
+                vm.triggerList = [];
+                WebRequest2('GET', '/api/group/'+this.group_id+'/devices/accounts/list-device-triggers?'+this.queryString({
+                    target_id: this.target_id,
+                    target_name: this.target_name,
+                    branch_id: this.branch_id
+                })).then(resp=>{
+                    
+                    resp.json().then(data=>{
+                        console.log("Data", data);
+                        vm.triggerList = data;
+                    });
+                    
+                })
+            }
         },
-        mounted:function(){     
+        mounted:function(){ 
+            this.loadDeviceAccounts();    
         },
         updated:function(){
 

@@ -50,4 +50,10 @@ class DeviceTemplateTrigger extends Model
     public function device_access(){
         return $this->belongsTo(DeviceAccess::class, 'device_access_id');
     }
+
+    public function device_accounts(){
+        return $this->hasMany(DeviceAccount::class, 'target_name', 'target_name');
+    }
+
+
 }
