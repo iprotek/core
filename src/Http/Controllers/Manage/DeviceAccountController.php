@@ -122,6 +122,8 @@ class DeviceAccountController extends _CommonController
 
         $template = $request->template ?? ""; 
 
+        return ["status"=>1, "template_translate"=>""];
+
     }
 
     
@@ -139,6 +141,16 @@ class DeviceAccountController extends _CommonController
 
         //check account if existed
 
+        $this->validate($request, [
+            "target_id"=>"required",
+            "target_name"=>"required",
+            "device_template_trigger_id"=>"nullable",
+            //"template"=>"required"
+        ]);
+
+        $template = $request->template ?? ""; 
+
+        return ["status"=>1, "template_translate"=>""];
 
     }
 
@@ -155,7 +167,16 @@ class DeviceAccountController extends _CommonController
         //TODO:: device_template_trigger_id
 
         //check account if existed
+        $this->validate($request, [
+            "target_id"=>"required",
+            "target_name"=>"required",
+            "device_template_trigger_id"=>"nullable",
+            //"template"=>"required"
+        ]);
 
+        $template = $request->template ?? ""; 
+
+        return ["status"=>1, "template_translate"=>""];
 
     }
     
@@ -171,6 +192,16 @@ class DeviceAccountController extends _CommonController
         //TODO:: device_template_trigger_id
 
 
+        $this->validate($request, [
+            "target_id"=>"required",
+            "target_name"=>"required",
+            "device_template_trigger_id"=>"nullable",
+            //"template"=>"required"
+        ]);
+
+        $template = $request->template ?? ""; 
+
+        return ["status"=>1, "template_translate"=>""];
 
     }
 
