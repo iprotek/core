@@ -26,7 +26,7 @@ class DeviceHelper
         $translate = DeviceVariableHelper::account($template, $data);
 
         //DEVICE ACCOUNT ID
-        $translate = DeviceVariableHelper::account($translate, $target_name, $traget_id); 
+        $translate = DeviceVariableHelper::device_account_id($translate, $target_name, $traget_id); 
         
         return ["status"=>1, "message"=>"Translate Successful", "translate"=>$translate, "template"=>$template ];
 
