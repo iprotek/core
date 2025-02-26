@@ -83,8 +83,9 @@ class DeviceAccountController extends _CommonController
         //CHECK DEVICE
         //ADD DEVICE LOG
 
-        //GET TEMPLATE
+        //GET TEMPLATE TRANSLATE
         //$trigger->register_command_template
+        \DB::table($request->target_name)->where('id', $request->target_id)->first();
         
         $request->template = $trigger->register_command_template;
 
