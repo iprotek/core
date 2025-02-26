@@ -22,16 +22,13 @@ class DeviceHelper
         }
 
         //ACCOUNT
-        
         //ACCOUNT TEMPLATE
-        $template = DeviceVariableHelper::account($template, $data);
+        $translate = DeviceVariableHelper::account($template, $data);
 
         //DEVICE ACCOUNT ID
+        $translate = DeviceVariableHelper::account($translate, $target_name, $traget_id); 
         
-
-
-
-
+        return ["status"=>1, "message"=>"Translate Successful", "translate"=>$translate, "template"=>$template ];
 
     }
 }
