@@ -35,6 +35,11 @@ class DeviceAccessController extends _CommonController
             $dynamic_table->where('group_id', PayHttp::target_group_id($request) );
         }
 
+        //DELETE AT
+        if(\Illuminate\Support\Facades\Schema::hasColumn($data_schema, 'deleted_at')){
+            $dynamic_table->whereRaw(' deleted_at IS NULL ' );
+        }
+
         if($request->search_text && trim($request->search_text)){
             $search_text = '%'.str_replace(' ','%', trim($request->search_text)).'%';
             $dynamic_table->whereRaw(' name like ? ', [$search_text]);
