@@ -44,18 +44,26 @@ class PayHttp
         return $proxy_group_id;
     }
 
-    public static function target_group_id(){
-        //Check if SubAccount
-        $user_admin = UserAdminPayAccount::where('user_admin_id', auth('admin')->user()->id)->first();
-        if( $user_admin && $user_admin->sub_account_group_id){
-            $parentAdmin = UserAdminPayAccount::where('pay_app_user_account_id', $user_admin->sub_account_group_id)->first();
-            if($parentAdmin){
-                return $parentAdmin->pay_app_user_account_id;
+    public static function target_group_id($proxy_group_id = null){
+        if($proxy_group_id === null){
+            //Check if SubAccount
+            $user_admin = UserAdminPayAccount::where('user_admin_id', auth('admin')->user()->id)->first();
+            if( $user_admin && $user_admin->sub_account_group_id){
+                $parentAdmin = UserAdminPayAccount::where('pay_app_user_account_id', $user_admin->sub_account_group_id)->first();
+                if($parentAdmin){
+                    return $parentAdmin->pay_app_user_account_id;
+                }
+                return 0;
             }
-            return 0;
+            else if( $user_admin )
+                return $user_admin->pay_app_user_account_id;
         }
-        else if( $user_admin )
-            return $user_admin->pay_app_user_account_id;
+        else{
+            $user_admin = UserAdminPayAccount::where('own_proxy_group_id', $proxy_group_id)->first();
+            if($user_admin){
+                return $user_admin->pay_app_user_account_id;
+            }
+        }
         return 0;
     }
 
