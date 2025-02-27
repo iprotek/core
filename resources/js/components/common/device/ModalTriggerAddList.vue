@@ -50,7 +50,7 @@
                                     <code>[account field="User Name" data-json="custom"]</code> - get the "User Name" field value form target json field custom.
                                 </div>
                                 <div>
-                                    <code>[account field="User Name" data-model="contact"]</code> - get the "User Name" field value form target source custom fields.
+                                    <code>[account field="User Name" data-model="contact"]</code> - get the "User Name" field value form target source custom model fields.
                                 </div>
                             </div>
                         </div>
