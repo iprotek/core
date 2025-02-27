@@ -15,35 +15,33 @@ class DeviceVariableHelper
      * [account field="User Name" data-json="json"] - get the "User Name" field value form target source custom fields. 
      */
     
-    static function account($template_str, $account){
+    static function account($template_str, $account, $target_name="", $traget_id = ""){
         $sample = $template_str;
 
         // Define the regular expression pattern
         //$pattern = '/{{\s*(phb-event-start)\s*(?:format\s*=\s*"([^"]*)"\s*)?(?:timezone\s*=\s*"([^"]*)"\s*)?(?:offset_mins\s*=\s*([^"]*)\s*)*}}/';
-        $pattern = '/\[\s*(account)\s*(?:field\s*=\s*"([^"]*)"\s*)?(?:data-json\s*=\s*"([^"]*)"\s*)*\]/';
+        $pattern = '/\[\s*(account)\s*(?:field\s*=\s*"([^"]*)"\s*)?(?:data-json\s*=\s*"([^"]*)"\s*)?(?:data-model\s*=\s*"([^"]*)"\s*)*\]/';
         //$pattern = '/\[account_name format="[^"]+"\]/';
         preg_match($pattern, $sample, $matches);
         $matching_string = isset($matches[0]) ? $matches[0] : "";
         if($matching_string){
             $field = isset( $matches[2]) ?  $matches[2]:null;
             $data_json = isset( $matches[3]) ?  $matches[3]:null;
-            //$offset_mins = isset( $matches[4]) ?  $matches[4]:0;
+            $data_model = isset( $matches[4]) ?  $matches[4]: null;
 
             //$str = static::event_time_setup($event->utc_start, $format, $timezone, $offset_mins);
             
             $str = "";
             if( $field ){
 
-                if($data_json){
-
-                    $str = "";
-
+                if($data_model){
+                    $str = \DB::select( " SELECT  fnGetDataTextValue(?,?,?,?) as val",[ $target_name, $traget_id, $data_model, $field ] )[0]->val;
+                }
+                else if($data_json){ 
                     $json = json_decode( $account->{$data_json}, TRUE);
 
                     if($json){
-
-                       $str = $json[$field];
-
+                       $str = $json[$field] ?? "";
                     }
 
                 }
@@ -51,11 +49,11 @@ class DeviceVariableHelper
                     $str = $account->{$field}; 
                 }
 
-            }
+            } 
             $result = str_replace($matching_string, $str, $sample);
 
             //recheck if still exists.
-            return static::account($result, $account);
+            return static::account($result, $account, $target_name, $traget_id);
         }
         return $template_str;
     }
@@ -81,7 +79,7 @@ class DeviceVariableHelper
             //$data_json = isset( $matches[3]) ?  $matches[3]:null;
             //$offset_mins = isset( $matches[4]) ?  $matches[4]:0; 
             //$str = static::event_time_setup($event->utc_start, $format, $timezone, $offset_mins); 
-            $str = "";
+            $str = "0";
             if( $deviceAccount ){
                 $str = $deviceAccount->id;
             }

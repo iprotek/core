@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use iProtek\Core\Models\Cms;
 use iProtek\Core\Enums\CmsType;
+use iProtek\Core\Enums\DeviceAccount;
 use MikrotikAPI\MikrotikAPI;
 use RouterOS\Client as MikroTikClient;
 use RouterOS\Query as MikroTikQuery;
@@ -57,6 +58,34 @@ class MikrotikHelper
             return [ "status"=>0, "message"=> $e->getMessage(), "command"=>$command ];
         }
 
+    }
+
+
+    public static function register($command){
+
+        //CHECK ACCOUNT USING USERNAME
+
+
+        //REGISTER
+
+
+
+    }
+
+    public static function update($command, DeviceAccount $deviceAccount){
+        
+    }
+
+    public static function active($command, DeviceAccount $deviceAccount){
+
+    }
+
+    public static function inactive($command, DeviceAccount $deviceAccount){
+        
+    }
+
+    public static function remove($command, DeviceAccount $deviceAccount){
+        
     }
 
 }

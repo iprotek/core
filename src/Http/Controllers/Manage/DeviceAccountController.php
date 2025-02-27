@@ -8,6 +8,7 @@ use iProtek\Core\Models\DeviceTemplateTrigger;
 use iProtek\Core\Models\DeviceAccess;
 use iProtek\Core\Models\DeviceAccount;
 use iProtek\Core\Helpers\PayModelHelper;
+use iProtek\Core\Helpers\DeviceHelper;
 
 class DeviceAccountController extends _CommonController
 {
@@ -122,8 +123,10 @@ class DeviceAccountController extends _CommonController
         ]);
 
         $template = $request->template ?? ""; 
+        $translate = DeviceHelper::translate_template($template, $request->target_name, $request->target_id);
 
-        return ["status"=>1, "template_translate"=>""];
+
+        return ["status"=>1, "message"=>"Translate Complete", "template"=>$template, "template_translate"=>$translate];
 
     }
 

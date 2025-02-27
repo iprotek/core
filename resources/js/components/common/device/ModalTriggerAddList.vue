@@ -33,7 +33,7 @@
                                     </div>
                                     <div v-if="show_preview" class="mt-1">
                                         <label class="mb-1">SELECT SOURCE</label>
-                                        <select2 v-if="show_preview" :query_filters="{data_schema: target_name}" v-model="selected_preview" :modal_selector="true" :url="'/api/group/'+group_id+'/devices/dynamic-selection'" :placeholder="'--Select Source--'"  />
+                                        <select2 @selected="show_preview_selected" v-if="show_preview" :query_filters="{data_schema: target_name}" v-model="selected_preview" :has_clear="true" :modal_selector="true" :url="'/api/group/'+group_id+'/devices/dynamic-selection'" :placeholder="'--Select Source--'"  />
                                     </div>
                                 </div>
                                 <small class="text-primary">*use this dynamic variable to replace your command on the current instance value.</small>
@@ -44,10 +44,13 @@
                                     <code>[device_account_id]</code> - get the account id from the device upon registration.
                                 </div>
                                 <div>
-                                    <code>[account field="plan" source="data"]</code> - get the "plan" field value form target source model.
+                                    <code>[account field="plan" data-json="data"]</code> - get the "plan" field value form target source model.
                                 </div>
                                 <div>
-                                    <code>[account field="User Name" source="custom"]</code> - get the "User Name" field value form target source custom fields.
+                                    <code>[account field="User Name" data-json="custom"]</code> - get the "User Name" field value form target json field custom.
+                                </div>
+                                <div>
+                                    <code>[account field="User Name" data-model="contact"]</code> - get the "User Name" field value form target source custom fields.
                                 </div>
                             </div>
                         </div>
@@ -67,8 +70,11 @@
                                     </small>
                                 </div>
                                 <textarea v-if="device_trigger_info.enable_register" v-model="device_trigger_info.register_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
-                                <div v-if="show_preview && device_trigger_info.enable_register" >
+                                <div v-if="show_preview && device_trigger_info.enable_register && selected_preview.id > 0" >
                                     <code>Preview:</code>
+                                    <div>
+                                        <small class="text-primary" v-text="register_command_template_preview" ></small>
+                                    </div>
                                 </div>
                             
                             </div>
@@ -215,7 +221,13 @@
                     
                     target_name: this.target_name,
                     target_id: this.target_id
-                }
+                },
+                register_command_template_preview:'',
+                update_command_template_preview:'',
+                active_command_template_preview:'',
+                inactive_command_template_preview:'',
+                remove_command_template_preview:''
+
            }
         },
         methods:{ 
@@ -249,6 +261,62 @@
                     target_name: this.target_name,
                     target_id: this.target_id
                 };
+            },
+
+            show_preview_selected:function(val){
+
+                //REGISTER
+                this.loadPreview('register');
+
+                //UPDATE
+                this.loadPreview('update');
+
+                //ACTIVE
+                this.loadPreview('active');
+
+                //INACTIVE
+                this.loadPreview('inactive');
+
+                //REMOVE
+                this.loadPreview('remove');
+
+            },
+
+            loadPreview:function(command){
+                
+                var vm = this;
+                var template = "";
+                var command_url = "";
+                if(command == 'register'){
+                    command_url = 'register-account-preview';
+                    template = this.device_trigger_info.register_command_template;
+                    vm.register_command_template_preview = '';
+                }                
+                else{
+                    return;
+                }
+
+                if(!(this.selected_preview.id > 0 && this.show_preview && template)) return;
+
+                var target_id = this.selected_preview.id;
+                
+                vm.update_command_template_preview = '';
+                vm.active_command_template_preview = '';
+                vm.inactive_command_template_preview = '';
+                vm.remove_command_template_preview = '';
+
+                WebRequest2('POST', '/api/group/'+this.group_id+'/devices/accounts/'+command_url, {
+                    target_id: target_id,
+                    target_name: this.target_name, 
+                    template: template
+                }).then(resp=>{
+                    resp.json().then(data=>{
+                        console.log("Template Result", data, command);
+                        if(command == 'register'){
+                            vm.register_command_template_preview = data.template_translate;
+                        }
+                    });
+                })
             },
             show:function(device_trigger_id = 0){ 
                 var vm = this;
