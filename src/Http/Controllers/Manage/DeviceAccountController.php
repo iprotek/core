@@ -134,6 +134,18 @@ class DeviceAccountController extends _CommonController
 
     }
     public function update_account_preview(Request $request){
+        $this->validate($request, [
+            "target_id"=>"required",
+            "target_name"=>"required",
+            "device_template_trigger_id"=>"nullable",
+            //"template"=>"required"
+        ]);
+
+        $template = $request->template ?? ""; 
+        $translate = DeviceHelper::translate_template($template, $request->target_name, $request->target_id);
+
+
+        return ["status"=>1, "message"=>"Translate Complete", "template"=>$template, "template_translate"=>$translate];
 
     }
 
@@ -148,10 +160,7 @@ class DeviceAccountController extends _CommonController
     }    
     public function set_active_account_preview(Request $request){ 
 
-        //TODO:: device_template_trigger_id
-
-        //check account if existed
-
+        
         $this->validate($request, [
             "target_id"=>"required",
             "target_name"=>"required",
@@ -160,8 +169,10 @@ class DeviceAccountController extends _CommonController
         ]);
 
         $template = $request->template ?? ""; 
+        $translate = DeviceHelper::translate_template($template, $request->target_name, $request->target_id);
 
-        return ["status"=>1, "template_translate"=>""];
+
+        return ["status"=>1, "message"=>"Translate Complete", "template"=>$template, "template_translate"=>$translate];
 
     }
 
@@ -175,9 +186,7 @@ class DeviceAccountController extends _CommonController
     }
     public function set_inactive_account_preview(Request $request){
 
-        //TODO:: device_template_trigger_id
-
-        //check account if existed
+        
         $this->validate($request, [
             "target_id"=>"required",
             "target_name"=>"required",
@@ -186,8 +195,10 @@ class DeviceAccountController extends _CommonController
         ]);
 
         $template = $request->template ?? ""; 
+        $translate = DeviceHelper::translate_template($template, $request->target_name, $request->target_id);
 
-        return ["status"=>1, "template_translate"=>""];
+
+        return ["status"=>1, "message"=>"Translate Complete", "template"=>$template, "template_translate"=>$translate];
 
     }
     
@@ -200,9 +211,7 @@ class DeviceAccountController extends _CommonController
     }
     public function remove_account_preview(Request $request){
 
-        //TODO:: device_template_trigger_id
-
-
+       
         $this->validate($request, [
             "target_id"=>"required",
             "target_name"=>"required",
@@ -211,8 +220,10 @@ class DeviceAccountController extends _CommonController
         ]);
 
         $template = $request->template ?? ""; 
+        $translate = DeviceHelper::translate_template($template, $request->target_name, $request->target_id);
 
-        return ["status"=>1, "template_translate"=>""];
+
+        return ["status"=>1, "message"=>"Translate Complete", "template"=>$template, "template_translate"=>$translate];
 
     }
 

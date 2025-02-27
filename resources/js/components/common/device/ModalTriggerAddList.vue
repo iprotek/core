@@ -104,6 +104,7 @@
                                     class="form-control text-sm" 
                                     style="min-height:80px" 
                                     placeholder="Please input your text command"
+                                    @change="loadPreview('update')"
                                 ></textarea>
                                 <div v-if="show_preview && device_trigger_info.enable_update && selected_preview.id > 0" >
                                     <code>Preview:</code>
@@ -131,6 +132,7 @@
                                     class="form-control text-sm" 
                                     style="min-height:80px" 
                                     placeholder="Please input your text command"
+                                    @change="loadPreview('active')"
                                 ></textarea>
                                 <div v-if="show_preview && device_trigger_info.enable_active && selected_preview.id > 0" >
                                     <code>Preview:</code>
@@ -158,6 +160,7 @@
                                     class="form-control text-sm" 
                                     style="min-height:80px" 
                                     placeholder="Please input your text command"
+                                    @change="loadPreview('inactive')"
                                 ></textarea>
                                 <div v-if="show_preview && device_trigger_info.enable_inactive && selected_preview.id > 0" >
                                     <code>Preview:</code>
@@ -185,6 +188,7 @@
                                     class="form-control text-sm" 
                                     style="min-height:80px" 
                                     placeholder="Please input your text command"
+                                    @change="loadPreview('remove')"
                                 ></textarea>
                                 <div v-if="show_preview && device_trigger_info.enable_remove && selected_preview.id > 0" >
                                     <code>Preview:</code>
@@ -339,26 +343,26 @@
                     command_url = "update-account-preview";
                     template = vm.device_trigger_info.update_command_template;
                     vm.update_command_template_preview = '';
-                    return;
+                    //return;
                 }
                 else if(command == 'active'){
                     command_url = "set-active-preview";
                     template = vm.device_trigger_info.active_command_template;
                     vm.active_command_template_preview = '';
-                    return;
+                    //return;
 
                 }
                 else if(command == 'inactive'){
                     command_url = "set-inactive-preview";
                     template = vm.device_trigger_info.inactive_command_template;
                     vm.inactive_command_template_preview = '';
-                    return;
+                    //return;
                 }
                 else if(command == 'remove'){
                     command_url = "remove-preview";
                     template = vm.device_trigger_info.remove_command_template;
                     vm.remove_command_template_preview = '';
-                    return;
+                    //return;
                 }
                 else{
                     return;
@@ -379,8 +383,18 @@
                 }).then(resp=>{
                     resp.json().then(data=>{
                         console.log("Template Result", data, command);
-                        if(command == 'register'){
-                            vm.register_command_template_preview = data.template_translate;
+                        if(data.status == 1){
+                            if(command == 'register'){
+                                vm.register_command_template_preview = data.template_translate;
+                            }
+                            else if(command == 'update')
+                                vm.update_command_template_preview = data.template_translate;
+                            else if(command == 'active')
+                                vm.active_command_template_preview = data.template_translate;
+                            else if(command == 'inactive')
+                                vm.inactive_command_template_preview = data.template_translate;
+                            else if(command == 'remove')
+                                vm.remove_command_template_preview = data.template_translate;
                         }
                     });
                 })

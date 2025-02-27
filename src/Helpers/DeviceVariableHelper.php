@@ -38,7 +38,7 @@ class DeviceVariableHelper
                     $str = \DB::select( " SELECT  fnGetDataTextValue(?,?,?,?) as val",[ $target_name, $traget_id, $data_model, $field ] )[0]->val;
                 }
                 else if($data_json){ 
-                    $json = json_decode( $account->{$data_json}, TRUE);
+                    $json = json_decode( $account->{$data_json} ?? "{}", TRUE);
 
                     if($json){
                        $str = $json[$field] ?? "";
@@ -46,7 +46,7 @@ class DeviceVariableHelper
 
                 }
                 else{
-                    $str = $account->{$field}; 
+                    $str = $account->{$field} ?? ""; 
                 }
 
             } 
