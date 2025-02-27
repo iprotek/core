@@ -130,6 +130,13 @@ class DeviceAccountController extends _CommonController
 
     }
 
+    public function update_account(Request $request){
+
+    }
+    public function update_account_preview(Request $request){
+
+    }
+
     
     public function set_active_account(Request $request){ 
 

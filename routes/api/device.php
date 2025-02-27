@@ -50,17 +50,22 @@ Route::prefix('/devices')->middleware('can:super-admin')->name('.device')->group
         Route::post('register-account', [DeviceAccountController::class, 'register_account'])->name('.register');
         Route::post('register-account-preview', [DeviceAccountController::class, 'register_account_preview'])->name('.register-preview');
 
+
+        //UPDATE
+        Route::put('update-account', [DeviceAccountController::class, 'update_account'])->name('.update-account');
+        Route::post('update-account-preview', [DeviceAccountController::class, 'update_account_preview'])->name('.update-account-preview');
+
         //INACTIVE
         Route::put('set-inactive', [DeviceAccountController::class, 'set_inactive_account'])->name('.set-inactive');
-        Route::put('set-inactive-preview', [DeviceAccountController::class, 'set_inactive_account_preview'])->name('.set-inactive-preview');
+        Route::post('set-inactive-preview', [DeviceAccountController::class, 'set_inactive_account_preview'])->name('.set-inactive-preview');
 
         //ACTIVE
         Route::put('set-active', [DeviceAccountController::class, 'set_active_account'])->name('.set-active');
-        Route::put('set-active-preview', [DeviceAccountController::class, 'set_active_account_preview'])->name('.set-active-preview');
+        Route::post('set-active-preview', [DeviceAccountController::class, 'set_active_account_preview'])->name('.set-active-preview');
 
         //REMOVE
         Route::delete('remove', [DeviceAccountController::class, 'remove_account'])->name('.remove');
-        Route::delete('remove-preview', [DeviceAccountController::class, 'remove_account_preview'])->name('.remove-preview');
+        Route::post('remove-preview', [DeviceAccountController::class, 'remove_account_preview'])->name('.remove-preview');
 
 
 

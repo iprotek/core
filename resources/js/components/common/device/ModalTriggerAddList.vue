@@ -69,7 +69,14 @@
                                         <icheck :checked="device_trigger_info.enable_register" @update:checked="(is_checked)=>{ device_trigger_info.enable_register = is_checked; }" :label="'Enable Register / New Entry'" />
                                     </small>
                                 </div>
-                                <textarea v-if="device_trigger_info.enable_register" v-model="device_trigger_info.register_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
+                                <textarea 
+                                    v-if="device_trigger_info.enable_register" 
+                                    v-model="device_trigger_info.register_command_template" 
+                                    class="form-control text-sm" 
+                                    style="min-height:80px" 
+                                    placeholder="Please input your text command"
+                                    @change="loadPreview('register')"
+                                ></textarea>
                                 <div v-if="show_preview && device_trigger_info.enable_register && selected_preview.id > 0" >
                                     <code>Preview:</code>
                                     <div>
@@ -91,9 +98,18 @@
                                     <icheck :checked="device_trigger_info.enable_update" @update:checked="(is_checked)=>{ device_trigger_info.enable_update = is_checked; }" :label="'Enable Updates'" />
                                     </small>
                                 </div>
-                                <textarea v-if="device_trigger_info.enable_update" v-model="device_trigger_info.update_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
-                                <div v-if="show_preview && device_trigger_info.enable_update" >
+                                <textarea 
+                                    v-if="device_trigger_info.enable_update" 
+                                    v-model="device_trigger_info.update_command_template" 
+                                    class="form-control text-sm" 
+                                    style="min-height:80px" 
+                                    placeholder="Please input your text command"
+                                ></textarea>
+                                <div v-if="show_preview && device_trigger_info.enable_update && selected_preview.id > 0" >
                                     <code>Preview:</code>
+                                    <div>
+                                        <small class="text-primary" v-text="update_command_template_preview" ></small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -109,9 +125,18 @@
                                     <icheck :checked="device_trigger_info.enable_active" @update:checked="(is_checked)=>{ device_trigger_info.enable_active = is_checked; }" :label="'Enable ACTIVE'" />
                                     </small>
                                 </div>
-                                <textarea v-if="device_trigger_info.enable_active" v-model="device_trigger_info.active_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
-                                <div v-if="show_preview && device_trigger_info.enable_active" >
+                                <textarea 
+                                    v-if="device_trigger_info.enable_active" 
+                                    v-model="device_trigger_info.active_command_template" 
+                                    class="form-control text-sm" 
+                                    style="min-height:80px" 
+                                    placeholder="Please input your text command"
+                                ></textarea>
+                                <div v-if="show_preview && device_trigger_info.enable_active && selected_preview.id > 0" >
                                     <code>Preview:</code>
+                                    <div>
+                                        <small class="text-primary" v-text="active_command_template_preview" ></small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -127,9 +152,18 @@
                                     <icheck :checked="device_trigger_info.enable_inactive" @update:checked="(is_checked)=>{ device_trigger_info.enable_inactive = is_checked; }" :label="'Enable Inactive'" />
                                     </small>
                                 </div>
-                                <textarea v-if="device_trigger_info.enable_inactive" v-model="device_trigger_info.inactive_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
-                                <div v-if="show_preview && device_trigger_info.enable_inactive" >
+                                <textarea 
+                                    v-if="device_trigger_info.enable_inactive" 
+                                    v-model="device_trigger_info.inactive_command_template" 
+                                    class="form-control text-sm" 
+                                    style="min-height:80px" 
+                                    placeholder="Please input your text command"
+                                ></textarea>
+                                <div v-if="show_preview && device_trigger_info.enable_inactive && selected_preview.id > 0" >
                                     <code>Preview:</code>
+                                    <div>
+                                        <small class="text-primary" v-text="inactive_command_template_preview" ></small>
+                                    </div>
                                 </div>
                            </div>
                         </div>
@@ -145,9 +179,18 @@
                                     <icheck :checked="device_trigger_info.enable_remove" @update:checked="(is_checked)=>{ device_trigger_info.enable_remove = is_checked; }" :label="'Enable Delete/Removal'" />
                                     </small>
                                 </div>
-                                <textarea v-if="device_trigger_info.enable_remove" v-model="device_trigger_info.remove_command_template" class="form-control text-sm" style="min-height:80px" placeholder="Please input your text command"></textarea>
-                                <div v-if="show_preview && device_trigger_info.enable_remove" >
+                                <textarea 
+                                    v-if="device_trigger_info.enable_remove" 
+                                    v-model="device_trigger_info.remove_command_template" 
+                                    class="form-control text-sm" 
+                                    style="min-height:80px" 
+                                    placeholder="Please input your text command"
+                                ></textarea>
+                                <div v-if="show_preview && device_trigger_info.enable_remove && selected_preview.id > 0" >
                                     <code>Preview:</code>
+                                    <div>
+                                        <small class="text-primary" v-text="remove_command_template_preview" ></small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -291,7 +334,32 @@
                     command_url = 'register-account-preview';
                     template = this.device_trigger_info.register_command_template;
                     vm.register_command_template_preview = '';
-                }                
+                }
+                else if(command == 'update'){
+                    command_url = "update-account-preview";
+                    template = vm.device_trigger_info.update_command_template;
+                    vm.update_command_template_preview = '';
+                    return;
+                }
+                else if(command == 'active'){
+                    command_url = "set-active-preview";
+                    template = vm.device_trigger_info.active_command_template;
+                    vm.active_command_template_preview = '';
+                    return;
+
+                }
+                else if(command == 'inactive'){
+                    command_url = "set-inactive-preview";
+                    template = vm.device_trigger_info.inactive_command_template;
+                    vm.inactive_command_template_preview = '';
+                    return;
+                }
+                else if(command == 'remove'){
+                    command_url = "remove-preview";
+                    template = vm.device_trigger_info.remove_command_template;
+                    vm.remove_command_template_preview = '';
+                    return;
+                }
                 else{
                     return;
                 }
@@ -300,7 +368,6 @@
 
                 var target_id = this.selected_preview.id;
                 
-                vm.update_command_template_preview = '';
                 vm.active_command_template_preview = '';
                 vm.inactive_command_template_preview = '';
                 vm.remove_command_template_preview = '';
