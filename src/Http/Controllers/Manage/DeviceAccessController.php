@@ -9,6 +9,7 @@ use iProtek\Core\Helpers\PayModelHelper;
 use iProtek\Core\Helpers\Console\MikrotikHelper;
 use iProtek\Core\Helpers\Console\SshHelper;
 use iProtek\Core\Models\DeviceAccessTriggerLog;
+use iProtek\Core\Helpers\PayHttp;
 
 class DeviceAccessController extends _CommonController
 {
@@ -29,6 +30,10 @@ class DeviceAccessController extends _CommonController
         $data_schema = $request->data_schema;
 
         $dynamic_table = \DB::table($data_schema);
+
+        if(\Illuminate\Support\Facades\Schema::hasColumn($data_schema, 'group_id')){
+            $dynamic_table->where('group_id', PayHttp::target_group_id($request) );
+        }
 
         if($request->search_text && trim($request->search_text)){
             $search_text = '%'.str_replace(' ','%', trim($request->search_text)).'%';

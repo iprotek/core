@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Support\Facades\Log;
 use iProtek\Core\Models\UserAdminPayAccount;
 use iProtek\Core\Models\SuperAdminSubAccount;
+use Illuminate\Http\Request; 
 
 class PayHttp
 {
@@ -44,8 +45,8 @@ class PayHttp
         return $proxy_group_id;
     }
 
-    public static function target_group_id($proxy_group_id = null){
-        if($proxy_group_id === null){
+    public static function target_group_id( Request $request = null){
+        if($request === null){
             //Check if SubAccount
             $user_admin = UserAdminPayAccount::where('user_admin_id', auth('admin')->user()->id)->first();
             if( $user_admin && $user_admin->sub_account_group_id){
@@ -59,7 +60,7 @@ class PayHttp
                 return $user_admin->pay_app_user_account_id;
         }
         else{
-            $user_admin = UserAdminPayAccount::where('own_proxy_group_id', $proxy_group_id)->first();
+            $user_admin = UserAdminPayAccount::where('own_proxy_group_id', $request->group_id)->first();
             if($user_admin){
                 return $user_admin->pay_app_user_account_id;
             }

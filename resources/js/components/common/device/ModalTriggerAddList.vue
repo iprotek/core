@@ -382,7 +382,7 @@
                     template: template
                 }).then(resp=>{
                     resp.json().then(data=>{
-                        console.log("Template Result", data, command);
+                        //console.log("Template Result", data, command);
                         if(data.status == 1){
                             if(command == 'register'){
                                 vm.register_command_template_preview = data.template_translate;
