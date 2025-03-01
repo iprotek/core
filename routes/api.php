@@ -12,7 +12,6 @@ Route::middleware('api')->group(function(){
 
         Route::middleware(['pay_app_check'])->get('check-app-compatibility', [\iProtek\Core\Http\Controllers\Controller::class, 'check_app_compatibility'])->name('api.check-app-compatibility');
 
-
         Route::get('app-info', [\App\Http\Controllers\AppInfoController::class, 'app_info'])->name('api.app-info');
 
         Route::get('app-list', [AppVariableController::class, 'api_applist'])->name('api.app-list');
@@ -31,9 +30,6 @@ Route::middleware('api')->group(function(){
 
             //Branch
             include(__DIR__.'/api/branch.php');
-
-            //Branch
-            include(__DIR__.'/api/device.php');
 
         });
 
