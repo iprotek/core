@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use iProtek\Core\Models\Cms;
 use iProtek\Core\Enums\CmsType;
 use iProtek\Core\Enums\DeviceAccount;
+use iProtek\Core\Models\DeviceAccess;
 use MikrotikAPI\MikrotikAPI;
 use RouterOS\Client as MikroTikClient;
 use RouterOS\Query as MikroTikQuery;
@@ -61,9 +62,21 @@ class MikrotikHelper
     }
 
 
-    public static function register($command){
+    public static function register( DeviceAccess $deviceAccess, $command){
+
+        if($deviceAccess->type != 'mikrotik'){
+            return [ "status"=>0, "message"=>"Invalid Device"];
+        }
 
         //CHECK ACCOUNT USING USERNAME
+        $credential = [
+            "host"=>$deviceAccess->host,
+            "user"=>$deviceAccess->user,
+            "password"=>$deviceAccess->password,
+            "port"=>$deviceAccess->port,
+            "is_ssl"=>$deviceAccess->is_ssl
+        ];
+
 
 
         //REGISTER
