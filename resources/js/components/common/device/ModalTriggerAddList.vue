@@ -117,7 +117,9 @@
                                 <div v-if="show_preview && device_trigger_info.enable_update && selected_preview.id > 0" >
                                     <code>Preview:</code>
                                     <div>
-                                        <small class="text-primary" v-text="update_command_template_preview" ></small>
+                                        <small class="text-primary">
+                                            <pre  v-text="update_command_template_preview"></pre>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +147,9 @@
                                 <div v-if="show_preview && device_trigger_info.enable_active && selected_preview.id > 0" >
                                     <code>Preview:</code>
                                     <div>
-                                        <small class="text-primary" v-text="active_command_template_preview" ></small>
+                                        <small class="text-primary">
+                                            <pre  v-text="active_command_template_preview"></pre>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +177,9 @@
                                 <div v-if="show_preview && device_trigger_info.enable_inactive && selected_preview.id > 0" >
                                     <code>Preview:</code>
                                     <div>
-                                        <small class="text-primary" v-text="inactive_command_template_preview" ></small>
+                                        <small class="text-primary">
+                                            <pre v-text="inactive_command_template_preview"></pre>
+                                        </small>
                                     </div>
                                 </div>
                            </div>
@@ -201,7 +207,9 @@
                                 <div v-if="show_preview && device_trigger_info.enable_remove && selected_preview.id > 0" >
                                     <code>Preview:</code>
                                     <div>
-                                        <small class="text-primary" v-text="remove_command_template_preview" ></small>
+                                        <small class="text-primary"  >
+                                            <pre v-text="remove_command_template_preview"></pre>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
