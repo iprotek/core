@@ -76,7 +76,7 @@
                                     <td>
                                         <div v-if="item.device_access && item.device_access.is_active">
                                             <template v-if="item.device_accounts.length <= 0">
-                                                <button :class="'btn btn-sm '+( item.enable_register ? 'btn-outline-primary' : 'btn-outline-danger disabled')" @click="item.enable_register ? makeAction('register') : '' ">
+                                                <button :class="'text-nowrap btn btn-sm '+( item.enable_register ? 'btn-outline-primary' : 'btn-outline-danger disabled')" @click="item.enable_register ? makeAction('register') : '' ">
                                                     <template v-if="item.enable_register">
                                                         <span class="fa fa-user-plus"></span>
                                                         REGISTER
