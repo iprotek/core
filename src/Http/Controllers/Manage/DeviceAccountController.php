@@ -86,15 +86,26 @@ class DeviceAccountController extends _CommonController
 
         //GET TEMPLATE TRANSLATE
         //$trigger->register_command_template
-        \DB::table($request->target_name)->where('id', $request->target_id)->first();
         
-        $request->template = $trigger->register_command_template;
+        $template = $trigger->register_command_template;
+        //CONVERT TEMPLATE TRANSLATION
+        $translate = DeviceHelper::translate_template($template, $request->target_name, $request->target_id);
 
-        //CONVERT TEMPLATE TO PREVIEW
-        $result = $this->register_account_preview($request);
-        if($result['status'] == 0){
-            return $result;
+        //IF MIKROTIK
+        if($device_access->type == 'mikrotik'){
+
         }
+        else{
+
+        }
+
+
+        //ELSE IF SSH
+
+
+        //ELSE IF WINDOWS
+
+
 
         //ADD TO LOG
 
@@ -110,7 +121,7 @@ class DeviceAccountController extends _CommonController
 
         //ADD DEVICE ACCOUNT
 
-        return ["status"=>1, "message"=>"Successfully Added.", "data"=>null];
+        return ["status"=>0, "message"=>"Device Registration Not available." ];
  
 
     }
