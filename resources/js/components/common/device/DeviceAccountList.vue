@@ -24,6 +24,9 @@
                                         <small><b> Type</b> </small>
                                     </th>
                                     <th>
+                                        <small><b> Auto </b> </small>
+                                    </th>
+                                    <th>
                                         <small> <b>Status</b> </small>
                                     </th>
                                     <th>
@@ -37,13 +40,13 @@
                             </thead>
                             <tbody>
                                 <tr v-if="branch_id === null || branch_id === undefined">
-                                    <td colspan="7" class="text-center"> -- Branch is required. -- </td>
+                                    <td colspan="8" class="text-center"> -- Branch is required. -- </td>
                                 </tr>
                                 <tr v-else-if="isLoading">
-                                    <td colspan="7" class="text-center"> -- Loading Device Triggers -- </td>
+                                    <td colspan="8" class="text-center"> -- Loading Device Triggers -- </td>
                                 </tr>
                                 <tr v-if="triggerList.length == 0">
-                                    <td colspan="7"> -- No Device Trigger Found! -- </td>
+                                    <td colspan="8"> -- No Device Trigger Found! -- </td>
                                 </tr>
                                 <tr v-for="(item,itemIndex) in triggerList" v-bind:key="'trigger-item-'+item.id+'-'+itemIndex">
                                     <td v-text="item.id"></td>
@@ -61,6 +64,7 @@
                                         <b v-if="item.device_access" v-text="item.device_access.type"></b>
                                         <code v-else>N/A</code>
                                     </td>
+                                    <td> is Auto? </td>
                                     <td>
                                         <code v-if="item.device_accounts.length <= 0">NO ACCOUNT</code>
                                     </td>
@@ -72,7 +76,7 @@
                                     <td>
                                         <div v-if="item.device_access && item.device_access.is_active">
                                             <template v-if="item.device_accounts.length <= 0">
-                                                <button :class="'btn btn-sm '+( item.enable_register ? 'btn-outline-primary' : 'btn-outline-danger disabled')">
+                                                <button :class="'btn btn-sm '+( item.enable_register ? 'btn-outline-primary' : 'btn-outline-danger disabled')" @click="item.enable_register ? makeAction('register') : '' ">
                                                     <template v-if="item.enable_register">
                                                         <span class="fa fa-user-plus"></span>
                                                         REGISTER
@@ -95,6 +99,7 @@
                 </div>
             </div>
         </div>
+        <swal ref="swal_prompt"></swal> 
     </div>
 </template>
 
@@ -117,6 +122,81 @@
                     return key + '=' + params[key]
                 }).join('&');
                 return queryString;
+            },
+            makeAction:function(device_template_trigger_id, action){
+                var  vm = this;
+                var method = '';
+                var message = '';
+                var uri = '';
+                if(action == 'register'){
+                    method = 'POST';
+                    message = 'Register Account?';
+                    uri = 'register-account';
+                }
+                else if(action == 'update'){
+                    method = 'PUT';
+                    message = 'Update Account?';
+                    uri = 'update-account';
+                }
+                else if(action == 'active'){
+                    method = 'PUT';
+                    message = 'SET ACTIVE ACCOUNT?';
+                    uri = 'set-active';
+                }
+                else if(action == 'inactive'){
+                    method = 'PUT';
+                    message = 'Inactive Account?';
+                    uri = 'set-inactive';
+                }
+                else if(action == 'remove'){
+                    method = 'DELETE';
+                    message = 'Delete Account?';
+                    uri = 'remove';
+                }
+                else{
+                    return;
+                }
+                if(uri == 'remove'){
+                     
+                    return  this.$refs.swal_prompt.alert(
+                        'question',
+                        message, 
+                        "Confirm" , 
+                        method, 
+                        '/api/group/'+this.group_id+'/devices/accounts/remove?'+this.queryString({
+                            device_template_trigger_id: device_template_trigger_id,
+                            target_id: this.target_id,
+                            target_name: this.target_name
+                        })
+                    ).then(res=>{
+                        if(res.isConfirmed){
+                            if(res.value.status == 1){
+                                vm.loadDeviceAccounts();
+                            }
+                        }
+                    }); 
+
+                } 
+                     
+                return this.$refs.swal_prompt.alert(
+                    'question',
+                    message, 
+                    "Confirm" , 
+                    method, 
+                    '/api/group/'+this.group_id+'/devices/accounts/'+uri,
+                    JSON.stringify({
+                        device_template_trigger_id: device_template_trigger_id,
+                        target_name: this.target_name,
+                        target_id: this.target_id
+                    })
+                ).then(res=>{
+                    if(res.isConfirmed){
+                        if(res.value.status == 1){
+                            vm.loadDeviceAccounts();
+                        }
+                    }
+                }); 
+
             },
             loadDeviceAccounts:function(){
                 var vm = this;
