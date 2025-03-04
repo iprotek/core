@@ -17,7 +17,7 @@
         },
         watch: {
             value(newValue) {
-                this.outside_trigger = true;
+                //this.outside_trigger = true;
                 this.input_value = newValue ? true:false;
                 this.input_check = this.input_value;
                 $('#'+this.switchID).bootstrapSwitch('state', this.input_value);
