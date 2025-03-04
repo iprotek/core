@@ -77,6 +77,9 @@
                                         </div>
                                     </td>
                                     <td> 
+                                        <small  v-if="item.device_accounts.length > 0" v-text="item.device_accounts[0].active_info">
+
+                                        </small>
                                     </td>
                                     <td>
                                         <span class="text-primary" v-if="item.device_accounts.length > 0" v-text="item.device_accounts.updated_at" ></span>
