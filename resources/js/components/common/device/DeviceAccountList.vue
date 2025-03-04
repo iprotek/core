@@ -82,7 +82,7 @@
                                         </small>
                                     </td>
                                     <td>
-                                        <span class="text-primary" v-if="item.device_accounts.length > 0" v-text="item.device_accounts.updated_at" ></span>
+                                        <span class="text-primary" v-if="item.device_accounts.length > 0" v-text="item.device_accounts[0].updated_at" ></span>
                                     </td>
                                     <td>
                                         <div v-if="item.device_access && item.device_access.is_active">
