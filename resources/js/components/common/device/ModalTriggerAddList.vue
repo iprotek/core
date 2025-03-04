@@ -388,9 +388,9 @@
 
                 var target_id = this.selected_preview.id;
                 
-                vm.active_command_template_preview = '';
-                vm.inactive_command_template_preview = '';
-                vm.remove_command_template_preview = '';
+                //vm.active_command_template_preview = '';
+                //vm.inactive_command_template_preview = '';
+                //vm.remove_command_template_preview = '';
 
                 WebRequest2('POST', '/api/group/'+this.group_id+'/devices/accounts/'+command_url, {
                     target_id: target_id,

@@ -24,7 +24,7 @@
                                         <small><b> Type</b> </small>
                                     </th>
                                     <th>
-                                        <small><b> Auto </b> </small>
+                                        <small><b title="automatically trigger in any changes."> Auto Trigger?</b> </small>
                                     </th>
                                     <th>
                                         <small> <b>Status</b> </small>
