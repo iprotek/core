@@ -50,7 +50,9 @@
                                 </tr>
                                 <tr v-for="(item,itemIndex) in triggerList" v-bind:key="'trigger-item-'+item.id+'-'+itemIndex">
                                     <td v-text="item.id"></td>
-                                    <td v-text="item.trigger_name"></td>
+                                    <td>
+                                        <small v-text="item.trigger_name"></small>
+                                    </td>
                                     <td>
                                         <b v-if="item.device_access" >
                                             <span v-text="item.device_access.name"></span>
@@ -69,6 +71,10 @@
                                     </td>
                                     <td>
                                         <code v-if="item.device_accounts.length <= 0">NO ACCOUNT</code>
+                                        <div v-else>
+                                            <small class="text-success" v-if="item.device_accounts[0].is_active">ACTIVE</small>
+                                            <small class="text-danger" v-else>INACTIVE</small>
+                                        </div>
                                     </td>
                                     <td> 
                                     </td>
@@ -87,6 +93,22 @@
                                                         REGISTER NOT AVAILABLE
                                                     </template>
                                                 </button>
+                                            </template>
+                                            <template v-else>
+                                                <div class="text-nowrap">
+                                                    <button title="Update" class="btn btn-outline-primary btn-sm mr-1" @click="makeAction(item.id, 'update', item.device_accounts[0].id)">
+                                                        <span class="fa fa-refresh"></span>
+                                                    </button>
+                                                    <button title="Set Active" class="btn btn-outline-success btn-sm mr-1" @click="makeAction(item.id, 'active', item.device_accounts[0].id)">
+                                                        <span class="fa fa-up"></span>
+                                                    </button>
+                                                    <button title="Set Inactive" class="btn btn-outline-warning btn-sm mr-1" @click="makeAction(item.id, 'inactive', item.device_accounts[0].id)">
+                                                        <span class="fa fa-arrow-down"></span>
+                                                    </button>
+                                                    <button title="Remove" class="btn btn-outline-danger btn-sm mr-1" @click="makeAction(item.id, 'remove', item.device_accounts[0].id)">
+                                                        <span class="fa fa-times"></span>
+                                                    </button>
+                                                </div>
                                             </template>
                                         </div>
                                         <div v-else>
@@ -127,7 +149,7 @@
                 }).join('&');
                 return queryString;
             },
-            makeAction:function(device_template_trigger_id, action){
+            makeAction:function(device_template_trigger_id, action, device_account_id = 0){
                 var  vm = this;
                 var method = '';
                 var message = '';
@@ -170,7 +192,8 @@
                         '/api/group/'+this.group_id+'/devices/accounts/remove?'+this.queryString({
                             device_template_trigger_id: device_template_trigger_id,
                             target_id: this.target_id,
-                            target_name: this.target_name
+                            target_name: this.target_name,
+                            device_account_id: device_account_id
                         })
                     ).then(res=>{
                         if(res.isConfirmed){
@@ -191,7 +214,8 @@
                     JSON.stringify({
                         device_template_trigger_id: device_template_trigger_id,
                         target_name: this.target_name,
-                        target_id: this.target_id
+                        target_id: this.target_id,
+                        device_account_id: device_account_id
                     })
                 ).then(res=>{
                     if(res.isConfirmed){
