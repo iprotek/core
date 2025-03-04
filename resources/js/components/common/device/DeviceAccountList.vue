@@ -99,16 +99,16 @@
                                             </template>
                                             <template v-else>
                                                 <div class="text-nowrap">
-                                                    <button title="Update" class="btn btn-outline-primary btn-sm mr-1" @click="makeAction(item.id, 'update', item.device_accounts[0].id)">
+                                                    <button title="Update" :class="'btn btn-outline-primary btn-sm mr-1 '+( item.enable_update ? '' : 'disabled')" @click="item.enable_update ? makeAction(item.id, 'update', item.device_accounts[0].id) : '' ">
                                                         <span class="fa fa-redo"></span>
                                                     </button>
-                                                    <button v-if="!item.device_accounts[0].is_active" title="Set Active" class="btn btn-outline-success btn-sm mr-1" @click="makeAction(item.id, 'active', item.device_accounts[0].id)">
+                                                    <button title="Set Active" :class="'btn btn-outline-success btn-sm mr-1 '+( item.enable_active ? '' : 'disabled')"  v-if="!item.device_accounts[0].is_active" @click="item.enable_active ? makeAction(item.id, 'active', item.device_accounts[0].id) : ''">
                                                         <span class="fa fa-arrow-up"></span>
                                                     </button>
-                                                    <button v-else title="Set Inactive" class="btn btn-outline-warning btn-sm mr-1" @click="makeAction(item.id, 'inactive', item.device_accounts[0].id)">
+                                                    <button v-else title="Set Inactive" :class="'btn btn-outline-warning btn-sm mr-1 '+( item.enable_inactive ? '' : 'disabled')" @click="item.enable_inactive ? makeAction(item.id, 'inactive', item.device_accounts[0].id):''">
                                                         <span class="fa fa-arrow-down"></span>
                                                     </button>
-                                                    <button title="Remove" class="btn btn-outline-danger btn-sm mr-1" @click="makeAction(item.id, 'remove', item.device_accounts[0].id)">
+                                                    <button title="Remove" :class="'btn btn-outline-danger btn-sm mr-1 '+( item.enable_remove ? '' : 'disabled')" @click="item.enable_remove ? makeAction(item.id, 'remove', item.device_accounts[0].id) : ''">
                                                         <span class="fa fa-times"></span>
                                                     </button>
                                                 </div>
