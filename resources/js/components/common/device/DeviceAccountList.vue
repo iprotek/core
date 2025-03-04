@@ -67,7 +67,7 @@
                                         <code v-else>N/A</code>
                                     </td>
                                     <td> 
-                                        <switch2 @value_changed="chk=>{ auto_trigger_value_changed(chk, item.device_accounts[0].id)}" v-if="item.device_accounts.length > 0" v-model="item.device_accounts[0].is_auto_trigger"  />
+                                        <switch2 @value_changed="auto_trigger_value_changed(item.device_accounts[0].is_auto_trigger, item.device_accounts[0].id)" v-if="item.device_accounts.length > 0" v-model="item.device_accounts[0].is_auto_trigger"  />
                                     </td>
                                     <td>
                                         <code v-if="item.device_accounts.length <= 0">NO ACCOUNT</code>
@@ -147,7 +147,7 @@
         },
         methods: { 
             auto_trigger_value_changed:function(chk, device_account_id){
-                console.log(chk,device_account_id);
+                console.log(chk, device_account_id);
                 var vm = this;
                 /*
                 WebRequest2('PUT', '/api/group/'+this.group_id+'/devices/accounts/update-auto-trigger', JSON.stringify({
