@@ -147,9 +147,8 @@
         },
         methods: { 
             auto_trigger_value_changed:function(chk, device_account_id){
-                console.log(chk, device_account_id);
-                var vm = this;
-                /*
+                //console.log(chk, device_account_id);
+                var vm = this; 
                 WebRequest2('PUT', '/api/group/'+this.group_id+'/devices/accounts/update-auto-trigger', JSON.stringify({
                     device_account_id: device_account_id,
                     is_auto_trigger: chk
@@ -160,8 +159,7 @@
                             //vm.loadDeviceAccounts();
                         }
                     });
-                });
-                */
+                }); 
             },
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {
