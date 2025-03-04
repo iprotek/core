@@ -64,7 +64,9 @@
                                         <b v-if="item.device_access" v-text="item.device_access.type"></b>
                                         <code v-else>N/A</code>
                                     </td>
-                                    <td> is Auto? </td>
+                                    <td> 
+                                        <switch2 v-if="item.device_accounts.length > 0" v-model="item.device_accounts[0].is_auto_trigger"  />
+                                    </td>
                                     <td>
                                         <code v-if="item.device_accounts.length <= 0">NO ACCOUNT</code>
                                     </td>
@@ -104,9 +106,11 @@
 </template>
 
 <script>
+    import BoostrapSwitch2Vue from '../BoostrapSwitch2.vue';
     export default {
         props:[ "title", "group_id", "target_id", "target_name", "branch_id"  ],
         components: { 
+            "switch2":BoostrapSwitch2Vue
         },
         watch: { 
         },
