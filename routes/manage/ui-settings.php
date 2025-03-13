@@ -10,7 +10,7 @@ use iProtek\Core\Helpers\UISettingHelper;
   } )->name('ui-settings-clear');
   Route::get('/ui-settings/{template}/{setting_name}/{value}', function(Request $request, $template, $setting_name, $value){
     return UISettingHelper::set($setting_name, $value , $template);
-  })->name('ui-settings');
+  })->name('ui-settings-with-value');
   Route::get('/ui-settings-clear/{template}/{setting_name}', function(Request $request, $template, $setting_name){
     return UISettingHelper::set($setting_name, "", $template );
   })->name('ui-settings');
