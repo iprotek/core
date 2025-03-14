@@ -45,11 +45,14 @@ class PayAppUserAccountApi
             'user'=>$auth_info 
         ]);
         if(!auth()->check()){
-            Log::info('Authenticating user: '.json_encode($auth_info["app_user_account"]["id"]));
+            //Log::info('Authenticating user: '.json_encode($auth_info["app_user_account"]["id"]));
             // Auth::setUser($user);
             $userAdminPay = UserAdminPayAccount::where('pay_app_user_account_id', $auth_info["app_user_account"]["id"])->first();
             if($userAdminPay){
-                Auth::setUser(Admin::find($userAdminPay->user_admin_id));
+                $userAdmin = Admin::find($userAdminPay->user_admin_id);
+                if($userAdmin){
+                    Auth::setUser($userAdmin);
+                }
             }
         }
 
