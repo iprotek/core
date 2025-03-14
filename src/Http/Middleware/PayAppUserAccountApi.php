@@ -43,6 +43,10 @@ class PayAppUserAccountApi
         $request->attributes->add([
             'user'=>$auth_info 
         ]);
+        if(!auth()->check()){
+            Log::info('Authenticating user: '.json_encode($auth_info));
+            // Auth::setUser($user);
+        }
 
 
          return $next($request);  
