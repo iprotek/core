@@ -8,6 +8,7 @@ use iProtek\Core\Http\Kernel;
 use iProtek\Core\Helpers\PayHttp;
 use Illuminate\Support\Facades\Gate;
 use iProtek\Core\Console\Commands\FileImportBatchCommand;
+use Illuminate\Support\Facades\Log;
 
 class iProtekServiceProvider extends ServiceProvider
 {
@@ -46,6 +47,7 @@ class iProtekServiceProvider extends ServiceProvider
         });
         Gate::define('superadmin', function ($user) {
 
+            Log::error($user);
             //1st PRIORITY IS THE APP ACCOUNT ID
             //iprotek.sa_app_account_id
             if(config('iprotek.sa_app_account_id')){
