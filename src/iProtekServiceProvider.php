@@ -36,18 +36,9 @@ class iProtekServiceProvider extends ServiceProvider
             ]);
         }
 
+        $fnCheckSuperAdmin = function ($user) {
 
-        // Bootstrap package services
-        //SUPERADMIN SETUP
-        Gate::define('super_admin', function ($user) {
-            return $user->can('superadmin');
-        });
-        Gate::define('super-admin', function ($user) {
-            return $user->can('superadmin');
-        });
-        Gate::define('superadmin', function ($user) {
-
-            //Log::error($user);
+            Log::error($user);
             //1st PRIORITY IS THE APP ACCOUNT ID
             //iprotek.sa_app_account_id
             if(config('iprotek.sa_app_account_id')){
@@ -61,7 +52,13 @@ class iProtekServiceProvider extends ServiceProvider
             }
 
             return $user->id == 1;
-        });
+        };
+
+        // Bootstrap package services
+        //SUPERADMIN SETUP
+        Gate::define('super_admin', $fnCheckSuperAdmin);
+        Gate::define('super-admin', $fnCheckSuperAdmin);
+        Gate::define('superadmin', $fnCheckSuperAdmin);
 
 
 
