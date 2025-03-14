@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use iProtek\Core\Models\UserAdminPayAccount;
 use Illuminate\Support\Facades\Session;
 use iProtek\Core\Helpers\PayGroup;
+use iProtek\Core\Models\Auths\Admin;
 
 class PayAppUserAccountApi
 {
@@ -44,8 +45,12 @@ class PayAppUserAccountApi
             'user'=>$auth_info 
         ]);
         if(!auth()->check()){
-            Log::info('Authenticating user: '.json_encode($auth_info));
+            Log::info('Authenticating user: '.json_encode($auth_info["app_user_account"]["id"]));
             // Auth::setUser($user);
+            $userAdminPay = UserAdminPayAccount::where('pay_app_user_account_id', $auth_info["app_user_account"]["id"])->first();
+            if($userAdminPay){
+                Auth::setUser(Admin::find($userAdminPay->user_admin_id));
+            }
         }
 
 
