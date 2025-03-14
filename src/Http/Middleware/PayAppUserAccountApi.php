@@ -45,8 +45,7 @@ class PayAppUserAccountApi
             'user'=>$auth_info 
         ]);
         if(!auth()->check()){
-            //Log::info('Authenticating user: '.json_encode($auth_info["app_user_account"]["id"]));
-            // Auth::setUser($user);
+            //TODO:: PLEASE FIX THIS FOR BROWSER.... DESTROY THIS WHEN LOGOUT...
             $userAdminPay = UserAdminPayAccount::where('pay_app_user_account_id', $auth_info["app_user_account"]["id"])->first();
             if($userAdminPay){
                 $userAdmin = Admin::find($userAdminPay->user_admin_id);

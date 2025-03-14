@@ -39,15 +39,13 @@ class iProtekServiceProvider extends ServiceProvider
         $fnCheckSuperAdmin = function ($user) {
 
             //1st PRIORITY IS THE APP ACCOUNT ID
-            //iprotek.sa_app_account_id
-            Log::info('Checking super admin: '.config('iprotek.sa_app_account_id').' == '.PayHttp::pay_account_id($user));
+            //Log::info('Checking super admin: '.config('iprotek.sa_app_account_id').' == '.PayHttp::pay_account_id($user));
             if(config('iprotek.sa_app_account_id')){
                 return config('iprotek.sa_app_account_id') == PayHttp::pay_account_id($user);
             }
             
             //2nd PRIORITY IS THE USERADMIN ID
-            //iprotek.sa_user_admin_id
-            Log::info('Checking super admin: '.config('iprotek.sa_user_admin_id').' == '. $user->id);
+            //Log::info('Checking super admin: '.config('iprotek.sa_user_admin_id').' == '. $user->id);
             if(config('iprotek.sa_user_admin_id')){
                 return config('iprotek.sa_user_admin_id') ==  $user->id;
             }
