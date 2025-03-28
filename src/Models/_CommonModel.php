@@ -37,7 +37,7 @@ class _CommonModel extends Model
     protected function asDateTime($value)
     {
         //return $value;
-        $timezone = config('app.timezone') ?: 'UTC';
+        $timezone = config('iprotek.timezone') ?: 'UTC';
         return parent::asDateTime($value)->setTimezone($timezone);
     }
 }
