@@ -18,5 +18,5 @@ return [
     'sa_app_account_id'=>env('PAY_SA_APP_ACCOUNT_ID', 0),
     'sa_user_admin_id'=>env('PAY_SA_USER_ADMIN_ID', 0),
     'is_demo'=>env('PAY_IPROTEK_IS_DEMO', 0),
-    'timezone'=>env('TIMEZONE', 'Asia/Manila')
+    'timezone'=>env('TIMEZONE', 'UTC')
 ];
