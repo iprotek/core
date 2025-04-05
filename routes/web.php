@@ -61,19 +61,6 @@ Route::middleware('web')->group(function(){
 
       //FILE IMPORT
       include(__DIR__.'/manage/file-import.php'); 
-
-      
-      /*
-      Route::prefix('/file-uploads')->name('.file-uploads')->group(function(){
-        Route::post('/add', [ iProtek\Core\Http\Controllers\Manage\FileUploadController::class ,'add'])->name('.add');
-        Route::get('/get-list', [ iProtek\Core\Http\Controllers\Manage\FileUploadController::class ,'list'])->name('.get-list');
-        Route::get('/get-list/{id}', [ iProtek\Core\Http\Controllers\Manage\FileUploadController::class ,'list'])->name('.get-one');
-        Route::get('/image-preview/{id}', [ iProtek\Core\Http\Controllers\Manage\FileUploadController::class ,'image_preview'])->name('.image-preview');
-        Route::get('/load-file/{id}', [ iProtek\Core\Http\Controllers\Manage\FileUploadController::class ,'load_file'])->name('.load-file');
-        Route::post('/set-default/{id}', [ iProtek\Core\Http\Controllers\Manage\FileUploadController::class ,'set_default'])->name('.set-default');
-        Route::delete('/remove/{id}', [ iProtek\Core\Http\Controllers\Manage\FileUploadController::class ,'remove'])->name('.remove');
-      });*/
-      
       
     });
 

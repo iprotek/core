@@ -65,6 +65,12 @@ class _CommonController extends BaseController
     }
     public function common_infos()
     {
+        
+        if(!Auth::guard($this->guard)->check()){
+            header('Location: /login');
+            exit;
+        }
+        
         $user = Auth::guard($this->guard)->user();
         $sidemenus = json_decode( DB::select("SELECT fnSysGetGroupSidemenus(?,0) as sidemenus ",[$user->id])[0]->sidemenus) ;//->sidemenus;
         
