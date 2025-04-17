@@ -11,7 +11,7 @@
 <script>
     
     export default {
-        props:[ "value" ,"allow_multiple", "url", "custom_data" , "default_theme", "append_data", "placeholder", "query_filters" ,"filters", "modal_selector", "allowtag", "has_clear", "disabled", "search_param", "display_items_no", "select_data", "select_template" ],
+        props:[ "value" ,"allow_multiple", "is_clean_after_select", "url", "custom_data" , "default_theme", "append_data", "placeholder", "query_filters" ,"filters", "modal_selector", "allowtag", "has_clear", "disabled", "search_param", "display_items_no", "select_data", "select_template" ],
         components: { 
         },
         watch: {
@@ -164,6 +164,16 @@
                         vm.sanitizeDuplicate();
                     }
                     vm.$emit("selected", vm.selectedItem, vm.select_tags);
+                    
+                    if(vm.is_clean_after_select === true){                         
+                        vm.item = {
+                            id:0,
+                            text:''
+                        } 
+                        setTimeout(()=>{ 
+                            $('#'+vm.selectElID).val(null).trigger('change');
+                        }, 100);
+                    }
                 }); 
                 $('#'+this.selectElID).on('select2:unselect', function (e) {
                     //console.log("UNSELECT");
