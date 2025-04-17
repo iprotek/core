@@ -164,15 +164,15 @@
                         vm.sanitizeDuplicate();
                     }
                     vm.$emit("selected", vm.selectedItem, vm.select_tags);
-                    
+
                     if(vm.is_clean_after_select === true){                         
                         vm.item = {
                             id:0,
                             text:''
                         } 
-                        setTimeout(()=>{ 
-                            $('#'+vm.selectElID).val(null).trigger('change');
-                        }, 100);
+                        //setTimeout(()=>{ 
+                        //    $('#'+vm.selectElID).val(null).trigger('change');
+                       // }, 100);
                     }
                 }); 
                 $('#'+this.selectElID).on('select2:unselect', function (e) {
