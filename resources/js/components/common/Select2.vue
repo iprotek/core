@@ -59,7 +59,11 @@
                 if(vm.select_template){
                     jSON.templateResult = vm.select_template;
                     jSON.templateSelection = vm.select_template,
-                    jSON.escapeMarkup = function(m) { return m; }
+                    jSON.escapeMarkup = function(m) { 
+                        console.log("ESCAPE MARKUP",m);
+                    
+                        return m; 
+                    }
                     //jSON.formatResult = vm.select_template;
                     //jSON.formatSelection = vm.select_template;
                 }
