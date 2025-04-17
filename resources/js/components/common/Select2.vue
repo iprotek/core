@@ -58,10 +58,10 @@
                 
                 if(vm.select_template){
                     jSON.templateResult = function(data, container) {
-                        vm.select_template(data, container, vm.itemList);
+                       return vm.select_template(data, container, vm.itemList);
                     }
                     jSON.templateSelection = function(data, container){ 
-                        vm.select_template(data, container, vm.itemList); 
+                       return  vm.select_template(data, container, vm.itemList); 
                     }
                     jSON.escapeMarkup = function(m) {
                         return m; 
