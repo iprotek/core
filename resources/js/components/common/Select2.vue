@@ -114,7 +114,7 @@
                 if(vm.select_template){
                     jSON.templateResult = vm.select_template;
                     jSON.templateSelection = vm.select_template,
-                    jSON.escapeMarkup = function(m) { return m; }
+                    jSON.escapeMarkup = function(m) { return vm.select_template(m); }
                     //jSON.formatResult = vm.select_template;
                     //jSON.formatSelection = vm.select_template;
                 }
