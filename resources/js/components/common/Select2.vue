@@ -55,6 +55,14 @@
             loadSelect:function(){
                 var vm = this;
                 var jSON = {}; 
+                
+                if(vm.select_template){
+                    jSON.templateResult = vm.select_template;
+                    jSON.templateSelection = vm.select_template,
+                    jSON.escapeMarkup = function(m) { return m; }
+                    //jSON.formatResult = vm.select_template;
+                    //jSON.formatSelection = vm.select_template;
+                }
                 if(vm.url){
                     jSON.ajax = {
                         type: 'GET',
@@ -111,13 +119,6 @@
                     jSON.data = vm.select_data;
                 }
 
-                if(vm.select_template){
-                    jSON.templateResult = vm.select_template;
-                    jSON.templateSelection = vm.select_template,
-                    jSON.escapeMarkup = function(m) { return m; }
-                    //jSON.formatResult = vm.select_template;
-                    //jSON.formatSelection = vm.select_template;
-                }
 
                 
                 if(vm.allowtag === true){
