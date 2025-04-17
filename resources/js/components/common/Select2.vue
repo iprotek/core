@@ -168,9 +168,9 @@
                     if(vm.is_clean_after_select === true){        
                         
                         //Prevent looping
-                        if(vm.item && vm.item.id > 0)
+                        if(vm.selectedItem && vm.selectedItem.id > 0)
                             return;
-                        
+
                         vm.selectedItem = null;
 
                         vm.item = {
