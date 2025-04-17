@@ -57,11 +57,13 @@
                 var jSON = {}; 
                 
                 if(vm.select_template){
-                    jSON.templateResult = vm.select_template;
-                    jSON.templateSelection = vm.select_template,
-                    jSON.escapeMarkup = function(m) { 
-                        console.log("ESCAPE MARKUP",m);
-                    
+                    jSON.templateResult = function(data, container) {
+                        vm.select_template(data, container, vm.itemList);
+                    }
+                    jSON.templateSelection = function(data, container){ 
+                        vm.select_template(data, container, vm.itemList); 
+                    }
+                    jSON.escapeMarkup = function(m) {
                         return m; 
                     }
                     //jSON.formatResult = vm.select_template;
