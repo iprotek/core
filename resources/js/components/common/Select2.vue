@@ -60,7 +60,7 @@
             loadSelect:function(){
                 var vm = this;
                 var jSON = {
-                    minimumInputLength: vm.minimum_input_length ? minimum_input_length : 0
+                    minimumInputLength: vm.minimum_input_length ? vm.minimum_input_length : 0
                 }; 
                 
                 if(vm.select_template){
