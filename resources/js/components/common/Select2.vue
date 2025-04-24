@@ -12,6 +12,10 @@
     
     export default {
         props:[ "value" ,"allow_multiple", "is_clean_after_select", "url", "custom_data" , "default_theme", "append_data", "placeholder", "query_filters" ,"filters", "modal_selector", "allowtag", "has_clear", "disabled", "search_param", "display_items_no", "select_data", "select_template" ],
+        emits: {
+            data_result:(data = {})=>{},
+            selected:()=>{}
+        },
         components: { 
         },
         watch: {
