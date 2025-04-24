@@ -30,6 +30,7 @@
         },
         data: function () {
             return { 
+                remain_focus:false,
                 select2Selector: 'select2-item-container-'+this._uid,
                 setUp:false,
                 selectElID: 'select-el-'+this._uid,
@@ -208,9 +209,10 @@
                         e.params.data.element.remove();
                     }
                 });
+                vm.remain_focus = vm.is_remain_focus_on_enter;
                 if(vm.is_remain_focus_on_enter){
                     $('#'+this.selectElID).on('keypress', function(e) {
-                        if (e.which === 13) { // Enter key code
+                        if (e.which === 13 && vm.remain_focus) { // Enter key code
                             e.preventDefault(); // Stop default behavior
                         }
                     });
@@ -236,7 +238,11 @@
                     select2.val([items[0],items[0]]);
                 }
 
+            },
+            focus:function(){
+                $('#'+this.selectElID).focus();
             }
+            
         },
         mounted:function(){   
             if(this.value){
