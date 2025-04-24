@@ -99,6 +99,8 @@
                         dataType: 'json',
                         processResults: function (data) { 
                             var data = data.data; 
+
+                            vm.$emit('data_result', data);
                             if(vm.append_data && vm.append_data.length > 0){
                                 data = vm.append_data.concat(data);
                             }
