@@ -11,7 +11,7 @@
 <script>
     
     export default {
-        props:[ "value" ,"allow_multiple", "is_clean_after_select", "url", "custom_data" , "default_theme", "append_data", "placeholder", "query_filters" ,"filters", "modal_selector", "allowtag", "has_clear", "disabled", "search_param", "display_items_no", "select_data", "select_template" ],
+        props:[ "value" ,"allow_multiple", "is_remain_focus_on_enter", "is_clean_after_select", "url", "custom_data" , "default_theme", "append_data", "placeholder", "query_filters" ,"filters", "modal_selector", "allowtag", "has_clear", "disabled", "search_param", "display_items_no", "select_data", "select_template" ],
         emits: {
             data_result:(data)=>{},
             selected:(item, tags)=>{}
@@ -208,7 +208,13 @@
                         e.params.data.element.remove();
                     }
                 });
-                
+                if(vm.is_remain_focus_on_enter){
+                    $('#'+this.selectElID).on('keypress', function(e) {
+                        if (e.which === 13) { // Enter key code
+                            e.preventDefault(); // Stop default behavior
+                        }
+                    });
+                }
                 
                 if(this.disabled === true){
                     $('#'+this.selectElID).prop('disabled', true);
