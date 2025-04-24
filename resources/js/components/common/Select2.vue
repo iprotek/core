@@ -101,10 +101,10 @@
                             return query;
                         },
                         dataType: 'json',
-                        processResults: function (data) { 
-                            var data = data.data; 
+                        processResults: function (result) { 
+                            var data = result.data; 
 
-                            vm.$emit('data_result', data);
+                            vm.$emit('data_result', result);
                             if(vm.append_data && vm.append_data.length > 0){
                                 data = vm.append_data.concat(data);
                             }
