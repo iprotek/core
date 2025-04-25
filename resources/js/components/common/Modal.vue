@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" :id="modal" :style="(zIndex? 'z-index:'+ zIndex+';':'') ">
-        <div style="margin-top:70px;" :class="(extended_width===true?'modal-dialog modal-lg':'modal-dialog') " :style="vw? 'min-width:'+vw+'vw':''">
+        <div style="margin-top:70px;" :class="(extended_width===true?'modal-dialog modal-lg ':'modal-dialog ') + (is_scrollable === true ? 'modal-dialogue modal-dialog-scrollable' : '') " :style="vw? 'min-width:'+vw+'vw':''">
             <div class="modal-content">
                 <slot>
                     <div class="modal-header pb-0">
@@ -40,7 +40,7 @@
 </template>
 <script>
     export default {
-        props: ['name', 'extended_width', 'prevent', 'body_class', 'vw', 'zIndex', "has_close"],
+        props: ['name', 'extended_width', 'prevent', 'body_class', 'vw', 'zIndex', "has_close", "is_scrollable"],
         data: function () {
             return {
                 modal: null,
