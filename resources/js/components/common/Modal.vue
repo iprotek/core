@@ -1,6 +1,6 @@
 <template>
     <div class="modal fade" :id="modal" :style="(zIndex? 'z-index:'+ zIndex+';':'') ">
-        <div style="margin-top:70px;" :class="(extended_width===true?'modal-dialog modal-lg ':'modal-dialog ') + (is_scrollable === true ? 'modal-dialogue modal-dialog-scrollable' : '') " :style="vw? 'min-width:'+vw+'vw':''">
+        <div :style="'margin-top:60px; '+(is_scrollable === true ? 'height:85vh;' : '')+(vw? 'min-width:'+vw+'vw;':'')" :class="(extended_width===true?'modal-dialog modal-lg ':'modal-dialog ') + (is_scrollable === true ? 'modal-dialogue modal-dialog-scrollable' : '') ">
             <div class="modal-content">
                 <slot>
                     <div class="modal-header pb-0">
