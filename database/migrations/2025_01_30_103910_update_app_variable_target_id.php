@@ -14,9 +14,11 @@ class UpdateAppVariableTargetId extends Migration
     public function up()
     {
         //
-        Schema::table('app_variables', function (Blueprint $table) {
-            $table->bigInteger('target_id')->nullable();
-        });
+        if (!Schema::hasColumn('app_variables', 'target_id')) {
+            Schema::table('app_variables', function (Blueprint $table) {
+                $table->bigInteger('target_id')->nullable();
+            });
+        }
     }
 
     /**
