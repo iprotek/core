@@ -191,9 +191,10 @@
 
                         vm.item = {
                             id:0,
-                            text:''
+                            text: vm.placeholder
                         } 
                         setTimeout(()=>{ 
+                            $('#'+vm.selectElID).trigger('input');
                             $('#'+vm.selectElID).val(null).trigger('change');
                         }, 100);
                     }
