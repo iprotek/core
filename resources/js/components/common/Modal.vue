@@ -66,9 +66,10 @@
                     $("#" + this.modal).modal('show');
                 }
             },
-            dismiss: function () {
+            dismiss: function (submit=true) {
                 $("#" + this.modal).modal('toggle');
-                this.$emit('modal_dismiss', this.modal);
+                if(submit)
+                    this.$emit('modal_dismiss', this.modal);
             },
             raised_exit: function () {
                 var vm = this;
