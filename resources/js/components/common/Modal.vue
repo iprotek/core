@@ -68,6 +68,7 @@
             },
             dismiss: function (submit=true) {
                 $("#" + this.modal).modal('toggle');
+                console.log("clossed", submit);
                 if(submit)
                     this.$emit('modal_dismiss', this.modal);
             },
