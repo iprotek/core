@@ -7,7 +7,7 @@
                         <h4 class="modal-title">
                             <slot name="header"></slot>
                         </h4>
-                        <button v-if="has_close !== false" type="button" class="close btn btn-outline-danger" @click.prevent="dismiss">
+                        <button v-if="has_close !== false" type="button" class="close btn btn-outline-danger" @click.prevent="dismiss()">
                             <span class="fa fa-times"></span>
                         </button>
                     </div>
