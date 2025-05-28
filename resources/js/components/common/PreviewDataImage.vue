@@ -22,7 +22,7 @@
 
         <!-- Modal Caption (Image Text) -->
         <!-- The Close Button -->
-        <span @click="close" class="preview-image-close" style="position:fixed;">&times;</span>
+        <span @click="close" class="preview-image-close mt-4 mr-4" style="position:fixed;">&times;</span>
         <div class="preview-image-caption">
             <p v-text="data.description"></p>
         </div>

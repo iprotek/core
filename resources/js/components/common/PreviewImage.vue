@@ -2,7 +2,7 @@
     <div :id="previewModal" class="preview-image-modal">
 
         <!-- The Close Button -->
-        <span @click="close" class="preview-image-close">&times;</span>
+        <span @click="close" class="preview-image-close  mt-4 mr-4">&times;</span>
 
         <!-- Modal Content (The Image) -->
         <img class="preview-image-modal-content" :id="previewImage">
