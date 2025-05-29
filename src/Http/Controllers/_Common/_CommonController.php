@@ -122,9 +122,11 @@ class _CommonController extends BaseController
        if($pay_account){
           $group_id = $pay_account->default_proxy_group_id;
         }
+
+        $selected_branch_id = \iProtek\Core\Helpers\BranchSelectionHelper::get();
        
 
-        return ["SIDEMENUS"=>$sidemenus, "USER"=>$user, "group_id"=>$group_id];
+        return ["SIDEMENUS"=>$sidemenus, "USER"=>$user, "group_id"=>$group_id, "selected_branch_id"=>$selected_branch_id ];
     }
 
     public function loginpage()

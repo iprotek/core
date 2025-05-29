@@ -36,7 +36,7 @@ class BranchSelectionHelper
             }
             $branches = static::active_branches();
             if( count($branches) > 0){
-                Log::error($branches);
+                //Log::error($branches);
                 $branch_id = $branches[0]['id'];
                 static::set($branch_id);
                 return $branch_id;
