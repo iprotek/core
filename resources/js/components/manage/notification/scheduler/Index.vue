@@ -7,25 +7,66 @@
                         <label class="mb-0">Schedule List</label>
                     </div>
                     <div class="card-body">
-                        <table class="w-100 custom-red-table">
-                            <thead>
-                                <tr>
-                                    <th style="width:100px;">Ref#</th>
-                                    <th>Name</th>
-                                    <th>Triggers</th>
-                                    <th>IsActive</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-if="isLoading">
-                                    <td class="text-center text-danger" colspan="5"> -- LOADING SCHEDULES -- </td>
-                                </tr>
-                                <tr v-else-if="scheduleList.length == 0">
-                                    <td class="text-center text-danger" colspan="5"> -- NO  SCHEDULES FOUND -- </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <page-search-container 
+                            
+                            :searchText="search_text" 
+                            :currentPage="current_page"
+                            :isLoading="isLoading"
+                            :itemList="scheduleList"
+                            :search_placeholder="'Search schedule'" 
+
+                            @update:currentPage="current_page = $event"
+                            @update:searchText="search_text = $event"
+                            @update:isLoading="isLoading = $event"
+                            @update:itemList="scheduleList = $event"
+                            
+                            :fn_plus_click="add_click"
+                            :fn_web_request2="loadingScheduleList"
+                            
+                            >
+                            <table class="w-100 custom-red-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:100px;">Ref#</th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Triggers</th>
+                                        <th>IsActive</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-if="isLoading">
+                                        <td class="text-center text-danger" colspan="6"> -- LOADING SCHEDULES -- </td>
+                                    </tr>
+                                    <tr v-else-if="scheduleList.length == 0">
+                                        <td class="text-center text-danger" colspan="6"> -- NO  SCHEDULES FOUND -- </td>
+                                    </tr>
+                                    <tr v-for="(item,itemIndex) in scheduleList" v-bind:key="'item-sched-'+item.id+'-'+itemIndex">
+                                        <th v-text="item.id"></th>
+                                        <th v-text="item.name"></th>
+                                        <th style="width:200px;" v-text="item.type"> </th>
+                                        <th style="width:150px;">
+                                            <button class="btn btn-success btn-sm ml-1">
+                                                <span class="fa fa-list"></span>
+                                            </button>
+                                        </th>
+                                        <th style="width:120px;">
+                                            <label v-if="item.is_active" class="text-success"> ACTIVE </label>
+                                            <label v-else class="text-danger"> INACTIVE </label>
+                                        </th>
+                                        <th class="text-nowrap" style="width:120px;" >
+                                            <button class="btn btn-warning btn-sm ml-1">
+                                                <span class="fa fa-edit"></span>
+                                            </button>
+                                            <button class="btn btn-danger btn-sm ml-1">
+                                                <span class="fa fa-times"></span>
+                                            </button>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </page-search-container>
                     </div>
                 </div>
             </div>
@@ -34,10 +75,11 @@
 </template>
 
 <script>
-    import PageFooterVue from '../../../common/PageFooter.vue';
+    import PageSearchContainerVue from '../../../common/PageSearchContainer.vue';
     export default {
-        props:[  ],
-        components: { 
+        props:[ "group_id" ],
+        components: {
+            "page-search-container": PageSearchContainerVue
         },
         watch: { 
         },
@@ -45,10 +87,14 @@
             return {
                 isLoading:false,
                 scheduleList:[],
-                schedulePageData:null
+                current_page:1,
+                search_text:''
             }
         },
         methods: { 
+            add_click:function(){
+                console.log("Clicked");
+            },
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {
                     return key + '=' + params[key]
@@ -56,7 +102,16 @@
                 return queryString;
             },
             loadingScheduleList:function(){
-
+                var vm = this;
+                return WebRequest2('GET', '/api/group/'+this.group_id+'/sys-notification/schedules/list?'+this.queryString({
+                    page: this.current_page,
+                    search_text: this.search_text,
+                    items_per_page:10
+                })).then(resp=>{
+                    return resp.json().then(data=>{
+                        return data;
+                    });
+                });
             }
         },
         mounted:function(){     

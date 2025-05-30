@@ -27,7 +27,7 @@ class _CommonController extends BaseController
 
         if($whereRawFields && $request->search_text && trim($request->search_text)){
             $search_type = "all";
-            $search_text = trim($search_text);
+            $search_text = trim($request->search_text);
             if($request->has('search_type')){
                 $search_type = $request->search_type;
             }
@@ -51,7 +51,7 @@ class _CommonController extends BaseController
         //FOR PAGINATION RESULT
         if($is_page === true){
             $items_per_page = 10;
-            if($request->has('items_per_page') && is_integer($request->items_per_page)){
+            if($request->has('items_per_page') && is_numeric($request->items_per_page) && is_integer( $request->items_per_page * 1)){
                 $items_per_page = $request->items_per_page;
             }
             if($items_per_page > 20)
