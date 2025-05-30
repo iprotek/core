@@ -4596,7 +4596,7 @@ var render = function render() {
     }
   }, [_c("template", {
     slot: "header"
-  }, [_vm._v("\n            SYS NOTIFICATION SCHEDULER TYPE\n        ")]), _vm._v(" "), _c("template", {
+  }, [_vm._v("\n           SCHEDULER NAME\n        ")]), _vm._v(" "), _c("template", {
     slot: "body"
   }, [_c("div", [_c("input2", {
     attrs: {

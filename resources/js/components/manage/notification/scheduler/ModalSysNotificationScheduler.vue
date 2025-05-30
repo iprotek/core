@@ -2,7 +2,7 @@
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
             <template slot="header" >
-                SYS NOTIFICATION SCHEDULER TYPE
+               SCHEDULER NAME
             </template> 
             <template slot="body" >
                 <div>
