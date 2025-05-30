@@ -20,8 +20,12 @@ class _CommonController extends BaseController
             $array = $this->common_infos();
         }
 
+        
         //FORCE TO ADD CONSTRAINT
-        $array["group_id"] = PayHttp::proxy_group_id();
+        if(!isset($array["group_id"])){
+            $array["group_id"] = PayHttp::proxy_group_id();
+        }
+
         return view($view, $array);
     }
 
