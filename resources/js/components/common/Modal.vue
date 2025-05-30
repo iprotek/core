@@ -13,7 +13,7 @@
                     </div>
                     <slot name="header-below"></slot>
                     <template v-if="has_success_message">
-                        <div class="alert-custom alert-custom-success">
+                        <div class="alert alert-success p-2 border-0 mx-2 mb-0">
                             <i class="fa fa-check" aria-hidden="true"></i>
                             <span v-html="message"></span>
                         </div>
@@ -24,7 +24,7 @@
                     </div>
                     <slot name="body-below"></slot>
                     <template v-if="has_error_message">
-                        <div class="alert-custom alert-custom-danger">
+                        <div class="alert alert-danger p-2 border-0 mx-2 mb-0">
                             <i class="fa fa-times" aria-hidden="true"></i>
                             <span v-html="message"></span>
                         </div>

@@ -71,15 +71,18 @@
                 </div>
             </div>
         </div>
+        <modal-sys-notification-scheduler ref="modal_sys_notif" />
     </div>
 </template>
 
 <script>
     import PageSearchContainerVue from '../../../common/PageSearchContainer.vue';
+    import ModalSysNotificationScheduler from './ModalSysNotificationScheduler.vue';
     export default {
         props:[ "group_id" ],
         components: {
-            "page-search-container": PageSearchContainerVue
+            "page-search-container": PageSearchContainerVue,
+            "modal-sys-notification-scheduler":ModalSysNotificationScheduler
         },
         watch: { 
         },
@@ -93,7 +96,7 @@
         },
         methods: { 
             add_click:function(){
-                console.log("Clicked");
+                this.$refs.modal_sys_notif.show();
             },
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {
