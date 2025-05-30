@@ -45,9 +45,6 @@ class _CommonController extends BaseController
             $data->whereRaw($whereRawFields,[$search_text]);
         }
 
-
-
-
         //FOR PAGINATION RESULT
         if($is_page === true){
             $items_per_page = 10;
@@ -68,7 +65,6 @@ class _CommonController extends BaseController
             $array = $this->common_infos();
         }
 
-        
         //FORCE TO ADD CONSTRAINT
         if(!isset($array["group_id"])){
             $array["group_id"] = PayHttp::proxy_group_id();
@@ -101,20 +97,18 @@ class _CommonController extends BaseController
             }
 
         }
-
-
-
     }
-
 
     public function _CResult($retval, $message, $dataid)
     {
         return [ "RetVal"=>$retval, "Message"=>$message, "DataID"=>$dataid  ];
     }
+
     public function _SResult($retval, $data, $itemperpage, $page, $itemsfound, $returnValue = 1)
     {
         return [ "RetVal"=>$retval, "Data"=>$data, "ItemPerPage"=>$itemperpage,"Page"=>$page,"ItemsFound"=> $itemsfound, "ReturnValue"=>$returnValue ];
     }
+
     public function common_infos()
     {
         
@@ -162,13 +156,13 @@ class _CommonController extends BaseController
             }
             $sidemenus = $new_array;
         }
-        
-       //GROUP ID
-       $user_id = $user->id;
-       $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where('user_admin_id', $user_id)->first();
-       $group_id = 0;
-       if($pay_account){
-          $group_id = $pay_account->default_proxy_group_id;
+
+        //GROUP ID
+        $user_id = $user->id;
+        $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where('user_admin_id', $user_id)->first();
+        $group_id = 0;
+        if($pay_account){
+            $group_id = $pay_account->default_proxy_group_id;
         }
 
         $selected_branch_id = \iProtek\Core\Helpers\BranchSelectionHelper::get();
