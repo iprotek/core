@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use iProtek\Core\Models\UserAdmin;
 use iProtek\Core\Models\UserAdminPayAccount;
+use iProtek\Core\Traits\iProtekCommonTraits;
 
 class _CommonModel extends Model
 {
-    use HasFactory;
+    use HasFactory, iProtekCommonTraits;
 
 
     public function created_info(){

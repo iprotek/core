@@ -9,6 +9,7 @@ use iProtek\Core\Helpers\PayHttp;
 use Illuminate\Support\Facades\Gate;
 use iProtek\Core\Console\Commands\FileImportBatchCommand;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Schema\Blueprint;
 
 class iProtekServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,21 @@ class iProtekServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        //DEFAULT SETTINGS    
+        Blueprint::macro('iprotekDefaultColumns', function () {
+            $this->bigIncrements('id');
+            $this->bigInteger('group_id')->nullable();
+            $this->bigInteger('pay_created_by')->nullable(); 
+            $this->bigInteger('pay_updated_by')->nullable();
+            $this->bigInteger('pay_deleted_by')->nullable();
+            $this->bigInteger('branch_id')->nullable();
+            $this->timestamps();
+        });
+
+
+
+
         //COMMANDS REGISTRATIONS PREPARATIONS 
         if ($this->app->runningInConsole()) {
             $this->commands([
