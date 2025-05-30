@@ -43,9 +43,6 @@ class iProtekServiceProvider extends ServiceProvider
             $this->timestamps();
         });
 
-
-
-
         //COMMANDS REGISTRATIONS PREPARATIONS 
         if ($this->app->runningInConsole()) {
             $this->commands([

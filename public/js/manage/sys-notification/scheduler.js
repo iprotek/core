@@ -3246,7 +3246,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PageFooter_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PageFooter.vue */ "./resources/js/components/common/PageFooter.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["currentPage", "isLoading", "searchText", "itemList", "fn_plus_click", "search_placeholder", "fn_web_request2"],
+  props: ["currentPage", "isLoading", "searchText", "itemList", "fn_plus_click", "search_placeholder", "fn_web_request2", "is_use_top_search"],
   emits: ['update:currentPage', 'update:searchText', 'update:isLoading', 'update:itemList', 'search_text_changed', 'page_changed'],
   components: {
     "page-footer": _PageFooter_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -3302,6 +3302,25 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.current_page = this.currentPage;
     this.search_now();
+    var vm = this;
+    var search_input_el = document.querySelector('#search-text-input');
+    if (search_input_el) {
+      search_input_el.onkeyup = function (evt) {
+        //console.log(evt);
+        if (evt.keyCode == 13) {
+          vm.search_text = evt.target.value;
+          vm.$emit('update:searchText', vm.search_text);
+          vm.search_now();
+          //console.log("Top trigger", vm.search_text);
+        } else if (evt.keyCode == 27) {
+          var parent = evt.target.closest('.navbar-search-block.navbar-search-open');
+          if (parent) {
+            parent.setAttribute("class", "navbar-search-block");
+            parent.style.display = "none";
+          }
+        }
+      };
+    }
   },
   updated: function updated() {}
 });
@@ -3934,7 +3953,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("div", [_c("div", {
+  return _c("div", [_vm.is_use_top_search !== true ? _c("div", [_c("div", {
     staticClass: "input-group text-nowrap mb-2"
   }, [typeof _vm.fn_plus_click === "function" ? _c("button", {
     staticClass: "btn btn-default text-primary",
@@ -3975,7 +3994,7 @@ var render = function render() {
     on: {
       click: _vm.text_changed
     }
-  }, [_vm._v("FIND")])])]), _vm._v(" "), _c("div", [_vm._t("default")], 2), _vm._v(" "), _c("page-footer", {
+  }, [_vm._v("FIND")])])]) : _vm._e(), _vm._v(" "), _c("div", [_vm._t("default")], 2), _vm._v(" "), _c("page-footer", {
     on: {
       page_changed: _vm.page_chaged
     },
@@ -4474,6 +4493,7 @@ var render = function render() {
       isLoading: _vm.isLoading,
       itemList: _vm.scheduleList,
       search_placeholder: "Search schedule",
+      is_use_top_search: true,
       fn_plus_click: _vm.add_click,
       fn_web_request2: _vm.loadingScheduleList
     },
@@ -4526,14 +4546,19 @@ var render = function render() {
         textContent: _vm._s(item.type)
       }
     }), _vm._v(" "), _c("th", {
+      staticClass: "text-nowrap",
       staticStyle: {
-        width: "150px"
+        width: "250px"
       }
     }, [_c("button", {
       staticClass: "btn btn-success btn-sm ml-1"
     }, [_c("span", {
       staticClass: "fa fa-list"
-    })])]), _vm._v(" "), _c("th", {
+    })]), _vm._v(" "), _c("small", {
+      staticClass: "text-success"
+    }, [_vm._v("0-Actives")]), _vm._v(" | "), _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("0-Inactives")])]), _vm._v(" "), _c("th", {
       staticStyle: {
         width: "120px"
       }

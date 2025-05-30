@@ -14,6 +14,7 @@
                             :isLoading="isLoading"
                             :itemList="scheduleList"
                             :search_placeholder="'Search schedule'" 
+                            :is_use_top_search="true"
 
                             @update:currentPage="current_page = $event"
                             @update:searchText="search_text = $event"
@@ -46,10 +47,11 @@
                                         <th v-text="item.id"></th>
                                         <th v-text="item.name"></th>
                                         <th style="width:200px;" v-text="item.type"> </th>
-                                        <th style="width:150px;">
+                                        <th style="width:250px;" class="text-nowrap">
                                             <button class="btn btn-success btn-sm ml-1">
                                                 <span class="fa fa-list"></span>
                                             </button>
+                                            <small class="text-success">0-Actives</small> | <small class="text-danger">0-Inactives</small>
                                         </th>
                                         <th style="width:120px;">
                                             <label v-if="item.is_active" class="text-success"> ACTIVE </label>
@@ -117,7 +119,7 @@
                 });
             }
         },
-        mounted:function(){     
+        mounted:function(){
         },
         updated:function(){
 

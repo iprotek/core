@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div> 
+        <div v-if="is_use_top_search !== true"> 
             <div class="input-group text-nowrap mb-2">
                 <button v-if="typeof fn_plus_click === 'function'" @click="fn_plus_click()" class="btn btn-default text-primary">
                     <span class="fa fa-plus"></span>
@@ -28,7 +28,9 @@
             "itemList",
             "fn_plus_click", 
             "search_placeholder", 
-            "fn_web_request2" ],
+            "fn_web_request2",
+            "is_use_top_search"
+         ],
         emits: [
             'update:currentPage', 
             'update:searchText', 
@@ -93,6 +95,29 @@
         mounted:function(){
             this.current_page = this.currentPage;
             this.search_now();
+            
+            var vm = this;
+            
+            var search_input_el = document.querySelector('#search-text-input');
+            if(search_input_el){
+                search_input_el.onkeyup = function(evt){
+                    //console.log(evt);
+                    if(evt.keyCode == 13){
+                        vm.search_text = evt.target.value;
+                        vm.$emit('update:searchText', vm.search_text); 
+                        vm.search_now();
+                        //console.log("Top trigger", vm.search_text);
+                    }
+                    else if(evt.keyCode == 27){
+                        var parent = evt.target.closest('.navbar-search-block.navbar-search-open');
+                        if(parent){
+                            parent.setAttribute("class", "navbar-search-block");
+                            parent.style.display = "none";
+                        }
+                    }
+                }
+            }
+                
         },
         updated:function(){
 
