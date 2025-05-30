@@ -39,6 +39,7 @@ class iProtekServiceProvider extends ServiceProvider
             $this->bigInteger('pay_updated_by')->nullable();
             $this->bigInteger('pay_deleted_by')->nullable();
             $this->bigInteger('branch_id')->nullable();
+            $this->softDeletes();
             $this->timestamps();
         });
 

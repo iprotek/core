@@ -12,9 +12,57 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use iProtek\Core\Helpers\PayHttp;
+use iProtek\Core\Helpers\PayModelHelper;
 
 class _CommonController extends BaseController
 {
+
+    public function apiModelSelect($model, Request $request, $is_by_branch = false, $is_page = false, $whereRawFields="name like ?" ){
+
+        $data = PayModelHelper::get($model, $request);
+
+        if($is_by_branch){
+            $data->where('branch_id', $request->branch_id);
+        }
+
+        if($whereRawFields && $request->search_text && trim($request->search_text)){
+            $search_type = "all";
+            $search_text = trim($search_text);
+            if($request->has('search_type')){
+                $search_type = $request->search_type;
+            }
+            if($search_type == "start"){
+                 $search_text = $search_text.'%';
+            }
+            else if($search_type == "end"){
+                $search_text = '%'.trim($search_text);
+            }
+            else if($search_type == "middle"){
+                $search_text = str_replace(' ', '%', $search_text);
+            }
+            else
+                $search_text = '%'.str_replace(' ', '%', $search_text).'%';
+            $data->whereRaw($whereRawFields,[$search_text]);
+        }
+
+
+
+
+        //FOR PAGINATION RESULT
+        if($is_page === true){
+            $items_per_page = 10;
+            if($request->has('items_per_page') && is_integer($request->items_per_page)){
+                $items_per_page = $request->items_per_page;
+            }
+            if($items_per_page > 20)
+                $items_per_page = 20;
+            
+            return $data->paginate($items_per_page);
+        }
+
+        return $data;
+    }
+
     public function view($view, $array = null){
         if(!$array){
             $array = $this->common_infos();
