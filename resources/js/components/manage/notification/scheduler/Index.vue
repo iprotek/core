@@ -47,8 +47,8 @@
                                         <th class="p-1" >
                                             <label v-text="item.name" class="mb-0"></label>
                                         </th>
-                                        <th class="p-1" style="width:200px;" v-text="item.type"> </th>
-                                        <th class="text-nowrap p-1" style="width:250px;" >
+                                        <th class="p-1" style="width:100px;" v-text="item.type"> </th>
+                                        <th class="text-nowrap p-1" style="width:220px;" >
                                             <button class="btn btn-success btn-sm ml-1">
                                                 <span class="fa fa-list"></span>
                                             </button>

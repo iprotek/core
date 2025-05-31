@@ -4699,7 +4699,7 @@ var render = function render() {
     })]), _vm._v(" "), _c("th", {
       staticClass: "p-1",
       staticStyle: {
-        width: "200px"
+        width: "100px"
       },
       domProps: {
         textContent: _vm._s(item.type)
@@ -4707,7 +4707,7 @@ var render = function render() {
     }), _vm._v(" "), _c("th", {
       staticClass: "text-nowrap p-1",
       staticStyle: {
-        width: "250px"
+        width: "220px"
       }
     }, [_c("button", {
       staticClass: "btn btn-success btn-sm ml-1"
