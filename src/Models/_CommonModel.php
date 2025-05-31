@@ -10,8 +10,17 @@ use iProtek\Core\Traits\iProtekCommonTraits;
 
 class _CommonModel extends Model
 {
-    use HasFactory, iProtekCommonTraits;
+    
+    use iProtekCommonTraits;
+    
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
 
+        if (method_exists($this, 'initializeHasCommonAttributes')) {
+            $this->initializeHasCommonAttributes();
+        }
+    }
 
     public function created_info(){
         return $this->belongsTo(UserAdmin::class, 'created_by')->select('id','name');

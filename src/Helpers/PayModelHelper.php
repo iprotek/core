@@ -29,7 +29,13 @@ class PayModelHelper
         $user = $request->get('user'); 
         $fields['group_id'] = static::get_group_id($user, $is_own);
         $fields['pay_created_by'] = static::get_user_id($user);
-        return $class::create($fields);
+
+        //FIXING instead using of ::create
+        $new_class = (new $class);
+        $new_class->fill( $fields );
+        $new_class->save();        
+
+        return $new_class;
     }
     public static function create_own($class, Request $request, $fields=[]){
         return static::create($class, $request, $fields, true);

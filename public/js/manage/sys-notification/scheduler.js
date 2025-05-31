@@ -3548,7 +3548,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["group_id"],
+  props: ["group_id", "branch_id"],
   components: {
     "page-search-container": _common_PageSearchContainer_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     "modal-sys-notification-scheduler": _ModalSysNotificationScheduler_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -3575,9 +3575,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     loadingScheduleList: function loadingScheduleList() {
       var vm = this;
-      return WebRequest2('GET', '/api/group/' + this.group_id + '/sys-notification/schedules/list?' + this.queryString({
+      return WebRequest2('GET', '/api/group/' + this.group_id + '/sys-notification/schedulers/list?' + this.queryString({
         page: this.current_page,
         search_text: this.search_text,
+        branch_id: this.branch_id,
         items_per_page: 10
       })).then(function (resp) {
         return resp.json().then(function (data) {
@@ -3608,7 +3609,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["group_id", "branch_id"],
   components: {
     "switch2": _common_BoostrapSwitch2_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     "input2": _common_UserInput2_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -3617,40 +3618,45 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       promiseExec: null,
-      is_active: true,
-      type: 'sms',
-      name: ''
+      schedule_info: {
+        is_active: true,
+        type: 'sms',
+        name: '',
+        id: 0,
+        branch_id: this.branch_id
+      }
     };
   },
   methods: {
-    reset: function reset() {},
+    reset: function reset() {
+      this.schedule_info = {
+        is_active: true,
+        type: 'sms',
+        name: '',
+        id: 0,
+        branch_id: this.branch_id
+      };
+    },
     show: function show() {
+      var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
       var vm = this;
+      vm.reset();
       this.$refs.modal.show();
+      vm.schedule_info.id = id;
+
       //this.$refs.modal.show_success("GG");
 
       return new Promise(function (promiseExec) {
         vm.promiseExec = promiseExec;
       });
     },
-    add: function add() {
+    save: function save() {
       var vm = this;
-      /*
-          this.$refs.swal_prompt.alert(
-              'question',
-              "Add Event", 
-              "Confirm" , 
-              "POST", 
-              "/manage/dashboard/resort-events/add", 
-              JSON.stringify(request)
-          ).then(res=>{
-              if(res.isConfirmed){
-                  vm.$emit('data_updated');
-              }
-          });
-      */
-      return new Promise(function (promiseExec) {
-        vm.promiseExec = promiseExec;
+      var request = vm.schedule_info;
+      this.$refs.swal_prompt.alert('question', "Add Schedule", "Confirm", "POST", "/api/group/" + this.group_id + "/sys-notification/schedulers/add", JSON.stringify(request)).then(function (res) {
+        if (res.isConfirmed) {
+          vm.$emit('data_updated');
+        }
       });
     }
   },
@@ -4495,7 +4501,7 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "fa fa-plus"
-  }), _vm._v(" ADD ITEM\n                    ")]), _vm._v(" "), _c("page-search-container", {
+  }), _vm._v(" ADD SCHEDULER\n                    ")]), _vm._v(" "), _c("page-search-container", {
     attrs: {
       searchText: _vm.search_text,
       currentPage: _vm.current_page,
@@ -4536,18 +4542,23 @@ var render = function render() {
     attrs: {
       colspan: "6"
     }
-  }, [_vm._v(" -- NO  SCHEDULES FOUND -- ")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.scheduleList, function (item, itemIndex) {
+  }, [_vm._v(" -- NO  SCHEDULER/S FOUND -- ")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.scheduleList, function (item, itemIndex) {
     return _c("tr", {
       key: "item-sched-" + item.id + "-" + itemIndex
     }, [_c("th", {
+      staticClass: "text-center p-1",
       domProps: {
         textContent: _vm._s(item.id)
       }
     }), _vm._v(" "), _c("th", {
+      staticClass: "p-1"
+    }, [_c("label", {
+      staticClass: "mb-0",
       domProps: {
         textContent: _vm._s(item.name)
       }
-    }), _vm._v(" "), _c("th", {
+    })]), _vm._v(" "), _c("th", {
+      staticClass: "p-1",
       staticStyle: {
         width: "200px"
       },
@@ -4555,7 +4566,7 @@ var render = function render() {
         textContent: _vm._s(item.type)
       }
     }), _vm._v(" "), _c("th", {
-      staticClass: "text-nowrap",
+      staticClass: "text-nowrap p-1",
       staticStyle: {
         width: "250px"
       }
@@ -4568,6 +4579,7 @@ var render = function render() {
     }, [_vm._v("0-Actives")]), _vm._v(" | "), _c("small", {
       staticClass: "text-danger"
     }, [_vm._v("0-Inactives")])]), _vm._v(" "), _c("th", {
+      staticClass: "p-1",
       staticStyle: {
         width: "120px"
       }
@@ -4576,7 +4588,7 @@ var render = function render() {
     }, [_vm._v(" ACTIVE ")]) : _c("label", {
       staticClass: "text-danger"
     }, [_vm._v(" INACTIVE ")])]), _vm._v(" "), _c("th", {
-      staticClass: "text-nowrap",
+      staticClass: "text-nowrap p-1",
       staticStyle: {
         width: "120px"
       }
@@ -4590,7 +4602,16 @@ var render = function render() {
       staticClass: "fa fa-times"
     })])])]);
   })], 2)])])], 1)])])]), _vm._v(" "), _c("modal-sys-notification-scheduler", {
-    ref: "modal_sys_notif"
+    ref: "modal_sys_notif",
+    attrs: {
+      group_id: _vm.group_id,
+      branch_id: _vm.branch_id
+    },
+    on: {
+      data_updated: function data_updated($event) {
+        return _vm.loadingScheduleList();
+      }
+    }
   })], 1);
 };
 var staticRenderFns = [function () {
@@ -4600,7 +4621,7 @@ var staticRenderFns = [function () {
     staticClass: "card-header"
   }, [_c("label", {
     staticClass: "mb-0"
-  }, [_vm._v("Schedule List")])]);
+  }, [_vm._v("Scheduler List")])]);
 }];
 render._withStripped = true;
 
@@ -4639,11 +4660,11 @@ var render = function render() {
       placeholder_description: "The name of the main control of your notification."
     },
     model: {
-      value: _vm.name,
+      value: _vm.schedule_info.name,
       callback: function callback($$v) {
-        _vm.name = $$v;
+        _vm.$set(_vm.schedule_info, "name", $$v);
       },
-      expression: "name"
+      expression: "schedule_info.name"
     }
   }), _vm._v(" "), _c("label", {
     staticClass: "mt-4"
@@ -4651,8 +4672,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.type,
-      expression: "type"
+      value: _vm.schedule_info.type,
+      expression: "schedule_info.type"
     }],
     staticClass: "form-control",
     on: {
@@ -4663,7 +4684,7 @@ var render = function render() {
           var val = "_value" in o ? o._value : o.value;
           return val;
         });
-        _vm.type = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
+        _vm.$set(_vm.schedule_info, "type", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
       }
     }
   }, [_c("option", {
@@ -4678,17 +4699,17 @@ var render = function render() {
     attrs: {
       value: "notification"
     }
-  }, [_vm._v("NOTIFICATION")])]), _vm._v(" "), _c("div", [_vm.type == "sms" ? _c("code", [_vm._v("Send SMS based on alloted schedules.")]) : _vm.type == "email" ? _c("code", [_vm._v("Send EMAIL based on alloted schedules.")]) : _vm.type == "notification" ? _c("code", [_vm._v("System notification such as task and reminders.")]) : _vm._e()]), _vm._v(" "), _c("label", {
+  }, [_vm._v("NOTIFICATION")])]), _vm._v(" "), _c("div", [_vm.schedule_info.type == "sms" ? _c("code", [_vm._v("Send SMS based on alloted schedules.")]) : _vm.schedule_info.type == "email" ? _c("code", [_vm._v("Send EMAIL based on alloted schedules.")]) : _vm.schedule_info.type == "notification" ? _c("code", [_vm._v("System notification such as task and reminders.")]) : _vm._e()]), _vm._v(" "), _c("label", {
     staticClass: "mt-4"
   }, [_vm._v("IS ACTIVE:")]), _vm._v(" "), _c("div", {
     staticClass: "mt-1"
   }, [_c("switch2", {
     model: {
-      value: _vm.is_active,
+      value: _vm.schedule_info.is_active,
       callback: function callback($$v) {
-        _vm.is_active = $$v;
+        _vm.$set(_vm.schedule_info, "is_active", $$v);
       },
-      expression: "is_active"
+      expression: "schedule_info.is_active"
     }
   })], 1)], 1)]), _vm._v(" "), _c("template", {
     slot: "footer"
@@ -4707,6 +4728,9 @@ var render = function render() {
     staticClass: "btn btn-outline-primary",
     attrs: {
       type: "button"
+    },
+    on: {
+      click: _vm.save
     }
   }, [_vm._v("SAVE")])])])], 2), _vm._v(" "), _c("swal", {
     ref: "swal_prompt"
