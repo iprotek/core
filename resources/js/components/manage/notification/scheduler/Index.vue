@@ -50,9 +50,9 @@
                                         </th>
                                         <th class="text-nowrap p-1" style="width:220px;" >
                                             <div v-if="item.type == 'sms'">
-                                                <button class="btn btn-success btn-sm ml-1">
+                                                <a :href="'/manage/sys-notification/scheduler/triggers/'+item.type+'/'+item.id" class="btn btn-success btn-sm ml-1" >
                                                     <span class="fa fa-list"></span>
-                                                </button>
+                                                </a>
                                                 <small class="text-success">0-Actives</small> | <small class="text-danger">0-Inactives</small>
                                             </div>
                                             <div v-else>

@@ -3233,7 +3233,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       var merged = Object.assign({}, obj1, obj2);
       vm.$emit("update:items", []);
       vm.$emit("update:is_loading", true);
-      console.log("Test", "GG");
       return WebRequest2(method, vm.url + '?' + this.queryString(merged)).then(function (resp) {
         return resp.json().then(function (data) {
           vm.$emit("update:items", data.data);
@@ -3371,7 +3370,6 @@ __webpack_require__.r(__webpack_exports__);
           vm.$emit('update:itemList', pageData.data);
         });
       }
-      console.log("GG", this.fn_web_request2);
     },
     page_chaged: function page_chaged(val) {
       this.$emit('update:currentPage', val);
@@ -4712,8 +4710,11 @@ var render = function render() {
       staticStyle: {
         width: "220px"
       }
-    }, [item.type == "sms" ? _c("div", [_c("button", {
-      staticClass: "btn btn-success btn-sm ml-1"
+    }, [item.type == "sms" ? _c("div", [_c("a", {
+      staticClass: "btn btn-success btn-sm ml-1",
+      attrs: {
+        href: "/manage/sys-notification/scheduler/triggers/" + item.type + "/" + item.id
+      }
     }, [_c("span", {
       staticClass: "fa fa-list"
     })]), _vm._v(" "), _c("small", {

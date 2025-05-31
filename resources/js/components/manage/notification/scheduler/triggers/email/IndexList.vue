@@ -15,12 +15,14 @@
 </template>
 
 <script>
+    import PageDataTableVue from '../../../../../common/PageDataTable.vue';
     export default {
         props:[ "group_id", "branch_id", "scheduler_id" ],
         $emits:[],
         watch: { 
         },
         components: { 
+            "page-data-table":PageDataTableVue
         },
         data: function () {
             return {    
