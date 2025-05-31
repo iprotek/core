@@ -3215,10 +3215,10 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=script&lang=js":
-/*!************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=script&lang=js ***!
-  \************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3351,10 +3351,10 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=template&id=2a4f387c":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=template&id=2a4f387c ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=template&id=69c8ca57":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=template&id=69c8ca57 ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -3371,12 +3371,10 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "container"
-  }, [_c("div", {
+  return _c("div", [_c("div", {
     staticClass: "row justify-content-center"
   }, [_c("div", {
-    staticClass: "col-md-8"
+    staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("div", {
@@ -20100,10 +20098,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue":
-/*!********************************************************************************************!*\
-  !*** ./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue ***!
-  \********************************************************************************************/
+/***/ "./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue ***!
+  \***************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -20111,8 +20109,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _IndexList_vue_vue_type_template_id_2a4f387c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IndexList.vue?vue&type=template&id=2a4f387c */ "./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=template&id=2a4f387c");
-/* harmony import */ var _IndexList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./IndexList.vue?vue&type=script&lang=js */ "./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=script&lang=js");
+/* harmony import */ var _IndexList_vue_vue_type_template_id_69c8ca57__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IndexList.vue?vue&type=template&id=69c8ca57 */ "./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=template&id=69c8ca57");
+/* harmony import */ var _IndexList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./IndexList.vue?vue&type=script&lang=js */ "./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=script&lang=js");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -20123,8 +20121,8 @@ __webpack_require__.r(__webpack_exports__);
 ;
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _IndexList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
-  _IndexList_vue_vue_type_template_id_2a4f387c__WEBPACK_IMPORTED_MODULE_0__.render,
-  _IndexList_vue_vue_type_template_id_2a4f387c__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _IndexList_vue_vue_type_template_id_69c8ca57__WEBPACK_IMPORTED_MODULE_0__.render,
+  _IndexList_vue_vue_type_template_id_69c8ca57__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -20135,15 +20133,15 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) // removed by dead control flow
 { var api; }
-component.options.__file = "resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue"
+component.options.__file = "resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=script&lang=js":
-/*!********************************************************************************************************************!*\
-  !*** ./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=script&lang=js ***!
-  \********************************************************************************************************************/
+/***/ "./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************!*\
+  !*** ./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -20151,24 +20149,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./IndexList.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./IndexList.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=script&lang=js");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=template&id=2a4f387c":
-/*!**************************************************************************************************************************!*\
-  !*** ./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=template&id=2a4f387c ***!
-  \**************************************************************************************************************************/
+/***/ "./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=template&id=69c8ca57":
+/*!*********************************************************************************************************************************!*\
+  !*** ./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=template&id=69c8ca57 ***!
+  \*********************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexList_vue_vue_type_template_id_2a4f387c__WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexList_vue_vue_type_template_id_2a4f387c__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexList_vue_vue_type_template_id_69c8ca57__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexList_vue_vue_type_template_id_69c8ca57__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexList_vue_vue_type_template_id_2a4f387c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./IndexList.vue?vue&type=template&id=2a4f387c */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue?vue&type=template&id=2a4f387c");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_IndexList_vue_vue_type_template_id_69c8ca57__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./IndexList.vue?vue&type=template&id=69c8ca57 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue?vue&type=template&id=69c8ca57");
 
 
 /***/ })
@@ -20267,7 +20265,7 @@ if (!window.Vue) {
  */
 
 //Vue.component('header-menus', require('./components/manage/HeaderMenu.vue').default);
-Vue.component('sys-notification-trigger-email', (__webpack_require__(/*! ../../../components/manage/notification/scheduler/triggers/email/IndexList.vue */ "./resources/js/components/manage/notification/scheduler/triggers/email/IndexList.vue")["default"]));
+Vue.component('sys-notification-trigger-notification', (__webpack_require__(/*! ../../../components/manage/notification/scheduler/triggers/notification/IndexList.vue */ "./resources/js/components/manage/notification/scheduler/triggers/notification/IndexList.vue")["default"]));
 Vue.component('modal-view', (__webpack_require__(/*! ../../../components/common/Modal.vue */ "./resources/js/components/common/Modal.vue")["default"]));
 Vue.component('swal', (__webpack_require__(/*! ../../../components/common/Swal.vue */ "./resources/js/components/common/Swal.vue")["default"]));
 

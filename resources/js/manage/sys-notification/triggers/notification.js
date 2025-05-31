@@ -19,7 +19,7 @@ if(!window.Vue){
 
 
 //Vue.component('header-menus', require('./components/manage/HeaderMenu.vue').default);
-Vue.component('sys-notification-trigger-email', require('../../../components/manage/notification/scheduler/triggers/email/IndexList.vue').default);
+Vue.component('sys-notification-trigger-notification', require('../../../components/manage/notification/scheduler/triggers/notification/IndexList.vue').default);
 Vue.component('modal-view', require('../../../components/common/Modal.vue').default); 
 Vue.component('swal', require('../../../components/common/Swal.vue').default); 
 

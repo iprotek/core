@@ -3371,12 +3371,10 @@ var render = function render() {
 var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "container"
-  }, [_c("div", {
+  return _c("div", [_c("div", {
     staticClass: "row justify-content-center"
   }, [_c("div", {
-    staticClass: "col-md-8"
+    staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "card"
   }, [_c("div", {
