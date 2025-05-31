@@ -9,21 +9,25 @@
                     <div class="card-body">
                         <button class="btn btn-outline-primary btn-sm mb-2" @click="add_click()">
                             <span class="fa fa-plus"></span> ADD SCHEDULER
-                        </button> 
-                        <page-data-table
-                            ref="page_data_table"
-                            v-if="url"
-                            :url="url"
-                            :is_loading="isLoading"
+                        </button>
+                        <page-search-container 
+                            ref="page_search"
+                            :searchText="search_text" 
+                            :currentPage="current_page"
+                            :isLoading="isLoading"
+                            :itemList="scheduleList"
+                            :search_placeholder="'Search schedule'" 
                             :is_use_top_search="true"
-                            :items="scheduleList"
-                            :search_placeholder="'Search Scheduler'"
-                            :json_filter="filters"
 
-                            @update:items="scheduleList = $event"
-                            @update:is_loading="isLoading = $event"
+                            @update:currentPage="current_page = $event"
+                            @update:searchText="search_text = $event"
+                            @update:isLoading="isLoading = $event"
+                            @update:itemList="scheduleList = $event"
                             
-                        >
+                            :fn_plus_click="add_click"
+                            :fn_web_request2="loadingScheduleList"
+                            
+                            >
                             <table class="w-100 custom-red-table">
                                 <thead>
                                     <tr>
@@ -69,41 +73,57 @@
                                     </tr>
                                 </tbody>
                             </table>
-
-                        </page-data-table>
+                        </page-search-container>
                     </div>
                 </div>
             </div>
         </div>
-        <modal-sys-notification-scheduler :group_id="group_id" :branch_id="branch_id" ref="modal_sys_notif" @data_updated="$refs.page_data_table.reloadPage()" />
+        <modal-sys-notification-scheduler :group_id="group_id" :branch_id="branch_id" ref="modal_sys_notif" @data_updated="$refs.page_search.search_now()" />
         <swal ref="swal_prompt"></swal> 
     </div>
 </template>
 
-<script> 
-    import PageDataTable from '../../../common/PageDataTable.vue';
+<script>
+    import PageSearchContainerVue from '../../../common/PageSearchContainer.vue';
     import ModalSysNotificationScheduler from './ModalSysNotificationScheduler.vue';
     export default {
         props:[ "group_id", "branch_id" ],
-        components: { 
-            "page-data-table":PageDataTable,
+        components: {
+            "page-search-container": PageSearchContainerVue,
             "modal-sys-notification-scheduler":ModalSysNotificationScheduler
         },
         watch: { 
         },
         data: function () {
             return {
-                url:'/api/group/'+this.group_id+'/sys-notification/schedulers/list',
-                filters:{
-                    branch_id: this.branch_id
-                },
                 isLoading:false,
-                scheduleList:[]
+                scheduleList:[],
+                current_page:1,
+                search_text:''
             }
         },
         methods: { 
             add_click:function(){
                 this.$refs.modal_sys_notif.show();
+            },
+            queryString:function(params={}){ 
+                var queryString = Object.keys(params).map(function(key) {
+                    return key + '=' + params[key]
+                }).join('&');
+                return queryString;
+            },
+            loadingScheduleList:function(){
+                var vm = this;
+                return WebRequest2('GET', '/api/group/'+this.group_id+'/sys-notification/schedulers/list?'+this.queryString({
+                    page: this.current_page,
+                    search_text: this.search_text,
+                    branch_id: this.branch_id,
+                    items_per_page:10
+                })).then(resp=>{
+                    return resp.json().then(data=>{
+                        return data;
+                    });
+                });
             },
             remove:function(id){
                 var vm = this;
@@ -115,7 +135,7 @@
                     "/api/group/"+this.group_id+"/sys-notification/schedulers/list/"+id
                 ).then(res=>{
                     if(res.isConfirmed && res.value.status == 1){
-                        vm.$refs.page_data_table.reloadPage();
+                        vm.$refs.page_search.search_now();
                     }
                 });
             }

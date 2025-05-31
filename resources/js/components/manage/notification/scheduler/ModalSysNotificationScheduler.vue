@@ -28,7 +28,12 @@
             <template slot="footer">
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
-                    <button type="button" class="btn btn-outline-primary" @click="save">SAVE</button> 
+                    <button v-if="schedule_info.id == 0 " type="button" class="btn btn-outline-primary" @click="save">
+                        <span class="fa fa-plus"></span>  ADD
+                    </button> 
+                    <button v-else type="button" class="btn btn-outline-primary" @click="save"> 
+                        <span class="fa fa-edit"></span> UPDATE
+                    </button> 
                 </div>
             </template>
         </modal-view> 
