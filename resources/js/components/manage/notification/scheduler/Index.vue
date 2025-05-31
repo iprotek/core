@@ -27,9 +27,9 @@
                             <table class="w-100 custom-red-table">
                                 <thead>
                                     <tr>
-                                        <th style="width:100px;">Ref#</th>
+                                        <th class="text-center" style="width:100px;">Ref#</th>
+                                        <th class="text-center">Type</th>
                                         <th>Name</th>
-                                        <th>Type</th>
                                         <th>Triggers</th>
                                         <th>IsActive</th>
                                         <th>Actions</th>
@@ -44,15 +44,20 @@
                                     </tr>
                                     <tr v-for="(item,itemIndex) in scheduleList" v-bind:key="'item-sched-'+item.id+'-'+itemIndex">
                                         <th class="text-center p-1" v-text="item.id"></th>
+                                        <th class="p-1 text-center" style="width:100px;" v-text="item.type"> </th>
                                         <th class="p-1" >
                                             <label v-text="item.name" class="mb-0"></label>
                                         </th>
-                                        <th class="p-1" style="width:100px;" v-text="item.type"> </th>
                                         <th class="text-nowrap p-1" style="width:220px;" >
-                                            <button class="btn btn-success btn-sm ml-1">
-                                                <span class="fa fa-list"></span>
-                                            </button>
-                                            <small class="text-success">0-Actives</small> | <small class="text-danger">0-Inactives</small>
+                                            <div v-if="item.type == 'sms'">
+                                                <button class="btn btn-success btn-sm ml-1">
+                                                    <span class="fa fa-list"></span>
+                                                </button>
+                                                <small class="text-success">0-Actives</small> | <small class="text-danger">0-Inactives</small>
+                                            </div>
+                                            <div v-else>
+                                                <code> SETTING NOT YET AVAILABLE </code>
+                                            </div>
                                         </th>
                                         <th class="p-1" style="width:120px;">
                                             <label v-if="item.is_active" class="text-success"> ACTIVE </label>

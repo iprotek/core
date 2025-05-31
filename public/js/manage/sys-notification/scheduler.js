@@ -4668,10 +4668,13 @@ var render = function render() {
   }, [_c("table", {
     staticClass: "w-100 custom-red-table"
   }, [_c("thead", [_c("tr", [_c("th", {
+    staticClass: "text-center",
     staticStyle: {
       width: "100px"
     }
-  }, [_vm._v("Ref#")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Type")]), _vm._v(" "), _c("th", [_vm._v("Triggers")]), _vm._v(" "), _c("th", [_vm._v("IsActive")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
+  }, [_vm._v("Ref#")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center"
+  }, [_vm._v("Type")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Triggers")]), _vm._v(" "), _c("th", [_vm._v("IsActive")]), _vm._v(" "), _c("th", [_vm._v("Actions")])])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
     staticClass: "text-center text-danger",
     attrs: {
       colspan: "6"
@@ -4690,14 +4693,7 @@ var render = function render() {
         textContent: _vm._s(item.id)
       }
     }), _vm._v(" "), _c("th", {
-      staticClass: "p-1"
-    }, [_c("label", {
-      staticClass: "mb-0",
-      domProps: {
-        textContent: _vm._s(item.name)
-      }
-    })]), _vm._v(" "), _c("th", {
-      staticClass: "p-1",
+      staticClass: "p-1 text-center",
       staticStyle: {
         width: "100px"
       },
@@ -4705,11 +4701,18 @@ var render = function render() {
         textContent: _vm._s(item.type)
       }
     }), _vm._v(" "), _c("th", {
+      staticClass: "p-1"
+    }, [_c("label", {
+      staticClass: "mb-0",
+      domProps: {
+        textContent: _vm._s(item.name)
+      }
+    })]), _vm._v(" "), _c("th", {
       staticClass: "text-nowrap p-1",
       staticStyle: {
         width: "220px"
       }
-    }, [_c("button", {
+    }, [item.type == "sms" ? _c("div", [_c("button", {
       staticClass: "btn btn-success btn-sm ml-1"
     }, [_c("span", {
       staticClass: "fa fa-list"
@@ -4717,7 +4720,7 @@ var render = function render() {
       staticClass: "text-success"
     }, [_vm._v("0-Actives")]), _vm._v(" | "), _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("0-Inactives")])]), _vm._v(" "), _c("th", {
+    }, [_vm._v("0-Inactives")])]) : _c("div", [_c("code", [_vm._v(" SETTING NOT YET AVAILABLE ")])])]), _vm._v(" "), _c("th", {
       staticClass: "p-1",
       staticStyle: {
         width: "120px"

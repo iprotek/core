@@ -17,7 +17,7 @@ use iProtek\Core\Helpers\PayModelHelper;
 class _CommonController extends BaseController
 {
 
-    public function apiModelSelect($model, Request $request, $is_by_branch = false, $is_page = false, $whereRawFields="name like ?" ){
+    public function apiModelSelect($model, Request $request, $is_by_branch = false, $is_page = false, $whereRawFields="name like ?", $orderByRaw="name ASC" ){
 
         $data = PayModelHelper::get($model, $request);
 
@@ -43,6 +43,10 @@ class _CommonController extends BaseController
             else
                 $search_text = '%'.str_replace(' ', '%', $search_text).'%';
             $data->whereRaw($whereRawFields,[$search_text]);
+        }
+
+        if($orderByRaw){
+            $data->orderByRaw($orderByRaw);
         }
 
         //FOR PAGINATION RESULT
