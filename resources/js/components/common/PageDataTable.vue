@@ -84,7 +84,6 @@
                 var merged = Object.assign({},obj1, obj2 );
                 vm.$emit("update:items", []);
                 vm.$emit("update:is_loading", true);
-                console.log("Test", "GG");
                 return WebRequest2(method, vm.url+'?'+this.queryString(merged)).then(resp=>{
                     return resp.json().then(data=>{
                         vm.$emit("update:items", data.data);

@@ -79,7 +79,6 @@
                         vm.$emit('update:itemList', pageData.data);
                     });
                 }
-                console.log("GG", this.fn_web_request2);
             },
             page_chaged:function(val){
                 this.$emit('update:currentPage', val);
