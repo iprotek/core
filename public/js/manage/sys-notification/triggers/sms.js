@@ -3895,7 +3895,7 @@ var render = function render() {
     staticClass: "card-header"
   }, [_vm._v("\n                    SMS SCHEDULE TRIGGER LIST\n                ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
-  }, [_vm.url ? _c("page-data-table", {
+  }, [_vm._m(0), _vm._v(" "), _vm.url ? _c("page-data-table", {
     ref: "page_data_table",
     attrs: {
       url: _vm.url,
@@ -3933,22 +3933,24 @@ var render = function render() {
   }, [_vm._v("Status")]), _vm._v(" "), _c("th", {
     staticClass: "text-center",
     staticStyle: {
-      width: "100px"
+      width: "150px"
     }
   }, [_vm._v("Triggers")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center"
+  }, [_vm._v("Status Info")]), _vm._v(" "), _c("th", {
     staticClass: "text-center text-nowrap",
     staticStyle: {
       width: "100px"
     }
-  }, [_vm._v("Target Count")])])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
+  }, [_vm._v("Target Count")]), _vm._v(" "), _c("th")])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
     staticClass: "text-center text-danger",
     attrs: {
-      colspan: "6"
+      colspan: "8"
     }
   }, [_vm._v(" -- LOADING TRIGGERS -- ")])]) : _vm.smsTriggerList.length == 0 ? _c("tr", [_c("td", {
     staticClass: "text-center text-danger",
     attrs: {
-      colspan: "6"
+      colspan: "8"
     }
   }, [_vm._v(" -- NO  SMS TRIGGER FOUND -- ")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.smsTriggerList, function (item, itemIndex) {
     return _c("tr", {
@@ -3973,10 +3975,22 @@ var render = function render() {
       staticClass: "btn btn-outline-primary btn-sm"
     }, [_c("span", {
       staticClass: "fa fa-list"
-    })])]), _vm._v(" "), _c("td")]);
+    })])]), _vm._v(" "), _c("td"), _vm._v(" "), _c("td", [_c("label", [_vm._v(" No of targets ")])]), _vm._v(" "), _c("td", [_c("button", {
+      staticClass: "btn btn-outline-primary btn-sm"
+    }, [_c("span", {
+      staticClass: "fa fa-edit"
+    })])])]);
   })], 2)])]) : _vm._e()], 1)])])])]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("button", {
+    staticClass: "btn btn-outline-primary btn-lg mb-2"
+  }, [_c("span", {
+    staticClass: "fa fa-plus"
+  }), _vm._v(" ADD TRIGGER\n                    ")]);
+}];
 render._withStripped = true;
 
 

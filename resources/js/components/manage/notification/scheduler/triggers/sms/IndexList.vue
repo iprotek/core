@@ -7,6 +7,9 @@
                         SMS SCHEDULE TRIGGER LIST
                     </div>
                     <div class="card-body">
+                        <button class="btn btn-outline-primary btn-lg mb-2">
+                            <span class="fa fa-plus"></span> ADD TRIGGER
+                        </button>
                         <page-data-table
                             ref="page_data_table"
                             v-if="url"
@@ -28,16 +31,18 @@
                                         <th >Name</th> 
                                         <th class="text-center" style="width:100px;">Is Active</th> 
                                         <th class="text-center" style="width:100px;">Status</th> 
-                                        <th class="text-center" style="width:100px;">Triggers</th> 
+                                        <th class="text-center" style="width:150px;">Triggers</th> 
+                                        <th class="text-center">Status Info</th> 
                                         <th class="text-center text-nowrap" style="width:100px;">Target Count</th> 
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-if="isLoading">
-                                        <td class="text-center text-danger" colspan="6"> -- LOADING TRIGGERS -- </td>
+                                        <td class="text-center text-danger" colspan="8"> -- LOADING TRIGGERS -- </td>
                                     </tr>
                                     <tr v-else-if="smsTriggerList.length == 0">
-                                        <td class="text-center text-danger" colspan="6"> -- NO  SMS TRIGGER FOUND -- </td>
+                                        <td class="text-center text-danger" colspan="8"> -- NO  SMS TRIGGER FOUND -- </td>
                                     </tr>
                                     <tr v-for="(item,itemIndex) in smsTriggerList" v-bind:key="'item-sched-'+item.id+'-'+itemIndex">
                                         <th class="text-center p-1" v-text="item.id"></th>
@@ -53,6 +58,14 @@
                                             </button>
                                         </td>
                                         <td></td>
+                                        <td>
+                                            <label> No of targets </label>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-outline-primary btn-sm">
+                                                <span class="fa fa-edit"></span>
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
