@@ -7,6 +7,9 @@
                         <label class="mb-0">Schedule List</label>
                     </div>
                     <div class="card-body">
+                        <button class="btn btn-outline-primary btn-sm mb-2" @click="add_click()">
+                            <span class="fa fa-plus"></span> ADD ITEM
+                        </button>
                         <page-search-container 
                             
                             :searchText="search_text" 

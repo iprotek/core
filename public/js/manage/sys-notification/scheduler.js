@@ -4486,7 +4486,16 @@ var render = function render() {
     staticClass: "card"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "card-body"
-  }, [_c("page-search-container", {
+  }, [_c("button", {
+    staticClass: "btn btn-outline-primary btn-sm mb-2",
+    on: {
+      click: function click($event) {
+        return _vm.add_click();
+      }
+    }
+  }, [_c("span", {
+    staticClass: "fa fa-plus"
+  }), _vm._v(" ADD ITEM\n                    ")]), _vm._v(" "), _c("page-search-container", {
     attrs: {
       searchText: _vm.search_text,
       currentPage: _vm.current_page,
@@ -4636,7 +4645,9 @@ var render = function render() {
       },
       expression: "name"
     }
-  }), _vm._v(" "), _c("label", [_vm._v("TYPE:")]), _vm._v(" "), _c("select", {
+  }), _vm._v(" "), _c("label", {
+    staticClass: "mt-4"
+  }, [_vm._v("TYPE:")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -4667,7 +4678,9 @@ var render = function render() {
     attrs: {
       value: "notification"
     }
-  }, [_vm._v("NOTIFICATION")])]), _vm._v(" "), _c("div", [_vm.type == "sms" ? _c("code", [_vm._v("Send SMS based on alloted schedules.")]) : _vm.type == "email" ? _c("code", [_vm._v("Send EMAIL based on alloted schedules.")]) : _vm.type == "notification" ? _c("code", [_vm._v("System notification such as task and reminders.")]) : _vm._e()]), _vm._v(" "), _c("label", [_vm._v("IS ACTIVE:")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("NOTIFICATION")])]), _vm._v(" "), _c("div", [_vm.type == "sms" ? _c("code", [_vm._v("Send SMS based on alloted schedules.")]) : _vm.type == "email" ? _c("code", [_vm._v("Send EMAIL based on alloted schedules.")]) : _vm.type == "notification" ? _c("code", [_vm._v("System notification such as task and reminders.")]) : _vm._e()]), _vm._v(" "), _c("label", {
+    staticClass: "mt-4"
+  }, [_vm._v("IS ACTIVE:")]), _vm._v(" "), _c("div", {
     staticClass: "mt-1"
   }, [_c("switch2", {
     model: {

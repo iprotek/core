@@ -21,10 +21,11 @@
 <script>    
     
     export default {
-        props:[  ],
-        components: {   
-        },
+        props:[ "group_id", "branch_id" ],
+        $emits:[],
         watch: { 
+        },
+        components: {   
         },
         data: function () {
             return {        
