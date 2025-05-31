@@ -3920,7 +3920,27 @@ var render = function render() {
     staticStyle: {
       width: "100px"
     }
-  }, [_vm._v("Ref#")])])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
+  }, [_vm._v("Ref#")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "100px"
+    }
+  }, [_vm._v("Is Active")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "100px"
+    }
+  }, [_vm._v("Status")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "100px"
+    }
+  }, [_vm._v("Triggers")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center text-nowrap",
+    staticStyle: {
+      width: "100px"
+    }
+  }, [_vm._v("Target Count")])])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
     staticClass: "text-center text-danger",
     attrs: {
       colspan: "6"
@@ -3938,7 +3958,22 @@ var render = function render() {
       domProps: {
         textContent: _vm._s(item.id)
       }
-    })]);
+    }), _vm._v(" "), _c("th", {
+      staticClass: "text-center p-1",
+      domProps: {
+        textContent: _vm._s(item.name)
+      }
+    }), _vm._v(" "), _c("th", {
+      staticClass: "text-center p-1"
+    }, [item.is_active ? _c("label", {
+      staticClass: "text-primary pb-0"
+    }, [_vm._v(" YES")]) : _c("label", {
+      staticClass: "text-danger pb-0"
+    }, [_vm._v(" NO ")])]), _vm._v(" "), _c("td"), _vm._v(" "), _c("td", [_c("button", {
+      staticClass: "btn btn-outline-primary btn-sm"
+    }, [_c("span", {
+      staticClass: "fa fa-list"
+    })])]), _vm._v(" "), _c("td")]);
   })], 2)])]) : _vm._e()], 1)])])])]);
 };
 var staticRenderFns = [];
