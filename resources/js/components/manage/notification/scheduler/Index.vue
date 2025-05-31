@@ -11,7 +11,7 @@
                             <span class="fa fa-plus"></span> ADD SCHEDULER
                         </button>
                         <page-search-container 
-                            
+                            ref="page_search"
                             :searchText="search_text" 
                             :currentPage="current_page"
                             :isLoading="isLoading"
@@ -66,7 +66,7 @@
                                             <button class="btn btn-warning btn-sm ml-1">
                                                 <span class="fa fa-edit"></span>
                                             </button>
-                                            <button class="btn btn-danger btn-sm ml-1">
+                                            <button @click="remove(item.id)" class="btn btn-danger btn-sm ml-1">
                                                 <span class="fa fa-times"></span>
                                             </button>
                                         </th>
@@ -78,7 +78,8 @@
                 </div>
             </div>
         </div>
-        <modal-sys-notification-scheduler :group_id="group_id" :branch_id="branch_id" ref="modal_sys_notif" @data_updated="loadingScheduleList()" />
+        <modal-sys-notification-scheduler :group_id="group_id" :branch_id="branch_id" ref="modal_sys_notif" @data_updated="$refs.page_search.search_now()" />
+        <swal ref="swal_prompt"></swal> 
     </div>
 </template>
 
@@ -122,6 +123,20 @@
                     return resp.json().then(data=>{
                         return data;
                     });
+                });
+            },
+            remove:function(id){
+                var vm = this;
+                this.$refs.swal_prompt.alert(
+                    'question',
+                    "REMOVE Schedule?", 
+                    "Confirm" , 
+                    "DELETE", 
+                    "/api/group/"+this.group_id+"/sys-notification/schedulers/list/"+id
+                ).then(res=>{
+                    if(res.isConfirmed && res.value.status == 1){
+                        vm.$refs.page_search.search_now();
+                    }
                 });
             }
         },

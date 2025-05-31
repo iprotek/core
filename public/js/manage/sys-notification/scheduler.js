@@ -3585,6 +3585,14 @@ __webpack_require__.r(__webpack_exports__);
           return data;
         });
       });
+    },
+    remove: function remove(id) {
+      var vm = this;
+      this.$refs.swal_prompt.alert('question', "REMOVE Schedule?", "Confirm", "DELETE", "/api/group/" + this.group_id + "/sys-notification/schedulers/list/" + id).then(function (res) {
+        if (res.isConfirmed && res.value.status == 1) {
+          vm.$refs.page_search.search_now();
+        }
+      });
     }
   },
   mounted: function mounted() {},
@@ -3653,11 +3661,21 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       var vm = this;
       var request = vm.schedule_info;
-      this.$refs.swal_prompt.alert('question', "Add Schedule", "Confirm", "POST", "/api/group/" + this.group_id + "/sys-notification/schedulers/add", JSON.stringify(request)).then(function (res) {
-        if (res.isConfirmed) {
-          vm.$emit('data_updated');
-        }
-      });
+      if (request.id == 0) {
+        this.$refs.swal_prompt.alert('question', "Add Schedule", "Confirm", "POST", "/api/group/" + this.group_id + "/sys-notification/schedulers/add", JSON.stringify(request)).then(function (res) {
+          if (res.isConfirmed && res.value.status == 1) {
+            vm.$emit('data_updated');
+            vm.schedule_info.id = res.value.data_id;
+          }
+        });
+      } else {
+        this.$refs.swal_prompt.alert('question', "Update Schedule", "Confirm", "PUT", "/api/group/" + this.group_id + "/sys-notification/schedulers/update", JSON.stringify(request)).then(function (res) {
+          if (res.isConfirmed && res.value.status == 1) {
+            vm.$emit('data_updated');
+            vm.schedule_info.id = res.value.data_id;
+          }
+        });
+      }
     }
   },
   mounted: function mounted() {},
@@ -4502,6 +4520,7 @@ var render = function render() {
   }, [_c("span", {
     staticClass: "fa fa-plus"
   }), _vm._v(" ADD SCHEDULER\n                    ")]), _vm._v(" "), _c("page-search-container", {
+    ref: "page_search",
     attrs: {
       searchText: _vm.search_text,
       currentPage: _vm.current_page,
@@ -4597,7 +4616,12 @@ var render = function render() {
     }, [_c("span", {
       staticClass: "fa fa-edit"
     })]), _vm._v(" "), _c("button", {
-      staticClass: "btn btn-danger btn-sm ml-1"
+      staticClass: "btn btn-danger btn-sm ml-1",
+      on: {
+        click: function click($event) {
+          return _vm.remove(item.id);
+        }
+      }
     }, [_c("span", {
       staticClass: "fa fa-times"
     })])])]);
@@ -4609,9 +4633,11 @@ var render = function render() {
     },
     on: {
       data_updated: function data_updated($event) {
-        return _vm.loadingScheduleList();
+        return _vm.$refs.page_search.search_now();
       }
     }
+  }), _vm._v(" "), _c("swal", {
+    ref: "swal_prompt"
   })], 1);
 };
 var staticRenderFns = [function () {

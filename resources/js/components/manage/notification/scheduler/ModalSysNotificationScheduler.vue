@@ -94,19 +94,36 @@
                 var vm = this;
                 
                 var request = vm.schedule_info;
-
-                this.$refs.swal_prompt.alert(
-                    'question',
-                    "Add Schedule", 
-                    "Confirm" , 
-                    "POST", 
-                    "/api/group/"+this.group_id+"/sys-notification/schedulers/add", 
-                    JSON.stringify(request)
-                ).then(res=>{
-                    if(res.isConfirmed){
-                        vm.$emit('data_updated');
-                    }
-                });
+                if(request.id == 0){
+                    this.$refs.swal_prompt.alert(
+                        'question',
+                        "Add Schedule", 
+                        "Confirm" , 
+                        "POST", 
+                        "/api/group/"+this.group_id+"/sys-notification/schedulers/add", 
+                        JSON.stringify(request)
+                    ).then(res=>{
+                        if(res.isConfirmed && res.value.status == 1){
+                            vm.$emit('data_updated');
+                            vm.schedule_info.id = res.value.data_id;
+                        }
+                    });
+                }
+                else {
+                    this.$refs.swal_prompt.alert(
+                        'question',
+                        "Update Schedule", 
+                        "Confirm" , 
+                        "PUT", 
+                        "/api/group/"+this.group_id+"/sys-notification/schedulers/update", 
+                        JSON.stringify(request)
+                    ).then(res=>{
+                        if(res.isConfirmed && res.value.status == 1){
+                            vm.$emit('data_updated');
+                            vm.schedule_info.id = res.value.data_id;
+                        }
+                    });
+                }
             }
 
         },
