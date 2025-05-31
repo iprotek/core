@@ -3476,7 +3476,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_PageDataTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../common/PageDataTable.vue */ "./resources/js/components/common/PageDataTable.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["group_id", "branch_id"],
+  props: ["group_id", "branch_id", "scheduler_id"],
   $emits: [],
   watch: {},
   components: {

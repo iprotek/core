@@ -73,8 +73,12 @@ class _CommonController extends BaseController
         ];
     }
 
-    public function view($view, $array = null){
-        if(!$array){
+    public function view($view, $array = null, $is_array_merge = false){
+        if($is_array_merge && is_array($array)){
+            $cm_info = $this->common_infos();
+            $array = $array + $cm_info;
+        }
+        else if(!$array){
             $array = $this->common_infos();
         }
 

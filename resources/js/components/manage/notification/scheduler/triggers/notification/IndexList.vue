@@ -16,7 +16,7 @@
 
 <script>
     export default {
-        props:[ "group_id", "branch_id" ],
+        props:[ "group_id", "branch_id", "scheduler_id" ],
         $emits:[],
         watch: { 
         },

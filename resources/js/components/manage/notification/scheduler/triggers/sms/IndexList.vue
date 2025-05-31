@@ -7,7 +7,6 @@
                         SMS SCHEDULE TRIGGER LIST
                     </div>
                     <div class="card-body">
-                        
                         <page-data-table
                             ref="page_data_table"
                             v-if="url"
@@ -53,7 +52,7 @@
 <script>
     import PageDataTableVue from '../../../../../common/PageDataTable.vue';
     export default {
-        props:[ "group_id", "branch_id" ],
+        props:[ "group_id", "branch_id", "scheduler_id" ],
         $emits:[],
         watch: { 
         },
