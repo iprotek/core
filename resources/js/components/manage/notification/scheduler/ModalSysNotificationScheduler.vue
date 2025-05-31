@@ -78,9 +78,24 @@
                 
                 vm.reset();
 
-                this.$refs.modal.show();
 
                 vm.schedule_info.id = id;
+                if(id){
+                    WebRequest2('GET', "/api/group/"+this.group_id+"/sys-notification/schedulers/list/"+id).then(resp=>{
+                        resp.json().then(data=>{
+
+                            vm.$refs.modal.show();
+                            vm.schedule_info.branch_id = data.branch_id;
+                            vm.schedule_info.name = data.name;
+                            vm.schedule_info.is_active = data.is_active;
+                            vm.schedule_info.type = data.type;
+                        
+                        });
+                    });
+                }
+                else{
+                    this.$refs.modal.show();
+                }
 
                 //this.$refs.modal.show_success("GG");
 
@@ -120,7 +135,6 @@
                     ).then(res=>{
                         if(res.isConfirmed && res.value.status == 1){
                             vm.$emit('data_updated');
-                            vm.schedule_info.id = res.value.data_id;
                         }
                     });
                 }

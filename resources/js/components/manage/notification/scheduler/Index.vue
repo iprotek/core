@@ -63,7 +63,7 @@
                                             <label v-else class="text-danger"> INACTIVE </label>
                                         </th>
                                         <th class="text-nowrap p-1" style="width:120px;" >
-                                            <button class="btn btn-warning btn-sm ml-1">
+                                            <button class="btn btn-warning btn-sm ml-1" @click="$refs.modal_sys_notif.show(item.id)">
                                                 <span class="fa fa-edit"></span>
                                             </button>
                                             <button @click="remove(item.id)" class="btn btn-danger btn-sm ml-1">

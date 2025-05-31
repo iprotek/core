@@ -3649,8 +3649,20 @@ __webpack_require__.r(__webpack_exports__);
       var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
       var vm = this;
       vm.reset();
-      this.$refs.modal.show();
       vm.schedule_info.id = id;
+      if (id) {
+        WebRequest2('GET', "/api/group/" + this.group_id + "/sys-notification/schedulers/list/" + id).then(function (resp) {
+          resp.json().then(function (data) {
+            vm.$refs.modal.show();
+            vm.schedule_info.branch_id = data.branch_id;
+            vm.schedule_info.name = data.name;
+            vm.schedule_info.is_active = data.is_active;
+            vm.schedule_info.type = data.type;
+          });
+        });
+      } else {
+        this.$refs.modal.show();
+      }
 
       //this.$refs.modal.show_success("GG");
 
@@ -3672,7 +3684,6 @@ __webpack_require__.r(__webpack_exports__);
         this.$refs.swal_prompt.alert('question', "Update Schedule", "Confirm", "PUT", "/api/group/" + this.group_id + "/sys-notification/schedulers/update", JSON.stringify(request)).then(function (res) {
           if (res.isConfirmed && res.value.status == 1) {
             vm.$emit('data_updated');
-            vm.schedule_info.id = res.value.data_id;
           }
         });
       }
@@ -4612,7 +4623,12 @@ var render = function render() {
         width: "120px"
       }
     }, [_c("button", {
-      staticClass: "btn btn-warning btn-sm ml-1"
+      staticClass: "btn btn-warning btn-sm ml-1",
+      on: {
+        click: function click($event) {
+          return _vm.$refs.modal_sys_notif.show(item.id);
+        }
+      }
     }, [_c("span", {
       staticClass: "fa fa-edit"
     })]), _vm._v(" "), _c("button", {
