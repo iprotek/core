@@ -3551,6 +3551,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["type", "placeholder", "prepend_icon_title", "input_style", "placeholder_style", "readonly", "placeholder_description", "placeholder_focus_color", "disabled", "value", "prepend_icon", "datalist"],
+  emits: ["value_changed"],
   components: {},
   watch: {
     value: function value(newValue) {

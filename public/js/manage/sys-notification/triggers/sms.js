@@ -3799,6 +3799,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["type", "placeholder", "prepend_icon_title", "input_style", "placeholder_style", "readonly", "placeholder_description", "placeholder_focus_color", "disabled", "value", "prepend_icon", "datalist"],
+  emits: ["value_changed"],
   components: {},
   watch: {
     value: function value(newValue) {
@@ -3878,16 +3879,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_UserInput2_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../common/UserInput2.vue */ "./resources/js/components/common/UserInput2.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["group_id", "branch_id"],
-  $emits: [],
-  watch: {},
+  props: ["set_repeat_type", "set_repeat_info"],
+  emits: ["update:set_repeat_type", "update:set_repeat_info"],
+  watch: {
+    set_repeat_type: function set_repeat_type(newVal) {
+      this.repeat_type = newVal ? newVal : 'yearly';
+    },
+    set_repeat_info: function set_repeat_info(newVal) {
+      if (!newVal) {
+        newVal = {
+          month_name: 'Jan',
+          month_day: 1,
+          week_day: 'Sun',
+          datetime: '',
+          time: ''
+        };
+      }
+      this.repeat_info = {
+        month_name: newVal.month_name,
+        month_day: newVal.month_day,
+        week_day: newVal.week_day,
+        datetime: newVal.datetime,
+        time: newVal.time
+      };
+    }
+  },
   components: {
     "input2": _common_UserInput2_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
       repeat_type: 'yearly',
-      repeat_month: 'Jan',
       repeat_days_after: 0,
       repeat_info: {
         month_name: 'Jan',
@@ -3935,9 +3957,6 @@ __webpack_require__.r(__webpack_exports__);
       }],
       weekDayList: [{
         name: 'Sunday',
-        value: 'Allday'
-      }, {
-        name: 'Sunday',
         value: 'Sun'
       }, {
         name: 'Monday',
@@ -3961,6 +3980,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    value_changed: function value_changed() {
+      this.$emit('update:set_repeat_type', this.repeat_type);
+      this.$emit('update:set_repeat_info', this.repeat_info);
+    },
     queryString: function queryString() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var queryString = Object.keys(params).map(function (key) {
@@ -4066,7 +4089,13 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         name: '',
         sms_client_api_request_link_id: 0,
         sys_notify_schedule_id: 0
-      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_sms_notify_sched, "name", ''), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "send_message", ''), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", false), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_sms_notify_sched, "error_message", ''), "repeat_days_after", 0), "repeat_type", ''), "repeat_info", ''), "others_settings", {}))
+      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_sms_notify_sched, "name", ''), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "send_message", ''), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", false), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_sms_notify_sched, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
+        month_name: 'Jan',
+        month_day: 1,
+        week_day: 'Mon',
+        datetime: '',
+        time: '08:00'
+      }), "others_settings", {}))
     };
   },
   methods: {
@@ -4111,7 +4140,13 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         name: '',
         sms_client_api_request_link_id: 0,
         sys_notify_schedule_id: 0
-      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "name", ''), "send_message", 'Hi, \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle immediately. If you had already paid please ignore.'), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", false), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "error_message", ''), "repeat_days_after", 0), "others_settings", {}));
+      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "name", ''), "send_message", 'Hi, \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle immediately. If you had already paid please ignore.'), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", false), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
+        month_name: 'Jan',
+        month_day: 1,
+        week_day: 'Mon',
+        datetime: '',
+        time: '08:00'
+      }), "others_settings", {}));
     },
     show: function show() {
       var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
@@ -4124,6 +4159,9 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       return new Promise(function (promiseExec) {
         vm.promiseExec = promiseExec;
       });
+    },
+    save: function save() {
+      console.log(this.sms_notify_sched);
     },
     add: function add() {
       var vm = this;
@@ -5103,7 +5141,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     on: {
-      change: function change($event) {
+      change: [function ($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
@@ -5111,7 +5149,7 @@ var render = function render() {
           return val;
         });
         _vm.repeat_type = $event.target.multiple ? $$selectedVal : $$selectedVal[0];
-      }
+      }, _vm.value_changed]
     }
   }, [_c("option", {
     attrs: {
@@ -5141,6 +5179,9 @@ var render = function render() {
       input_style: "height:35px;",
       placeholder_description: "The number days this notificatin will repeat."
     },
+    on: {
+      value_changed: _vm.value_changed
+    },
     model: {
       value: _vm.repeat_days_after,
       callback: function callback($$v) {
@@ -5159,7 +5200,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     on: {
-      change: function change($event) {
+      change: [function ($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
@@ -5167,7 +5208,7 @@ var render = function render() {
           return val;
         });
         _vm.$set(_vm.repeat_info, "month_name", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
+      }, _vm.value_changed]
     }
   }, _vm._l(_vm.monthList, function (mo, moIn) {
     return _c("option", {
@@ -5190,6 +5231,7 @@ var render = function render() {
       value: _vm.repeat_info.month_day
     },
     on: {
+      change: _vm.value_changed,
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.$set(_vm.repeat_info, "month_day", $event.target.value);
@@ -5208,7 +5250,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     on: {
-      change: function change($event) {
+      change: [function ($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
@@ -5216,7 +5258,7 @@ var render = function render() {
           return val;
         });
         _vm.$set(_vm.repeat_info, "week_day", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
+      }, _vm.value_changed]
     }
   }, _vm._l(_vm.weekDayList, function (we, wekIn) {
     return _c("option", {
@@ -5242,6 +5284,7 @@ var render = function render() {
       value: _vm.repeat_info.datetime
     },
     on: {
+      change: _vm.value_changed,
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.$set(_vm.repeat_info, "datetime", $event.target.value);
@@ -5264,6 +5307,7 @@ var render = function render() {
       value: _vm.repeat_info.time
     },
     on: {
+      change: _vm.value_changed,
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.$set(_vm.repeat_info, "time", $event.target.value);
@@ -5643,7 +5687,20 @@ var render = function render() {
       },
       expression: "sms_notify_sched.is_stop_when_fully_paid"
     }
-  }), _vm._v(" STOP WHEN FULLY PAID\n                                ")], 1)], 1) : _vm._e()])]), _vm._v(" "), _c("repeat-setting")], 1)])]), _vm._v(" "), _c("template", {
+  }), _vm._v(" STOP WHEN FULLY PAID\n                                ")], 1)], 1) : _vm._e()])]), _vm._v(" "), _c("repeat-setting", {
+    attrs: {
+      set_repeat_info: _vm.sms_notify_sched.repeat_info,
+      set_repeat_type: _vm.sms_notify_sched.repeat_type
+    },
+    on: {
+      "update:set_repeat_info": function updateSet_repeat_info($event) {
+        _vm.sms_notify_sched.repeat_info = $event;
+      },
+      "update:set_repeat_type": function updateSet_repeat_type($event) {
+        _vm.sms_notify_sched.repeat_type = $event;
+      }
+    }
+  })], 1)])]), _vm._v(" "), _c("template", {
     slot: "footer"
   }, [_c("div", [_c("button", {
     staticClass: "btn btn-outline-dark mr-4",
@@ -5660,6 +5717,9 @@ var render = function render() {
     staticClass: "btn btn-outline-primary",
     attrs: {
       type: "button"
+    },
+    on: {
+      click: _vm.save
     }
   }, [_c("span", {
     staticClass: "fa fa-plus"
@@ -5667,6 +5727,9 @@ var render = function render() {
     staticClass: "btn btn-outline-primary",
     attrs: {
       type: "button"
+    },
+    on: {
+      click: _vm.save
     }
   }, [_c("span", {
     staticClass: "fa fa-save"

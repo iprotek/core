@@ -66,17 +66,22 @@
                                 </div>
                             </div>
                         </div>
-                        <repeat-setting />
+                        <repeat-setting 
+                            :set_repeat_info="sms_notify_sched.repeat_info" 
+                            :set_repeat_type="sms_notify_sched.repeat_type"  
+                            @update:set_repeat_info="sms_notify_sched.repeat_info = $event"
+                            @update:set_repeat_type="sms_notify_sched.repeat_type = $event"
+                            />
                     </div>
                 </div>
             </template>
             <template slot="footer">
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
-                    <button type="button" class="btn btn-outline-primary" v-if="sms_notify_sched.id == 0" >
+                    <button type="button" class="btn btn-outline-primary" v-if="sms_notify_sched.id == 0" @click="save">
                         <span class="fa fa-plus"></span> ADD
                     </button> 
-                    <button type="button" class="btn btn-outline-primary" v-else >
+                    <button type="button" class="btn btn-outline-primary" v-else @click="save">
                         <span class="fa fa-save"></span>SAVE
                     </button> 
                 </div>
@@ -132,8 +137,14 @@
                     is_stop_when_fully_paid:true,
                     error_message:'',
                     repeat_days_after:0,
-                    repeat_type:'', //yearly, monthly, weekly, daily,
-                    repeat_info:'', //February, Tuesday, 31, 14:00:00
+                    repeat_type:'yearly', //yearly, monthly, weekly, daily,
+                    repeat_info:{
+                        month_name:'Jan',
+                        month_day:1,
+                        week_day:'Mon',
+                        datetime:'',
+                        time:'08:00'
+                    }, //February, Tuesday, 31, 14:00:00
                     others_settings:{}
                 }
 
@@ -198,6 +209,14 @@
                     is_stop_when_fully_paid:true,
                     error_message:'',
                     repeat_days_after:0,
+                    repeat_type:'yearly', //yearly, monthly, weekly, daily,
+                    repeat_info:{
+                        month_name:'Jan',
+                        month_day:1,
+                        week_day:'Mon',
+                        datetime:'',
+                        time:'08:00'
+                    }, //February, Tuesday, 31, 14:00:00
                     others_settings:{}
                 }
 
@@ -214,6 +233,9 @@
                     vm.promiseExec = promiseExec;
                 });
                 
+            },
+            save:function(){
+                console.log(this.sms_notify_sched);
             },
             add:function(){
                 var vm = this;

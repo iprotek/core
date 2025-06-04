@@ -42,6 +42,7 @@
 <script>
     export default {
         props:[ "type","placeholder","prepend_icon_title" , "input_style", "placeholder_style", "readonly" , "placeholder_description", "placeholder_focus_color", "disabled", "value", "prepend_icon" , "datalist"],
+        emits:[ "value_changed"],
         components: { 
         },
         watch: {
