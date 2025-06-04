@@ -114,7 +114,7 @@
                 var vm = this;
                 this.$refs.swal_prompt.alert(
                     'question',
-                    "REMOVE Schedule?", 
+                    "REMOVE Scheduler?", 
                     "Confirm" , 
                     "DELETE", 
                     "/api/group/"+this.group_id+"/sys-notification/schedulers/list/"+id

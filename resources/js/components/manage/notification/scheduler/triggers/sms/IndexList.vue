@@ -7,8 +7,8 @@
                         SMS SCHEDULE TRIGGER LIST
                     </div>
                     <div class="card-body">
-                        <button class="btn btn-outline-primary btn-lg mb-2">
-                            <span class="fa fa-plus"></span> ADD TRIGGER
+                        <button class="btn btn-outline-primary btn-lg mb-2" @click="$refs.modal_sms_notif_sched.show()">
+                            <span class="fa fa-plus"></span> ADD SCHEDULE
                         </button>
                         <page-data-table
                             ref="page_data_table"
@@ -76,18 +76,21 @@
                 </div>
             </div>
         </div>
+        <modal-sms-notif-sched ref="modal_sms_notif_sched" :branch_id="branch_id" :group_id="group_id" />
     </div>
 </template>
 
 <script>
     import PageDataTableVue from '../../../../../common/PageDataTable.vue';
+    import ModalSmsNotificationScheduler from './ModalSmsNotificationScheduler.vue';
     export default {
         props:[ "group_id", "branch_id", "scheduler_id" ],
         $emits:[],
         watch: { 
         },
         components: { 
-            "page-data-table":PageDataTableVue
+            "page-data-table":PageDataTableVue,
+            "modal-sms-notif-sched":ModalSmsNotificationScheduler
         },
         data: function () {
             return {    

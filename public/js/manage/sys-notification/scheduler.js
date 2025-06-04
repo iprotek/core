@@ -3654,7 +3654,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     remove: function remove(id) {
       var vm = this;
-      this.$refs.swal_prompt.alert('question', "REMOVE Schedule?", "Confirm", "DELETE", "/api/group/" + this.group_id + "/sys-notification/schedulers/list/" + id).then(function (res) {
+      this.$refs.swal_prompt.alert('question', "REMOVE Scheduler?", "Confirm", "DELETE", "/api/group/" + this.group_id + "/sys-notification/schedulers/list/" + id).then(function (res) {
         if (res.isConfirmed && res.value.status == 1) {
           vm.$refs.page_data_table.reloadPage();
         }
