@@ -3424,16 +3424,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["set_errors"],
+  $emits: ["update:set_errors"],
+  watch: {
+    set_errors: function set_errors(newVal) {
+      this.errors = newVal ? newVal : [];
+    }
+  },
   components: {},
   data: function data() {
-    return {};
+    return {
+      errors: []
+    };
   },
   methods: {
     alert: function alert(icon, title, buttonTitle, method, url, data) {
       var _this = this;
       var __error_callback = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
       var _contentType = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 'application/json';
+      var vm = this;
+      vm.errors = [];
       return Swal.fire({
         title: title,
         icon: icon,
@@ -3449,31 +3459,33 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         showLoaderOnConfirm: true,
         preConfirm: function preConfirm(deparment_name) {
           return WebRequest2(method, url, data, _contentType).then(function (response) {
-            try {
-              if (response.ok) return response.json();
-              //Initiator to stop from closing
-              Swal.showValidationMessage("ERROR");
-              return response.json().then(function (a) {
-                //console.log(a);
-                //throw new Error(a.message);
-                if (__error_callback) {
-                  __error_callback(a);
-                }
-                Swal.showValidationMessage("Request failed: ".concat(_this.extractValuesFromJson(a)));
-                return a;
-              })["catch"](function (error) {
-                console.log(error);
-                Swal.showValidationMessage("Request failed: ".concat(error));
-                if (__error_callback) {
-                  __error_callback(error);
-                }
-                return error;
-              });
-            } catch (err) {
-              respose.text().then(function (data) {
-                console.log(data);
-              });
-            }
+            if (response.ok) return response.json();
+            //Initiator to stop from closing
+            Swal.showValidationMessage("ERROR");
+            return response.json().then(function (a) {
+              //console.log(a);
+              //throw new Error(a.message);
+              if (__error_callback) {
+                __error_callback(a);
+              }
+              Swal.showValidationMessage("Request failed: ".concat(_this.extractValuesFromJson(a)));
+              var err = new Error("Validation Error");
+              err.errors = a;
+              vm.$emit('update:set_errors', a);
+              //throw err;
+              return err;
+            })["catch"](function (error) {
+              console.log(error);
+              Swal.showValidationMessage("Request failed: ".concat(error));
+              if (__error_callback) {
+                __error_callback(error);
+              }
+              var err = new Error(error);
+              err.errors = [];
+              throw err;
+              // removed by dead control flow
+{}
+            });
           });
         },
         allowOutsideClick: function allowOutsideClick() {

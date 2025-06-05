@@ -3,15 +3,24 @@
 <script>
 export default {
      
-        props:[ ],
+        props:[ "set_errors" ],
+        $emits:["update:set_errors"],
+        watch: { 
+            set_errors:function(newVal){
+                this.errors = newVal ? newVal : [];
+            }
+        },
         components: {  
         },
         data: function () {
-            return {     
+            return {
+                errors:[]     
             }
         },
         methods: { 
             alert(icon, title, buttonTitle,method, url, data, __error_callback=null,_contentType='application/json'){
+                var vm = this;
+                vm.errors = [];
                 return  Swal.fire({
                             title: title, 
                             icon: icon,  
@@ -29,11 +38,10 @@ export default {
                             preConfirm: (deparment_name) => {
                             return WebRequest2(method, url, data, _contentType)
                                 .then(response => {
-                                    try{
                                     if (response.ok) 
-                                        return response.json()
+                                        return response.json();
                                     //Initiator to stop from closing
-                                    Swal.showValidationMessage( `ERROR` )
+                                    Swal.showValidationMessage( `ERROR` );
                                     return response.json().then(a=>{
                                         //console.log(a);
                                         //throw new Error(a.message);
@@ -43,7 +51,11 @@ export default {
                                         Swal.showValidationMessage(
                                         `Request failed: ${this.extractValuesFromJson(a)}`
                                         )
-                                        return a;
+                                        var err = new Error("Validation Error");
+                                        err.errors = a;
+                                        vm.$emit('update:set_errors', a);
+                                        //throw err;
+                                        return err;
                                     })
                                     .catch(error => { 
                                         console.log(error);
@@ -53,13 +65,11 @@ export default {
                                         if(__error_callback){
                                             __error_callback(error);
                                         }
+                                        var err = new Error(error);
+                                        err.errors = [];
+                                        throw err;
                                         return error;
-                                    }); 
-                                    }catch(err){
-                                        respose.text().then(data=>{
-                                            console.log(data);
-                                        });
-                                    }
+                                    });
                                 }
                                 );
                             },

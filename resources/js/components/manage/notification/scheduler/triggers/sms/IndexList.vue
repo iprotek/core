@@ -76,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <modal-sms-notif-sched ref="modal_sms_notif_sched" :branch_id="branch_id" :group_id="group_id" />
+        <modal-sms-notif-sched ref="modal_sms_notif_sched" :branch_id="branch_id" :group_id="group_id" :scheduler_id="scheduler_id" />
     </div>
 </template>
 
@@ -97,7 +97,8 @@
                 
                 url:'/api/group/'+this.group_id+'/sys-notification/schedulers/triggers/sms/list',
                 filters:{
-                    branch_id: this.branch_id
+                    branch_id: this.branch_id,
+                    scheduler_id : this.scheduler_id
                 },
                 isLoading:false,
                 smsTriggerList:[]

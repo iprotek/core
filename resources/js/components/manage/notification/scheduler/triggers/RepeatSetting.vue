@@ -14,7 +14,7 @@
                     </select>
                 </div>
                 <div class="mx-4" v-if=" repeat_type != 'daily' && repeat_type != 'datetime' " >
-                    <input2 @value_changed="value_changed" v-model="repeat_days_after" :placeholder="'Repeat days after trigger'" :input_style="'height:35px;'" :placeholder_description="'The number days this notificatin will repeat.'" />
+                    <input2 @value_changed="value_changed" v-model="repeat_days_after" :placeholder="'Repeat days after trigger at the max of 5'" :input_style="'height:35px;'" :placeholder_description="'The number days this notificatin will repeat.'" />
                 </div>
                 <table class="table w-100">
                     <tr v-if="repeat_type == 'yearly'">
@@ -69,9 +69,14 @@
 <script>
     import UserInput2 from '../../../../common/UserInput2.vue';
     export default {
-        props:[ "set_repeat_type", "set_repeat_info" ],
-        emits:[ "update:set_repeat_type", "update:set_repeat_info"],
+        props:[ "set_repeat_type", "set_repeat_info", "set_repeat_days_after" ],
+        emits:[ "update:set_repeat_type", "update:set_repeat_info", "update:set_repeat_days_after"],
         watch: { 
+            set_repeat_days_after:function(newVal){
+                if(newVal > 5)
+                   newVal = 5;
+                this.repeat_days_after =  newVal >= 0 ? newVal : 0;
+            },
             set_repeat_type:function(newVal){
                 this.repeat_type = newVal ? newVal : 'yearly';
             },
@@ -85,8 +90,6 @@
                         time:''
                     };
                 }
-
-
                 this.repeat_info = {
                     month_name: newVal.month_name,
                     month_day: newVal.month_day,
@@ -138,8 +141,15 @@
         },
         methods: { 
             value_changed:function(){
+                if(this.repeat_info.month_day > 25){
+                    this.repeat_info.month_day = 25;
+                }else if(this.repeat_info.month_day <= 0){
+                    this.repeat_info.month_day = 1;
+                }
+
                 this.$emit('update:set_repeat_type', this.repeat_type);
                 this.$emit('update:set_repeat_info', this.repeat_info);
+                this.$emit('update:set_repeat_days_after', this.repeat_days_after);
             },
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {

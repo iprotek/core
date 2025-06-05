@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <input2 v-model="sms_notify_sched.name" :type="'text'" :placeholder="'SMS Schedule Trigger Name'" :input_style="'height:40px;'" />
-                        
+                        <validation :errors="errors" :field="'name'" />
                         <div class="mt-2">
                             <label class="mb-0 mt-2">IS ACTIVE:</label>
                             <switch2 v-model="sms_notify_sched.is_active" />
@@ -16,8 +16,9 @@
 
                         <div class="mt-2" >
                             <label class="mb-0"> SMS SENDER </label>
-                            <select2 v-model="selected_sms_sender" :placeholder="' -- SMS SENDER -- '" :url="'/manage/sms-sender/list'" :modal_selector="true" />
+                            <select2 v-model="selected_sms_sender" :query_filters="{active_only:1}" :placeholder="' -- SMS SENDER -- '" :url="'/manage/sms-sender/list'" :modal_selector="true" />
                         </div>
+                        <validation :errors="errors" :field="'sms_client_api_request_link_id'" />
                         
                         <div>
                             <label class="mb-0 mt-2">TO TYPE:</label>
@@ -29,6 +30,8 @@
                         <div v-if="sms_notify_sched.to_type">
                             <select2 @selected="item_selected_changed" :is_clean_after_select="true" :has_clear="true" :placeholder="'-- select '+sms_notify_sched.to_type+'--'" :url="'/list/'+sms_notify_sched.to_type" :modal_selector="true" />
                         </div>
+                        <validation :errors="errors" :field="'selected_items'" />
+                        <validation :errors="errors" :field="'mobile_nos'" />
                         <div>
                             <span class="badge badge-pill badge-primary" v-for="(item,itemIndex) in sms_notify_sched.selected_items" v-bind:key="'item-'+item.id+'-'+itemIndex" >
                               <span class="fa fa-times text-danger" style="cursor: pointer;" @click="removeNotifSched(item)"></span>  {{ item.text }} - {{ item.mobile_no }}
@@ -41,6 +44,7 @@
                         <div>
                             <small>                            
                                 <label class="mb-0">DYNAMIC VARIABLES</label>
+                                <div><code>[person_name]</code> - the name of the recipient</div>
                                 <div><code>[total_due]</code> - automatically set based on total due</div>
                                 <div><code>[total_paid]</code> - automatically adjust based on total paid</div>
                                 <div><code>[total_balance]</code> - automatically set from total due deduced by total paid</div>
@@ -59,6 +63,7 @@
                                 </select>
                                 <div v-if="sms_notify_sched.notification_type == 'payment'">
                                     <input2 v-model="sms_notify_sched.total_due" :placeholder="'Total Due:'" :input_style="'height:35px;'" />
+                                    <validation :errors="errors" :field="'total_due'" />
                                     <input2 v-model="sms_notify_sched.total_paid" :placeholder="'Total Paid:'" :input_style="'height:35px;'" />
                                     <div class="mt-2">
                                         <switch2 v-model="sms_notify_sched.is_stop_when_fully_paid" /> STOP WHEN FULLY PAID
@@ -68,9 +73,11 @@
                         </div>
                         <repeat-setting 
                             :set_repeat_info="sms_notify_sched.repeat_info" 
-                            :set_repeat_type="sms_notify_sched.repeat_type"  
+                            :set_repeat_type="sms_notify_sched.repeat_type"
+                            :set_repeat_days_after="sms_notify_sched.repeat_days_after"
                             @update:set_repeat_info="sms_notify_sched.repeat_info = $event"
                             @update:set_repeat_type="sms_notify_sched.repeat_type = $event"
+                            @update:set_repeat_days_after="sms_notify_sched.repeat_days_after = $event"
                             />
                     </div>
                 </div>
@@ -87,7 +94,7 @@
                 </div>
             </template>
         </modal-view> 
-        <swal ref="swal_prompt"></swal> 
+        <swal ref="swal_prompt" :set_errors="errors" @update:set_errors="errors=$event"></swal> 
     </div>
 
 </template>
@@ -97,8 +104,9 @@
     import Select2Vue from '../../../../../common/Select2.vue';
     import UserInput2Vue from '../../../../../common/UserInput2.vue';
     import RepeatSetting from '../RepeatSetting.vue';
+    import ValidationVue from '../../../../../common/Validation.vue';
     export default {
-        props:[ "group_id", "branch_id" ],
+        props:[ "group_id", "branch_id", "scheduler_id" ],
         $emits:[],
         watch: { 
         },
@@ -106,12 +114,14 @@
             "input2":UserInput2Vue,
             "select2":Select2Vue,
             "switch2":BoostrapSwitch2Vue,
-            "repeat-setting":RepeatSetting
+            "repeat-setting":RepeatSetting,
+            "validation":ValidationVue
         },
         data: function () {
             return {        
                 promiseExec:null,
                 to_type_list:[], 
+                errors:[],
                 selected_to_type:{
                     id:0,
                     text:''
@@ -198,7 +208,7 @@
                     sms_client_api_request_link_id:0,
                     sys_notify_schedule_id:0,
                     name:'',
-                    send_message:'Hi, \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle immediately. If you had already paid please ignore.',
+                    send_message:'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle immediately. If you had already paid please ignore.',
                     notification_type:'payment',
                     to_type:'', //customers,users
                     selected_items:[],
@@ -236,6 +246,40 @@
             },
             save:function(){
                 console.log(this.sms_notify_sched);
+                var vm = this;
+
+                var request = JSON.parse(JSON.stringify(this.sms_notify_sched));
+                
+                //SELECTED SENDER
+                request.sms_client_api_request_link_id = vm.selected_sms_sender.id ? vm.selected_sms_sender.id : null; 
+
+
+                //GROUPED
+                request.branch_id = this.branch_id;
+                request.sys_notify_schedule_id = this.scheduler_id;
+                
+                //REPEATH SETTINGS
+                request.month_name = request.repeat_info.month_name;
+                request.month_day = request.repeat_info.month_day;
+                request.week_day = request.repeat_info.week_day;
+                request.datetime = request.repeat_info.datetime;
+                request.time = request.repeat_info.time;
+                if(request.id == 0){
+                    vm.$refs.swal_prompt.alert(
+                        'question',
+                        "Add Trigger Now?", 
+                        "Confirm" , 
+                        "POST", 
+                        "/api/group/"+this.group_id+"/sys-notification/schedulers/triggers/sms/add", 
+                        JSON.stringify(request)
+                    ).then(res=>{
+                        console.log(vm.errors);
+                        if(res.isConfirmed && res.value.status == 1){
+                            vm.sms_notify_sched.id = res.value.data_id;
+                        }
+                    });
+                }
+
             },
             add:function(){
                 var vm = this;

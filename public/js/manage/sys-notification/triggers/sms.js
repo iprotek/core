@@ -3672,16 +3672,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: [],
+  props: ["set_errors"],
+  $emits: ["update:set_errors"],
+  watch: {
+    set_errors: function set_errors(newVal) {
+      this.errors = newVal ? newVal : [];
+    }
+  },
   components: {},
   data: function data() {
-    return {};
+    return {
+      errors: []
+    };
   },
   methods: {
     alert: function alert(icon, title, buttonTitle, method, url, data) {
       var _this = this;
       var __error_callback = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
       var _contentType = arguments.length > 7 && arguments[7] !== undefined ? arguments[7] : 'application/json';
+      var vm = this;
+      vm.errors = [];
       return Swal.fire({
         title: title,
         icon: icon,
@@ -3697,31 +3707,33 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         showLoaderOnConfirm: true,
         preConfirm: function preConfirm(deparment_name) {
           return WebRequest2(method, url, data, _contentType).then(function (response) {
-            try {
-              if (response.ok) return response.json();
-              //Initiator to stop from closing
-              Swal.showValidationMessage("ERROR");
-              return response.json().then(function (a) {
-                //console.log(a);
-                //throw new Error(a.message);
-                if (__error_callback) {
-                  __error_callback(a);
-                }
-                Swal.showValidationMessage("Request failed: ".concat(_this.extractValuesFromJson(a)));
-                return a;
-              })["catch"](function (error) {
-                console.log(error);
-                Swal.showValidationMessage("Request failed: ".concat(error));
-                if (__error_callback) {
-                  __error_callback(error);
-                }
-                return error;
-              });
-            } catch (err) {
-              respose.text().then(function (data) {
-                console.log(data);
-              });
-            }
+            if (response.ok) return response.json();
+            //Initiator to stop from closing
+            Swal.showValidationMessage("ERROR");
+            return response.json().then(function (a) {
+              //console.log(a);
+              //throw new Error(a.message);
+              if (__error_callback) {
+                __error_callback(a);
+              }
+              Swal.showValidationMessage("Request failed: ".concat(_this.extractValuesFromJson(a)));
+              var err = new Error("Validation Error");
+              err.errors = a;
+              vm.$emit('update:set_errors', a);
+              //throw err;
+              return err;
+            })["catch"](function (error) {
+              console.log(error);
+              Swal.showValidationMessage("Request failed: ".concat(error));
+              if (__error_callback) {
+                __error_callback(error);
+              }
+              var err = new Error(error);
+              err.errors = [];
+              throw err;
+              // removed by dead control flow
+{}
+            });
           });
         },
         allowOutsideClick: function allowOutsideClick() {
@@ -3865,6 +3877,37 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/common/Validation.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/common/Validation.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    errors: {
+      required: true,
+      "default": function _default() {
+        return [];
+      }
+    },
+    field: {
+      required: true,
+      "default": function _default() {
+        return '';
+      }
+    },
+    is_small: true
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/RepeatSetting.vue?vue&type=script&lang=js":
 /*!**********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/RepeatSetting.vue?vue&type=script&lang=js ***!
@@ -3879,9 +3922,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_UserInput2_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../common/UserInput2.vue */ "./resources/js/components/common/UserInput2.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["set_repeat_type", "set_repeat_info"],
-  emits: ["update:set_repeat_type", "update:set_repeat_info"],
+  props: ["set_repeat_type", "set_repeat_info", "set_repeat_days_after"],
+  emits: ["update:set_repeat_type", "update:set_repeat_info", "update:set_repeat_days_after"],
   watch: {
+    set_repeat_days_after: function set_repeat_days_after(newVal) {
+      if (newVal > 5) newVal = 5;
+      this.repeat_days_after = newVal >= 0 ? newVal : 0;
+    },
     set_repeat_type: function set_repeat_type(newVal) {
       this.repeat_type = newVal ? newVal : 'yearly';
     },
@@ -3981,8 +4028,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     value_changed: function value_changed() {
+      if (this.repeat_info.month_day > 25) {
+        this.repeat_info.month_day = 25;
+      } else if (this.repeat_info.month_day <= 0) {
+        this.repeat_info.month_day = 1;
+      }
       this.$emit('update:set_repeat_type', this.repeat_type);
       this.$emit('update:set_repeat_info', this.repeat_info);
+      this.$emit('update:set_repeat_days_after', this.repeat_days_after);
     },
     queryString: function queryString() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -4025,7 +4078,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       url: '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/list',
       filters: {
-        branch_id: this.branch_id
+        branch_id: this.branch_id,
+        scheduler_id: this.scheduler_id
       },
       isLoading: false,
       smsTriggerList: []
@@ -4053,6 +4107,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_Select2_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../common/Select2.vue */ "./resources/js/components/common/Select2.vue");
 /* harmony import */ var _common_UserInput2_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../common/UserInput2.vue */ "./resources/js/components/common/UserInput2.vue");
 /* harmony import */ var _RepeatSetting_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../RepeatSetting.vue */ "./resources/js/components/manage/notification/scheduler/triggers/RepeatSetting.vue");
+/* harmony import */ var _common_Validation_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../common/Validation.vue */ "./resources/js/components/common/Validation.vue");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
@@ -4061,21 +4116,24 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["group_id", "branch_id"],
+  props: ["group_id", "branch_id", "scheduler_id"],
   $emits: [],
   watch: {},
   components: {
     "input2": _common_UserInput2_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     "select2": _common_Select2_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     "switch2": _common_BoostrapSwitch2_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    "repeat-setting": _RepeatSetting_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    "repeat-setting": _RepeatSetting_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    "validation": _common_Validation_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     var _sms_notify_sched;
     return {
       promiseExec: null,
       to_type_list: [],
+      errors: [],
       selected_to_type: {
         id: 0,
         text: ''
@@ -4140,7 +4198,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         name: '',
         sms_client_api_request_link_id: 0,
         sys_notify_schedule_id: 0
-      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "name", ''), "send_message", 'Hi, \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle immediately. If you had already paid please ignore.'), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", false), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
+      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "name", ''), "send_message", 'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle immediately. If you had already paid please ignore.'), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", false), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
         month_name: 'Jan',
         month_day: 1,
         week_day: 'Mon',
@@ -4162,6 +4220,30 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     },
     save: function save() {
       console.log(this.sms_notify_sched);
+      var vm = this;
+      var request = JSON.parse(JSON.stringify(this.sms_notify_sched));
+
+      //SELECTED SENDER
+      request.sms_client_api_request_link_id = vm.selected_sms_sender.id ? vm.selected_sms_sender.id : null;
+
+      //GROUPED
+      request.branch_id = this.branch_id;
+      request.sys_notify_schedule_id = this.scheduler_id;
+
+      //REPEATH SETTINGS
+      request.month_name = request.repeat_info.month_name;
+      request.month_day = request.repeat_info.month_day;
+      request.week_day = request.repeat_info.week_day;
+      request.datetime = request.repeat_info.datetime;
+      request.time = request.repeat_info.time;
+      if (request.id == 0) {
+        vm.$refs.swal_prompt.alert('question', "Add Trigger Now?", "Confirm", "POST", "/api/group/" + this.group_id + "/sys-notification/schedulers/triggers/sms/add", JSON.stringify(request)).then(function (res) {
+          console.log(vm.errors);
+          if (res.isConfirmed && res.value.status == 1) {
+            vm.sms_notify_sched.id = res.value.data_id;
+          }
+        });
+      }
     },
     add: function add() {
       var vm = this;
@@ -5107,6 +5189,41 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/common/Validation.vue?vue&type=template&id=21d79202":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/common/Validation.vue?vue&type=template&id=21d79202 ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _vm.is_small ? _c("small", [_vm.errors[_vm.field] !== undefined ? _c("span", {
+    staticClass: "help-block text-red"
+  }, _vm._l(_vm.errors[_vm.field], function (value, key) {
+    return _c("span", {
+      key: "item-key" + key
+    }, [_vm._v(" " + _vm._s(value)), _c("br")]);
+  }), 0) : _vm._e()]) : _vm.errors[_vm.field] !== undefined ? _c("span", {
+    staticClass: "help-block text-red"
+  }, _vm._l(_vm.errors[_vm.field], function (value, key) {
+    return _c("span", {
+      key: "item-key" + key
+    }, [_vm._v(" " + _vm._s(value)), _c("br")]);
+  }), 0) : _vm._e();
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/RepeatSetting.vue?vue&type=template&id=2288515a":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/RepeatSetting.vue?vue&type=template&id=2288515a ***!
@@ -5175,7 +5292,7 @@ var render = function render() {
     staticClass: "mx-4"
   }, [_c("input2", {
     attrs: {
-      placeholder: "Repeat days after trigger",
+      placeholder: "Repeat days after trigger at the max of 5",
       input_style: "height:35px;",
       placeholder_description: "The number days this notificatin will repeat."
     },
@@ -5452,7 +5569,8 @@ var render = function render() {
     ref: "modal_sms_notif_sched",
     attrs: {
       branch_id: _vm.branch_id,
-      group_id: _vm.group_id
+      group_id: _vm.group_id,
+      scheduler_id: _vm.scheduler_id
     }
   })], 1);
 };
@@ -5505,6 +5623,11 @@ var render = function render() {
       },
       expression: "sms_notify_sched.name"
     }
+  }), _vm._v(" "), _c("validation", {
+    attrs: {
+      errors: _vm.errors,
+      field: "name"
+    }
   }), _vm._v(" "), _c("div", {
     staticClass: "mt-2"
   }, [_c("label", {
@@ -5523,6 +5646,9 @@ var render = function render() {
     staticClass: "mb-0"
   }, [_vm._v(" SMS SENDER ")]), _vm._v(" "), _c("select2", {
     attrs: {
+      query_filters: {
+        active_only: 1
+      },
       placeholder: " -- SMS SENDER -- ",
       url: "/manage/sms-sender/list",
       modal_selector: true
@@ -5534,7 +5660,12 @@ var render = function render() {
       },
       expression: "selected_sms_sender"
     }
-  })], 1), _vm._v(" "), _c("div", [_c("label", {
+  })], 1), _vm._v(" "), _c("validation", {
+    attrs: {
+      errors: _vm.errors,
+      field: "sms_client_api_request_link_id"
+    }
+  }), _vm._v(" "), _c("div", [_c("label", {
     staticClass: "mb-0 mt-2"
   }, [_vm._v("TO TYPE:")]), _vm._v(" "), _c("select", {
     directives: [{
@@ -5573,7 +5704,17 @@ var render = function render() {
     on: {
       selected: _vm.item_selected_changed
     }
-  })], 1) : _vm._e(), _vm._v(" "), _c("div", _vm._l(_vm.sms_notify_sched.selected_items, function (item, itemIndex) {
+  })], 1) : _vm._e(), _vm._v(" "), _c("validation", {
+    attrs: {
+      errors: _vm.errors,
+      field: "selected_items"
+    }
+  }), _vm._v(" "), _c("validation", {
+    attrs: {
+      errors: _vm.errors,
+      field: "mobile_nos"
+    }
+  }), _vm._v(" "), _c("div", _vm._l(_vm.sms_notify_sched.selected_items, function (item, itemIndex) {
     return _c("span", {
       key: "item-" + item.id + "-" + itemIndex,
       staticClass: "badge badge-pill badge-primary"
@@ -5616,7 +5757,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", [_c("small", [_c("label", {
     staticClass: "mb-0"
-  }, [_vm._v("DYNAMIC VARIABLES")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_due]")]), _vm._v(" - automatically set based on total due")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_paid]")]), _vm._v(" - automatically adjust based on total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_balance]")]), _vm._v(" - automatically set from total due deduced by total paid")])])])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("DYNAMIC VARIABLES")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[person_name]")]), _vm._v(" - the name of the recipient")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_due]")]), _vm._v(" - automatically set based on total due")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_paid]")]), _vm._v(" - automatically adjust based on total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_balance]")]), _vm._v(" - automatically set from total due deduced by total paid")])])])], 1), _vm._v(" "), _c("div", {
     staticClass: "col-sm-6"
   }, [_c("div", {
     staticClass: "card p-0"
@@ -5665,6 +5806,11 @@ var render = function render() {
       },
       expression: "sms_notify_sched.total_due"
     }
+  }), _vm._v(" "), _c("validation", {
+    attrs: {
+      errors: _vm.errors,
+      field: "total_due"
+    }
   }), _vm._v(" "), _c("input2", {
     attrs: {
       placeholder: "Total Paid:",
@@ -5690,7 +5836,8 @@ var render = function render() {
   }), _vm._v(" STOP WHEN FULLY PAID\n                                ")], 1)], 1) : _vm._e()])]), _vm._v(" "), _c("repeat-setting", {
     attrs: {
       set_repeat_info: _vm.sms_notify_sched.repeat_info,
-      set_repeat_type: _vm.sms_notify_sched.repeat_type
+      set_repeat_type: _vm.sms_notify_sched.repeat_type,
+      set_repeat_days_after: _vm.sms_notify_sched.repeat_days_after
     },
     on: {
       "update:set_repeat_info": function updateSet_repeat_info($event) {
@@ -5698,6 +5845,9 @@ var render = function render() {
       },
       "update:set_repeat_type": function updateSet_repeat_type($event) {
         _vm.sms_notify_sched.repeat_type = $event;
+      },
+      "update:set_repeat_days_after": function updateSet_repeat_days_after($event) {
+        _vm.sms_notify_sched.repeat_days_after = $event;
       }
     }
   })], 1)])]), _vm._v(" "), _c("template", {
@@ -5734,7 +5884,15 @@ var render = function render() {
   }, [_c("span", {
     staticClass: "fa fa-save"
   }), _vm._v("SAVE\n                ")])])])], 2), _vm._v(" "), _c("swal", {
-    ref: "swal_prompt"
+    ref: "swal_prompt",
+    attrs: {
+      set_errors: _vm.errors
+    },
+    on: {
+      "update:set_errors": function updateSet_errors($event) {
+        _vm.errors = $event;
+      }
+    }
   })], 1);
 };
 var staticRenderFns = [];
@@ -22887,6 +23045,79 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_UserInput2_vue_vue_type_template_id_a0cafc48__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_UserInput2_vue_vue_type_template_id_a0cafc48__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UserInput2.vue?vue&type=template&id=a0cafc48 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/common/UserInput2.vue?vue&type=template&id=a0cafc48");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/common/Validation.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/common/Validation.vue ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Validation_vue_vue_type_template_id_21d79202__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Validation.vue?vue&type=template&id=21d79202 */ "./resources/js/components/common/Validation.vue?vue&type=template&id=21d79202");
+/* harmony import */ var _Validation_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Validation.vue?vue&type=script&lang=js */ "./resources/js/components/common/Validation.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Validation_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Validation_vue_vue_type_template_id_21d79202__WEBPACK_IMPORTED_MODULE_0__.render,
+  _Validation_vue_vue_type_template_id_21d79202__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) // removed by dead control flow
+{ var api; }
+component.options.__file = "resources/js/components/common/Validation.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/common/Validation.vue?vue&type=script&lang=js":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/common/Validation.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Validation_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Validation.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/common/Validation.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Validation_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/common/Validation.vue?vue&type=template&id=21d79202":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/common/Validation.vue?vue&type=template&id=21d79202 ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Validation_vue_vue_type_template_id_21d79202__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Validation_vue_vue_type_template_id_21d79202__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Validation_vue_vue_type_template_id_21d79202__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Validation.vue?vue&type=template&id=21d79202 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/common/Validation.vue?vue&type=template&id=21d79202");
 
 
 /***/ }),
