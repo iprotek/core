@@ -25,6 +25,8 @@
                     this.selectedText = this.item.text;
                     this.selectedItem = this.item;
                 }
+                if(this.item && this.item.id ==0)
+                    this.loadElement();
                 //this.loadElement();
             },
         },
@@ -53,8 +55,8 @@
                     vm.setUp = true;
                     setTimeout(()=>{                    
                         vm.loadSelect();
-                    }, 100);
-                }, 50);
+                    }, 20);
+                }, 20);
 
             },
             loadSelect:function(){

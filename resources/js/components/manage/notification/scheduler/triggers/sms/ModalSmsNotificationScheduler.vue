@@ -143,7 +143,7 @@
                     mobile_nos:[],
                     total_due:0,
                     total_paid:0,
-                    is_active:false,
+                    is_active:true,
                     is_stop_when_fully_paid:true,
                     error_message:'',
                     repeat_days_after:0,
@@ -161,6 +161,12 @@
            }
         },
         methods:{ 
+            queryString:function(params={}){ 
+                var queryString = Object.keys(params).map(function(key) {
+                    return key + '=' + params[key]
+                }).join('&');
+                return queryString;
+            },
             removeNotifSched:function(item){
                 var vm = this;
                 vm.sms_notify_sched.selected_items = vm.sms_notify_sched.selected_items.filter(i=>{
@@ -202,6 +208,12 @@
             },
             reset:function(){
                 this.to_type_list = []; 
+                //if(this.selected_sms_sender.id < 0){
+                    this.selected_sms_sender = {
+                        id:0,
+                        text:''
+                    }
+                //}
                 this.sms_notify_sched = {
                     id:0,
                     name:'',
@@ -215,7 +227,7 @@
                     mobile_nos:[],
                     total_due:0,
                     total_paid:0,
-                    is_active:false,
+                    is_active:true,
                     is_stop_when_fully_paid:true,
                     error_message:'',
                     repeat_days_after:0,
@@ -235,9 +247,55 @@
                 var vm = this;
                 vm.reset();
                 vm.sms_notify_sched.id = id;
-                this.loadToTypeList().then(data=>{
-                    vm.$refs.modal.show();
-                });
+
+                if(id){
+                    WebRequest2('GET', '/api/group/'+this.group_id+'/sys-notification/schedulers/triggers/sms/get/'+id+'?'+this.queryString({
+                        branch_id: this.branch_id
+                    })).then(resp=>{
+                        resp.json().then(data=>{
+                            //console.log("Result:", data);
+
+                            if(data.sms_client_api_request_link){
+                                vm.selected_sms_sender = {
+                                    id:data.sms_client_api_request_link.id,
+                                    text:data.sms_client_api_request_link.name
+                                }
+                            }
+
+                            vm.sms_notify_sched = {
+                                id: data.id,
+                                name: data.name,
+                                sms_client_api_request_link_id: data.sms_client_api_request_link_id,
+                                sys_notify_schedule_id: data.sys_notify_schedule_id,
+                                name: data.name,
+                                notification_type: data.notification_type, //payment, announcement
+                                to_type: data.to_type, //customers,users
+                                selected_items: data.selected_items,
+                                send_message: data.send_message,
+                                mobile_nos: data.mobile_nos,
+                                total_due: data.total_due,
+                                total_paid: data.total_paid,
+                                is_active: data.is_active,
+                                is_stop_when_fully_paid: data.is_stop_when_fully_paid,
+                                error_message: data.error_message,
+                                repeat_days_after: data.repeat_days_after,
+                                repeat_type: data.repeat_type, //yearly, monthly, weekly, daily,
+                                repeat_info:data.repeat_info, //February, Tuesday, 31, 14:00:00
+                                others_settings: data.others_settings
+
+                            };
+                            
+                            vm.loadToTypeList().then(data=>{
+                                vm.$refs.modal.show();
+                            });
+                        });
+                    });
+                }
+                else{
+                    this.loadToTypeList().then(data=>{
+                        vm.$refs.modal.show();
+                    });
+                }
 
                 return new Promise((promiseExec)=>{
                     vm.promiseExec = promiseExec;
@@ -245,7 +303,8 @@
                 
             },
             save:function(){
-                console.log(this.sms_notify_sched);
+
+                //console.log(this.sms_notify_sched);
                 var vm = this;
 
                 var request = JSON.parse(JSON.stringify(this.sms_notify_sched));
@@ -273,7 +332,22 @@
                         "/api/group/"+this.group_id+"/sys-notification/schedulers/triggers/sms/add", 
                         JSON.stringify(request)
                     ).then(res=>{
-                        console.log(vm.errors);
+                        //console.log(vm.errors);
+                        if(res.isConfirmed && res.value.status == 1){
+                            vm.sms_notify_sched.id = res.value.data_id;
+                        }
+                    });
+                }
+                else {
+                    vm.$refs.swal_prompt.alert(
+                        'question',
+                        "Add Trigger Now?", 
+                        "Confirm" , 
+                        "PUT", 
+                        "/api/group/"+this.group_id+"/sys-notification/schedulers/triggers/sms/update", 
+                        JSON.stringify(request)
+                    ).then(res=>{
+                        //console.log(vm.errors);
                         if(res.isConfirmed && res.value.status == 1){
                             vm.sms_notify_sched.id = res.value.data_id;
                         }

@@ -3443,6 +3443,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         this.selectedText = this.item.text;
         this.selectedItem = this.item;
       }
+      if (this.item && this.item.id == 0) this.loadElement();
       //this.loadElement();
     }
   },
@@ -3471,8 +3472,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         vm.setUp = true;
         setTimeout(function () {
           vm.loadSelect();
-        }, 100);
-      }, 50);
+        }, 20);
+      }, 20);
     },
     loadSelect: function loadSelect() {
       var vm = this;
@@ -4147,7 +4148,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         name: '',
         sms_client_api_request_link_id: 0,
         sys_notify_schedule_id: 0
-      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_sms_notify_sched, "name", ''), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "send_message", ''), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", false), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_sms_notify_sched, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
+      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_sms_notify_sched, "name", ''), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "send_message", ''), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", true), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_sms_notify_sched, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
         month_name: 'Jan',
         month_day: 1,
         week_day: 'Mon',
@@ -4157,6 +4158,13 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     };
   },
   methods: {
+    queryString: function queryString() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var queryString = Object.keys(params).map(function (key) {
+        return key + '=' + params[key];
+      }).join('&');
+      return queryString;
+    },
     removeNotifSched: function removeNotifSched(item) {
       var vm = this;
       vm.sms_notify_sched.selected_items = vm.sms_notify_sched.selected_items.filter(function (i) {
@@ -4193,12 +4201,18 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     reset: function reset() {
       var _this$sms_notify_sche;
       this.to_type_list = [];
+      //if(this.selected_sms_sender.id < 0){
+      this.selected_sms_sender = {
+        id: 0,
+        text: ''
+      };
+      //}
       this.sms_notify_sched = (_this$sms_notify_sche = {
         id: 0,
         name: '',
         sms_client_api_request_link_id: 0,
         sys_notify_schedule_id: 0
-      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "name", ''), "send_message", 'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle immediately. If you had already paid please ignore.'), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", false), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
+      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "name", ''), "send_message", 'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle immediately. If you had already paid please ignore.'), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", true), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
         month_name: 'Jan',
         month_day: 1,
         week_day: 'Mon',
@@ -4211,15 +4225,42 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       var vm = this;
       vm.reset();
       vm.sms_notify_sched.id = id;
-      this.loadToTypeList().then(function (data) {
-        vm.$refs.modal.show();
-      });
+      if (id) {
+        WebRequest2('GET', '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/get/' + id + '?' + this.queryString({
+          branch_id: this.branch_id
+        })).then(function (resp) {
+          resp.json().then(function (data) {
+            var _vm$sms_notify_sched;
+            //console.log("Result:", data);
+
+            if (data.sms_client_api_request_link) {
+              vm.selected_sms_sender = {
+                id: data.sms_client_api_request_link.id,
+                text: data.sms_client_api_request_link.name
+              };
+            }
+            vm.sms_notify_sched = (_vm$sms_notify_sched = {
+              id: data.id,
+              name: data.name,
+              sms_client_api_request_link_id: data.sms_client_api_request_link_id,
+              sys_notify_schedule_id: data.sys_notify_schedule_id
+            }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_vm$sms_notify_sched, "name", data.name), "notification_type", data.notification_type), "to_type", data.to_type), "selected_items", data.selected_items), "send_message", data.send_message), "mobile_nos", data.mobile_nos), "total_due", data.total_due), "total_paid", data.total_paid), "is_active", data.is_active), "is_stop_when_fully_paid", data.is_stop_when_fully_paid), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_vm$sms_notify_sched, "error_message", data.error_message), "repeat_days_after", data.repeat_days_after), "repeat_type", data.repeat_type), "repeat_info", data.repeat_info), "others_settings", data.others_settings));
+            vm.loadToTypeList().then(function (data) {
+              vm.$refs.modal.show();
+            });
+          });
+        });
+      } else {
+        this.loadToTypeList().then(function (data) {
+          vm.$refs.modal.show();
+        });
+      }
       return new Promise(function (promiseExec) {
         vm.promiseExec = promiseExec;
       });
     },
     save: function save() {
-      console.log(this.sms_notify_sched);
+      //console.log(this.sms_notify_sched);
       var vm = this;
       var request = JSON.parse(JSON.stringify(this.sms_notify_sched));
 
@@ -4238,7 +4279,14 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       request.time = request.repeat_info.time;
       if (request.id == 0) {
         vm.$refs.swal_prompt.alert('question', "Add Trigger Now?", "Confirm", "POST", "/api/group/" + this.group_id + "/sys-notification/schedulers/triggers/sms/add", JSON.stringify(request)).then(function (res) {
-          console.log(vm.errors);
+          //console.log(vm.errors);
+          if (res.isConfirmed && res.value.status == 1) {
+            vm.sms_notify_sched.id = res.value.data_id;
+          }
+        });
+      } else {
+        vm.$refs.swal_prompt.alert('question', "Add Trigger Now?", "Confirm", "PUT", "/api/group/" + this.group_id + "/sys-notification/schedulers/triggers/sms/update", JSON.stringify(request)).then(function (res) {
+          //console.log(vm.errors);
           if (res.isConfirmed && res.value.status == 1) {
             vm.sms_notify_sched.id = res.value.data_id;
           }
@@ -5508,6 +5556,11 @@ var render = function render() {
   }, [_vm._v("Ref#")]), _vm._v(" "), _c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", {
     staticClass: "text-center",
     staticStyle: {
+      width: "80px"
+    }
+  }, [_vm._v("Type")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center",
+    staticStyle: {
       width: "100px"
     }
   }, [_vm._v("Is Active")]), _vm._v(" "), _c("th", {
@@ -5518,9 +5571,11 @@ var render = function render() {
   }, [_vm._v("Status")]), _vm._v(" "), _c("th", {
     staticClass: "text-center",
     staticStyle: {
-      width: "150px"
+      width: "80px"
     }
   }, [_vm._v("Triggers")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center"
+  }, [_vm._v("Repeat")]), _vm._v(" "), _c("th", {
     staticClass: "text-center"
   }, [_vm._v("Status Info")]), _vm._v(" "), _c("th", {
     staticClass: "text-center text-nowrap",
@@ -5530,12 +5585,12 @@ var render = function render() {
   }, [_vm._v("Target Count")]), _vm._v(" "), _c("th")])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
     staticClass: "text-center text-danger",
     attrs: {
-      colspan: "8"
+      colspan: "10"
     }
   }, [_vm._v(" -- LOADING TRIGGERS -- ")])]) : _vm.smsTriggerList.length == 0 ? _c("tr", [_c("td", {
     staticClass: "text-center text-danger",
     attrs: {
-      colspan: "8"
+      colspan: "10"
     }
   }, [_vm._v(" -- NO  SMS TRIGGER FOUND -- ")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.smsTriggerList, function (item, itemIndex) {
     return _c("tr", {
@@ -5551,17 +5606,52 @@ var render = function render() {
         textContent: _vm._s(item.name)
       }
     }), _vm._v(" "), _c("th", {
+      staticClass: "text-center p-1 text-nowrap"
+    }, [_vm._v("\n                                        " + _vm._s(item.notification_type) + " \n                                        "), item.notification_type == "payment" ? _c("button", {
+      staticClass: "btn btn-sm btn-outline-primary"
+    }, [_vm._v("\n                                            PAY\n                                        ")]) : _vm._e()]), _vm._v(" "), _c("th", {
       staticClass: "text-center p-1"
     }, [item.is_active ? _c("label", {
       staticClass: "text-primary pb-0"
     }, [_vm._v(" YES")]) : _c("label", {
       staticClass: "text-danger pb-0"
-    }, [_vm._v(" NO ")])]), _vm._v(" "), _c("td"), _vm._v(" "), _c("td", [_c("button", {
+    }, [_vm._v(" NO ")])]), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(item.status)
+      }
+    }), _vm._v(" "), _c("td", [_c("button", {
       staticClass: "btn btn-outline-primary btn-sm"
     }, [_c("span", {
       staticClass: "fa fa-list"
-    })])]), _vm._v(" "), _c("td"), _vm._v(" "), _c("td", [_c("label", [_vm._v(" No of targets ")])]), _vm._v(" "), _c("td", [_c("button", {
-      staticClass: "btn btn-outline-primary btn-sm"
+    })])]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_c("b", {
+      domProps: {
+        textContent: _vm._s(item.repeat_type)
+      }
+    }), _vm._v(" "), item.repeat_info ? _c("span", [item.repeat_type == "yearly" ? _c("span", [_vm._v(" in " + _vm._s(item.repeat_info.month_name) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "yearly" || item.repeat_type == "monthly" ? _c("span", [_vm._v(" on " + _vm._s(item.repeat_info.month_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "weekly" ? _c("span", [_vm._v(" every " + _vm._s(item.repeat_info.week_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "datetime" ? _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.datetime) + " ")]) : _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.time))])]) : _vm._e()]), _vm._v(" "), _c("td", {
+      staticClass: "text-nowrap"
+    }, [_c("small", {
+      domProps: {
+        textContent: _vm._s(item.error_message)
+      }
+    })]), _vm._v(" "), _c("td", {
+      staticClass: "text-nowrap"
+    }, [_c("label", {
+      domProps: {
+        textContent: _vm._s(item.selected_items.length)
+      }
+    })]), _vm._v(" "), _c("td", {
+      staticStyle: {
+        width: "80px"
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-outline-warning btn-sm",
+      on: {
+        click: function click($event) {
+          return _vm.$refs.modal_sms_notif_sched.show(item.id);
+        }
+      }
     }, [_c("span", {
       staticClass: "fa fa-edit"
     })])])]);

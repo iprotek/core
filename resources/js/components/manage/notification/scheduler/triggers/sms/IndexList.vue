@@ -29,9 +29,11 @@
                                     <tr>
                                         <th class="text-center" style="width:100px;">Ref#</th> 
                                         <th >Name</th> 
+                                        <th class="text-center" style="width:80px;">Type</th> 
                                         <th class="text-center" style="width:100px;">Is Active</th> 
                                         <th class="text-center" style="width:100px;">Status</th> 
-                                        <th class="text-center" style="width:150px;">Triggers</th> 
+                                        <th class="text-center" style="width:80px;">Triggers</th> 
+                                        <th class="text-center">Repeat</th> 
                                         <th class="text-center">Status Info</th> 
                                         <th class="text-center text-nowrap" style="width:100px;">Target Count</th> 
                                         <th></th>
@@ -39,30 +41,49 @@
                                 </thead>
                                 <tbody>
                                     <tr v-if="isLoading">
-                                        <td class="text-center text-danger" colspan="8"> -- LOADING TRIGGERS -- </td>
+                                        <td class="text-center text-danger" colspan="10"> -- LOADING TRIGGERS -- </td>
                                     </tr>
                                     <tr v-else-if="smsTriggerList.length == 0">
-                                        <td class="text-center text-danger" colspan="8"> -- NO  SMS TRIGGER FOUND -- </td>
+                                        <td class="text-center text-danger" colspan="10"> -- NO  SMS TRIGGER FOUND -- </td>
                                     </tr>
                                     <tr v-for="(item,itemIndex) in smsTriggerList" v-bind:key="'item-sched-'+item.id+'-'+itemIndex">
                                         <th class="text-center p-1" v-text="item.id"></th>
                                         <th class="text-center p-1" v-text="item.name"></th>
+                                        <th class="text-center p-1 text-nowrap" >
+                                            {{ item.notification_type }} 
+                                            <button v-if="item.notification_type == 'payment'" class="btn btn-sm btn-outline-primary">
+                                                PAY
+                                            </button>
+                                        </th>
                                         <th class="text-center p-1">
                                             <label v-if="item.is_active" class="text-primary pb-0"> YES</label>
                                             <label v-else class="text-danger pb-0"> NO </label>
                                         </th>
-                                        <td></td>
+                                        <td v-text="item.status"> </td>
                                         <td>
                                             <button class="btn btn-outline-primary btn-sm">
                                                 <span class="fa fa-list"></span>
                                             </button>
                                         </td>
-                                        <td></td>
-                                        <td>
-                                            <label> No of targets </label>
+                                        <td class="text-center">
+                                            <b  v-text="item.repeat_type"></b>
+                                            <span v-if="item.repeat_info">
+
+                                                <span v-if="item.repeat_type == 'yearly'"> in {{ item.repeat_info.month_name }} </span>
+                                                <span v-if="item.repeat_type == 'yearly' || item.repeat_type == 'monthly'"> on {{ item.repeat_info.month_day }} </span>
+                                                <span v-if="item.repeat_type == 'weekly'"> every {{ item.repeat_info.week_day }} </span>
+                                                <span v-if="item.repeat_type == 'datetime'"> at {{ item.repeat_info.datetime }} </span>
+                                                <span v-else> at {{ item.repeat_info.time }}</span>
+                                            </span>
                                         </td>
-                                        <td>
-                                            <button class="btn btn-outline-primary btn-sm">
+                                        <td class="text-nowrap">
+                                            <small  v-text="item.error_message"></small>
+                                        </td>
+                                        <td class="text-nowrap">
+                                            <label v-text="item.selected_items.length"></label>
+                                        </td>
+                                        <td style="width:80px;">
+                                            <button class="btn btn-outline-warning btn-sm" @click="$refs.modal_sms_notif_sched.show(item.id)">
                                                 <span class="fa fa-edit"></span>
                                             </button>
                                         </td>
