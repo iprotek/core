@@ -3708,7 +3708,10 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         showLoaderOnConfirm: true,
         preConfirm: function preConfirm(deparment_name) {
           return WebRequest2(method, url, data, _contentType).then(function (response) {
-            if (response.ok) return response.json();
+            if (response.ok) {
+              vm.$emit('update:set_errors', []);
+              return response.json();
+            }
             //Initiator to stop from closing
             Swal.showValidationMessage("ERROR");
             return response.json().then(function (a) {

@@ -38,8 +38,10 @@ export default {
                             preConfirm: (deparment_name) => {
                             return WebRequest2(method, url, data, _contentType)
                                 .then(response => {
-                                    if (response.ok) 
+                                    if (response.ok) {
+                                        vm.$emit('update:set_errors', []);
                                         return response.json();
+                                    }
                                     //Initiator to stop from closing
                                     Swal.showValidationMessage( `ERROR` );
                                     return response.json().then(a=>{
