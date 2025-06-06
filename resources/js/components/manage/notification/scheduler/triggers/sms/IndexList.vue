@@ -33,6 +33,7 @@
                                         <th class="text-center" style="width:100px;">Is Active</th> 
                                         <th class="text-center" style="width:100px;">Status</th> 
                                         <th class="text-center" style="width:80px;">Triggers</th> 
+                                        <th class="text-center">Schedule Time</th> 
                                         <th class="text-center">Repeat</th> 
                                         <th class="text-center">Status Info</th> 
                                         <th class="text-center text-nowrap" style="width:100px;">Target Count</th> 
@@ -41,10 +42,10 @@
                                 </thead>
                                 <tbody>
                                     <tr v-if="isLoading">
-                                        <td class="text-center text-danger" colspan="10"> -- LOADING TRIGGERS -- </td>
+                                        <td class="text-center text-danger" colspan="11"> -- LOADING TRIGGERS -- </td>
                                     </tr>
                                     <tr v-else-if="smsTriggerList.length == 0">
-                                        <td class="text-center text-danger" colspan="10"> -- NO  SMS TRIGGER FOUND -- </td>
+                                        <td class="text-center text-danger" colspan="11"> -- NO  SMS TRIGGER FOUND -- </td>
                                     </tr>
                                     <tr v-for="(item,itemIndex) in smsTriggerList" v-bind:key="'item-sched-'+item.id+'-'+itemIndex">
                                         <th class="text-center p-1" v-text="item.id"></th>
@@ -64,6 +65,12 @@
                                             <button class="btn btn-outline-primary btn-sm">
                                                 <span class="fa fa-list"></span>
                                             </button>
+                                        </td>
+                                        <td>
+                                            <small >
+                                                <b v-text="item.datetime_schedule"></b>
+                                                <code v-text="item.repeat_days_after"></code>
+                                            </small>
                                         </td>
                                         <td class="text-center">
                                             <b  v-text="item.repeat_type"></b>

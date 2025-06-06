@@ -13,9 +13,6 @@
                         <option value="datetime">NO REPEAT | ON DATETIME SCHED</option>
                     </select>
                 </div>
-                <div class="mx-4" v-if=" repeat_type != 'daily' && repeat_type != 'datetime' " >
-                    <input2 @value_changed="value_changed" v-model="repeat_days_after" :placeholder="'Repeat days after trigger at the max of 5'" :input_style="'height:35px;'" :placeholder_description="'The number days this notificatin will repeat.'" />
-                </div>
                 <table class="table w-100">
                     <tr v-if="repeat_type == 'yearly'">
                         <td class="text-right">
@@ -60,7 +57,9 @@
                         </td>
                     </tr>
                 </table>
-            
+                <div class="mx-4" v-if=" repeat_type != 'daily' " >
+                    <input2 @value_changed="value_changed" v-model="repeat_days_after" :placeholder="'Repeat days after trigger at the max of 5'" :input_style="'height:35px;'" :placeholder_description="'The number days this notificatin will repeat.'" />
+                </div>
             </div>
         </div>
     </div>

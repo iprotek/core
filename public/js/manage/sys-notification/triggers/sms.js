@@ -5339,25 +5339,7 @@ var render = function render() {
     attrs: {
       value: "datetime"
     }
-  }, [_vm._v("NO REPEAT | ON DATETIME SCHED")])])]), _vm._v(" "), _vm.repeat_type != "daily" && _vm.repeat_type != "datetime" ? _c("div", {
-    staticClass: "mx-4"
-  }, [_c("input2", {
-    attrs: {
-      placeholder: "Repeat days after trigger at the max of 5",
-      input_style: "height:35px;",
-      placeholder_description: "The number days this notificatin will repeat."
-    },
-    on: {
-      value_changed: _vm.value_changed
-    },
-    model: {
-      value: _vm.repeat_days_after,
-      callback: function callback($$v) {
-        _vm.repeat_days_after = $$v;
-      },
-      expression: "repeat_days_after"
-    }
-  })], 1) : _vm._e(), _vm._v(" "), _c("table", {
+  }, [_vm._v("NO REPEAT | ON DATETIME SCHED")])])]), _vm._v(" "), _c("table", {
     staticClass: "table w-100"
   }, [_vm.repeat_type == "yearly" ? _c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("select", {
     directives: [{
@@ -5481,7 +5463,25 @@ var render = function render() {
         _vm.$set(_vm.repeat_info, "time", $event.target.value);
       }
     }
-  })])]) : _vm._e()])])])]);
+  })])]) : _vm._e()]), _vm._v(" "), _vm.repeat_type != "daily" ? _c("div", {
+    staticClass: "mx-4"
+  }, [_c("input2", {
+    attrs: {
+      placeholder: "Repeat days after trigger at the max of 5",
+      input_style: "height:35px;",
+      placeholder_description: "The number days this notificatin will repeat."
+    },
+    on: {
+      value_changed: _vm.value_changed
+    },
+    model: {
+      value: _vm.repeat_days_after,
+      callback: function callback($$v) {
+        _vm.repeat_days_after = $$v;
+      },
+      expression: "repeat_days_after"
+    }
+  })], 1) : _vm._e()])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -5578,6 +5578,8 @@ var render = function render() {
     }
   }, [_vm._v("Triggers")]), _vm._v(" "), _c("th", {
     staticClass: "text-center"
+  }, [_vm._v("Schedule Time")]), _vm._v(" "), _c("th", {
+    staticClass: "text-center"
   }, [_vm._v("Repeat")]), _vm._v(" "), _c("th", {
     staticClass: "text-center"
   }, [_vm._v("Status Info")]), _vm._v(" "), _c("th", {
@@ -5588,12 +5590,12 @@ var render = function render() {
   }, [_vm._v("Target Count")]), _vm._v(" "), _c("th")])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
     staticClass: "text-center text-danger",
     attrs: {
-      colspan: "10"
+      colspan: "11"
     }
   }, [_vm._v(" -- LOADING TRIGGERS -- ")])]) : _vm.smsTriggerList.length == 0 ? _c("tr", [_c("td", {
     staticClass: "text-center text-danger",
     attrs: {
-      colspan: "10"
+      colspan: "11"
     }
   }, [_vm._v(" -- NO  SMS TRIGGER FOUND -- ")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.smsTriggerList, function (item, itemIndex) {
     return _c("tr", {
@@ -5626,6 +5628,14 @@ var render = function render() {
       staticClass: "btn btn-outline-primary btn-sm"
     }, [_c("span", {
       staticClass: "fa fa-list"
+    })])]), _vm._v(" "), _c("td", [_c("small", [_c("b", {
+      domProps: {
+        textContent: _vm._s(item.datetime_schedule)
+      }
+    }), _vm._v(" "), _c("code", {
+      domProps: {
+        textContent: _vm._s(item.repeat_days_after)
+      }
     })])]), _vm._v(" "), _c("td", {
       staticClass: "text-center"
     }, [_c("b", {
