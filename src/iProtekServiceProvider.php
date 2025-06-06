@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 use iProtek\Core\Console\Commands\FileImportBatchCommand;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Console\Scheduling\Schedule;
 
 class iProtekServiceProvider extends ServiceProvider
 {
@@ -107,5 +108,33 @@ class iProtekServiceProvider extends ServiceProvider
             return new Kernel($app, $app['router']);
         });
         */
+    }
+
+    public function booted($callback){
+        
+        $this->app->booted(function () {
+            //$schedule = $this->app->make(Schedule::class);
+             $schedule = app(Schedule::class);
+            // Schedule your command
+            //$schedule->command('mypackage:run-task')->dailyAt('13:00');
+
+            // Or inline task
+            // $schedule->call(function () {
+            //     Log::info('Running scheduled task from package...');
+            // })->everyFiveMinutes();
+            $schedule->command('file-import-batch:process')
+            ->everyMinute()
+            ->onOneServer()
+            ->runInBackground()
+            ->withoutOverlapping();
+
+            $schedule->command('file-import-batch-data:process')
+            ->cron("*/2 * * * *")
+            ->onOneServer()
+            ->runInBackground()
+            ->withoutOverlapping();
+
+
+        });
     }
 }

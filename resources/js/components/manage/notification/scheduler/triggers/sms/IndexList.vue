@@ -60,7 +60,9 @@
                                             <label v-if="item.is_active" class="text-primary pb-0"> YES</label>
                                             <label v-else class="text-danger pb-0"> NO </label>
                                         </th>
-                                        <td v-text="item.status"> </td>
+                                        <td class="text-center"> 
+                                            <small  v-text="item.status"></small>
+                                        </td>
                                         <td>
                                             <button class="btn btn-outline-primary btn-sm">
                                                 <span class="fa fa-list"></span>
@@ -68,25 +70,28 @@
                                         </td>
                                         <td>
                                             <small >
+                                                <code :title="'No of days the notification will repeat after trigger.'"> [ {{ item.repeat_days_after }} ]</code>
                                                 <b v-text="item.datetime_schedule"></b>
-                                                <code v-text="item.repeat_days_after"></code>
                                             </small>
                                         </td>
-                                        <td class="text-center">
-                                            <b  v-text="item.repeat_type"></b>
-                                            <span v-if="item.repeat_info">
+                                        <td class="text-left text-nowrap">
+                                            <small>
+                                                <b v-if="item.repeat_type != 'datetime'" v-text="item.repeat_type"></b>
+                                                <code v-else><b>ONCE</b></code> :
+                                                <span v-if="item.repeat_info">
 
-                                                <span v-if="item.repeat_type == 'yearly'"> in {{ item.repeat_info.month_name }} </span>
-                                                <span v-if="item.repeat_type == 'yearly' || item.repeat_type == 'monthly'"> on {{ item.repeat_info.month_day }} </span>
-                                                <span v-if="item.repeat_type == 'weekly'"> every {{ item.repeat_info.week_day }} </span>
-                                                <span v-if="item.repeat_type == 'datetime'"> at {{ item.repeat_info.datetime }} </span>
-                                                <span v-else> at {{ item.repeat_info.time }}</span>
-                                            </span>
+                                                    <span v-if="item.repeat_type == 'yearly'"> in {{ item.repeat_info.month_name }} </span>
+                                                    <span v-if="item.repeat_type == 'yearly' || item.repeat_type == 'monthly'"> on {{ item.repeat_info.month_day }} </span>
+                                                    <span v-if="item.repeat_type == 'weekly'"> every {{ item.repeat_info.week_day }} </span>
+                                                    <span v-if="item.repeat_type == 'datetime'"> at {{ item.repeat_info.datetime }} </span>
+                                                    <span v-else> at {{ item.repeat_info.time }}</span>
+                                                </span>
+                                            </small>
                                         </td>
                                         <td class="text-nowrap">
                                             <small  v-text="item.error_message"></small>
                                         </td>
-                                        <td class="text-nowrap">
+                                        <td class="text-center">
                                             <label v-text="item.selected_items.length"></label>
                                         </td>
                                         <td style="width:80px;">

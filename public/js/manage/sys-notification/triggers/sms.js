@@ -5621,35 +5621,37 @@ var render = function render() {
     }, [_vm._v(" YES")]) : _c("label", {
       staticClass: "text-danger pb-0"
     }, [_vm._v(" NO ")])]), _vm._v(" "), _c("td", {
+      staticClass: "text-center"
+    }, [_c("small", {
       domProps: {
         textContent: _vm._s(item.status)
       }
-    }), _vm._v(" "), _c("td", [_c("button", {
+    })]), _vm._v(" "), _c("td", [_c("button", {
       staticClass: "btn btn-outline-primary btn-sm"
     }, [_c("span", {
       staticClass: "fa fa-list"
-    })])]), _vm._v(" "), _c("td", [_c("small", [_c("b", {
+    })])]), _vm._v(" "), _c("td", [_c("small", [_c("code", {
+      attrs: {
+        title: "No of days the notification will repeat after trigger."
+      }
+    }, [_vm._v(" [ " + _vm._s(item.repeat_days_after) + " ]")]), _vm._v(" "), _c("b", {
       domProps: {
         textContent: _vm._s(item.datetime_schedule)
       }
-    }), _vm._v(" "), _c("code", {
-      domProps: {
-        textContent: _vm._s(item.repeat_days_after)
-      }
     })])]), _vm._v(" "), _c("td", {
-      staticClass: "text-center"
-    }, [_c("b", {
+      staticClass: "text-left text-nowrap"
+    }, [_c("small", [item.repeat_type != "datetime" ? _c("b", {
       domProps: {
         textContent: _vm._s(item.repeat_type)
       }
-    }), _vm._v(" "), item.repeat_info ? _c("span", [item.repeat_type == "yearly" ? _c("span", [_vm._v(" in " + _vm._s(item.repeat_info.month_name) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "yearly" || item.repeat_type == "monthly" ? _c("span", [_vm._v(" on " + _vm._s(item.repeat_info.month_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "weekly" ? _c("span", [_vm._v(" every " + _vm._s(item.repeat_info.week_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "datetime" ? _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.datetime) + " ")]) : _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.time))])]) : _vm._e()]), _vm._v(" "), _c("td", {
+    }) : _c("code", [_c("b", [_vm._v("ONCE")])]), _vm._v(" :\n                                            "), item.repeat_info ? _c("span", [item.repeat_type == "yearly" ? _c("span", [_vm._v(" in " + _vm._s(item.repeat_info.month_name) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "yearly" || item.repeat_type == "monthly" ? _c("span", [_vm._v(" on " + _vm._s(item.repeat_info.month_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "weekly" ? _c("span", [_vm._v(" every " + _vm._s(item.repeat_info.week_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "datetime" ? _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.datetime) + " ")]) : _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.time))])]) : _vm._e()])]), _vm._v(" "), _c("td", {
       staticClass: "text-nowrap"
     }, [_c("small", {
       domProps: {
         textContent: _vm._s(item.error_message)
       }
     })]), _vm._v(" "), _c("td", {
-      staticClass: "text-nowrap"
+      staticClass: "text-center"
     }, [_c("label", {
       domProps: {
         textContent: _vm._s(item.selected_items.length)
