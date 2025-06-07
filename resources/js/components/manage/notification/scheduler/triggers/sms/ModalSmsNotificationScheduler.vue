@@ -220,7 +220,7 @@
                     sms_client_api_request_link_id:0,
                     sys_notify_scheduler_id:0,
                     name:'',
-                    send_message:'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle immediately. If you had already paid please ignore.',
+                    send_message:'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle. If you had already paid please ignore.',
                     notification_type:'payment',
                     to_type:'', //customers,users
                     selected_items:[],
