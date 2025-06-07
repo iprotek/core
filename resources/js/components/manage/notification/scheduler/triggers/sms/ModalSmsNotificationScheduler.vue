@@ -134,7 +134,7 @@
                     id:0,
                     name:'',
                     sms_client_api_request_link_id:0,
-                    sys_notify_schedule_id:0,
+                    sys_notify_scheduler_id:0,
                     name:'',
                     notification_type:'payment', //payment, announcement
                     to_type:'', //customers,users
@@ -218,7 +218,7 @@
                     id:0,
                     name:'',
                     sms_client_api_request_link_id:0,
-                    sys_notify_schedule_id:0,
+                    sys_notify_scheduler_id:0,
                     name:'',
                     send_message:'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle immediately. If you had already paid please ignore.',
                     notification_type:'payment',
@@ -266,7 +266,7 @@
                                 id: data.id,
                                 name: data.name,
                                 sms_client_api_request_link_id: data.sms_client_api_request_link_id,
-                                sys_notify_schedule_id: data.sys_notify_schedule_id,
+                                sys_notify_scheduler_id: data.sys_notify_scheduler_id,
                                 name: data.name,
                                 notification_type: data.notification_type, //payment, announcement
                                 to_type: data.to_type, //customers,users
@@ -315,7 +315,7 @@
 
                 //GROUPED
                 request.branch_id = this.branch_id;
-                request.sys_notify_schedule_id = this.scheduler_id;
+                request.sys_notify_scheduler_id = this.scheduler_id;
                 
                 //REPEATH SETTINGS
                 request.month_name = request.repeat_info.month_name;

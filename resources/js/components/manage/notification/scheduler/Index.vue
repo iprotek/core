@@ -53,7 +53,7 @@
                                                 <a :href="'/manage/sys-notification/scheduler/triggers/'+item.type+'/'+item.id" class="btn btn-success btn-sm ml-1" >
                                                     <span class="fa fa-list"></span>
                                                 </a>
-                                                <small class="text-success">0-Actives</small> | <small class="text-danger">0-Inactives</small>
+                                                <small class="text-success">{{item.sms_schedule_active_count}}-Actives</small> | <small class="text-danger">{{item.sms_schedule_inactive_count}}-Inactives</small>
                                             </div>
                                             <div v-else>
                                                 <code> SETTING NOT YET AVAILABLE </code>

@@ -4735,9 +4735,9 @@ var render = function render() {
       staticClass: "fa fa-list"
     })]), _vm._v(" "), _c("small", {
       staticClass: "text-success"
-    }, [_vm._v("0-Actives")]), _vm._v(" | "), _c("small", {
+    }, [_vm._v(_vm._s(item.sms_schedule_active_count) + "-Actives")]), _vm._v(" | "), _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("0-Inactives")])]) : _c("div", [_c("code", [_vm._v(" SETTING NOT YET AVAILABLE ")])])]), _vm._v(" "), _c("th", {
+    }, [_vm._v(_vm._s(item.sms_schedule_inactive_count) + "-Inactives")])]) : _c("div", [_c("code", [_vm._v(" SETTING NOT YET AVAILABLE ")])])]), _vm._v(" "), _c("th", {
       staticClass: "p-1",
       staticStyle: {
         width: "120px"

@@ -4150,7 +4150,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         id: 0,
         name: '',
         sms_client_api_request_link_id: 0,
-        sys_notify_schedule_id: 0
+        sys_notify_scheduler_id: 0
       }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_sms_notify_sched, "name", ''), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "send_message", ''), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", true), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_sms_notify_sched, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
         month_name: 'Jan',
         month_day: 1,
@@ -4214,7 +4214,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         id: 0,
         name: '',
         sms_client_api_request_link_id: 0,
-        sys_notify_schedule_id: 0
+        sys_notify_scheduler_id: 0
       }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "name", ''), "send_message", 'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle immediately. If you had already paid please ignore.'), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", true), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
         month_name: 'Jan',
         month_day: 1,
@@ -4246,7 +4246,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
               id: data.id,
               name: data.name,
               sms_client_api_request_link_id: data.sms_client_api_request_link_id,
-              sys_notify_schedule_id: data.sys_notify_schedule_id
+              sys_notify_scheduler_id: data.sys_notify_scheduler_id
             }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_vm$sms_notify_sched, "name", data.name), "notification_type", data.notification_type), "to_type", data.to_type), "selected_items", data.selected_items), "send_message", data.send_message), "mobile_nos", data.mobile_nos), "total_due", data.total_due), "total_paid", data.total_paid), "is_active", data.is_active), "is_stop_when_fully_paid", data.is_stop_when_fully_paid), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_vm$sms_notify_sched, "error_message", data.error_message), "repeat_days_after", data.repeat_days_after), "repeat_type", data.repeat_type), "repeat_info", data.repeat_info), "others_settings", data.others_settings));
             vm.loadToTypeList().then(function (data) {
               vm.$refs.modal.show();
@@ -4272,7 +4272,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
       //GROUPED
       request.branch_id = this.branch_id;
-      request.sys_notify_schedule_id = this.scheduler_id;
+      request.sys_notify_scheduler_id = this.scheduler_id;
 
       //REPEATH SETTINGS
       request.month_name = request.repeat_info.month_name;
