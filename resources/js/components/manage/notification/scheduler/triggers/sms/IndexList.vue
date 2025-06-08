@@ -115,7 +115,7 @@
             </div>
         </div>
         <modal-sms-notif-sched ref="modal_sms_notif_sched" :branch_id="branch_id" :group_id="group_id" :scheduler_id="scheduler_id" />
-        <modal-pay-schedule-trigger ref="modal_pay_schedule_trigger" />
+        <modal-pay-schedule-trigger :branch_id="branch_id" :group_id="group_id" ref="modal_pay_schedule_trigger" />
     </div>
 </template>
 

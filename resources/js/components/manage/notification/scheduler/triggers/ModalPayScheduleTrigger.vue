@@ -1,23 +1,23 @@
 <template>
     <div>
-        <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :vw="80">
+        <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :vw="90">
             <template slot="header" >
-                PAY NOW
+                PAYMENT
             </template> 
             <template slot="body" >     
-                <div class="row">
-                    <div class="col-sm-6 pt-4">
-                        <paid-schedule-trigger />
-                        <button class="btn btn-outline-primary btn-sm" v-if="!is_show_sent" @click="is_show_sent = true">
+                <div class="row" v-if="pay_info.sys_notify_schedule_sms_triggers_id">
+                    <div class="col-sm-7 pt-4">
+                        <paid-schedule-trigger :branch_id="branch_id" :group_id="group_id" :sys_notify_schedule_sms_triggers_id="pay_info.sys_notify_schedule_sms_triggers_id" :type="pay_info.type" />
+                        <button class="btn btn-outline-primary btn-sm ml-2" v-if="!is_show_sent" @click="is_show_sent = true">
                             <span class="fa fa-sms"></span> SHOW NOTIFIED SMS
                         </button>
-                        <button class="btn btn-outline-danger btn-sm" v-else @click="is_show_sent = false">
+                        <button class="btn btn-outline-danger btn-sm ml-2" v-else @click="is_show_sent = false">
                             <span class="fa fa-sms"></span> HIDE NOTIFIED SMS
                         </button>
-                        <paid-sms-schedule-trigger v-if="is_show_sent" />
+                        <paid-sms-schedule-trigger :branch_id="branch_id" :group_id="group_id" :sys_notify_schedule_sms_triggers_id="pay_info.sys_notify_schedule_sms_triggers_id" v-if="is_show_sent" :type="pay_info.type" />
                     </div>
-                    <div class="col-sm-6">
-                        <div class="card p-0 mt-4 card-primary">
+                    <div class="col-sm-5 pt-4">
+                        <div class="card p-0 card-primary">
                             <div class="card-header">
                                 <label class="mb-0">PAY</label>
                             </div>
@@ -85,6 +85,8 @@
                 pay_info:{
                     sys_notify_schedule_sms_triggers_id:0,
                     //due_amount:0,
+                    note:'',
+                    type:'sms',
                     paid_amount: 0,
                     message_template:'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [ref_no].',
                     is_notify_sms:true
@@ -93,17 +95,31 @@
         },
         methods:{ 
             reset:function(){
-
+                this.pay_info = {
+                    sys_notify_schedule_sms_triggers_id:0,
+                    note:'',
+                    type:'sms',
+                    paid_amount:0,
+                    message_template:'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [ref_no].',
+                    is_notify_sms:true
+                }
+                //this.pay_info.sys_notify_schedule_sms_triggers_id = 0;
             },
             show:function(id){ 
                 var vm = this;
-                vm.pay_info.sys_notify_schedule_sms_triggers_id = id;
+                vm.reset();
 
-                this.$refs.modal.show();
+                setTimeout(()=>{
 
-                return new Promise((promiseExec)=>{
-                    vm.promiseExec = promiseExec;
-                });
+                    vm.pay_info.sys_notify_schedule_sms_triggers_id = id;
+
+                    vm.$refs.modal.show();
+
+                    return new Promise((promiseExec)=>{
+                        vm.promiseExec = promiseExec;
+                    });
+                    
+                }, 50);
                 
             },
             add:function(){

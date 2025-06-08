@@ -7,7 +7,42 @@
                        <label class="mb-0"> PAID HISTORY </label>
                     </div>
                     <div class="card-body">
-                        I'm an example component.
+
+                        <page-data-table 
+                            ref="page_data_table"
+                            v-if="url"
+                            :url="url"
+                            :is_loading="isLoading"
+                            :is_use_top_search="false"
+                            :items="paidScheduleTriggerList"
+                            :search_placeholder="'Search any keywords...'"
+                            :json_filter="filters"
+
+                            @update:items="paidScheduleTriggerList = $event"
+                            @update:is_loading="isLoading = $event"
+                            
+                        >
+                        <table class="table custom-red-table">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"> <small class="text-bold">Ref#</small> </th>
+                                    <th> <small class="text-bold">DATETIME</small> </th>
+                                    <th> <small class="text-bold">AMOUNT</small></th>
+                                    <th> <small class="text-bold">PAID</small></th>
+                                    <th> <small class="text-bold">BALANCE</small></th> 
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-if="isLoading">
+                                    <th class="text-center" colspan="6"> -- LOADING PAID HISTORY -- </th>
+                                </tr>
+                                <tr v-else-if="paidScheduleTriggerList.length == 0" >
+                                    <th class="text-center" colspan="6"> -- NO PAID HISTORY FOUND! -- </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </page-data-table>
                     </div>
                 </div>
             </div>
@@ -16,6 +51,8 @@
 </template>
 
 <script>
+    import PageDataTableVue from '../../../../common/PageDataTable.vue';
+
     export default {
         props:[ "group_id", "branch_id", "type", "sys_notify_schedule_sms_triggers_id" ],
         $emits:[],
@@ -25,9 +62,18 @@
             }
         },
         components: { 
+            "page-data-table":PageDataTableVue
         },
         data: function () {
             return {    
+                type:'sms',
+                url:'/api/group/'+this.group_id+'/sys-notification/schedulers/triggers/sms/get/'+this.sys_notify_schedule_sms_triggers_id+'/paid/list',
+                filters:{
+                    branch_id: this.branch_id,
+                    type : this.type
+                },
+                isLoading:false,
+                paidScheduleTriggerList:[],
             }
         },
         methods: { 

@@ -3954,6 +3954,8 @@ __webpack_require__.r(__webpack_exports__);
       pay_info: {
         sys_notify_schedule_sms_triggers_id: 0,
         //due_amount:0,
+        note: '',
+        type: 'sms',
         paid_amount: 0,
         message_template: 'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [ref_no].',
         is_notify_sms: true
@@ -3961,14 +3963,27 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    reset: function reset() {},
+    reset: function reset() {
+      this.pay_info = {
+        sys_notify_schedule_sms_triggers_id: 0,
+        note: '',
+        type: 'sms',
+        paid_amount: 0,
+        message_template: 'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [ref_no].',
+        is_notify_sms: true
+      };
+      //this.pay_info.sys_notify_schedule_sms_triggers_id = 0;
+    },
     show: function show(id) {
       var vm = this;
-      vm.pay_info.sys_notify_schedule_sms_triggers_id = id;
-      this.$refs.modal.show();
-      return new Promise(function (promiseExec) {
-        vm.promiseExec = promiseExec;
-      });
+      vm.reset();
+      setTimeout(function () {
+        vm.pay_info.sys_notify_schedule_sms_triggers_id = id;
+        vm.$refs.modal.show();
+        return new Promise(function (promiseExec) {
+          vm.promiseExec = promiseExec;
+        });
+      }, 50);
     },
     add: function add() {
       var vm = this;
@@ -4008,15 +4023,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _common_PageDataTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../common/PageDataTable.vue */ "./resources/js/components/common/PageDataTable.vue");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["group_id", "branch_id", "type", "sys_notify_schedule_sms_triggers_id"],
   $emits: [],
   watch: {
     sys_notify_schedule_sms_triggers_id: function sys_notify_schedule_sms_triggers_id(val) {}
   },
-  components: {},
+  components: {
+    "page-data-table": _common_PageDataTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
-    return {};
+    return {
+      type: 'sms',
+      url: '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/get/' + this.sys_notify_schedule_sms_triggers_id + '/paid/list',
+      filters: {
+        branch_id: this.branch_id,
+        type: this.type
+      },
+      isLoading: false,
+      paidScheduleTriggerList: []
+    };
   },
   methods: {
     queryString: function queryString() {
@@ -4230,7 +4258,7 @@ __webpack_require__.r(__webpack_exports__);
   $emits: [],
   watch: {
     target_id: function target_id(val) {
-      this.url = '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/trigger-list/' + val;
+      this.url = '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/get/' + val + '/trigger-list';
     },
     type: function type(val) {
       this.filters = {
@@ -4244,7 +4272,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      url: '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/trigger-list/' + this.target_id,
+      url: '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/get/' + this.target_id + '/trigger-list',
       filters: {
         branch_id: this.branch_id,
         type: this.type
@@ -5516,18 +5544,25 @@ var render = function render() {
     attrs: {
       prevent: true,
       body_class: "pt-0",
-      vw: 80
+      vw: 90
     }
   }, [_c("template", {
     slot: "header"
-  }, [_vm._v("\n            PAY NOW\n        ")]), _vm._v(" "), _c("template", {
+  }, [_vm._v("\n            PAYMENT\n        ")]), _vm._v(" "), _c("template", {
     slot: "body"
-  }, [_c("div", {
+  }, [_vm.pay_info.sys_notify_schedule_sms_triggers_id ? _c("div", {
     staticClass: "row"
   }, [_c("div", {
-    staticClass: "col-sm-6 pt-4"
-  }, [_c("paid-schedule-trigger"), _vm._v(" "), !_vm.is_show_sent ? _c("button", {
-    staticClass: "btn btn-outline-primary btn-sm",
+    staticClass: "col-sm-7 pt-4"
+  }, [_c("paid-schedule-trigger", {
+    attrs: {
+      branch_id: _vm.branch_id,
+      group_id: _vm.group_id,
+      sys_notify_schedule_sms_triggers_id: _vm.pay_info.sys_notify_schedule_sms_triggers_id,
+      type: _vm.pay_info.type
+    }
+  }), _vm._v(" "), !_vm.is_show_sent ? _c("button", {
+    staticClass: "btn btn-outline-primary btn-sm ml-2",
     on: {
       click: function click($event) {
         _vm.is_show_sent = true;
@@ -5536,7 +5571,7 @@ var render = function render() {
   }, [_c("span", {
     staticClass: "fa fa-sms"
   }), _vm._v(" SHOW NOTIFIED SMS\n                    ")]) : _c("button", {
-    staticClass: "btn btn-outline-danger btn-sm",
+    staticClass: "btn btn-outline-danger btn-sm ml-2",
     on: {
       click: function click($event) {
         _vm.is_show_sent = false;
@@ -5544,10 +5579,17 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "fa fa-sms"
-  }), _vm._v(" HIDE NOTIFIED SMS\n                    ")]), _vm._v(" "), _vm.is_show_sent ? _c("paid-sms-schedule-trigger") : _vm._e()], 1), _vm._v(" "), _c("div", {
-    staticClass: "col-sm-6"
+  }), _vm._v(" HIDE NOTIFIED SMS\n                    ")]), _vm._v(" "), _vm.is_show_sent ? _c("paid-sms-schedule-trigger", {
+    attrs: {
+      branch_id: _vm.branch_id,
+      group_id: _vm.group_id,
+      sys_notify_schedule_sms_triggers_id: _vm.pay_info.sys_notify_schedule_sms_triggers_id,
+      type: _vm.pay_info.type
+    }
+  }) : _vm._e()], 1), _vm._v(" "), _c("div", {
+    staticClass: "col-sm-5 pt-4"
   }, [_c("div", {
-    staticClass: "card p-0 mt-4 card-primary"
+    staticClass: "card p-0 card-primary"
   }, [_c("div", {
     staticClass: "card-header"
   }, [_c("label", {
@@ -5619,7 +5661,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("small", [_c("label", {
     staticClass: "mb-0"
-  }, [_vm._v("DYNAMIC VARIABLES")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[person_name]")]), _vm._v(" - the name of the recipient")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_due]")]), _vm._v(" - automatically set based on total due")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_paid]")]), _vm._v(" - automatically adjust based on total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_balance]")]), _vm._v(" - automatically set from total due deduced by total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[paid_amount]")]), _vm._v(" - the amount you currently paid.")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[ref_no]")]), _vm._v(" - is paid reference number.")])])]) : _vm._e()], 1)])])])]), _vm._v(" "), _c("template", {
+  }, [_vm._v("DYNAMIC VARIABLES")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[person_name]")]), _vm._v(" - the name of the recipient")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_due]")]), _vm._v(" - automatically set based on total due")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_paid]")]), _vm._v(" - automatically adjust based on total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_balance]")]), _vm._v(" - automatically set from total due deduced by total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[paid_amount]")]), _vm._v(" - the amount you currently paid.")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[ref_no]")]), _vm._v(" - is paid reference number.")])])]) : _vm._e()], 1)])])]) : _vm._e()]), _vm._v(" "), _c("template", {
     slot: "footer"
   }, [_c("div", [_c("button", {
     staticClass: "btn btn-outline-dark mr-4",
@@ -5657,11 +5699,6 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _vm._m(0);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
   return _c("div", {
     staticClass: "container"
   }, [_c("div", {
@@ -5670,13 +5707,60 @@ var staticRenderFns = [function () {
     staticClass: "col-md-12"
   }, [_c("div", {
     staticClass: "card"
-  }, [_c("div", {
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_vm.url ? _c("page-data-table", {
+    ref: "page_data_table",
+    attrs: {
+      url: _vm.url,
+      is_loading: _vm.isLoading,
+      is_use_top_search: false,
+      items: _vm.paidScheduleTriggerList,
+      search_placeholder: "Search any keywords...",
+      json_filter: _vm.filters
+    },
+    on: {
+      "update:items": function updateItems($event) {
+        _vm.paidScheduleTriggerList = $event;
+      },
+      "update:is_loading": function updateIs_loading($event) {
+        _vm.isLoading = $event;
+      }
+    }
+  }, [_c("table", {
+    staticClass: "table custom-red-table"
+  }, [_c("thead", [_c("tr", [_c("th", {
+    staticClass: "text-center"
+  }, [_c("small", {
+    staticClass: "text-bold"
+  }, [_vm._v("Ref#")])]), _vm._v(" "), _c("th", [_c("small", {
+    staticClass: "text-bold"
+  }, [_vm._v("DATETIME")])]), _vm._v(" "), _c("th", [_c("small", {
+    staticClass: "text-bold"
+  }, [_vm._v("AMOUNT")])]), _vm._v(" "), _c("th", [_c("small", {
+    staticClass: "text-bold"
+  }, [_vm._v("PAID")])]), _vm._v(" "), _c("th", [_c("small", {
+    staticClass: "text-bold"
+  }, [_vm._v("BALANCE")])]), _vm._v(" "), _c("th")])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("th", {
+    staticClass: "text-center",
+    attrs: {
+      colspan: "6"
+    }
+  }, [_vm._v(" -- LOADING PAID HISTORY -- ")])]) : _vm.paidScheduleTriggerList.length == 0 ? _c("tr", [_c("th", {
+    staticClass: "text-center",
+    attrs: {
+      colspan: "6"
+    }
+  }, [_vm._v(" -- NO PAID HISTORY FOUND! -- ")])]) : _vm._e()])])]) : _vm._e()], 1)])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
     staticClass: "card-header"
   }, [_c("label", {
     staticClass: "mb-0"
-  }, [_vm._v(" PAID HISTORY ")])]), _vm._v(" "), _c("div", {
-    staticClass: "card-body"
-  }, [_vm._v("\n                    I'm an example component.\n                ")])])])])]);
+  }, [_vm._v(" PAID HISTORY ")])]);
 }];
 render._withStripped = true;
 
@@ -6244,7 +6328,11 @@ var render = function render() {
       scheduler_id: _vm.scheduler_id
     }
   }), _vm._v(" "), _c("modal-pay-schedule-trigger", {
-    ref: "modal_pay_schedule_trigger"
+    ref: "modal_pay_schedule_trigger",
+    attrs: {
+      branch_id: _vm.branch_id,
+      group_id: _vm.group_id
+    }
   })], 1);
 };
 var staticRenderFns = [];

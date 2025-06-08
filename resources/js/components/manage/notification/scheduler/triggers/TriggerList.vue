@@ -64,7 +64,7 @@
         $emits:[],
         watch: { 
             target_id:function(val){
-                this.url = '/api/group/'+this.group_id+'/sys-notification/schedulers/triggers/sms/trigger-list/'+val;
+                this.url = '/api/group/'+this.group_id+'/sys-notification/schedulers/triggers/sms/get/'+val+'/trigger-list';
             },
             type:function(val){
                 this.filters = {
@@ -78,7 +78,7 @@
         },
         data: function () {
             return { 
-                url:'/api/group/'+this.group_id+'/sys-notification/schedulers/triggers/sms/trigger-list/'+this.target_id,
+                url:'/api/group/'+this.group_id+'/sys-notification/schedulers/triggers/sms/get/'+this.target_id+'/trigger-list',
                 filters:{
                     branch_id: this.branch_id,
                     type : this.type
