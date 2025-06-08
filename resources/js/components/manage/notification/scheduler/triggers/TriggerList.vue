@@ -23,7 +23,7 @@
                         <table class="custom-red-table">
                             <thead>
                                 <tr>
-                                    <th>REF#</th>
+                                    <th style="width:80px;" class="text-center">REF#</th>
                                     <th>MOBILE#</th>
                                     <th>MESSAGE</th>
                                     <th>STATUS</th>
@@ -36,6 +36,13 @@
                                 </tr>
                                 <tr v-else-if="smsTriggerList.length == 0">
                                     <td colspan="5" class="text-center"> -- NO TRIGGER/S Found! -- </td>
+                                </tr>
+                                <tr v-for="(trigItem,trigIndex) in smsTriggerList" v-bind:key="'trig-'+trigItem.id+'-'+trigIndex">
+                                    <td class="text-center" v-text="trigItem.id"></td>
+                                    <td v-text="trigItem.to_number"></td>
+                                    <td v-text="trigItem.message"></td>
+                                    <td v-text="trigItem.status_info"></td>
+                                    <td v-text="trigItem.created_at"></td>
                                 </tr>
                             </tbody>
                         </table>

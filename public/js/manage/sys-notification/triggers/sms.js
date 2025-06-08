@@ -5606,7 +5606,12 @@ var render = function render() {
     }
   }, [_c("table", {
     staticClass: "custom-red-table"
-  }, [_c("thead", [_c("tr", [_c("th", [_vm._v("REF#")]), _vm._v(" "), _c("th", [_vm._v("MOBILE#")]), _vm._v(" "), _c("th", [_vm._v("MESSAGE")]), _vm._v(" "), _c("th", [_vm._v("STATUS")]), _vm._v(" "), _c("th", [_vm._v("SUBMITTED AT")])])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
+  }, [_c("thead", [_c("tr", [_c("th", {
+    staticClass: "text-center",
+    staticStyle: {
+      width: "80px"
+    }
+  }, [_vm._v("REF#")]), _vm._v(" "), _c("th", [_vm._v("MOBILE#")]), _vm._v(" "), _c("th", [_vm._v("MESSAGE")]), _vm._v(" "), _c("th", [_vm._v("STATUS")]), _vm._v(" "), _c("th", [_vm._v("SUBMITTED AT")])])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
     staticClass: "text-center",
     attrs: {
       colspan: "5"
@@ -5616,7 +5621,32 @@ var render = function render() {
     attrs: {
       colspan: "5"
     }
-  }, [_vm._v(" -- NO TRIGGER/S Found! -- ")])]) : _vm._e()])])]) : _vm._e()], 1)])])])]);
+  }, [_vm._v(" -- NO TRIGGER/S Found! -- ")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.smsTriggerList, function (trigItem, trigIndex) {
+    return _c("tr", {
+      key: "trig-" + trigItem.id + "-" + trigIndex
+    }, [_c("td", {
+      staticClass: "text-center",
+      domProps: {
+        textContent: _vm._s(trigItem.id)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(trigItem.to_number)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(trigItem.message)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(trigItem.status_info)
+      }
+    }), _vm._v(" "), _c("td", {
+      domProps: {
+        textContent: _vm._s(trigItem.created_at)
+      }
+    })]);
+  })], 2)])]) : _vm._e()], 1)])])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -5803,13 +5833,13 @@ var render = function render() {
       staticClass: "fa fa-edit"
     })])])]);
   })], 2)])]) : _vm._e()], 1) : _c("div", [_c("button", {
-    staticClass: "btn btn-outline-primary btn-sm",
+    staticClass: "btn btn-outline-primary btn-sm my-2",
     on: {
       click: function click($event) {
         _vm.target_id = 0;
       }
     }
-  }, [_vm._v("VIEW SCHEDULE")]), _vm._v(" "), _c("trigger-list", {
+  }, [_vm._v("VIEW SCHEDULE TRIGGER")]), _vm._v(" "), _c("trigger-list", {
     attrs: {
       group_id: _vm.group_id,
       branch_id: _vm.branch_id,

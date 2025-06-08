@@ -107,7 +107,7 @@
                             </page-data-table>
                         </div>
                         <div v-else>
-                            <button class="btn btn-outline-primary btn-sm" @click="target_id = 0">VIEW SCHEDULE</button>
+                            <button class="btn btn-outline-primary btn-sm my-2" @click="target_id = 0">VIEW SCHEDULE TRIGGER</button>
                             <trigger-list :group_id="group_id" :branch_id="branch_id" :target_id="target_id" :type="type"/>
                         </div>
                     </div>
