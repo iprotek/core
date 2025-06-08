@@ -3390,6 +3390,7 @@ __webpack_require__.r(__webpack_exports__);
     if (vm.is_use_top_search) {
       var search_input_el = document.querySelector('#search-text-input');
       if (search_input_el) {
+        if (vm.search_placeholder) search_input_el.placeholder = vm.search_placeholder;
         search_input_el.onkeyup = function (evt) {
           //console.log(evt);
           if (evt.keyCode == 13) {
@@ -4057,6 +4058,62 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _common_PageDataTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../common/PageDataTable.vue */ "./resources/js/components/common/PageDataTable.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ["group_id", "branch_id", "type", "target_id"],
+  $emits: [],
+  watch: {
+    target_id: function target_id(val) {
+      this.url = '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/trigger-list/' + val;
+    },
+    type: function type(val) {
+      this.filters = {
+        branch_id: this.branch_id,
+        type: val
+      };
+    }
+  },
+  components: {
+    "page-data-table": _common_PageDataTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      url: '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/trigger-list/' + this.target_id,
+      filters: {
+        branch_id: this.branch_id,
+        type: this.type
+      },
+      isLoading: false,
+      smsTriggerList: []
+    };
+  },
+  methods: {
+    queryString: function queryString() {
+      var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      var queryString = Object.keys(params).map(function (key) {
+        return key + '=' + params[key];
+      }).join('&');
+      return queryString;
+    }
+  },
+  mounted: function mounted() {},
+  updated: function updated() {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/sms/IndexList.vue?vue&type=script&lang=js":
 /*!**********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/sms/IndexList.vue?vue&type=script&lang=js ***!
@@ -4070,6 +4127,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _common_PageDataTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../common/PageDataTable.vue */ "./resources/js/components/common/PageDataTable.vue");
 /* harmony import */ var _ModalSmsNotificationScheduler_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModalSmsNotificationScheduler.vue */ "./resources/js/components/manage/notification/scheduler/triggers/sms/ModalSmsNotificationScheduler.vue");
+/* harmony import */ var _TriggerList_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../TriggerList.vue */ "./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -4078,10 +4137,13 @@ __webpack_require__.r(__webpack_exports__);
   watch: {},
   components: {
     "page-data-table": _common_PageDataTable_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    "modal-sms-notif-sched": _ModalSmsNotificationScheduler_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    "modal-sms-notif-sched": _ModalSmsNotificationScheduler_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    "trigger-list": _TriggerList_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
+      target_id: 0,
+      type: 'sms',
       url: '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/list',
       filters: {
         branch_id: this.branch_id,
@@ -5471,7 +5533,7 @@ var render = function render() {
     attrs: {
       placeholder: "Repeat days after trigger at the max of 5",
       input_style: "height:35px;",
-      placeholder_description: "The number days this notificatin will repeat."
+      placeholder_description: "The number days this notificatin will repeat consecutive."
     },
     on: {
       value_changed: _vm.value_changed
@@ -5494,6 +5556,69 @@ var staticRenderFns = [function () {
     staticClass: "mb-0"
   }, [_vm._v("MONTH:")])]);
 }];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=template&id=2113fb4a":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=template&id=2113fb4a ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("div", {
+    staticClass: "row justify-content-center"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "card-header"
+  }, [_vm._v("SMS TRIGGER LIST")]), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_vm.url ? _c("page-data-table", {
+    ref: "page_data_table",
+    attrs: {
+      url: _vm.url,
+      is_loading: _vm.isLoading,
+      is_use_top_search: false,
+      items: _vm.smsTriggerList,
+      search_placeholder: "Search ",
+      json_filter: _vm.filters
+    },
+    on: {
+      "update:items": function updateItems($event) {
+        _vm.smsTriggerList = $event;
+      },
+      "update:is_loading": function updateIs_loading($event) {
+        _vm.isLoading = $event;
+      }
+    }
+  }, [_c("table", {
+    staticClass: "custom-red-table"
+  }, [_c("thead", [_c("tr", [_c("th", [_vm._v("REF#")]), _vm._v(" "), _c("th", [_vm._v("MOBILE#")]), _vm._v(" "), _c("th", [_vm._v("MESSAGE")]), _vm._v(" "), _c("th", [_vm._v("STATUS")]), _vm._v(" "), _c("th", [_vm._v("SUBMITTED AT")])])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
+    staticClass: "text-center",
+    attrs: {
+      colspan: "5"
+    }
+  }, [_vm._v(" -- LOADING TRIGGERS -- ")])]) : _vm.smsTriggerList.length == 0 ? _c("tr", [_c("td", {
+    staticClass: "text-center",
+    attrs: {
+      colspan: "5"
+    }
+  }, [_vm._v(" -- NO TRIGGER/S Found! -- ")])]) : _vm._e()])])]) : _vm._e()], 1)])])])]);
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -5524,7 +5649,7 @@ var render = function render() {
     staticClass: "card-header"
   }, [_vm._v("\n                    SMS SCHEDULE TRIGGER LIST\n                ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
-  }, [_c("button", {
+  }, [_vm.target_id == 0 ? _c("div", [_c("button", {
     staticClass: "btn btn-outline-primary btn-lg mb-2",
     on: {
       click: function click($event) {
@@ -5533,7 +5658,7 @@ var render = function render() {
     }
   }, [_c("span", {
     staticClass: "fa fa-plus"
-  }), _vm._v(" ADD SCHEDULE\n                    ")]), _vm._v(" "), _vm.url ? _c("page-data-table", {
+  }), _vm._v(" ADD SCHEDULE\n                        ")]), _vm._v(" "), _vm.url ? _c("page-data-table", {
     ref: "page_data_table",
     attrs: {
       url: _vm.url,
@@ -5614,9 +5739,9 @@ var render = function render() {
       }
     }), _vm._v(" "), _c("th", {
       staticClass: "text-center p-1 text-nowrap"
-    }, [_vm._v("\n                                        " + _vm._s(item.notification_type) + " \n                                        "), item.notification_type == "payment" ? _c("button", {
+    }, [_vm._v("\n                                            " + _vm._s(item.notification_type) + " \n                                            "), item.notification_type == "payment" ? _c("button", {
       staticClass: "btn btn-sm btn-outline-primary"
-    }, [_vm._v("\n                                            PAY\n                                        ")]) : _vm._e()]), _vm._v(" "), _c("th", {
+    }, [_vm._v("\n                                                PAY\n                                            ")]) : _vm._e()]), _vm._v(" "), _c("th", {
       staticClass: "text-center p-1"
     }, [item.is_active ? _c("label", {
       staticClass: "text-primary pb-0"
@@ -5629,10 +5754,15 @@ var render = function render() {
         textContent: _vm._s(item.status)
       }
     })]), _vm._v(" "), _c("td", [_c("button", {
-      staticClass: "btn btn-outline-primary btn-sm"
+      staticClass: "btn btn-outline-primary btn-sm",
+      on: {
+        click: function click($event) {
+          _vm.target_id = item.id;
+        }
+      }
     }, [_c("span", {
       staticClass: "fa fa-list"
-    })])]), _vm._v(" "), _c("td", [_c("small", [_c("code", {
+    })]), _vm._v(" " + _vm._s(item.sms_trigger_count) + "\n                                        ")]), _vm._v(" "), _c("td", [_c("small", [_c("code", {
       attrs: {
         title: "No of days the notification will repeat after trigger."
       }
@@ -5646,7 +5776,7 @@ var render = function render() {
       domProps: {
         textContent: _vm._s(item.repeat_type)
       }
-    }) : _c("code", [_c("b", [_vm._v("ONCE")])]), _vm._v(" :\n                                            "), item.repeat_info ? _c("span", [item.repeat_type == "yearly" ? _c("span", [_vm._v(" in " + _vm._s(item.repeat_info.month_name) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "yearly" || item.repeat_type == "monthly" ? _c("span", [_vm._v(" on " + _vm._s(item.repeat_info.month_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "weekly" ? _c("span", [_vm._v(" every " + _vm._s(item.repeat_info.week_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "datetime" ? _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.datetime) + " ")]) : _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.time))])]) : _vm._e()])]), _vm._v(" "), _c("td", {
+    }) : _c("code", [_c("b", [_vm._v("ONCE")])]), _vm._v(" :\n                                                "), item.repeat_info ? _c("span", [item.repeat_type == "yearly" ? _c("span", [_vm._v(" in " + _vm._s(item.repeat_info.month_name) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "yearly" || item.repeat_type == "monthly" ? _c("span", [_vm._v(" on " + _vm._s(item.repeat_info.month_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "weekly" ? _c("span", [_vm._v(" every " + _vm._s(item.repeat_info.week_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "datetime" ? _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.datetime) + " ")]) : _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.time))])]) : _vm._e()])]), _vm._v(" "), _c("td", {
       staticClass: "text-nowrap"
     }, [_c("small", {
       domProps: {
@@ -5672,7 +5802,21 @@ var render = function render() {
     }, [_c("span", {
       staticClass: "fa fa-edit"
     })])])]);
-  })], 2)])]) : _vm._e()], 1)])])]), _vm._v(" "), _c("modal-sms-notif-sched", {
+  })], 2)])]) : _vm._e()], 1) : _c("div", [_c("button", {
+    staticClass: "btn btn-outline-primary btn-sm",
+    on: {
+      click: function click($event) {
+        _vm.target_id = 0;
+      }
+    }
+  }, [_vm._v("VIEW SCHEDULE")]), _vm._v(" "), _c("trigger-list", {
+    attrs: {
+      group_id: _vm.group_id,
+      branch_id: _vm.branch_id,
+      target_id: _vm.target_id,
+      type: _vm.type
+    }
+  })], 1)])])])]), _vm._v(" "), _c("modal-sms-notif-sched", {
     ref: "modal_sms_notif_sched",
     attrs: {
       branch_id: _vm.branch_id,
@@ -23298,6 +23442,79 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RepeatSetting_vue_vue_type_template_id_2288515a__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RepeatSetting_vue_vue_type_template_id_2288515a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./RepeatSetting.vue?vue&type=template&id=2288515a */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/RepeatSetting.vue?vue&type=template&id=2288515a");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _TriggerList_vue_vue_type_template_id_2113fb4a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TriggerList.vue?vue&type=template&id=2113fb4a */ "./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=template&id=2113fb4a");
+/* harmony import */ var _TriggerList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TriggerList.vue?vue&type=script&lang=js */ "./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=script&lang=js");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TriggerList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TriggerList_vue_vue_type_template_id_2113fb4a__WEBPACK_IMPORTED_MODULE_0__.render,
+  _TriggerList_vue_vue_type_template_id_2113fb4a__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) // removed by dead control flow
+{ var api; }
+component.options.__file = "resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TriggerList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TriggerList.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=script&lang=js");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TriggerList_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=template&id=2113fb4a":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=template&id=2113fb4a ***!
+  \**********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TriggerList_vue_vue_type_template_id_2113fb4a__WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TriggerList_vue_vue_type_template_id_2113fb4a__WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_lib_index_js_vue_loader_options_TriggerList_vue_vue_type_template_id_2113fb4a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./TriggerList.vue?vue&type=template&id=2113fb4a */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/lib/loaders/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/manage/notification/scheduler/triggers/TriggerList.vue?vue&type=template&id=2113fb4a");
 
 
 /***/ }),

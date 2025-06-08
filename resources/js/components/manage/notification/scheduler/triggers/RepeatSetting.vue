@@ -58,7 +58,7 @@
                     </tr>
                 </table>
                 <div class="mx-4" v-if=" repeat_type != 'daily' " >
-                    <input2 @value_changed="value_changed" v-model="repeat_days_after" :placeholder="'Repeat days after trigger at the max of 5'" :input_style="'height:35px;'" :placeholder_description="'The number days this notificatin will repeat.'" />
+                    <input2 @value_changed="value_changed" v-model="repeat_days_after" :placeholder="'Repeat days after trigger at the max of 5'" :input_style="'height:35px;'" :placeholder_description="'The number days this notificatin will repeat consecutive.'" />
                 </div>
             </div>
         </div>

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use iProtek\Core\Helpers\PayHttp;
 use iProtek\Core\Helpers\PayModelHelper;
+use Illuminate\Support\Facades\Schema;
 
 class _CommonController extends BaseController
 {
@@ -22,7 +23,13 @@ class _CommonController extends BaseController
         $data = PayModelHelper::get($model, $request);
 
         if($is_by_branch){
-            $data->where('branch_id', $request->branch_id);
+            if(is_string($model)){
+                $model = new $model;
+            }
+            
+            if(Schema::hasColumn( $model->getTable(), 'branch_id' )){
+                $data->where('branch_id', $request->branch_id);
+            }
         }
 
         

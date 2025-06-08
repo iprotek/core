@@ -101,6 +101,8 @@
             if(vm.is_use_top_search){
                 var search_input_el = document.querySelector('#search-text-input');
                 if(search_input_el){
+                    if(vm.search_placeholder)
+                        search_input_el.placeholder = vm.search_placeholder;
                     search_input_el.onkeyup = function(evt){
                         //console.log(evt);
                         if(evt.keyCode == 13){
