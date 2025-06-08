@@ -3930,6 +3930,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_BoostrapSwitch2_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../common/BoostrapSwitch2.vue */ "./resources/js/components/common/BoostrapSwitch2.vue");
 /* harmony import */ var _PaidScheduleTriggerList_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PaidScheduleTriggerList.vue */ "./resources/js/components/manage/notification/scheduler/triggers/PaidScheduleTriggerList.vue");
 /* harmony import */ var _PaidSmsScheduleTriggerList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PaidSmsScheduleTriggerList.vue */ "./resources/js/components/manage/notification/scheduler/triggers/PaidSmsScheduleTriggerList.vue");
+/* harmony import */ var _common_Validation_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../common/Validation.vue */ "./resources/js/components/common/Validation.vue");
+
 
 
 
@@ -3942,10 +3944,12 @@ __webpack_require__.r(__webpack_exports__);
     "input2": _common_UserInput2_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     "switch2": _common_BoostrapSwitch2_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     "paid-schedule-trigger": _PaidScheduleTriggerList_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    "paid-sms-schedule-trigger": _PaidSmsScheduleTriggerList_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    "paid-sms-schedule-trigger": _PaidSmsScheduleTriggerList_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    "validation": _common_Validation_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
+      errors: [],
       promiseExec: null,
       total_due: 0,
       total_paid: 0,
@@ -3976,31 +3980,37 @@ __webpack_require__.r(__webpack_exports__);
     },
     show: function show(id) {
       var vm = this;
-      vm.reset();
-      setTimeout(function () {
-        vm.pay_info.sys_notify_schedule_sms_triggers_id = id;
+      vm.loadScheduleTrigger(id).then(function (data) {
         vm.$refs.modal.show();
-        return new Promise(function (promiseExec) {
-          vm.promiseExec = promiseExec;
-        });
-      }, 50);
+      });
+      return new Promise(function (promiseExec) {
+        vm.promiseExec = promiseExec;
+      });
     },
-    add: function add() {
+    loadScheduleTrigger: function loadScheduleTrigger(id) {
       var vm = this;
-      /*
-          this.$refs.swal_prompt.alert(
-              'question',
-              "Add Event", 
-              "Confirm" , 
-              "POST", 
-              "/manage/dashboard/resort-events/add", 
-              JSON.stringify(request)
-          ).then(res=>{
-              if(res.isConfirmed){
-                  vm.$emit('data_updated');
-              }
-          });
-      */
+      vm.reset();
+      return WebRequest2('GET', '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/get/' + id + '?branch_id=' + this.branch_id).then(function (resp) {
+        resp.json().then(function (data) {
+          vm.pay_info.sys_notify_schedule_sms_triggers_id = data.id;
+          vm.total_due = data.total_due;
+          vm.total_paid = data.total_paid;
+          vm.total_balance = (data.total_due - data.total_paid).toFixed(3);
+        });
+      });
+    },
+    pay_now: function pay_now() {
+      var vm = this;
+      var request = JSON.parse(JSON.stringify(vm.pay_info));
+      request.branch_id = this.branch_id;
+      //console.log(request);
+      this.$refs.swal_prompt.alert('question', "PAY NOW?", "Confirm", "POST", '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/get/' + this.pay_info.sys_notify_schedule_sms_triggers_id + '/paid/add-pay', JSON.stringify(request)).then(function (res) {
+        //console.log(vm.errors);
+        if (res.isConfirmed && res.value.status == 1) {
+          vm.$emit('data_updated');
+          vm.loadScheduleTrigger(vm.pay_info.sys_notify_schedule_sms_triggers_id);
+        }
+      });
       return new Promise(function (promiseExec) {
         vm.promiseExec = promiseExec;
       });
@@ -5629,8 +5639,43 @@ var render = function render() {
       },
       expression: "pay_info.paid_amount"
     }
-  }), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-outline-primary my-2"
+  }), _vm._v(" "), _c("validation", {
+    attrs: {
+      errors: _vm.errors,
+      field: "paid_amount",
+      is_small: true
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "my-2"
+  }, [_c("label", {
+    staticClass: "mb-0"
+  }, [_vm._v("Note:")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.pay_info.note,
+      expression: "pay_info.note"
+    }],
+    staticClass: "form-control text-sm",
+    staticStyle: {
+      "min-height": "50px"
+    },
+    domProps: {
+      value: _vm.pay_info.note
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.pay_info, "note", $event.target.value);
+      }
+    }
+  })]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-outline-primary my-2",
+    on: {
+      click: function click($event) {
+        return _vm.pay_now();
+      }
+    }
   }, [_vm._v(" PAY NOW!")]), _vm._v(" "), _c("div", [_c("switch2", {
     model: {
       value: _vm.pay_info.is_notify_sms,
@@ -5675,7 +5720,15 @@ var render = function render() {
       }
     }
   }, [_vm._v("Close")])])])], 2), _vm._v(" "), _c("swal", {
-    ref: "swal_prompt"
+    ref: "swal_prompt",
+    attrs: {
+      set_errors: _vm.errors
+    },
+    on: {
+      "update:set_errors": function updateSet_errors($event) {
+        _vm.errors = $event;
+      }
+    }
   })], 1);
 };
 var staticRenderFns = [];
@@ -5751,7 +5804,49 @@ var render = function render() {
     attrs: {
       colspan: "6"
     }
-  }, [_vm._v(" -- NO PAID HISTORY FOUND! -- ")])]) : _vm._e()])])]) : _vm._e()], 1)])])])]);
+  }, [_vm._v(" -- NO PAID HISTORY FOUND! -- ")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.paidScheduleTriggerList, function (item, index) {
+    return _c("tr", {
+      key: "item-sms-paid-" + item.id + "-" + index
+    }, [_c("th", {
+      staticClass: "text-center"
+    }, [_c("small", {
+      staticClass: "text-bold",
+      domProps: {
+        textContent: _vm._s(item.id)
+      }
+    })]), _vm._v(" "), _c("th", [_c("small", {
+      staticClass: "text-bold",
+      domProps: {
+        textContent: _vm._s(item.created_at)
+      }
+    })]), _vm._v(" "), _c("th", [_c("small", {
+      staticClass: "text-bold",
+      domProps: {
+        textContent: _vm._s(item.due_amount)
+      }
+    })]), _vm._v(" "), _c("th", [_c("small", {
+      staticClass: "text-bold",
+      domProps: {
+        textContent: _vm._s(item.paid_amount)
+      }
+    })]), _vm._v(" "), _c("th", [_c("small", {
+      staticClass: "text-bold",
+      domProps: {
+        textContent: _vm._s(item.balance_amount)
+      }
+    })]), _vm._v(" "), _c("td", [item.note ? _c("button", {
+      staticClass: "btn btn-outline-warning btn-sm",
+      attrs: {
+        title: "Note: " + item.note
+      }
+    }, [_c("span", {
+      staticClass: "fa fa-sticky-note"
+    })]) : _vm._e(), _vm._v(" "), _c("button", {
+      staticClass: "btn btn-outline-primary"
+    }, [_c("span", {
+      staticClass: "fa fa-sms"
+    }), _vm._v(" Send SMS\n                                    ")])])]);
+  })], 2)])]) : _vm._e()], 1)])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

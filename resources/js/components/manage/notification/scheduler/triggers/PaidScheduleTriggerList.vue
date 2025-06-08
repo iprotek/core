@@ -40,6 +40,31 @@
                                 <tr v-else-if="paidScheduleTriggerList.length == 0" >
                                     <th class="text-center" colspan="6"> -- NO PAID HISTORY FOUND! -- </th>
                                 </tr>
+                                <tr v-for="(item,index) in paidScheduleTriggerList" v-bind:key="'item-sms-paid-'+item.id+'-'+index">
+                                    <th class="text-center">
+                                        <small class="text-bold" v-text="item.id"></small>
+                                    </th>
+                                    <th >
+                                        <small class="text-bold" v-text="item.created_at"></small>
+                                    </th>
+                                    <th >
+                                        <small class="text-bold" v-text="item.due_amount"></small>
+                                    </th>
+                                    <th >
+                                        <small class="text-bold" v-text="item.paid_amount"></small>
+                                    </th>
+                                    <th >
+                                        <small class="text-bold" v-text="item.balance_amount"></small>
+                                    </th>
+                                    <td>
+                                        <button v-if="item.note" class="btn btn-outline-warning btn-sm" :title="'Note: '+item.note">
+                                            <span class="fa fa-sticky-note"></span>
+                                        </button> 
+                                        <button class="btn btn-outline-primary">
+                                            <span class="fa fa-sms"></span> Send SMS
+                                        </button>  
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         </page-data-table>
