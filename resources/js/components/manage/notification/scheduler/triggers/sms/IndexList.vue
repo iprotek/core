@@ -53,7 +53,7 @@
                                             <th class="text-center p-1" v-text="item.name"></th>
                                             <th class="text-center p-1 text-nowrap" >
                                                 {{ item.notification_type }} 
-                                                <button v-if="item.notification_type == 'payment'" class="btn btn-sm btn-outline-primary">
+                                                <button @click="$refs.modal_pay_schedule_trigger.show(item.id)" v-if="item.notification_type == 'payment'" class="btn btn-sm btn-outline-primary">
                                                     PAY
                                                 </button>
                                             </th>
@@ -69,7 +69,7 @@
                                                     <span class="fa fa-list"></span>
                                                 </button> {{ item.sms_trigger_count }}
                                             </td>
-                                            <td>
+                                            <td class="text-nowrap">
                                                 <small >
                                                     <code :title="'No of days the notification will repeat after trigger.'"> [ {{ item.repeat_days_after }} ]</code>
                                                     <b v-text="item.datetime_schedule"></b>
@@ -115,6 +115,7 @@
             </div>
         </div>
         <modal-sms-notif-sched ref="modal_sms_notif_sched" :branch_id="branch_id" :group_id="group_id" :scheduler_id="scheduler_id" />
+        <modal-pay-schedule-trigger ref="modal_pay_schedule_trigger" />
     </div>
 </template>
 
@@ -122,6 +123,8 @@
     import PageDataTableVue from '../../../../../common/PageDataTable.vue';
     import ModalSmsNotificationScheduler from './ModalSmsNotificationScheduler.vue';
     import TriggerList from '../TriggerList.vue';
+    import ModalPayScheduelTriggerVue from '../ModalPayScheduleTrigger.vue';
+
     export default {
         props:[ "group_id", "branch_id", "scheduler_id" ],
         $emits:[],
@@ -130,7 +133,8 @@
         components: { 
             "page-data-table" : PageDataTableVue,
             "modal-sms-notif-sched" : ModalSmsNotificationScheduler,
-            "trigger-list" : TriggerList
+            "trigger-list" : TriggerList,
+            "modal-pay-schedule-trigger":ModalPayScheduelTriggerVue
         },
         data: function () {
             return {    
