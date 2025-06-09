@@ -57,10 +57,10 @@
                                         <small class="text-bold" v-text="item.balance_amount"></small>
                                     </th>
                                     <td>
-                                        <button v-if="item.note" class="btn btn-outline-warning btn-sm" :title="'Note: '+item.note">
+                                        <button v-if="item.note" class="btn btn-outline-danger btn-sm" :title="'Note: '+item.note">
                                             <span class="fa fa-sticky-note"></span>
                                         </button> 
-                                        <button class="btn btn-outline-primary" @click="resendSmsPayment(item.id)" >
+                                        <button class="btn btn-outline-primary btn-sm" @click="resendSmsPayment(item.id)" >
                                             <span class="fa fa-sms"></span> Resend SMS
                                         </button>  
                                     </td>

@@ -3951,6 +3951,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       errors: [],
       promiseExec: null,
+      schedule_name: '',
       total_due: 0,
       total_paid: 0,
       is_show_sent: false,
@@ -3992,6 +3993,7 @@ __webpack_require__.r(__webpack_exports__);
       vm.reset();
       return WebRequest2('GET', '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/get/' + id + '?branch_id=' + this.branch_id).then(function (resp) {
         resp.json().then(function (data) {
+          vm.schedule_name = data.name;
           vm.pay_info.sys_notify_schedule_sms_triggers_id = data.id;
           vm.total_due = data.total_due;
           vm.total_paid = data.total_paid;
@@ -5584,7 +5586,9 @@ var render = function render() {
     staticClass: "mb-0"
   }, [_vm._v("PAY")])]), _vm._v(" "), _c("div", {
     staticClass: "card-body pt-0"
-  }, [_c("input2", {
+  }, [_c("h4", {
+    staticClass: "text-center mt-2"
+  }, [_vm._v(_vm._s(_vm.schedule_name))]), _vm._v(" "), _c("input2", {
     attrs: {
       value: _vm.total_due,
       readonly: true,
@@ -5813,14 +5817,14 @@ var render = function render() {
         textContent: _vm._s(item.balance_amount)
       }
     })]), _vm._v(" "), _c("td", [item.note ? _c("button", {
-      staticClass: "btn btn-outline-warning btn-sm",
+      staticClass: "btn btn-outline-danger btn-sm",
       attrs: {
         title: "Note: " + item.note
       }
     }, [_c("span", {
       staticClass: "fa fa-sticky-note"
     })]) : _vm._e(), _vm._v(" "), _c("button", {
-      staticClass: "btn btn-outline-primary",
+      staticClass: "btn btn-outline-primary btn-sm",
       on: {
         click: function click($event) {
           return _vm.resendSmsPayment(item.id);

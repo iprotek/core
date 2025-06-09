@@ -22,6 +22,7 @@
                                 <label class="mb-0">PAY</label>
                             </div>
                             <div class="card-body pt-0">
+                                <h4 class="text-center mt-2">{{ schedule_name }}</h4>
                                 <input2 :value="total_due" :readonly="true" :placeholder="'Total Due'" :input_style="'height:35px;'"/>
                                 <input2 :value="total_paid" :readonly="true" :placeholder="'Total Paid'" :input_style="'height:35px;'"/>
                                 <input2 :value="total_balance" :readonly="true" :placeholder="'Total Balance'" :input_style="'height:35px;'"/>
@@ -87,6 +88,7 @@
             return {        
                 errors:[],
                 promiseExec:null,
+                schedule_name:'',
                 total_due:0,
                 total_paid:0,
                 is_show_sent:false,
@@ -130,6 +132,7 @@
                 vm.reset();
                 return WebRequest2('GET', '/api/group/'+this.group_id+'/sys-notification/schedulers/triggers/sms/get/'+id+'?branch_id='+this.branch_id).then(resp=>{
                     resp.json().then(data=>{
+                        vm.schedule_name = data.name;
                         vm.pay_info.sys_notify_schedule_sms_triggers_id = data.id;
                         vm.total_due = data.total_due;
                         vm.total_paid = data.total_paid;
