@@ -14,7 +14,7 @@
                         <button class="btn btn-outline-danger btn-sm ml-2" v-else @click="is_show_sent = false">
                             <span class="fa fa-sms"></span> HIDE NOTIFIED SMS
                         </button>
-                        <paid-sms-schedule-trigger :branch_id="branch_id" :group_id="group_id" :sys_notify_schedule_sms_triggers_id="pay_info.sys_notify_schedule_sms_triggers_id" v-if="is_show_sent" :type="pay_info.type" />
+                        <paid-sms-trigger-list v-if="is_show_sent" :title="'Payment SMS NOTIFICATION'" :branch_id="branch_id" :group_id="group_id" :target_id="pay_info.sys_notify_schedule_sms_triggers_id" :type="'sms-payment'" />
                     </div>
                     <div class="col-sm-5 pt-4">
                         <div class="card p-0 card-primary">
@@ -68,9 +68,9 @@
 <script>    
     import UserInput2 from '../../../../common/UserInput2.vue';
     import BoostrapSwitch2 from '../../../../common/BoostrapSwitch2.vue';
-    import PaidScheduleTriggerList from './PaidScheduleTriggerList.vue';
-    import PaidSmsScheduleTriggerList from './PaidSmsScheduleTriggerList.vue';
+    import PaidScheduleTriggerList from './PaidScheduleTriggerList.vue'; 
     import Validation from '../../../../common/Validation.vue';
+    import TriggerList from './TriggerList.vue';
     export default {
         props:[ "group_id", "branch_id" ],
         $emits:[],
@@ -80,7 +80,7 @@
             "input2":UserInput2,
             "switch2":BoostrapSwitch2,
             "paid-schedule-trigger":PaidScheduleTriggerList,
-            "paid-sms-schedule-trigger":PaidSmsScheduleTriggerList,
+            "paid-sms-trigger-list":TriggerList, 
             "validation":Validation
         },
         data: function () {

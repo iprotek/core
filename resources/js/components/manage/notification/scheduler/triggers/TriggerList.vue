@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">SMS TRIGGER LIST</div>
+                    <div class="card-header" v-text="title"></div>
                     <div class="card-body">
                         
                         <page-data-table
@@ -60,7 +60,7 @@
     import PageDataTable from '../../../../common/PageDataTable.vue';
 
     export default {
-        props:[ "group_id", "branch_id", "type", "target_id" ],
+        props:[ "title", "group_id", "branch_id", "type", "target_id" ],
         $emits:[],
         watch: { 
             target_id:function(val){

@@ -1,5 +1,6 @@
 <template>
-    <div class="container">
+    <div>
+        <!--
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
@@ -11,11 +12,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
+
     </div>
 </template>
 
 <script>
+    import TriggerListVue from './TriggerList.vue';
     export default {
         props:[ "group_id", "branch_id", "type", "sys_notify_schedule_sms_triggers_id" ],
         $emits:[],
@@ -25,6 +28,7 @@
             }
         },
         components: { 
+            "trigger-list":TriggerListVue
         },
         data: function () {
             return {    
