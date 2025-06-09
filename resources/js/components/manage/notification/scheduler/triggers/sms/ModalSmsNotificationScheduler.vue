@@ -48,6 +48,7 @@
                                 <div><code>[total_due]</code> - automatically set based on total due</div>
                                 <div><code>[total_paid]</code> - automatically adjust based on total paid</div>
                                 <div><code>[total_balance]</code> - automatically set from total due deduced by total paid</div>
+                                <div><code>[due_ref_no]</code> - automatically set the ref due for payment.</div>
                             </small>
                         </div>
                     </div>
@@ -220,7 +221,7 @@
                     sms_client_api_request_link_id:0,
                     sys_notify_scheduler_id:0,
                     name:'',
-                    send_message:'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle. If you had already paid please ignore.',
+                    send_message:'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid] ref#:[due_ref_no].\r\n Please settle. If you had already paid please ignore.',
                     notification_type:'payment',
                     to_type:'', //customers,users
                     selected_items:[],

@@ -3961,7 +3961,7 @@ __webpack_require__.r(__webpack_exports__);
         note: '',
         type: 'sms',
         paid_amount: 0,
-        message_template: 'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [ref_no].',
+        message_template: 'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [paid_ref_no].',
         is_notify_sms: true
       }
     };
@@ -3973,7 +3973,7 @@ __webpack_require__.r(__webpack_exports__);
         note: '',
         type: 'sms',
         paid_amount: 0,
-        message_template: 'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [ref_no].',
+        message_template: 'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [paid_ref_no].',
         is_notify_sms: true
       };
       //this.pay_info.sys_notify_schedule_sms_triggers_id = 0;
@@ -4036,7 +4036,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _common_PageDataTable_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../common/PageDataTable.vue */ "./resources/js/components/common/PageDataTable.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["group_id", "branch_id", "type", "sys_notify_schedule_sms_triggers_id"],
+  props: ["swal_prompt", "group_id", "branch_id", "type", "sys_notify_schedule_sms_triggers_id"],
   $emits: [],
   watch: {
     sys_notify_schedule_sms_triggers_id: function sys_notify_schedule_sms_triggers_id(val) {}
@@ -4063,6 +4063,18 @@ __webpack_require__.r(__webpack_exports__);
         return key + '=' + params[key];
       }).join('&');
       return queryString;
+    },
+    resendSmsPayment: function resendSmsPayment(payment_id) {
+      var request = {
+        sys_notify_paid_schedule_trigger_id: payment_id
+      };
+      this.swal_prompt.alert('question', "Resend SMS Payment Notif?", "Confirm", "POST", '/api/group/' + this.group_id + '/sys-notification/schedulers/triggers/sms/get/' + this.sys_notify_schedule_sms_triggers_id + '/paid/resend-sms-payment', JSON.stringify(request)).then(function (res) {
+        //console.log(vm.errors);
+        if (res.isConfirmed && res.value.status == 1) {
+          //vm.$emit('data_updated');
+          //vm.loadScheduleTrigger(vm.pay_info.sys_notify_schedule_sms_triggers_id);
+        }
+      });
     }
   },
   mounted: function mounted() {},
@@ -4474,7 +4486,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         name: '',
         sms_client_api_request_link_id: 0,
         sys_notify_scheduler_id: 0
-      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "name", ''), "send_message", 'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid].\r\n Please settle. If you had already paid please ignore.'), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", true), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
+      }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "name", ''), "send_message", 'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid] ref#:[due_ref_no].\r\n Please settle. If you had already paid please ignore.'), "notification_type", 'payment'), "to_type", ''), "selected_items", []), "mobile_nos", []), "total_due", 0), "total_paid", 0), "is_active", true), "is_stop_when_fully_paid", true), _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_this$sms_notify_sche, "error_message", ''), "repeat_days_after", 0), "repeat_type", 'yearly'), "repeat_info", {
         month_name: 'Jan',
         month_day: 1,
         week_day: 'Mon',
@@ -5564,14 +5576,15 @@ var render = function render() {
     staticClass: "row"
   }, [_c("div", {
     staticClass: "col-sm-7 pt-4"
-  }, [_c("paid-schedule-trigger", {
+  }, [_vm.$refs.swal_prompt ? _c("paid-schedule-trigger", {
     attrs: {
+      swal_prompt: _vm.$refs.swal_prompt,
       branch_id: _vm.branch_id,
       group_id: _vm.group_id,
       sys_notify_schedule_sms_triggers_id: _vm.pay_info.sys_notify_schedule_sms_triggers_id,
       type: _vm.pay_info.type
     }
-  }), _vm._v(" "), !_vm.is_show_sent ? _c("button", {
+  }) : _vm._e(), _vm._v(" "), !_vm.is_show_sent ? _c("button", {
     staticClass: "btn btn-outline-primary btn-sm ml-2",
     on: {
       click: function click($event) {
@@ -5706,7 +5719,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("small", [_c("label", {
     staticClass: "mb-0"
-  }, [_vm._v("DYNAMIC VARIABLES")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[person_name]")]), _vm._v(" - the name of the recipient")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_due]")]), _vm._v(" - automatically set based on total due")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_paid]")]), _vm._v(" - automatically adjust based on total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_balance]")]), _vm._v(" - automatically set from total due deduced by total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[paid_amount]")]), _vm._v(" - the amount you currently paid.")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[ref_no]")]), _vm._v(" - is paid reference number.")])])]) : _vm._e()], 1)])])]) : _vm._e()]), _vm._v(" "), _c("template", {
+  }, [_vm._v("DYNAMIC VARIABLES")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[person_name]")]), _vm._v(" - the name of the recipient")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_due]")]), _vm._v(" - automatically set based on total due")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_paid]")]), _vm._v(" - automatically adjust based on total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_balance]")]), _vm._v(" - automatically set from total due deduced by total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[due_ref_no]")]), _vm._v(" - automatically set the ref due for payment.")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[paid_amount]")]), _vm._v(" - the amount you currently paid.")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[paid_ref_no]")]), _vm._v(" - is paid reference number.")])])]) : _vm._e()], 1)])])]) : _vm._e()]), _vm._v(" "), _c("template", {
     slot: "footer"
   }, [_c("div", [_c("button", {
     staticClass: "btn btn-outline-dark mr-4",
@@ -5842,10 +5855,15 @@ var render = function render() {
     }, [_c("span", {
       staticClass: "fa fa-sticky-note"
     })]) : _vm._e(), _vm._v(" "), _c("button", {
-      staticClass: "btn btn-outline-primary"
+      staticClass: "btn btn-outline-primary",
+      on: {
+        click: function click($event) {
+          return _vm.resendSmsPayment(item.id);
+        }
+      }
     }, [_c("span", {
       staticClass: "fa fa-sms"
-    }), _vm._v(" Send SMS\n                                    ")])])]);
+    }), _vm._v(" Resend SMS\n                                    ")])])]);
   })], 2)])]) : _vm._e()], 1)])])])]);
 };
 var staticRenderFns = [function () {
@@ -6613,7 +6631,7 @@ var render = function render() {
     }
   })]), _vm._v(" "), _c("div", [_c("small", [_c("label", {
     staticClass: "mb-0"
-  }, [_vm._v("DYNAMIC VARIABLES")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[person_name]")]), _vm._v(" - the name of the recipient")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_due]")]), _vm._v(" - automatically set based on total due")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_paid]")]), _vm._v(" - automatically adjust based on total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_balance]")]), _vm._v(" - automatically set from total due deduced by total paid")])])])], 1), _vm._v(" "), _c("div", {
+  }, [_vm._v("DYNAMIC VARIABLES")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[person_name]")]), _vm._v(" - the name of the recipient")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_due]")]), _vm._v(" - automatically set based on total due")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_paid]")]), _vm._v(" - automatically adjust based on total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[total_balance]")]), _vm._v(" - automatically set from total due deduced by total paid")]), _vm._v(" "), _c("div", [_c("code", [_vm._v("[due_ref_no]")]), _vm._v(" - automatically set the ref due for payment.")])])])], 1), _vm._v(" "), _c("div", {
     staticClass: "col-sm-6"
   }, [_c("div", {
     staticClass: "card p-0"

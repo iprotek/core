@@ -60,8 +60,8 @@
                                         <button v-if="item.note" class="btn btn-outline-warning btn-sm" :title="'Note: '+item.note">
                                             <span class="fa fa-sticky-note"></span>
                                         </button> 
-                                        <button class="btn btn-outline-primary">
-                                            <span class="fa fa-sms"></span> Send SMS
+                                        <button class="btn btn-outline-primary" @click="resendSmsPayment(item.id)" >
+                                            <span class="fa fa-sms"></span> Resend SMS
                                         </button>  
                                     </td>
                                 </tr>
@@ -79,7 +79,7 @@
     import PageDataTableVue from '../../../../common/PageDataTable.vue';
 
     export default {
-        props:[ "group_id", "branch_id", "type", "sys_notify_schedule_sms_triggers_id" ],
+        props:[ "swal_prompt", "group_id", "branch_id", "type", "sys_notify_schedule_sms_triggers_id" ],
         $emits:[],
         watch: { 
             sys_notify_schedule_sms_triggers_id:function(val){
@@ -108,6 +108,25 @@
                 }).join('&');
                 return queryString;
             },
+            resendSmsPayment:function(payment_id){
+                var request = {
+                    sys_notify_paid_schedule_trigger_id: payment_id
+                }
+                this.swal_prompt.alert(
+                    'question',
+                    "Resend SMS Payment Notif?", 
+                    "Confirm" , 
+                    "POST", 
+                    '/api/group/'+this.group_id+'/sys-notification/schedulers/triggers/sms/get/'+this.sys_notify_schedule_sms_triggers_id+'/paid/resend-sms-payment', 
+                    JSON.stringify(request)
+                ).then(res=>{
+                    //console.log(vm.errors);
+                    if(res.isConfirmed && res.value.status == 1){
+                        //vm.$emit('data_updated');
+                        //vm.loadScheduleTrigger(vm.pay_info.sys_notify_schedule_sms_triggers_id);
+                    }
+                }); 
+            }
 
         },
         mounted:function(){     

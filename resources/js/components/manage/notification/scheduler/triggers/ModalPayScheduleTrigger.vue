@@ -7,7 +7,7 @@
             <template slot="body" >     
                 <div class="row" v-if="pay_info.sys_notify_schedule_sms_triggers_id">
                     <div class="col-sm-7 pt-4">
-                        <paid-schedule-trigger :branch_id="branch_id" :group_id="group_id" :sys_notify_schedule_sms_triggers_id="pay_info.sys_notify_schedule_sms_triggers_id" :type="pay_info.type" />
+                        <paid-schedule-trigger v-if="$refs.swal_prompt" :swal_prompt="$refs.swal_prompt" :branch_id="branch_id" :group_id="group_id" :sys_notify_schedule_sms_triggers_id="pay_info.sys_notify_schedule_sms_triggers_id" :type="pay_info.type" />
                         <button class="btn btn-outline-primary btn-sm ml-2" v-if="!is_show_sent" @click="is_show_sent = true">
                             <span class="fa fa-sms"></span> SHOW NOTIFIED SMS
                         </button>
@@ -44,8 +44,9 @@
                                         <div><code>[total_due]</code> - automatically set based on total due</div>
                                         <div><code>[total_paid]</code> - automatically adjust based on total paid</div>
                                         <div><code>[total_balance]</code> - automatically set from total due deduced by total paid</div>
+                                        <div><code>[due_ref_no]</code> - automatically set the ref due for payment.</div>
                                         <div><code>[paid_amount]</code> - the amount you currently paid.</div>
-                                        <div><code>[ref_no]</code> - is paid reference number.</div>
+                                        <div><code>[paid_ref_no]</code> - is paid reference number.</div>
                                     </small>
                                 </div>
                             </div>
@@ -96,7 +97,7 @@
                     note:'',
                     type:'sms',
                     paid_amount: 0,
-                    message_template:'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [ref_no].',
+                    message_template:'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [paid_ref_no].',
                     is_notify_sms:true
                 }
            }
@@ -108,7 +109,7 @@
                     note:'',
                     type:'sms',
                     paid_amount:0,
-                    message_template:'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [ref_no].',
+                    message_template:'Hi [person_name],\r\n We received your payment amount of [paid_amount] with ref#: [paid_ref_no].',
                     is_notify_sms:true
                 }
                 //this.pay_info.sys_notify_schedule_sms_triggers_id = 0;
