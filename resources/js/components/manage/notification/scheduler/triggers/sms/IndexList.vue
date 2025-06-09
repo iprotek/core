@@ -33,29 +33,33 @@
                                             <th class="text-center" style="width:80px;">Type</th> 
                                             <th class="text-center" style="width:100px;">Is Active</th> 
                                             <th class="text-center" style="width:100px;">Status</th> 
-                                            <th class="text-center" style="width:80px;">Triggers</th> 
-                                            <th class="text-center">Schedule Time</th> 
-                                            <th class="text-center">Repeat</th> 
-                                            <th class="text-center">Status Info</th> 
+                                            <th class="text-center" style="width:80px;">Triggers</th>  
+                                            <th class="text-center" style="width: 100px;">Repeat</th> 
+                                            <th class="text-center" style="width: 100px;">Status Info</th> 
                                             <th class="text-center text-nowrap" style="width:100px;">Target Count</th> 
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-if="isLoading">
-                                            <td class="text-center text-danger" colspan="11"> -- LOADING TRIGGERS -- </td>
+                                            <td class="text-center text-danger" colspan="10"> -- LOADING TRIGGERS -- </td>
                                         </tr>
                                         <tr v-else-if="smsTriggerList.length == 0">
-                                            <td class="text-center text-danger" colspan="11"> -- NO  SMS TRIGGER FOUND -- </td>
+                                            <td class="text-center text-danger" colspan="10"> -- NO  SMS TRIGGER FOUND -- </td>
                                         </tr>
                                         <tr v-for="(item,itemIndex) in smsTriggerList" v-bind:key="'item-sched-'+item.id+'-'+itemIndex">
                                             <th class="text-center p-1" v-text="item.id"></th>
-                                            <th class="text-center p-1" v-text="item.name"></th>
+                                            <th class="text-left p-1" v-text="item.name"></th>
                                             <th class="text-center p-1 text-nowrap" >
-                                                {{ item.notification_type }} 
-                                                <button @click="$refs.modal_pay_schedule_trigger.show(item.id)" v-if="item.notification_type == 'payment'" class="btn btn-sm btn-outline-primary">
-                                                    PAY
-                                                </button>
+                                                <small>
+                                                    <b> {{ item.notification_type }} </b>
+                                                    <span class="text-nowrap" v-if="item.notification_type == 'payment'">
+                                                        <button @click="$refs.modal_pay_schedule_trigger.show(item.id)" class="btn btn-outline-primary btn-sm">
+                                                            PAY
+                                                        </button>
+                                                        BAL: <code> {{ item.total_due - item.total_paid }}</code> 
+                                                    </span>
+                                                </small>
                                             </th>
                                             <th class="text-center p-1">
                                                 <label v-if="item.is_active" class="text-primary pb-0"> YES</label>
@@ -68,11 +72,6 @@
                                                 <button @click="target_id = item.id" class="btn btn-outline-primary btn-sm">
                                                     <span class="fa fa-list"></span>
                                                 </button> {{ item.sms_trigger_count }}
-                                            </td>
-                                            <td class="text-nowrap">
-                                                <small >
-                                                    <b v-text="item.datetime_schedule"></b>
-                                                </small>
                                             </td>
                                             <td class="text-left text-nowrap">
                                                 <small>
@@ -88,6 +87,11 @@
                                                         <span v-else> at {{ item.repeat_info.time }}</span>
                                                     </span>
                                                 </small>
+                                                <div>
+                                                    <small >
+                                                        TRIGGER SCHED: <b v-text="item.datetime_schedule"></b>
+                                                    </small>
+                                                </div>
                                             </td>
                                             <td class="text-nowrap">
                                                 <small  v-text="item.error_message"></small>

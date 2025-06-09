@@ -6255,11 +6255,15 @@ var render = function render() {
       width: "80px"
     }
   }, [_vm._v("Triggers")]), _vm._v(" "), _c("th", {
-    staticClass: "text-center"
-  }, [_vm._v("Schedule Time")]), _vm._v(" "), _c("th", {
-    staticClass: "text-center"
+    staticClass: "text-center",
+    staticStyle: {
+      width: "100px"
+    }
   }, [_vm._v("Repeat")]), _vm._v(" "), _c("th", {
-    staticClass: "text-center"
+    staticClass: "text-center",
+    staticStyle: {
+      width: "100px"
+    }
   }, [_vm._v("Status Info")]), _vm._v(" "), _c("th", {
     staticClass: "text-center text-nowrap",
     staticStyle: {
@@ -6268,12 +6272,12 @@ var render = function render() {
   }, [_vm._v("Target Count")]), _vm._v(" "), _c("th")])]), _vm._v(" "), _c("tbody", [_vm.isLoading ? _c("tr", [_c("td", {
     staticClass: "text-center text-danger",
     attrs: {
-      colspan: "11"
+      colspan: "10"
     }
   }, [_vm._v(" -- LOADING TRIGGERS -- ")])]) : _vm.smsTriggerList.length == 0 ? _c("tr", [_c("td", {
     staticClass: "text-center text-danger",
     attrs: {
-      colspan: "11"
+      colspan: "10"
     }
   }, [_vm._v(" -- NO  SMS TRIGGER FOUND -- ")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.smsTriggerList, function (item, itemIndex) {
     return _c("tr", {
@@ -6284,20 +6288,22 @@ var render = function render() {
         textContent: _vm._s(item.id)
       }
     }), _vm._v(" "), _c("th", {
-      staticClass: "text-center p-1",
+      staticClass: "text-left p-1",
       domProps: {
         textContent: _vm._s(item.name)
       }
     }), _vm._v(" "), _c("th", {
       staticClass: "text-center p-1 text-nowrap"
-    }, [_vm._v("\n                                            " + _vm._s(item.notification_type) + " \n                                            "), item.notification_type == "payment" ? _c("button", {
-      staticClass: "btn btn-sm btn-outline-primary",
+    }, [_c("small", [_c("b", [_vm._v(" " + _vm._s(item.notification_type) + " ")]), _vm._v(" "), item.notification_type == "payment" ? _c("span", {
+      staticClass: "text-nowrap"
+    }, [_c("button", {
+      staticClass: "btn btn-outline-primary btn-sm",
       on: {
         click: function click($event) {
           return _vm.$refs.modal_pay_schedule_trigger.show(item.id);
         }
       }
-    }, [_vm._v("\n                                                PAY\n                                            ")]) : _vm._e()]), _vm._v(" "), _c("th", {
+    }, [_vm._v("\n                                                        PAY\n                                                    ")]), _vm._v("\n                                                    BAL: "), _c("code", [_vm._v(" " + _vm._s(item.total_due - item.total_paid))])]) : _vm._e()])]), _vm._v(" "), _c("th", {
       staticClass: "text-center p-1"
     }, [item.is_active ? _c("label", {
       staticClass: "text-primary pb-0"
@@ -6319,12 +6325,6 @@ var render = function render() {
     }, [_c("span", {
       staticClass: "fa fa-list"
     })]), _vm._v(" " + _vm._s(item.sms_trigger_count) + "\n                                        ")]), _vm._v(" "), _c("td", {
-      staticClass: "text-nowrap"
-    }, [_c("small", [_c("b", {
-      domProps: {
-        textContent: _vm._s(item.datetime_schedule)
-      }
-    })])]), _vm._v(" "), _c("td", {
       staticClass: "text-left text-nowrap"
     }, [_c("small", [_c("code", {
       attrs: {
@@ -6334,7 +6334,11 @@ var render = function render() {
       domProps: {
         textContent: _vm._s(item.repeat_type)
       }
-    }) : _c("code", [_c("b", [_vm._v("ONCE")])]), _vm._v(" :\n                                                "), item.repeat_info ? _c("span", [item.repeat_type == "yearly" ? _c("span", [_vm._v(" in " + _vm._s(item.repeat_info.month_name) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "yearly" || item.repeat_type == "monthly" ? _c("span", [_vm._v(" on " + _vm._s(item.repeat_info.month_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "weekly" ? _c("span", [_vm._v(" every " + _vm._s(item.repeat_info.week_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "datetime" ? _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.datetime) + " ")]) : _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.time))])]) : _vm._e()])]), _vm._v(" "), _c("td", {
+    }) : _c("code", [_c("b", [_vm._v("ONCE")])]), _vm._v(" :\n                                                "), item.repeat_info ? _c("span", [item.repeat_type == "yearly" ? _c("span", [_vm._v(" in " + _vm._s(item.repeat_info.month_name) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "yearly" || item.repeat_type == "monthly" ? _c("span", [_vm._v(" on " + _vm._s(item.repeat_info.month_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "weekly" ? _c("span", [_vm._v(" every " + _vm._s(item.repeat_info.week_day) + " ")]) : _vm._e(), _vm._v(" "), item.repeat_type == "datetime" ? _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.datetime) + " ")]) : _c("span", [_vm._v(" at " + _vm._s(item.repeat_info.time))])]) : _vm._e()]), _vm._v(" "), _c("div", [_c("small", [_vm._v("\n                                                    TRIGGER SCHED: "), _c("b", {
+      domProps: {
+        textContent: _vm._s(item.datetime_schedule)
+      }
+    })])])]), _vm._v(" "), _c("td", {
       staticClass: "text-nowrap"
     }, [_c("small", {
       domProps: {
