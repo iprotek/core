@@ -58,7 +58,7 @@
                             <div class="card-body pt-0">
                                 
                                 <label class="mb-0 mt-2">TYPE:</label>
-                                <select v-model="sms_notify_sched.notification_type" class="form-control">
+                                <select @change="selection_notif_type" v-model="sms_notify_sched.notification_type" class="form-control">
                                     <option value="payment">PAYMENT</option>
                                     <option value="announcement">ANNOUNCEMENT</option>
                                 </select>
@@ -162,6 +162,18 @@
            }
         },
         methods:{ 
+            selection_notif_type:function(){
+                var vm = this;
+                if(vm.sms_notify_sched.notification_type == 'payment'){
+                    vm.sms_notify_sched.send_message = 'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid] ref#:[due_ref_no].\r\n Please settle. If you had already paid please ignore.';
+                }
+                else if(vm.sms_notify_sched.notification_type == 'announcement'){
+                    vm.sms_notify_sched.send_message = 'Hi [person_name], Good day!';
+                }
+
+
+
+            },
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {
                     return key + '=' + params[key]
@@ -350,7 +362,7 @@
                     ).then(res=>{
                         //console.log(vm.errors);
                         if(res.isConfirmed && res.value.status == 1){
-                            vm.sms_notify_sched.id = res.value.data_id;
+                            //vm.sms_notify_sched.id = res.value.data_id;
                         }
                     });
                 }

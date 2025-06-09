@@ -71,12 +71,12 @@
                                             </td>
                                             <td class="text-nowrap">
                                                 <small >
-                                                    <code :title="'No of days the notification will repeat after trigger.'"> [ {{ item.repeat_days_after }} ]</code>
                                                     <b v-text="item.datetime_schedule"></b>
                                                 </small>
                                             </td>
                                             <td class="text-left text-nowrap">
                                                 <small>
+                                                    <code :title="'No of days the notification will repeat after trigger.'"> [ {{ item.repeat_days_after }} ]</code>
                                                     <b v-if="item.repeat_type != 'datetime'" v-text="item.repeat_type"></b>
                                                     <code v-else><b>ONCE</b></code> :
                                                     <span v-if="item.repeat_info">

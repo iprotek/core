@@ -4398,6 +4398,14 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     };
   },
   methods: {
+    selection_notif_type: function selection_notif_type() {
+      var vm = this;
+      if (vm.sms_notify_sched.notification_type == 'payment') {
+        vm.sms_notify_sched.send_message = 'Hi [person_name], \r\n You had balance of [total_balance] from your total due of [total_due] with total paid of [total_paid] ref#:[due_ref_no].\r\n Please settle. If you had already paid please ignore.';
+      } else if (vm.sms_notify_sched.notification_type == 'announcement') {
+        vm.sms_notify_sched.send_message = 'Hi [person_name], Good day!';
+      }
+    },
     queryString: function queryString() {
       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
       var queryString = Object.keys(params).map(function (key) {
@@ -4528,7 +4536,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         vm.$refs.swal_prompt.alert('question', "Add Trigger Now?", "Confirm", "PUT", "/api/group/" + this.group_id + "/sys-notification/schedulers/triggers/sms/update", JSON.stringify(request)).then(function (res) {
           //console.log(vm.errors);
           if (res.isConfirmed && res.value.status == 1) {
-            vm.sms_notify_sched.id = res.value.data_id;
+            //vm.sms_notify_sched.id = res.value.data_id;
           }
         });
       }
@@ -6312,17 +6320,17 @@ var render = function render() {
       staticClass: "fa fa-list"
     })]), _vm._v(" " + _vm._s(item.sms_trigger_count) + "\n                                        ")]), _vm._v(" "), _c("td", {
       staticClass: "text-nowrap"
-    }, [_c("small", [_c("code", {
-      attrs: {
-        title: "No of days the notification will repeat after trigger."
-      }
-    }, [_vm._v(" [ " + _vm._s(item.repeat_days_after) + " ]")]), _vm._v(" "), _c("b", {
+    }, [_c("small", [_c("b", {
       domProps: {
         textContent: _vm._s(item.datetime_schedule)
       }
     })])]), _vm._v(" "), _c("td", {
       staticClass: "text-left text-nowrap"
-    }, [_c("small", [item.repeat_type != "datetime" ? _c("b", {
+    }, [_c("small", [_c("code", {
+      attrs: {
+        title: "No of days the notification will repeat after trigger."
+      }
+    }, [_vm._v(" [ " + _vm._s(item.repeat_days_after) + " ]")]), _vm._v(" "), item.repeat_type != "datetime" ? _c("b", {
       domProps: {
         textContent: _vm._s(item.repeat_type)
       }
@@ -6584,7 +6592,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     on: {
-      change: function change($event) {
+      change: [function ($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
           return o.selected;
         }).map(function (o) {
@@ -6592,7 +6600,7 @@ var render = function render() {
           return val;
         });
         _vm.$set(_vm.sms_notify_sched, "notification_type", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
+      }, _vm.selection_notif_type]
     }
   }, [_c("option", {
     attrs: {
