@@ -6200,8 +6200,8 @@ var render = function render() {
     staticClass: "card-header"
   }, [_vm._v("\n                    SMS SCHEDULE TRIGGER LIST\n                ")]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
-  }, [_vm.target_id == 0 ? _c("div", [_c("button", {
-    staticClass: "btn btn-outline-primary btn-lg mb-2",
+  }, [_vm.target_id == 0 ? _c("div", [_vm._m(0), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-outline-primary btn-sm mb-2",
     on: {
       click: function click($event) {
         return _vm.$refs.modal_sms_notif_sched.show();
@@ -6394,7 +6394,18 @@ var render = function render() {
     }
   })], 1);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
+    staticClass: "btn btn-outline-primary btn-sm mb-2 mr-2",
+    attrs: {
+      href: "/manage/sys-notification/scheduler"
+    }
+  }, [_c("span", {
+    staticClass: "fa fa-arrow-left"
+  }), _vm._v(" BACK TO SCHEDULERS\n                        ")]);
+}];
 render._withStripped = true;
 
 

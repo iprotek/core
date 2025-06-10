@@ -4655,7 +4655,7 @@ var render = function render() {
     staticClass: "card"
   }, [_vm._m(0), _vm._v(" "), _c("div", {
     staticClass: "card-body"
-  }, [_c("button", {
+  }, [_vm._m(1), _vm._v(" "), _c("button", {
     staticClass: "btn btn-outline-primary btn-sm mb-2",
     on: {
       click: function click($event) {
@@ -4796,6 +4796,17 @@ var staticRenderFns = [function () {
   }, [_c("label", {
     staticClass: "mb-0"
   }, [_vm._v("Scheduler List")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("a", {
+    staticClass: "btn btn-outline-primary btn-sm mb-2 mr-2",
+    attrs: {
+      href: "/manage"
+    }
+  }, [_c("span", {
+    staticClass: "fa fa-arrow-left"
+  }), _vm._v(" DASHBOARD\n                    ")]);
 }];
 render._withStripped = true;
 

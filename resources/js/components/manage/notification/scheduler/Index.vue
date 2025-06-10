@@ -7,6 +7,10 @@
                         <label class="mb-0">Scheduler List</label>
                     </div>
                     <div class="card-body">
+                        
+                        <a href="/manage" class="btn btn-outline-primary btn-sm mb-2 mr-2">
+                            <span class="fa fa-arrow-left"></span> DASHBOARD
+                        </a>
                         <button class="btn btn-outline-primary btn-sm mb-2" @click="add_click()">
                             <span class="fa fa-plus"></span> ADD SCHEDULER
                         </button> 

@@ -8,7 +8,10 @@
                     </div>
                     <div class="card-body">
                         <div v-if="target_id == 0">
-                            <button class="btn btn-outline-primary btn-lg mb-2" @click="$refs.modal_sms_notif_sched.show()">
+                            <a href="/manage/sys-notification/scheduler" class="btn btn-outline-primary btn-sm mb-2 mr-2">
+                                <span class="fa fa-arrow-left"></span> BACK TO SCHEDULERS
+                            </a>
+                            <button class="btn btn-outline-primary btn-sm mb-2" @click="$refs.modal_sms_notif_sched.show()">
                                 <span class="fa fa-plus"></span> ADD SCHEDULE
                             </button>
                             <page-data-table 
