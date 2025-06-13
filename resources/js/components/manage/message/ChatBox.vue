@@ -4,11 +4,13 @@
             <div class="card-header">
                 <img :data-card-widget="(is_minimize?'collapse':'')" class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image" style="width:30px; height:30px;" @click=" (is_minimize ? isMinimizeClick():'')" :style="(is_minimize ? 'cursor:pointer;':'')"> 
                 &nbsp;
-                <h3 :title="value.email" :class="'card-title py-1 ml-1 '+(is_active ? 'text-primary':'')" :data-card-widget="(is_minimize?'collapse':'')" @click=" (is_minimize ? isMinimizeClick():'')" :style="(is_minimize ? 'cursor:pointer;':'')">
-                    ({{value.type}}{{value.is_self ? '/Self':''}}) {{ value.name }}
+                <h3 :title="value.name+' ('+value.email+')'" :class="'card-title py-1 ml-1 '+(is_active ? 'text-primary':'')" :data-card-widget="(is_minimize?'collapse':'')" @click=" (is_minimize ? isMinimizeClick():'')" :style="(is_minimize ? 'cursor:pointer;':'')">
+                    <small>({{value.type}}{{value.is_self && value.type != 'sms' ? '/Self':''}})</small> 
+                    
+                    <span v-text="limitString(value.name, 20)"></span> 
                 </h3>
                 <div class="card-tools">
-                    <span v-if="value.count_unseen" title="3 New Messages" :class="'badge '+(is_active ? 'bg-danger':'bg-warning')" v-text="value.count_unseen"></span>
+                    <span v-if="value.count_unseen" :title=" value.count_unseen +' New Messages'" :class="'badge '+(is_active ? 'bg-danger':'bg-warning')" v-text="value.count_unseen"></span>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" @click="isMinimizeClick()">
                         <i class="fas fa-minus"></i>
                     </button>
@@ -84,10 +86,10 @@
             </div> 
             <div  class="card-footer" :style="'display: '+(is_minimize ? 'none;':'block;')"> 
                 <div class="input-group" v-if="!errorMessage">
-                    <span class="input-group-text p-2 px-3">
+                    <span v-if="value.type != 'sms'" class="input-group-text p-2 px-3">
                         <span :class="'fa fa-paperclip text-lg '+(is_active ? 'text-primary':'')" style="cursor:pointer;"></span>
                     </span>
-                    <input v-model="sendText" @keyup.enter=" sendText.trim() ? $refs.web_submit_send.submit():''" :id="chat_id" type="text" name="message" placeholder="Type Message ..." class="form-control" :readonly="isSend">
+                    <input v-model="sendText" :maxlength="value.type == 'sms'? 150:''" @keyup.enter=" sendText.trim() ? $refs.web_submit_send.submit():''" :id="chat_id" type="text" name="message" placeholder="Type Message ..." class="form-control" :readonly="isSend">
                     <span :class="'btn btn-primary '+(sendText.trim() ? '':'disabled')">
                         <!--
                         <button @click="sendContactMessage()" type="submit" :class="'btn '+(is_active ? 'btn-primary':'btn-secondary')+' '+(isSend ? 'disabled':'')">Send</button>
@@ -125,6 +127,11 @@
             }
         },
         methods: { 
+            limitString:function(text, limit=20){
+                if(text && text.length > limit)
+                    return text.substring(0, limit-2)+'...';
+                return text;
+            },
             isMinimizeClick:function(){
                 var vm = this;
                 setTimeout(()=>{
@@ -154,13 +161,22 @@
             loadContactMessages:function(is_add = false){
                 var vm = this;
                 vm.errorMessage = '';
-                WebRequest2('GET', '/manage/message/dm/contact/'+this.value.app_user_account_id).then(resp=>{
+                var url = "";
+                if(vm.value.type == "dm"){
+                    url = '/manage/message/dm/contact/'+this.value.app_user_account_id;
+                }
+                else if(vm.value.type == "sms"){
+                    url = '/manage/message/sms/contact/'+this.value.mobile_no;
+                }
+
+
+                WebRequest2('GET', url).then(resp=>{
                     resp.json().then(data=>{
-                        //console.log(data);
+                        console.log("MESSAGE RESULT:"+vm.value.type,data);
                         if(data.status == 1){
                             if(is_add == false){
+                                console.log(data.result.data);
                                 vm.messages = data.result.data.reverse();
-
                                 //scroll to bottom
                                 setTimeout(()=>{
                                     var el = document.querySelector('#'+vm.chatContainerEl);
@@ -203,13 +219,16 @@
                 if(this.value.type == 'dm'){
                     return  this.sendByDm(request);
                 }
+                else if(this.value.type == 'sms'){
+                    return this.sendBySms(request);
+                }
 
                 return;
 
             },
 
             sendByDm(request){
-                var vm = this;
+                var vm = this; 
                 return  WebRequest2('POST', '/manage/message/dm/contact/'+this.value.app_user_account_id, request).then(resp=>{
                     return resp.json().then(data=>{
                         //console.log(data);
@@ -234,7 +253,36 @@
                         return data;
                     })
                 });
+                
+        
 
+            },
+            sendBySms(request){
+                
+                return  WebRequest2('POST', '/manage/message/sms/contact/'+this.value.mobile_no, request).then(resp=>{
+                    return resp.json().then(data=>{
+                        //console.log(data);
+                        setTimeout(()=>{
+                            vm.isSend = false;
+                        }, 3000);
+                        if(data.status == 1){
+                            data.message = "Submit";
+                            if(data.result.status == 1){
+                                vm.sendText = '';
+                                //DONT LOAD CONTACT JUST USE WEBSUMIT
+                                vm.loadContactMessages();
+                            }
+                        }else{
+                            data.message = "Failed";
+                        }
+                        if(!resp.ok){
+                            return;
+                        }
+
+
+                        return data;
+                    })
+                });
             }
             
         },

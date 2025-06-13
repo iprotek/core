@@ -14,21 +14,31 @@
                         <img src="/images/temp-image.png" alt="User Avatar" class="img-size-50 mr-3 img-circle"/>
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
-                            <small>
+                            <small class="text-wrap" :title="chatItem.name" v-if="type == 'sms'">
+                                <b v-text="limitString(chatItem.name, 27)"> </b> 
+                                <small class="text-primary">
+                                    <small><b v-text="chatItem.mobile_no"></b></small>
+                                </small> 
+                            </small>
+                            <small v-else :title="chatItem.name">
                                 <b v-if="chatItem.is_self" class="text-primary"> <i>(Self)</i>   </b> 
-                                <b> {{ chatItem.name }} </b>
+                                <b v-text="limitString(chatItem.name, 20)"> </b>
                             </small>
                             <span class="float-right mx-1 badge badge-danger" v-if="chatItem.count_unseen" v-text="chatItem.count_unseen"></span>
                             </h3>
                             <small>
                             <p class="text-sm" v-if="chatItem.last_message_info && chatItem.last_message_info.message && chatItem.last_message_info.chat_type == 'text'" >
-                                <small v-if="chatItem.last_message_info.is_self" class="text-secondary" v-text="'(You) '+limitString(chatItem.last_message_info.message)"></small>
-                                <small v-else class="text-primary" v-text="'(Response) '+limitString(chatItem.last_message_info.message)"></small>
+                                <small v-if="chatItem.last_message_info.is_self" class="text-secondary" v-text="(type =='sms'? '(Replied)':  '(You) ')+limitString(chatItem.last_message_info.message)" :title="chatItem.last_message_info.message"></small>
+                                <small v-else class="text-primary" v-text="'(Response) '+limitString(chatItem.last_message_info.message)" :title="chatItem.last_message_info.message"></small>
                             </p>
                             <p  v-else>
                                 <small> <i>Chat Not Available.</i> </small>
                             </p></small>
-                            <p class="text-sm text-muted" v-if="chatItem.last_message_diff"><i class="far fa-clock mr-1"></i> {{ chatItem.last_message_diff }}</p>
+                            <p class="text-sm text-muted" v-if="chatItem.last_message_diff">
+                                <small>
+                                    <i class="far fa-clock mr-1"></i> {{ chatItem.last_message_diff }}
+                                </small>
+                            </p>
                         </div>
                     </div> 
                 </a>
@@ -73,9 +83,9 @@
             clicktChatNotif:function(chatInfo){
                 window.addChatMessage(chatInfo, this.type);
             },
-            limitString:function(text){
-                if(text && text.length > 20)
-                    return text.substring(0, 18)+'...';
+            limitString:function(text, limit=20){
+                if(text && text.length > limit)
+                    return text.substring(0, limit-2)+'...';
                 return text;
             }
 
