@@ -55,7 +55,8 @@
                         </div> 
                         <div v-else class="direct-chat-msg right">
                             <div class="direct-chat-infos clearfix">
-                                <span :class="'direct-chat-name float-right '+(is_active ? 'text-primary':'')" v-text="chat.from_pay_user_account.name"></span>
+                                <span v-if="chat.from_pay_user_account" :class="'direct-chat-name float-right '+(is_active ? 'text-primary':'')" v-text="chat.from_pay_user_account.name"></span>
+                                <span v-else :class="'direct-chat-name float-right '+(is_active ? 'text-primary':'')"> <i> (SYSTEM) </i> </span>
                                 <span class="direct-chat-timestamp float-left" v-if="chat.created_at_diff" v-text="chat.created_at_diff" :title="chat.created_at"></span>
                             </div> 
                             <img class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image"> 
@@ -172,7 +173,7 @@
 
                 WebRequest2('GET', url).then(resp=>{
                     resp.json().then(data=>{
-                        console.log("MESSAGE RESULT:"+vm.value.type,data);
+                        //console.log("MESSAGE RESULT:"+vm.value.type,data);
                         if(data.status == 1){
                             if(is_add == false){
                                 console.log(data.result.data);

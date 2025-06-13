@@ -3817,7 +3817,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       WebRequest2('GET', url).then(function (resp) {
         resp.json().then(function (data) {
-          console.log("MESSAGE RESULT:" + vm.value.type, data);
+          //console.log("MESSAGE RESULT:"+vm.value.type,data);
           if (data.status == 1) {
             if (is_add == false) {
               console.log(data.result.data);
@@ -5633,12 +5633,14 @@ var render = function render() {
       staticClass: "direct-chat-msg right"
     }, [_c("div", {
       staticClass: "direct-chat-infos clearfix"
-    }, [_c("span", {
+    }, [chat.from_pay_user_account ? _c("span", {
       "class": "direct-chat-name float-right " + (_vm.is_active ? "text-primary" : ""),
       domProps: {
         textContent: _vm._s(chat.from_pay_user_account.name)
       }
-    }), _vm._v(" "), chat.created_at_diff ? _c("span", {
+    }) : _c("span", {
+      "class": "direct-chat-name float-right " + (_vm.is_active ? "text-primary" : "")
+    }, [_c("i", [_vm._v(" (SYSTEM) ")])]), _vm._v(" "), chat.created_at_diff ? _c("span", {
       staticClass: "direct-chat-timestamp float-left",
       attrs: {
         title: chat.created_at
