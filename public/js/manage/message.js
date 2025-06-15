@@ -3820,7 +3820,7 @@ __webpack_require__.r(__webpack_exports__);
           //console.log("MESSAGE RESULT:"+vm.value.type,data);
           if (data.status == 1) {
             if (is_add == false) {
-              console.log(data.result.data);
+              //console.log(data.result.data);
               vm.messages = data.result.data.reverse();
               //scroll to bottom
               setTimeout(function () {
@@ -3886,6 +3886,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     sendBySms: function sendBySms(request) {
+      var vm = this;
       return WebRequest2('POST', '/manage/message/sms/contact/' + this.value.mobile_no, request).then(function (resp) {
         return resp.json().then(function (data) {
           //console.log(data);

@@ -176,7 +176,7 @@
                         //console.log("MESSAGE RESULT:"+vm.value.type,data);
                         if(data.status == 1){
                             if(is_add == false){
-                                console.log(data.result.data);
+                                //console.log(data.result.data);
                                 vm.messages = data.result.data.reverse();
                                 //scroll to bottom
                                 setTimeout(()=>{
@@ -259,7 +259,7 @@
 
             },
             sendBySms(request){
-                
+                var vm = this;
                 return  WebRequest2('POST', '/manage/message/sms/contact/'+this.value.mobile_no, request).then(resp=>{
                     return resp.json().then(data=>{
                         //console.log(data);
