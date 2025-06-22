@@ -84,8 +84,8 @@ class iProtekServiceProvider extends ServiceProvider
         $link = public_path('iprotek');
         // Create symbolic link if it doesn't exist
         if (!file_exists($link)) {
-            Log::error($target);
-            Log::error($link);
+            //Log::error($target);
+            //Log::error($link);
             symlink($target, $link);
         }
 
