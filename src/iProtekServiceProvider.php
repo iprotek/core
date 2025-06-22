@@ -84,11 +84,14 @@ class iProtekServiceProvider extends ServiceProvider
             $target = base_path('vendor').'/iprotek/core/public';
         }*/
         $target = __DIR__.'/../public';
+        $target = realpath($target);
 
-        $link = public_path('iprotek');
-        // Create symbolic link if it doesn't exist
-        if (!file_exists($link)) {
-            symlink($target, $link);
+        if($target){
+            $link = public_path('iprotek');
+            // Create symbolic link if it doesn't exist
+            if (!file_exists($link)) {
+                symlink($target, $link);
+            }
         }
 
         //Run this to publish
