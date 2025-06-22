@@ -75,19 +75,17 @@ class iProtekServiceProvider extends ServiceProvider
         Gate::define('superadmin', $fnCheckSuperAdmin);
 
 
-
-
         //Create link instead
         
         $target = base_path('packages').'/iprotek/core/public';//__DIR__.'/../public';
         if (!is_dir($target)) {
             $target = base_path('vendor').'/iprotek/core/public';
         }
-
-
         $link = public_path('iprotek');
         // Create symbolic link if it doesn't exist
         if (!file_exists($link)) {
+            Log::error($target);
+            Log::error($link);
             symlink($target, $link);
         }
 
