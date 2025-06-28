@@ -6,20 +6,9 @@
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <span class="dropdown-item dropdown-header" > APPLICATIONS </span>
-            <div class="dropdown-divider"></div>
-            <!--
-                <a href="#" class="dropdown-item dropdown-footer">
-                    See All Notifications
-                </a>
-            -->
-            <a class="dropdown-item py-0 pb-1 text-center text-sm text-danger">
-                <small>
-                    <span > NO APPS AVAILABLE </span>
-                </small>
-            </a>
 
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item py-0 pb-1 text-center text-sm text-black">
+            <a class="dropdown-item py-0 text-center text-sm text-black">
                 <small>
                     <i class="fas fa-cog"></i> <span > Modules </span>
                 </small>
@@ -37,10 +26,6 @@
                     </a>
                     <a class="btn btn-app m-0 my-1">
                         <span class="badge bg-info mr-2">12</span>
-                        <i class="fas fa-map-pin"></i> Tracking
-                    </a>
-                    <a class="btn btn-app m-0 my-1">
-                        <span class="badge bg-info mr-2">12</span>
                         <i class="fas fa-th"></i> APPS
                     </a>
                     <a class="btn btn-app m-0 my-1 bg-primary">
@@ -48,6 +33,12 @@
                         <i class="fas fa-users"></i> MGMT
                     </a>
                 </div>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item py-0 pb-1 text-center text-sm text-danger">
+                <small>
+                    <span > NO APPS AVAILABLE </span>
+                </small>
+            </a>
             <div class="dropdown-divider"></div>
             
             <a href="/manage/apps/list" class="dropdown-item py-0 pb-1 text-center text-sm text-primary">
