@@ -5,9 +5,6 @@
             <span class="badge badge-warning navbar-badge" > ? </span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header" > APPLICATIONS </span>
-
-            <div class="dropdown-divider"></div>
             <a class="dropdown-item py-0 text-center text-sm text-black">
                 <small>
                     <i class="fas fa-cog"></i> <span > Modules </span>
@@ -33,6 +30,8 @@
                         <i class="fas fa-users"></i> MGMT
                     </a>
                 </div>
+            <div class="dropdown-divider"></div>
+            <span class="dropdown-item dropdown-header" > APPLICATIONS </span>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item py-0 pb-1 text-center text-sm text-danger">
                 <small>
