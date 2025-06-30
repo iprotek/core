@@ -1,0 +1,49 @@
+<template>
+    <a v-if="app_info" class="btn btn-app mx-1 mb-1">
+        <div class="badge mr-1">
+            <small v-if="app_info.notifications.info" class="bg-info p-1 rounded-2" v-text="app_info.notifications.info"></small>
+            <small v-if="app_info.notifications.warning" class="bg-warning p-1 rounded-2" v-text="app_info.notifications.warning"></small>
+            <small v-if="app_info.notifications.danger" class="bg-danger p-1 rounded-2" v-text="app_info.notifications.danger"></small>
+            <small v-if="app_info.notifications.success" class="bg-success p-1 rounded-2" v-text="app_info.notifications.success"></small>
+        </div>
+        <i :class="button_icon"></i> {{  title }}
+    </a>
+</template>
+
+<script>
+    export default {
+        props:[ "group_id", "app_info" ],
+        $emits:[],
+        watch: { 
+        },
+        components: { 
+        },
+        data: function () {
+            return {
+                title: 'Button',
+                button_icon:"fas fa-envelope",
+            }
+        },
+        methods: { 
+            queryString:function(params={}){ 
+                var queryString = Object.keys(params).map(function(key) {
+                    return key + '=' + params[key]
+                }).join('&');
+                return queryString;
+            },
+
+        },
+        mounted:function(){ 
+            if(this.app_info){
+                if(this.app_info.defaults && this.app_info.defaults.title){
+                    this.title = this.app_info.defaults.title;
+                    if(this.app_info.defaults.icon_class)
+                        this.button_icon = this.app_info.defaults.icon_class;
+                }
+            }
+        },
+        updated:function(){
+
+        }
+    }
+</script>

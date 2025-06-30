@@ -16,31 +16,27 @@
              <!-- Tracking( Administrator ONLY ) -->
              <!-- Sms-sender( Administrator ONLY ) -->
              <!-- MGMT( Administrator ONLY ) -->
-                <div class="text-center p-1">
-                    <a class="btn btn-app m-0 my-1">
-                        <span class="badge bg-info mr-2">12</span>
-                        <i class="fas fa-envelope"></i> Messaging
-                    </a>
-                    <a class="btn btn-app m-0 my-1">
-                        <span class="badge bg-info mr-2">12</span>
-                        <i class="fas fa-th"></i> APPS
-                    </a>
-                    <a class="btn btn-app m-0 my-1 bg-primary">
-                        <span class="badge bg-info mr-2">12</span>
-                        <i class="fas fa-users"></i> MGMT
-                    </a>
+                <div class="text-center px-1 pt-1 pb-0">
+                    <span v-for="free_app in free_apps" v-bind:key="'free-app'+free_app.id">
+                        <app-button v-bind:app_info="free_app" v-bind:group_id="group_id" ></app-button>
+                    </span>
                 </div>
             <div class="dropdown-divider"></div>
-            <span class="dropdown-item dropdown-header" > APPLICATIONS </span>
+            <span class="dropdown-item dropdown-header p-1 text-black text-bold" > <small>APPLICATIONS</small> </span>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item py-0 pb-1 text-center text-sm text-danger">
-                <small>
+                <small v-if="!isLoading && other_apps.length == 0">
                     <span > NO APPS AVAILABLE </span>
                 </small>
             </a>
+            <div class="text-center px-1 pt-1 pb-0">
+                <span v-for="other_app in other_apps" v-bind:key="'other-app'+other_app.id">
+                    <app-button v-bind:app_info="other_app" v-bind:group_id="group_id" ></app-button>
+                </span>
+            </div>
             <div class="dropdown-divider"></div>
             
-            <a href="/manage/apps/list" class="dropdown-item py-0 pb-1 text-center text-sm text-primary">
+            <a href="#" class="dropdown-item py-0 pb-1 text-center text-sm text-primary">
                 <small>
                     <i class="fas fa-plus"></i> <span > Add App </span>
                 </small>
@@ -50,9 +46,11 @@
 </template>
 
 <script>
+    import AppButton from './AppButton.vue';
     export default {
-        props:[  ],
-        components: { 
+        props:[ "group_id" ],
+        components: {
+            "app-button": AppButton
         },
         watch:{
             
@@ -67,13 +65,42 @@
                 updates:{
                     isCheck:false,
                     message:'Check System Updates'
-                }
+                },
+                free_apps:[],
+                other_apps:[],
+                isLoading:false
             }
         },
-        methods: {  
+        methods: {
+            loadApps:function(){
+                var vm = this;
+                vm.free_apps = [];
+                vm.other_apps = [];
+                vm.isLoading = true;
+                WebRequest2('GET', '/manage/apps/list').then(resp=>{
+                    resp.json().then(data=>{
+                        vm.isLoading = false;
+                        if(data.status==1 && data.result && data.result.status == 1){
+                            vm.free_apps = data.result.data.filter(app=>{
+                                if(app.defaults && app.defaults.is_notif_visible && app.defaults.is_free){
+                                    return true;
+                                }
+                                return false;
+                            });
+                            vm.other_apps = data.result.data.filter(app=>{
+                                if(app.defaults && app.defaults.is_notif_visible && !app.defaults.is_free){
+                                    return true;
+                                }
+                                return false;
+                            });
+                        }
+                    });
+                });
+            }
 
         },
         mounted:function(){ 
+            this.loadApps();
         },
         updated:function(){
 
