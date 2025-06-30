@@ -29,7 +29,7 @@
                     <span > NO APPS AVAILABLE </span>
                 </small>
             </a>
-            <div class="text-center px-1 pt-1 pb-0">
+            <div v-if="current_app_name" class="text-center px-1 pt-1 pb-0">
                 <span v-for="other_app in other_apps" v-bind:key="'other-app'+other_app.id">
                     <app-button v-bind:app_info="other_app" v-bind:group_id="group_id"  :current_app_name="current_app_name"></app-button>
                 </span>
