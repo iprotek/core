@@ -17,7 +17,7 @@
     <div class="card">
       <div class="card-body">
         <p class="login-box-msg">Sign in to start your session.</p>
-        @if(!config('iprotek_account.url') || config('iprotek.app_type') == 'APPLICATION SYSTEM' )
+        @if(!config('iprotek_account.url') || config('iprotek.app_type') == 'ACCOUNT SYSTEM' )
           <form method="POST" action="{{ route('pay-login') }}">
             @csrf   
             <div>
