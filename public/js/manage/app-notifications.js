@@ -3023,7 +3023,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["group_id", "app_info"],
+  props: ["group_id", "app_info", "current_app_name"],
   $emits: [],
   watch: {},
   components: {},
@@ -3069,7 +3069,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AppButton_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AppButton.vue */ "./resources/js/components/manage/apps/AppButton.vue");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["group_id"],
+  props: ["group_id", "app_name", "current_app_name"],
   components: {
     "app-button": _AppButton_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -3141,7 +3141,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _vm.app_info ? _c("a", {
-    staticClass: "btn btn-app mx-1 mb-1"
+    "class": "btn btn-app mx-1 mb-1 " + (_vm.app_info.name == _vm.current_app_name ? "bg-gray" : "")
   }, [_c("div", {
     staticClass: "badge mr-1"
   }, [_vm.app_info.notifications.info ? _c("small", {
@@ -3201,7 +3201,8 @@ var render = function render() {
     }, [_c("app-button", {
       attrs: {
         app_info: free_app,
-        group_id: _vm.group_id
+        group_id: _vm.group_id,
+        current_app_name: _vm.current_app_name
       }
     })], 1);
   }), 0), _vm._v(" "), _c("div", {
@@ -3218,7 +3219,8 @@ var render = function render() {
     }, [_c("app-button", {
       attrs: {
         app_info: other_app,
-        group_id: _vm.group_id
+        group_id: _vm.group_id,
+        current_app_name: _vm.current_app_name
       }
     })], 1);
   }), 0), _vm._v(" "), _c("div", {

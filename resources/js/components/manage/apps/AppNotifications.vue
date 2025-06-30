@@ -18,7 +18,7 @@
              <!-- MGMT( Administrator ONLY ) -->
                 <div class="text-center px-1 pt-1 pb-0">
                     <span v-for="free_app in free_apps" v-bind:key="'free-app'+free_app.id">
-                        <app-button v-bind:app_info="free_app" v-bind:group_id="group_id" ></app-button>
+                        <app-button v-bind:app_info="free_app" v-bind:group_id="group_id" :current_app_name="current_app_name" ></app-button>
                     </span>
                 </div>
             <div class="dropdown-divider"></div>
@@ -31,7 +31,7 @@
             </a>
             <div class="text-center px-1 pt-1 pb-0">
                 <span v-for="other_app in other_apps" v-bind:key="'other-app'+other_app.id">
-                    <app-button v-bind:app_info="other_app" v-bind:group_id="group_id" ></app-button>
+                    <app-button v-bind:app_info="other_app" v-bind:group_id="group_id"  :current_app_name="current_app_name"></app-button>
                 </span>
             </div>
             <div class="dropdown-divider"></div>
@@ -48,7 +48,7 @@
 <script>
     import AppButton from './AppButton.vue';
     export default {
-        props:[ "group_id" ],
+        props:[ "group_id","app_name","current_app_name" ],
         components: {
             "app-button": AppButton
         },
