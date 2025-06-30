@@ -28,6 +28,7 @@
         "iprotek/xrac":">=1.0.0",
         "iprotek/device":">=1.0.0",
         "iprotek/apps":">=1.0.0",
+        "iprotek/account":">=1.0.0",
         "pusher/pusher-php-server": "^7.2",
         "phpoffice/phpspreadsheet": "^3.8",
         "simplesoftwareio/simple-qrcode": "*",
@@ -36,7 +37,6 @@
     "type": "library",  
     "license": "MIT", 
     "require-dev": {
-        "phpunit/phpunit": "~6.0 || ~7.0 || ~9.0"
     },
     "suggest": {
         "ext-intl": "Use this for design your dashboard on bootstrap."

@@ -49,7 +49,7 @@
                     $type = view()->getSection('login-type', 'primary');
                 ?>
                 <x-container.card :x-type="$type " :x-title="$title" class="h2 text-red text-italic" style=";min-height:530px;" >
-                    <p class="login-box-msg">Sign in to start your session</p>
+                    <p class="login-box-msg">Sign in to start your session.</p> 
                         <div class="col-12">
                             <x-input.checkbox x-label-trans-id="secured_login" x-text="SECURED LOGIN" x-id="is_secured" onchange="secured_passchanged(event)"/>
                         </div>
@@ -125,31 +125,31 @@
                         </div>
                         <!-- /.col -->
                         </div>
-                    <!--
-                    <div class="social-auth-links text-center mt-2 mb-3">
-                        <a href="#" class="btn btn-block btn-primary">
-                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-                        </a>
-                        <a href="#" class="btn btn-block btn-danger">
-                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-                        </a>
-                    </div> -->
-                    <!-- /.social-auth-links -->
-                    
-                    <hr/>
-                        <a href="/create-suggestion" ><h6 class="text-center text-red"> <i class="btn btn-default"> <b class="text-red">- - CREATE SUGGESTION NOW - -</b> </i> </h6> </a>
-                    <hr/>
-                    <?php if($hasForgetPass){ ?>
-                        <p class="mb-1">
-                            <a href="/recovery-request"> <label style="cursor:pointer;" class="m-0 text-info" label-trans-id="account_recovery_request"> Account Recovery Request</label></a>
-                        </p>
-                    <?php } ?>
+                        <!--
+                        <div class="social-auth-links text-center mt-2 mb-3">
+                            <a href="#" class="btn btn-block btn-primary">
+                            <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                            </a>
+                            <a href="#" class="btn btn-block btn-danger">
+                            <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                            </a>
+                        </div> -->
+                        <!-- /.social-auth-links -->
+                        
+                        <hr/>
+                            <a href="/create-suggestion" ><h6 class="text-center text-red"> <i class="btn btn-default"> <b class="text-red">- - CREATE SUGGESTION NOW - -</b> </i> </h6> </a>
+                        <hr/>
+                        <?php if($hasForgetPass){ ?>
+                            <p class="mb-1">
+                                <a href="/recovery-request"> <label style="cursor:pointer;" class="m-0 text-info" label-trans-id="account_recovery_request"> Account Recovery Request</label></a>
+                            </p>
+                        <?php } ?>
 
-                    <?php if($hasRegister){ ?>
-                        <p class="mb-0">
-                            <a href="/register" class="text-center" ><label style="cursor:pointer;" class="m-0 text-info" label-trans-id="register">Register</label></a>
-                        </p>
-                    <?php } ?>
+                        <?php if($hasRegister){ ?>
+                            <p class="mb-0">
+                                <a href="/register" class="text-center" ><label style="cursor:pointer;" class="m-0 text-info" label-trans-id="register">Register</label></a>
+                            </p>
+                        <?php } ?> 
                 </x-container.card>
             
             </div>
