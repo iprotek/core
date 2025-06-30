@@ -78,7 +78,7 @@
         <helpdesk-notification></helpdesk-notification>
       </li>
       <li id="apps-list-el" class="nav-item dropdown">
-        <app-notifications :group_id="{{$group_id}}" app_name="{{config('iprotek.app_type')}}" />
+        <app-notifications :group_id="{{$group_id}}" current_app_name="{{config('iprotek.app_type')}}" />
         <!--
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>

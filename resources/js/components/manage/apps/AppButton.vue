@@ -35,6 +35,7 @@
         },
         mounted:function(){ 
             if(this.app_info){
+                console.log("APP TYPE", this.current_app_name);
                 if(this.app_info.defaults && this.app_info.defaults.title){
                     this.title = this.app_info.defaults.title;
                     if(this.app_info.defaults.icon_class)

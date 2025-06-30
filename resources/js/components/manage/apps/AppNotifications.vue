@@ -10,7 +10,7 @@
                     <i class="fas fa-cog"></i> <span > Modules </span>
                 </small>
             </a>
-            <div class="dropdown-divider"></div>
+            <div v-if="current_app_name" class="dropdown-divider"></div>
             <!-- LIST OF MODULES -->
              <!-- Messaging( Administrator ONLY ) -->
              <!-- Tracking( Administrator ONLY ) -->
