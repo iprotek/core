@@ -31,7 +31,6 @@ class UserAdmin extends Model
         'recovery_requested_at',
         "recovery_requested_reason",
         "remember_token",
-        "is_active",
         "receive_email_notif"
     ];
     protected $hidden = [
