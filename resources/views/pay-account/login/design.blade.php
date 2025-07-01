@@ -92,7 +92,7 @@
             <a href="register.html" class="text-center">Register a new membership</a>
           </p>-->
         @else 
-          <div class="col-12 text-center"><button class="btn btn-primary btn-block">Sign In</button></div>
+          <div class="col-12 text-center"><button onclick="clickPopUp()" class="btn btn-primary btn-block">Sign In</button></div>
         @endif
         </div>
     </div>

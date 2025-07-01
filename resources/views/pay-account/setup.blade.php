@@ -20,6 +20,15 @@
                     <!-- ELSE REDIRECT TO MANAGE PAGE -->
                 @else
                     <!-- WAIT FOR THE LOGIN AND WAIT FOR THE POP UP TO LOGGED IN -->
+                     <?php
+                        $login_request_id = 0;
+                        $resp = \iProtek\Account\Helpers\AccountHelper::submitLoginRequest(request());
+                        if($resp["status"] == 1){
+                            if($resp["result"] && $resp["result"]["status"] == 1){
+                                $login_request_id = $resp["result"]["id"];
+                            }
+                        }
+                     ?>
 
                 @endif
          @endif
@@ -33,7 +42,22 @@
     <script src="/iprotek/js/pay-forgot-password.js"></script>
     <!--<script src="/js/app.js"></script>-->
     <!-- POP-UP FOR LOGIN SCRIPTING ON ACCOUNT WEBSITE HERE -->
-    @if(config('iprotek_account.url') && config('iprotek.app_type') != 'ACCOUNT SYSTEM')
+     <script>
+        function clickPopUp(){
+            const popup = window.open('http://account.iprotek.internal/handshake/login-request?login_request_id={{$login_request_id}}', 'authPopup', 'width=600,height=400,resizable=yes,scrollbars=yes');
 
+            //USE THIS SCRIPT ON POPU - and click button authorize when success
+            //window.opener.postMessage({ token: 'abc123' }, 'http://your-main-app.internal');
+
+            window.addEventListener('message', (event) => {
+                //if (event.origin === 'http://account.iprotek.internal') {
+                    console.log(event.origin);
+                    console.log('Received message:', event.data);
+                //}
+            });
+        }
+    </script>
+    @if(config('iprotek_account.url') && config('iprotek.app_type') != 'ACCOUNT SYSTEM')
+        
     @endif
 @endsection
