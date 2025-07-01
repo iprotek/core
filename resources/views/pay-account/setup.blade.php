@@ -45,8 +45,25 @@
     @if(config('iprotek_account.url') && config('iprotek.app_type') != 'ACCOUNT SYSTEM')
         <script>
             function clickPopUp(){
-                const popup = window.open('http://account.iprotek.internal/handshake/login-request?login_request_id={{$login_request_id}}', 'authPopup', 'width=600,height=400,resizable=yes,scrollbars=yes');
+                
+                const popupWidth = 600;
+                const popupHeight = 400;
 
+                // Current window position (even across multiple monitors)
+                const dualScreenLeft = window.screenX !== undefined ? window.screenX : window.screenLeft;
+                const dualScreenTop = window.screenY !== undefined ? window.screenY : window.screenTop;
+
+                // Current window size
+                const windowWidth = window.innerWidth || document.documentElement.clientWidth || screen.width;
+                const windowHeight = window.innerHeight || document.documentElement.clientHeight || screen.height;
+
+                // Center popup within the current screen
+                const left = dualScreenLeft + (windowWidth - popupWidth) / 2;
+                const top = dualScreenTop + (windowHeight - popupHeight) / 2;
+                const popup = window.open(
+                    'http://account.iprotek.internal/handshake/login-request?login_request_id={{$login_request_id}}', 
+                    'authPopup', 
+                    `scrollbars=yes,resizable=yes,width=${popupWidth},height=${popupHeight},top=${top},left=${left}`);
                 //USE THIS SCRIPT ON POPU - and click button authorize when success
                 //window.opener.postMessage({ token: 'abc123' }, 'http://your-main-app.internal');
 
