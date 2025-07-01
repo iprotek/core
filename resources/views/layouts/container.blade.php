@@ -57,14 +57,14 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- Left Side Of Navbar -->
-                        <ul class="navbar-nav me-auto">
+                    @if(!request()->input('login_request_id'))
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <!-- Left Side Of Navbar -->
+                            <ul class="navbar-nav me-auto">
 
-                        </ul>
+                            </ul>
 
-                        <!-- Right Side Of Navbar -->
-                         @if(!request()->input('login_request_id'))
+                            <!-- Right Side Of Navbar -->
                             <ul class="navbar-nav ms-auto">
                                 <!-- Authentication Links -->
                                 @if (Route::has('helpdesk.create-get'))
@@ -131,8 +131,8 @@
                                     @endif
                                 @endauth
                             </ul>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
                 </div>
             </nav>
 
