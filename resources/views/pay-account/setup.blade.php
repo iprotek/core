@@ -42,22 +42,22 @@
     <script src="/iprotek/js/pay-forgot-password.js"></script>
     <!--<script src="/js/app.js"></script>-->
     <!-- POP-UP FOR LOGIN SCRIPTING ON ACCOUNT WEBSITE HERE -->
-     <script>
-        function clickPopUp(){
-            const popup = window.open('http://account.iprotek.internal/handshake/login-request?login_request_id={{$login_request_id}}', 'authPopup', 'width=600,height=400,resizable=yes,scrollbars=yes');
-
-            //USE THIS SCRIPT ON POPU - and click button authorize when success
-            //window.opener.postMessage({ token: 'abc123' }, 'http://your-main-app.internal');
-
-            window.addEventListener('message', (event) => {
-                //if (event.origin === 'http://account.iprotek.internal') {
-                    console.log(event.origin);
-                    console.log('Received message:', event.data);
-                //}
-            });
-        }
-    </script>
     @if(config('iprotek_account.url') && config('iprotek.app_type') != 'ACCOUNT SYSTEM')
+        <script>
+            function clickPopUp(){
+                const popup = window.open('http://account.iprotek.internal/handshake/login-request?login_request_id={{$login_request_id}}', 'authPopup', 'width=600,height=400,resizable=yes,scrollbars=yes');
+
+                //USE THIS SCRIPT ON POPU - and click button authorize when success
+                //window.opener.postMessage({ token: 'abc123' }, 'http://your-main-app.internal');
+
+                window.addEventListener('message', (event) => {
+                    //if (event.origin === 'http://account.iprotek.internal') {
+                        console.log(event.origin);
+                        console.log('Received message:', event.data);
+                    //}
+                });
+            }
+        </script>
         
     @endif
 @endsection
