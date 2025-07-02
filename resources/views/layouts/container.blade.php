@@ -57,82 +57,80 @@
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                             <span class="navbar-toggler-icon"></span>
                         </button>
-                        @if(!request()->input('login_request_id'))
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                <!-- Left Side Of Navbar -->
-                                <ul class="navbar-nav me-auto">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <!-- Left Side Of Navbar -->
+                            <ul class="navbar-nav me-auto">
 
-                                </ul>
+                            </ul>
 
-                                <!-- Right Side Of Navbar -->
-                                <ul class="navbar-nav ms-auto">
-                                    <!-- Authentication Links -->
-                                    @if (Route::has('helpdesk.create-get'))
-                                        <li class="nav-item"> 
-                                            <a class="nav-link text-white" href="{{route('helpdesk.create-get')}}">  
-                                                <span class="ion ion-help-buoy"></span> 
-                                                {{ __('Helpdesk') }}
+                            <!-- Right Side Of Navbar -->
+                            <ul class="navbar-nav ms-auto">
+                                <!-- Authentication Links -->
+                                @if (Route::has('helpdesk.create-get'))
+                                    <li class="nav-item"> 
+                                        <a class="nav-link text-white" href="{{route('helpdesk.create-get')}}">  
+                                            <span class="ion ion-help-buoy"></span> 
+                                            {{ __('Helpdesk') }}
+                                        </a>
+                                    </li>
+                                @endif
+                                @if(isset($help_url))
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{$help_url}}">{{ __('Help') }}</a>
+                                    </li>
+                                @endif
+                                @if(isset($contact_url))
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{$contact_url}}">{{ __('Contact') }}</a>
+                                    </li>
+                                @endif
+                                @if(isset($registration_url))
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{$registration_url}}">{{ __('Registration') }}</a>
+                                    </li>
+                                @endif
+                                @if(isset($cart_url))
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="{{$cart_url}}"><span class="fa  fa-shopping-cart"></span> CART (0)</a>
+                                    </li>
+                                @endif
+                                
+                                @auth('admin')
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="/manage">{{ __('Manage') }}</a>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle  text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            {{ Auth::user()->name }}
+                                        </a>
+
+                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="z-index:10000;">
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
+                                                                document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
                                             </a>
-                                        </li>
-                                    @endif
-                                    @if(isset($help_url))
-                                        <li class="nav-item">
-                                            <a class="nav-link text-white" href="{{$help_url}}">{{ __('Help') }}</a>
-                                        </li>
-                                    @endif
-                                    @if(isset($contact_url))
-                                        <li class="nav-item">
-                                            <a class="nav-link text-white" href="{{$contact_url}}">{{ __('Contact') }}</a>
-                                        </li>
-                                    @endif
-                                    @if(isset($registration_url))
-                                        <li class="nav-item">
-                                            <a class="nav-link text-white" href="{{$registration_url}}">{{ __('Registration') }}</a>
-                                        </li>
-                                    @endif
-                                    @if(isset($cart_url))
-                                        <li class="nav-item">
-                                            <a class="nav-link text-white" href="{{$cart_url}}"><span class="fa  fa-shopping-cart"></span> CART (0)</a>
-                                        </li>
-                                    @endif
-                                    
-                                    @auth('admin')
-                                        <li class="nav-item">
-                                            <a class="nav-link text-white" href="/manage">{{ __('Manage') }}</a>
-                                        </li>
-                                        <li class="nav-item dropdown">
-                                            <a id="navbarDropdown" class="nav-link dropdown-toggle  text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                                {{ Auth::user()->name }}
-                                            </a>
 
-                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="z-index:10000;">
-                                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                                    onclick="event.preventDefault();
-                                                                    document.getElementById('logout-form').submit();">
-                                                    {{ __('Logout') }}
-                                                </a>
-
-                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                    @csrf
-                                                </form>
-                                            </div>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </div>
+                                    </li>
+                                    <!--
+                                    @if (Route::has('register'))
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                         </li>
-                                        <!--
-                                        @if (Route::has('register'))
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                            </li>
-                                        @endif-->
-                                    @else 
-                                        @if (Route::has('login'))
-                                            <li class="nav-item">
-                                                <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                            </li>
-                                        @endif
-                                    @endauth
-                                </ul>
-                            </div>
-                        @endif
+                                    @endif-->
+                                @else 
+                                    @if (Route::has('login'))
+                                        <li class="nav-item">
+                                            <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                        </li>
+                                    @endif
+                                @endauth
+                            </ul>
+                        </div>
                     @endif
                 </div>
             </nav>
