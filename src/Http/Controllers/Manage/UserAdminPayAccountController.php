@@ -174,6 +174,8 @@ class UserAdminPayAccountController extends _CommonController
             $pay_account->save();
         }
 
+        return redirect()->intended();
+
         return redirect('/manage');//->route('manage');
     }
     /*
