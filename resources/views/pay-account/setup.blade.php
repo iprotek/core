@@ -8,8 +8,12 @@
     ?>
     <div id="main-content" class="contianer" style="min-height:85vh;">
         <div class="row mx-4 justify-content-center">
-            <div class="col-sm-4 text-dark mt-5" style="min-width:350px;">  
-                    @include('iprotek_core::pay-account.login.design')
+            <div class="col-sm-4 text-dark mt-5" style="min-width:350px;"> 
+                    @if(!auth('admin')->check()) 
+                        @include('iprotek_core::pay-account.login.design')
+                    @else
+                        <code>You are already logged.</code>
+                    @endif
             </div>
         </div>
         <!-- ADD SOME POP-UP LOG-IN HERE FOR ACCOUNT WEBSITE -->
@@ -22,10 +26,12 @@
                     <!-- WAIT FOR THE LOGIN AND WAIT FOR THE POP UP TO LOGGED IN -->
                      <?php
                         $login_request_id = 0;
+                        $login_request_code = "";
                         $resp = \iProtek\Account\Helpers\AccountHelper::submitLoginRequest(request());
                         if($resp["status"] == 1){
                             if($resp["result"] && $resp["result"]["status"] == 1){
                                 $login_request_id = $resp["result"]["id"];
+                                $login_request_code = $resp["result"]["code"];
                             }
                         }
                      ?>
@@ -71,6 +77,12 @@
                     //if (event.origin === 'http://account.iprotek.internal') {
                         console.log(event.origin);
                         console.log('Received message:', event.data);
+                        if(event.data.code == '{{$login_request_code}}'){
+                            //LOGIN VALIDATION
+                            
+
+
+                        }
                     //}
                 });
             }
