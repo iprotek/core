@@ -116,9 +116,5 @@ class UserAdmin extends Model
         $company_id = $this->company_id;
 
 
-
-
-
-
     }
 }
