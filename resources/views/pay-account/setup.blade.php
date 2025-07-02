@@ -53,7 +53,7 @@
             function clickPopUp(){
                 
                 const popupWidth = 600;
-                const popupHeight = 400;
+                const popupHeight = 600;
 
                 // Current window position (even across multiple monitors)
                 const dualScreenLeft = window.screenX !== undefined ? window.screenX : window.screenLeft;
