@@ -11,6 +11,7 @@ class UserAdminPayAccount extends Model
     use HasFactory,SoftDeletes;
     protected $fillable = [
         "user_admin_id",
+        "browser_session_id",
         "default_proxy_group_id",
         "pay_app_user_account_id",
         "email",
