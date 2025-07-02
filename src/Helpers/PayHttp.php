@@ -13,17 +13,34 @@ class PayHttp
     
     public static function pay_account_id($user_admin =null){
         $pay_account_id = 0;
+        $session_id = session()->getId();
 
         if($user_admin){
             $user_admin_id = $user_admin->id;
-            $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
+            $user_admin = null;
+            if($session_id)
+                $user_admin = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user_admin_id, 'browser_session_id'=>$session_id])->first();
+            
+            
+            if(!$user_admin){
+                $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
+            }
+
             if($user_admin){
                 $pay_account_id = $user_admin->pay_app_user_account_id;
             } 
         }
         else if(auth('admin')->check()){
+
             $user_admin_id = auth('admin')->user()->id;
-            $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
+
+            $user_admin = null;
+            if($session_id)
+                $user_admin = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user_admin_id, 'browser_session_id'=>$session_id])->first();
+            
+            if(!$user_admin)
+                $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
+
             if($user_admin){
                 $pay_account_id = $user_admin->pay_app_user_account_id;
             }
@@ -35,9 +52,19 @@ class PayHttp
     public static function proxy_group_id(){
         //GETTING THE SESSION BUT IF FAILED THEN GET THE DB DEFAULTS
         $proxy_group_id = PayGroup::getGroupId();
+
+        $session_id = session()->getId();
+
         if( !$proxy_group_id && auth('admin')->check() ){
             $user_admin_id = auth('admin')->user()->id;
+
+            $user_admin = null;
+            if($session_id)
+                $user_admin = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user_admin_id, 'browser_session_id'=>$session_id])->first();
+
+            if(!$user_admin)
             $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
+
             if($user_admin){
                 $proxy_group_id = $user_admin->default_proxy_group_id;
             }
@@ -46,9 +73,20 @@ class PayHttp
     }
 
     public static function target_group_id( Request $request = null){
+        
+        $session_id = session()->getId();
+
         if($request === null){
             //Check if SubAccount
-            $user_admin = UserAdminPayAccount::where('user_admin_id', auth('admin')->user()->id)->first();
+            $user_admin_id = auth('admin')->user()->id;
+            
+            $user_admin = null;
+            if($session_id)
+                $user_admin = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user_admin_id, 'browser_session_id'=>$session_id])->first();
+
+            if(!$user_admin)
+                $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
+
             if( $user_admin && $user_admin->sub_account_group_id){
                 $parentAdmin = UserAdminPayAccount::where('pay_app_user_account_id', $user_admin->sub_account_group_id)->first();
                 if($parentAdmin){
@@ -58,6 +96,7 @@ class PayHttp
             }
             else if( $user_admin )
                 return $user_admin->pay_app_user_account_id;
+
         }
         else{
             $user_admin = UserAdminPayAccount::where('own_proxy_group_id', $request->group_id)->first();
@@ -70,7 +109,15 @@ class PayHttp
 
     public static function target_own_group_id(){
         //Check if SubAccount
-        $user_admin = UserAdminPayAccount::where('user_admin_id', auth('admin')->user()->id)->first();
+        $user_admin_id = auth('admin')->user()->id;
+        $session_id = session()->getId();
+        $user_admin = null;
+        if($session_id)
+            $user_admin = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user_admin_id, 'browser_session_id'=>$session_id])->first();
+
+        if(!$user_admin)
+            $user_admin = UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
+        
         if( $user_admin && $user_admin->sub_account_group_id){
             $parentAdmin = UserAdminPayAccount::where('pay_app_user_account_id', $user_admin->sub_account_group_id)->first();
             if($parentAdmin){
@@ -137,7 +184,15 @@ class PayHttp
     public static function account_info(){
         
         $user = auth()->user();
-        $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+        
+        $session_id = session()->getId();
+        $pay_account = null;
+        if($session_id)
+            $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user->id, 'browser_session_id'=>$session_id])->first();
+
+        if(!$pay_account)
+            $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+
         if(!$pay_account)
             return null;
         
@@ -174,7 +229,15 @@ class PayHttp
         $queryString = http_build_query(["search"=>$search, "page"=>$page, "items_per_page"=>$items_per_page]);
         
         $user = auth()->user();
-        $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+        $session_id = session()->getId();
+        $pay_account = null;
+
+        if($session_id)
+            $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user->id, 'browser_session_id'=>$session_id])->first();
+
+        if(!$pay_account)
+            $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+
         if(!$pay_account)
             return null;
         
@@ -244,7 +307,15 @@ class PayHttp
         $queryString = http_build_query(["search"=>$search, "page"=>$page, "items_per_page"=>$items_per_page]);
         
         $user = auth()->user();
-        $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+        $session_id = session()->getId();
+        $pay_account = null;
+        
+        if($session_id)
+            $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user->id, 'browser_session_id'=>$session_id])->first();
+        
+        if(!$pay_account)
+            $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+
         if(!$pay_account)
             return null;
 
@@ -261,7 +332,15 @@ class PayHttp
 
     public static function send_invitation($email, $role, $verify_password){
         $user = auth()->user();
-        $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+        
+        $session_id = session()->getId();
+        $pay_account = null;
+        if($session_id)
+            $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user->id, 'browser_session_id'=>$session_id])->first();
+
+        if(!$pay_account)
+            $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+
         if(!$pay_account)
             return null;
         $data = [
@@ -307,7 +386,14 @@ class PayHttp
     public static function logout(){
         
         $user = auth()->user();
-        $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+
+        $session_id = session()->getId();
+        $pay_account = null;
+        if($session_id)
+            $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user->id, 'browser_session_id'=>$session_id])->first();
+        if(!$pay_account)
+            $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+        
         if(!$pay_account)
             return null;
         

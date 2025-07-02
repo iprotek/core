@@ -183,7 +183,12 @@ class _CommonController extends BaseController
 
         //GROUP ID
         $user_id = $user->id;
-        $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where('user_admin_id', $user_id)->first();
+
+        $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where(['user_admin_id'=>$user_id, 'browser_session_id'=>session()->getId()])->first();
+
+        if(!$pay_account)
+            $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where('user_admin_id', $user_id)->first();
+    
         $group_id = 0;
         if($pay_account){
             $group_id = $pay_account->default_proxy_group_id;
