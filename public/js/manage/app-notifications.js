@@ -3040,6 +3040,12 @@ __webpack_require__.r(__webpack_exports__);
         return key + '=' + params[key];
       }).join('&');
       return queryString;
+    },
+    getUrl: function getUrl() {
+      if (this.app_info && this.app_info.public_url) {
+        return (this.app_info.is_https ? 'https://' : 'http://') + (this.app_info.is_default ? this.app_info.www : this.app_info.public_url) + '/manage';
+      }
+      return '#';
     }
   },
   mounted: function mounted() {
@@ -3144,7 +3150,7 @@ var render = function render() {
   return _vm.app_info ? _c("a", {
     "class": "btn btn-app mx-1 mb-1 " + (_vm.app_info.name == _vm.current_app_name ? "bg-gray" : ""),
     attrs: {
-      href: (_vm.app_info.is_https ? "https://" : "http://") + _vm.app_info.public_url + "/manage"
+      href: _vm.getUrl()
     }
   }, [_c("div", {
     staticClass: "badge mr-1"
