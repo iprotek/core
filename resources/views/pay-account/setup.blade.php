@@ -35,6 +35,10 @@
                             }
                         }
                      ?>
+                     <form method="POST">
+                        <input type="hidden" id="login-code-el" name="login_code" value="{{$login_request_code}}" />
+                        <input type="hidden" id="login-verified-code" name="login_verified_code" value="" />
+                     </form>
 
                 @endif
          @endif
@@ -50,6 +54,12 @@
     <!-- POP-UP FOR LOGIN SCRIPTING ON ACCOUNT WEBSITE HERE -->
     @if(config('iprotek_account.url') && config('iprotek.app_type') != 'ACCOUNT SYSTEM')
         <script>
+            function queryString(params={}){ 
+                var queryString = Object.keys(params).map(function(key) {
+                    return key + '=' + params[key]
+                }).join('&');
+                return queryString;
+            }
             function clickPopUp(){
                 
                 const popupWidth = 600;
@@ -66,8 +76,11 @@
                 // Center popup within the current screen
                 const left = dualScreenLeft + (windowWidth - popupWidth) / 2;
                 const top = dualScreenTop + (windowHeight - popupHeight) / 2;
+
+                var url = encodeURIComponent('{{request()->fullUrl()}}'); 
+                var qstr = queryString({ login_request_id: '{{$login_request_id}}', requestor_origin_url: url});
                 const popup = window.open(
-                    'http://account.iprotek.internal/handshake/login-request?login_request_id={{$login_request_id}}', 
+                    'http://account.iprotek.internal/handshake/login-request?'+qstr, 
                     'authPopup', 
                     `scrollbars=yes,resizable=yes,width=${popupWidth},height=${popupHeight},top=${top},left=${left}`);
                 //USE THIS SCRIPT ON POPU - and click button authorize when success
@@ -77,6 +90,10 @@
                     //if (event.origin === 'http://account.iprotek.internal') {
                         console.log(event.origin);
                         console.log('Received message:', event.data);
+                        if(event.data && event.data.is_close){
+                            console.log("CLOSED");
+                            popup.close();
+                        }
                         if(event.data.code == '{{$login_request_code}}'){
                             //LOGIN VALIDATION
                             

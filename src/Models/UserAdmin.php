@@ -117,4 +117,19 @@ class UserAdmin extends Model
 
 
     }
+
+    public function current_pay_account(){
+        
+        if(auth()->check()){
+            $session_id = session()->getId();
+            if($session_id){
+                return $this->hasOne(UserAdminPayAccount::class,'user_admin_id')->where('browser_session_id', $session_id);
+            }
+        }
+        return $this->hasOne(UserAdminPayAccount::class,'user_admin_id')->orderBy('id', 'DESC');
+    }
+
+
+
+
 }
