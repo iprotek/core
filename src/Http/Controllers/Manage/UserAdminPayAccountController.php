@@ -97,11 +97,7 @@ class UserAdminPayAccountController extends _CommonController
 
         }
 
-
         //JUST ADD
-
-
-        
 
         //FORCE TO LOGIN
         $user = \iProtek\Core\Models\Auths\Admin::find($set_user_admin->id);
@@ -125,7 +121,28 @@ class UserAdminPayAccountController extends _CommonController
                     $restrict->save();
                 }
             }
+            else{
+                SuperAdminSubAccount::create([
+                    "email"=>$sub_account["email"],
+                    "user_type"=>$sub_account["user_type"],
+                    "sub_account_group_id"=>$sub_account["sub_account_group_id"]
+                ]);
+            }
         }
+
+        
+        $account_info = [
+            "pay_account_id"=>$pay_account['pay_app_user_account_id'],
+            "default_proxy_group_id"=>$sub_account ? 0 : $pay_account["default_proxy_group_id"],
+            "own_proxy_group_id"=>$pay_account["own_proxy_group_id"],
+            "email"=>$pay_account["email"],
+            "access_token"=>$pay_account["access_token"],
+            "refresh_token"=>$pay_account["refresh_token"],
+            "sub_account_group_id"=>$sub_account ? $sub_account["sub_account_group_id"] : $pay_account["sub_account_group_id"]
+
+        ];
+
+        UserAdminHelper::create_pay_account($set_user_admin->id, session()->getId(), $account_info);
 
 
         return redirect()->intended();
@@ -229,7 +246,6 @@ class UserAdminPayAccountController extends _CommonController
         //if(!$pay_account){
 
         $account_info = [
-            "sub_account"=>$sub_account,
             "pay_account_id"=>$result['id'],
             "default_proxy_group_id"=>$sub_account ? 0 : $result["own_group"]['id'],
             "own_proxy_group_id"=>$result["own_group"]['id'],

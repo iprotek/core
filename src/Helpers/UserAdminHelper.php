@@ -5,6 +5,7 @@ namespace iProtek\Core\Helpers;
 use DB;
 use iProtek\Core\Models\UserAdmin;
 use iProtek\Core\Models\UserAdminPayAccount;
+
 class UserAdminHelper
 {
     public static function create_account($name, $email){
@@ -41,8 +42,6 @@ class UserAdminHelper
 
     public static function create_pay_account($user_admin_id, $session_id, array $info){
 
-        $sub_account = $info["sub_account"];
-        
         $pay_account = UserAdminPayAccount::create([
             "browser_session_id"=>$session_id,
             "user_admin_id"=>$user_admin_id,
@@ -57,5 +56,17 @@ class UserAdminHelper
 
         return $pay_account;
 
+    }
+
+    public static function get_current_pay_account($user_admin_id, $is_default=true){
+        $pay_account = null;
+        if(auth()->check()){
+            $session_id = session()->getId();
+            if($session_id)
+                $pay_account = UserAdminPayAccount::where(['user_admin_id'=>$user_admin_id, 'browser_session_id'=>$session_id])->first();
+        }
+        if(!$pay_account && $is_default )
+           return UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
+        return null;
     }
 }
