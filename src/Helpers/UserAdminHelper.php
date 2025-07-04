@@ -4,6 +4,7 @@ namespace iProtek\Core\Helpers;
 
 use DB;
 use iProtek\Core\Models\UserAdmin;
+use iProtek\Core\Models\UserAdminPayAccount;
 class UserAdminHelper
 {
     public static function create_account($name, $email){

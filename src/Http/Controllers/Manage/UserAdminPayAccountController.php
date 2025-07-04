@@ -240,7 +240,6 @@ class UserAdminPayAccountController extends _CommonController
 
         ];
 
-
         UserAdminHelper::create_pay_account($user_admin->id, session()->getId(), $account_info);
         /*
             $pay_account = UserAdminPayAccount::create([
