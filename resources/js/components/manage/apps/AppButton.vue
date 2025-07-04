@@ -41,7 +41,7 @@
 
         },
         mounted:function(){ 
-            console.log("AppButton mounted", this.app_info);
+            //console.log("AppButton mounted", this.app_info);
             if(this.app_info){
                 if(this.app_info.defaults && this.app_info.defaults.title){
                     this.title = this.app_info.defaults.title;
