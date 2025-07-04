@@ -85,20 +85,22 @@
                     `scrollbars=yes,resizable=yes,width=${popupWidth},height=${popupHeight},top=${top},left=${left}`);
                 //USE THIS SCRIPT ON POPU - and click button authorize when success
                 //window.opener.postMessage({ token: 'abc123' }, 'http://your-main-app.internal');
-
+                window.isTriggered = false;
                 window.addEventListener('message', (event) => {
+                        if(window.isTrigger) return;
+                        window.isTrigger = true;
                     //if (event.origin === 'http://account.iprotek.internal') {
                         console.log(event.origin);
                         console.log('Received message:', event.data);
-                        if(event.data && event.data.is_close){
-                            console.log("CLOSED");
-                            popup.close();
-                        }
                         if(event.data.code == '{{$login_request_code}}'){
                             //LOGIN VALIDATION
                             
 
 
+                        }
+                        if(event.data && event.data.is_close){
+                            console.log("CLOSED");
+                            popup.close();
                         }
                     //}
                 });
