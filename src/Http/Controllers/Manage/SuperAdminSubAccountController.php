@@ -5,7 +5,6 @@ namespace iProtek\Core\Http\Controllers\Manage;
 use Illuminate\Http\Request;
 use iProtek\Core\Http\Controllers\_Common\_CommonController;
 use iProtek\Core\Models\BillingSuperAdminSubAccount;
-use iProtek\Core\Models\BillingUserAdminPayAccount;
 use iProtek\Core\Models\UserAdmin;
 use iProtek\Core\Models\UserAdminInfo;
 use Illuminate\Support\Facades\Hash;
@@ -192,7 +191,8 @@ class SuperAdminSubAccountController extends _CommonController
     public function post_sub_account_default_group(Request $request){
 
         $user = auth()->user();
-        $pay_account = BillingUserAdminPayAccount::where('email', $user->email)->first();
+        $user_admin_id = $user->id;
+        $pay_account = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account($user_admin_id);
 
         if($pay_account){
             //BillingSuperAdminSubAccount

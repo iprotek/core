@@ -6,7 +6,6 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use iProtek\Core\Models\UserAdminPayAccount;
 use Illuminate\Support\Facades\Session;
 use iProtek\Core\Helpers\PayGroup;
 

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use iProtek\Core\Http\Controllers\_Common\_CommonController; 
 use DB;
 use iProtek\Core\Helpers\PayGroup;
-use iProtek\Core\Models\UserAdminPayAccount;
 
 class SettingController extends _CommonController
 {
