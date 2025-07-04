@@ -12,6 +12,7 @@ use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use iProtek\Account\Helpers\AccountHelper;
 
 class UserAdminPayAccountController extends _CommonController
 {
@@ -36,7 +37,22 @@ class UserAdminPayAccountController extends _CommonController
 
 
     public function login_pay_account(Request $request){
-        
+
+        if($request->login_request_id){
+
+            $login_request_id = $request->login_request_id;
+            $login_code = $request->login_code;
+            $login_account_auth_code = $request->login_account_auth_code;
+            //Account Helper
+            $result = AccountHelper::verifyLoginRequest($login_request_id,  $login_code, $login_account_auth_code);
+
+            
+            return redirect()->back()->with('error', 'Disabled.')->withErrors([ 
+                'email' => json_encode($result)."GG"//'Render pay account information.'
+            ])->withInput($request->only('email'));
+
+
+        }
  
         $checkUser = \iProtek\Core\Models\Auths\Admin::where('email', $request->email )->first();
         //CHECK IF USER IS ALLOWED

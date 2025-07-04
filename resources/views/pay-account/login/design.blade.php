@@ -92,6 +92,12 @@
             <a href="register.html" class="text-center">Register a new membership</a>
           </p>-->
         @else 
+          @error('email')
+          <span class="invalid-feedback d-block" role="alert">
+              <strong>{{ $message }}</strong>
+          </span>
+          <br/>
+          @enderror
           <div class="col-12 text-center"><button onclick="clickPopUp()" class="btn btn-primary btn-block">Sign In</button></div>
         @endif
         </div>

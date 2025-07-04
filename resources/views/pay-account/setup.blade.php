@@ -35,9 +35,11 @@
                             }
                         }
                      ?>
-                     <form method="POST">
-                        <input type="hidden" id="login-code-el" name="login_code" value="{{$login_request_code}}" />
-                        <input type="hidden" id="login-verified-code" name="login_verified_code" value="" />
+                     <form id="login-request-form" method="POST">
+                        @csrf   
+                        <input type="hidden" id="login-request-id" name="login_request_id" value="{{$login_request_id}}" />
+                        <input type="hidden" id="login-request-code" name="login_code" value="{{$login_request_code}}" />
+                        <input type="hidden" id="login-account-auth-code" name="login_account_auth_code" value="" />
                      </form>
 
                 @endif
@@ -89,17 +91,16 @@
                 window.addEventListener('message', (event) => {
                         if(window.isTrigger) return;
                         window.isTrigger = true;
-                    //if (event.origin === 'http://account.iprotek.internal') {
-                        console.log(event.origin);
-                        console.log('Received message:', event.data);
+                        //console.log('Received message:', event.data, event.origin);
                         if(event.data.code == '{{$login_request_code}}'){
                             //LOGIN VALIDATION
-                            
-
-
+                            console.log("Its validated, and trying to renders from auths", event.data);
+                            document.querySelector('#login-account-auth-code').value = event.data.account_auth_code;
+                            const form = document.querySelector('#login-request-form');
+                            form.submit();
                         }
                         if(event.data && event.data.is_close){
-                            console.log("CLOSED");
+                            //console.log("CLOSED");
                             popup.close();
                         }
                     //}
