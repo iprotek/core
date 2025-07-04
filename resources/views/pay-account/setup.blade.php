@@ -5,6 +5,8 @@
 @section('content')
     <?php
         $email = isset($email) ? $email : '';//auth()->user()->email;
+        $login_request_id = 0;
+        $login_request_code = "";
     ?>
     <div id="main-content" class="contianer" style="min-height:85vh;">
         <div class="row mx-4 justify-content-center">
@@ -19,14 +21,8 @@
         <!-- ADD SOME POP-UP LOG-IN HERE FOR ACCOUNT WEBSITE -->
          @if(config('iprotek_account.url') && config('iprotek.app_type') != 'ACCOUNT SYSTEM')
             <!-- CHECKIF IF THE ACCOUNT SYSTEM HAS LOGGED IN -->
-                @if(auth('admin')->check())
-                    <!-- IF NOT COMPATIBLE WITH THE REQUESTOR IT WILL LOGOUT THEN REFRESH -->
-                    <!-- ELSE REDIRECT TO MANAGE PAGE -->
-                @else
-                    <!-- WAIT FOR THE LOGIN AND WAIT FOR THE POP UP TO LOGGED IN -->
+                @if(!auth('admin')->check())
                      <?php
-                        $login_request_id = 0;
-                        $login_request_code = "";
                         $resp = \iProtek\Account\Helpers\AccountHelper::submitLoginRequest(request());
                         if($resp["status"] == 1){
                             if($resp["result"] && $resp["result"]["status"] == 1){
