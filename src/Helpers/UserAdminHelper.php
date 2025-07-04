@@ -6,7 +6,7 @@ use DB;
 use iProtek\Core\Models\UserAdmin;
 class UserAdminHelper
 {
-    public function create_account($name, $email){
+    public static function create_account($name, $email){
         
         $userAdmin = UserAdmin::create([
             'name' => $name,//Str::random(10),
@@ -38,7 +38,7 @@ class UserAdminHelper
 
     }
 
-    public function create_pay_account($user_admin_id, $session_id, array $info){
+    public static function create_pay_account($user_admin_id, $session_id, array $info){
 
         $sub_account = $info["sub_account"];
         
