@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use iProtek\Account\Helpers\AccountHelper;
+use iProtek\Core\Helpers\UserAdminHelper;
 
 class UserAdminPayAccountController extends _CommonController
 {
@@ -36,21 +37,106 @@ class UserAdminPayAccountController extends _CommonController
     }
 
 
+    public function login_account_provider(Request $request){
+
+
+        $login_request_id = $request->login_request_id;
+        $login_code = $request->login_code;
+        $login_account_auth_code = $request->login_account_auth_code;
+        //Account Helper
+        $result = AccountHelper::verifyLoginRequest($login_request_id,  $login_code, $login_account_auth_code);
+
+        $err_message = "";
+        $user_admin = null;
+        $pay_account = null;
+        $sub_account = null;
+        if($result && $result["status"] == 1){                
+            
+            $auth_result = $result["result"];
+
+            if($auth_result && $auth_result["status"] == 1){
+
+                //$err_message = $auth_result["message"];
+                $user_admin = $auth_result["user_admin"];
+                $pay_account = $auth_result["pay_account"];
+                $sub_account = $auth_result["sub_account"];
+
+
+
+            }
+            else if($auth_result && $auth_result["message"]){
+                $err_message = $auth_result["message"];
+            }
+            else{
+                $err_message = "Something goes wrong(2)";
+            }
+
+            if(!$user_admin || !$pay_account){
+                $err_message = "Something goes wrong rendering the account info(2)";
+            }
+
+        }
+        else{
+            $err_message = "Something is wrong with your account provider";
+        }
+
+        if($err_message){
+            return redirect()->back()->with('error', 'Disabled.')->withErrors([ 
+                'email' => $err_message//'Render pay account information.'
+            ])->withInput($request->only('email'));
+        }
+
+        //CHECK USER ADMIN IF EXISTS BY EMAIL
+        $set_user_admin = UserAdmin::where('email', $user_admin["email"])->first();
+        //IF NOT ADD AND ADD INFO
+        if(!$set_user_admin){        
+            $set_user_admin = UserAdminHelper::create_account($name, $email);
+        }
+        //ELSE UPDATE
+        else{
+
+        }
+
+
+        //JUST ADD
+
+
+        
+
+        //FORCE TO LOGIN
+        $user = \iProtek\Core\Models\Auths\Admin::find($set_user_admin->id);
+
+        //CHECK IF USER HAS BRANCH ACCESS
+        Auth::login($user, true);
+
+
+        //CONFIGURE ITS SUBACCOUNT SETTINGS
+        //SUBACCOUNT FEATURE
+        if($sub_account){
+            $sub_account_group_id = null; 
+            $sub_account = SuperAdminSubAccount::where('email', $user->email)->first();
+            if($sub_account)
+            {
+                $sub_account_group_id = $sub_account->sub_account_group_id;
+
+                $restrict = UserAdmin::where('email', $user->email)->first();
+                if($restrict){
+                    $restrict->user_type = 2;
+                    $restrict->save();
+                }
+            }
+        }
+
+
+        return redirect()->intended();
+    }
+
+
     public function login_pay_account(Request $request){
 
         if($request->login_request_id){
 
-            $login_request_id = $request->login_request_id;
-            $login_code = $request->login_code;
-            $login_account_auth_code = $request->login_account_auth_code;
-            //Account Helper
-            $result = AccountHelper::verifyLoginRequest($login_request_id,  $login_code, $login_account_auth_code);
-
-            
-            return redirect()->back()->with('error', 'Disabled.')->withErrors([ 
-                'email' => json_encode($result)."GG"//'Render pay account information.'
-            ])->withInput($request->only('email'));
-
+            return $this->login_account_provider($request);
 
         }
  
@@ -117,39 +203,14 @@ class UserAdminPayAccountController extends _CommonController
         $name = $result['name'];
         $userAdmin = UserAdmin::where('email', $result['email'])->first();
         if(!$userAdmin){
-            $userAdmin = UserAdmin::create([
-                'name' => $name,//Str::random(10),
-                'username' => $email,
-                'email' => $email,
-                'company_id'=> $email,
-                'password' => bcrypt('12345'),
-                'is_verified'=>-1,
-                'user_type'=>0,
-                'region'=>'PH',
-                'is_protected'=>1
-            ]);
-            DB::table('user_admin_infos')->insert([
-                'user_admin_id' => $userAdmin->id,//Str::random(10),
-                'company_id' => '12345',
-                'first_name' => 'N/A',
-                'middle_name'=> '',
-                'last_name' => 'N/A',
-                'position'=>'N/A',
-                'department'=>'N/A',
-                'line'=>'N/A',
-                'factory'=>'PH',
-                'is_active'=>1,
-                'status_id'=>1,
-                'region'=>'PH'
-            ]);
-
+            $userAdmin = UserAdminHelper::create_account($name, $email);
         }
         $user = \iProtek\Core\Models\Auths\Admin::find($userAdmin->id);
 
         //CHECK IF USER HAS BRANCH ACCESS
         Auth::login($user, true);
 
-        
+        //SUBACCOUNT FEATURE
         $sub_account_group_id = null; 
         $sub_account = SuperAdminSubAccount::where('email', $user->email)->first();
         if($sub_account)
@@ -162,11 +223,26 @@ class UserAdminPayAccountController extends _CommonController
               $restrict->save();
            }
         }
-
         
         $user_admin = auth()->user();
         //$pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user_admin->id])->first();
         //if(!$pay_account){
+
+        $account_info = [
+            "sub_account"=>$sub_account,
+            "pay_account_id"=>$result['id'],
+            "default_proxy_group_id"=>$sub_account ? 0 : $result["own_group"]['id'],
+            "own_proxy_group_id"=>$result["own_group"]['id'],
+            "email"=>$email,
+            "access_token"=>$access_token,
+            "refresh_token"=>$refresh_token,
+            "sub_account_group_id"=>$sub_account ? $sub_account->sub_account_group_id : null
+
+        ];
+
+
+        UserAdminHelper::create_pay_account($user_admin->id, session()->getId(), $account_info);
+        /*
             $pay_account = UserAdminPayAccount::create([
                 "browser_session_id"=>session()->getId(),
                 "user_admin_id"=>$user_admin->id,
@@ -178,6 +254,7 @@ class UserAdminPayAccountController extends _CommonController
                 "refresh_token"=>$refresh_token,
                 "sub_account_group_id"=>$sub_account_group_id
             ]);
+        */
         //}
         //else{
         /*

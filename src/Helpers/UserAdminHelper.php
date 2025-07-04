@@ -1,0 +1,60 @@
+<?php
+
+namespace iProtek\Core\Helpers;
+
+use DB;
+use iProtek\Core\Models\UserAdmin;
+class UserAdminHelper
+{
+    public function create_account($name, $email){
+        
+        $userAdmin = UserAdmin::create([
+            'name' => $name,//Str::random(10),
+            'username' => $email,
+            'email' => $email,
+            'company_id'=> $email,
+            'password' => bcrypt('12345'),
+            'is_verified'=>-1,
+            'user_type'=>0,
+            'region'=>'PH',
+            'is_protected'=>1
+        ]);
+        DB::table('user_admin_infos')->insert([
+            'user_admin_id' => $userAdmin->id,//Str::random(10),
+            'company_id' => $email,
+            'first_name' => 'N/A',
+            'middle_name'=> '',
+            'last_name' => 'N/A',
+            'position'=>'N/A',
+            'department'=>'N/A',
+            'line'=>'N/A',
+            'factory'=>'PH',
+            'is_active'=>1,
+            'status_id'=>1,
+            'region'=>'PH'
+        ]);
+
+        return $userAdmin;
+
+    }
+
+    public function create_pay_account($user_admin_id, $session_id, array $info){
+
+        $sub_account = $info["sub_account"];
+        
+        $pay_account = UserAdminPayAccount::create([
+            "browser_session_id"=>$session_id,
+            "user_admin_id"=>$user_admin_id,
+            "default_proxy_group_id"=> $info["default_proxy_group_id"],
+            "pay_app_user_account_id"=>$info['pay_account_id'],
+            "own_proxy_group_id"=>$info["own_proxy_group_id"],
+            "email"=>$info["email"],
+            "access_token"=>$info["access_token"],
+            "refresh_token"=>$info["refresh_token"],
+            "sub_account_group_id"=>$info["sub_account_group_id"]
+        ]);
+
+        return $pay_account;
+
+    }
+}
