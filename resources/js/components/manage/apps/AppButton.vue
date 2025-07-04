@@ -1,5 +1,5 @@
 <template>
-    <a v-if="app_info" :class="'btn btn-app mx-1 mb-1 '+(app_info.name == current_app_name ? 'bg-gray' : '') ">
+    <a :href="(app_info.is_https ? 'https://':'http://')+app_info.public_url+'/manage' " v-if="app_info" :class="'btn btn-app mx-1 mb-1 '+(app_info.name == current_app_name ? 'bg-gray' : '') ">
         <div class="badge mr-1">
             <small v-if="app_info.notifications.info" class="bg-info p-1 rounded-2" v-text="app_info.notifications.info"></small>
             <small v-if="app_info.notifications.warning" class="bg-warning p-1 rounded-2" v-text="app_info.notifications.warning"></small>
@@ -34,6 +34,7 @@
 
         },
         mounted:function(){ 
+            console.log("AppButton mounted", this.app_info);
             if(this.app_info){
                 if(this.app_info.defaults && this.app_info.defaults.title){
                     this.title = this.app_info.defaults.title;
