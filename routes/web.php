@@ -50,7 +50,7 @@ Route::middleware('web')->group(function(){
   include(__DIR__.'/manage/guest-chat.php'); 
 
     
-  Route::prefix('manage')->middleware(['auth'])->name('manage')->group(function(){
+  Route::prefix('manage')->middleware(['auth:admin'])->name('manage')->group(function(){
     
     Route::middleware(['auth_web_pay_checker', 'pay.account'])->group(function(){
 
