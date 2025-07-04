@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use iProtek\Core\Helpers\GuestChat\GuestChatHelper;
 use iProtek\Core\Helpers\GuestChat\GuestChatContentHelper;
 use iProtek\Core\Http\Controllers\_Common\_CommonController;
+use iProtek\Core\Helpers\UserAdminHelper;
 
 class GuestChatController extends _CommonController
 {
@@ -55,8 +56,8 @@ class GuestChatController extends _CommonController
         }
         $pay_account_id = 0;
         if(auth('admin')->check()){
-            $user_id = auth('admin')->user()->id;
-            $pay_account = \iProtek\Core\Models\UserAdminPayAccount::where('user_admin_id', $user_id)->first();
+            $user_id = auth('admin')->user()->id;            
+            $pay_account = UserAdminHelper::get_current_pay_account($user_id);
             if($pay_account){
                 $pay_account_id = $pay_account->pay_app_user_account_id;
             }

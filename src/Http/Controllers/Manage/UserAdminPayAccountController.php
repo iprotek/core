@@ -241,10 +241,7 @@ class UserAdminPayAccountController extends _CommonController
            }
         }
         
-        $user_admin = auth()->user();
-        //$pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user_admin->id])->first();
-        //if(!$pay_account){
-
+        $user_admin = auth()->user(); 
         $account_info = [
             "pay_account_id"=>$result['id'],
             "default_proxy_group_id"=>$sub_account ? 0 : $result["own_group"]['id'],
@@ -256,39 +253,13 @@ class UserAdminPayAccountController extends _CommonController
 
         ];
 
-        UserAdminHelper::create_pay_account($user_admin->id, session()->getId(), $account_info);
-        /*
-            $pay_account = UserAdminPayAccount::create([
-                "browser_session_id"=>session()->getId(),
-                "user_admin_id"=>$user_admin->id,
-                "default_proxy_group_id"=> $sub_account ? 0 : $result["own_group"]['id'],
-                "pay_app_user_account_id"=>$result['id'],
-                "own_proxy_group_id"=>$result["own_group"]['id'],
-                "email"=>$request->email,
-                "access_token"=>$access_token,
-                "refresh_token"=>$refresh_token,
-                "sub_account_group_id"=>$sub_account_group_id
-            ]);
-        */
-        //}
-        //else{
-        /*
-        $pay_account->user_admin_id = $user_admin->id;
-        $pay_account->default_proxy_group_id =  $sub_account ? 0 : $result["own_group"]['id'];
-        $pay_account->pay_app_user_account_id = $result['id'];
-        $pay_account->own_proxy_group_id = $result["own_group"]['id'];
-        $pay_account->email = $request->email;
-        $pay_account->access_token = $access_token;
-        $pay_account->refresh_token = $refresh_token;
-        $pay_account->sub_account_group_id = $sub_account_group_id;
-        $pay_account->save();
-        */
-        //}
+        UserAdminHelper::create_pay_account($user_admin->id, session()->getId(), $account_info); 
 
         return redirect()->intended();
 
         return redirect('/manage');//->route('manage');
     }
+    
     /*
     public function view_forgot_password(Request $request){
         return view('pay-account.request-password');

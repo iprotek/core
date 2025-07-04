@@ -24,9 +24,8 @@ class SettingController extends _CommonController
         $proxy_group_id = $request->proxy_group_id;
         PayGroup::setGroupId($proxy_group_id);
     
-        $admin_id = auth()->user()->id;
-        
-        $billing_user_admin = UserAdminPayAccount::where(["user_admin_id"=>$admin_id])->first();
+        $user_admin_id = auth()->user()->id;
+        $billing_user_admin = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account($user_admin_id);
         $billing_user_admin->default_proxy_group_id = $proxy_group_id;
         $billing_user_admin->save();
 

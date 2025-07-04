@@ -28,7 +28,8 @@ class PayAppUserAccount
              return redirect('/login');//->route('login');
          }
          $user = auth()->user();
-         $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+         $user_admin_id = $user->id;
+         $pay_account = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account($user_admin_id);
          if(!$pay_account){
             
             return redirect()->route('login')->with('error', 'Please ')->withErrors([ 

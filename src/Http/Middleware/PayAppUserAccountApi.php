@@ -26,7 +26,8 @@ class PayAppUserAccountApi
         $bearerToken = $request->bearerToken() ?: "";
         if(!$bearerToken && auth()->check()){
             $user = auth()->user();
-            $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first();
+            $user_admin_id = $user->id;
+            $pay_account = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account($user_admin_id);
             if(!$pay_account){
                 abort(403, 'Forbidden Access2');
             }

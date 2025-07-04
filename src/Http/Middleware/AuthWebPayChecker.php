@@ -29,8 +29,9 @@ class AuthWebPayChecker
         }
         \iProtek\Core\Helpers\PayHttp::client(); 
          $user = auth()->user();
-         $pay_account = UserAdminPayAccount::where(["user_admin_id"=>$user->id])->first(); 
-
+         $user_admin_id = $user->id;
+         $pay_account = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account($user_admin_id);
+         
         //Check if account is sub account
         if($pay_account){
             $sub_account = SuperAdminSubAccount::where(['email'=>$pay_account->email])->first();
