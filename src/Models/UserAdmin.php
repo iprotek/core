@@ -126,6 +126,7 @@ class UserAdmin extends Model
                 return $this->hasOne(UserAdminPayAccount::class,'user_admin_id')->where('browser_session_id', $session_id);
             }
         }
+        
         return $this->hasOne(UserAdminPayAccount::class,'user_admin_id')->orderBy('id', 'DESC');
     }
 

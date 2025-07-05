@@ -5,6 +5,7 @@ namespace iProtek\Core\Helpers;
 use DB;
 use iProtek\Core\Models\UserAdmin;
 use iProtek\Core\Models\UserAdminPayAccount;
+use Illuminate\Support\Facades\Log;
 
 class UserAdminHelper
 {
@@ -71,5 +72,33 @@ class UserAdminHelper
         if(!$pay_account && $is_default )
            return UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
         return null;
+    }
+
+    public static function renew_pay_account_session($new_session_id, $old_session_id){
+        if(auth('admin')->check() && $new_session_id){
+            
+            //Log::error("Checking...");
+            
+            $user_admin_id = auth('admin')->user()->id;
+
+            $checkExists = UserAdminPayAccount::where(['browser_session_id'=>$new_session_id, 'user_admin_id'=>$user_admin_id])->first();
+            if(!$checkExists && $old_session_id){
+                $pay_account = UserAdminPayAccount::where(['browser_session_id'=>$old_session_id, 'user_admin_id'=>$user_admin_id])->first();
+                if($pay_account){
+                    $new_pay_account = $pay_account->replicate(); 
+                    $new_pay_account->browser_session_id = $new_session_id;
+                    $new_pay_account->save();
+                    //Log::error("Created new...");
+                }
+                else{                    
+                    //Log::error("Not exists pay account...");
+                }
+            }
+            else{
+                //Log::error("Already existed...");
+            }
+
+
+        }
     }
 }

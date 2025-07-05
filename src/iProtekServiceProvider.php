@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Console\Scheduling\Schedule;
 
+use Illuminate\Support\Facades\Event;
+use Illuminate\Session\Events\SessionRegenerated;
+use iProtek\Core\Listeners\LogSessionRegeneration;
+
 class iProtekServiceProvider extends ServiceProvider
 {
     /**
@@ -31,6 +35,10 @@ class iProtekServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Event::listen(
+            SessionRegenerated::class,
+            [LogSessionRegeneration::class, 'handle']
+        );
 
         //DEFAULT SETTINGS    
         Blueprint::macro('iprotekDefaultColumns', function () {
