@@ -62,8 +62,11 @@ class UserAdminHelper
         $pay_account = null;
         if(auth()->check()){
             $session_id = session()->getId();
-            if($session_id)
-               return UserAdminPayAccount::where(['user_admin_id'=>$user_admin_id, 'browser_session_id'=>$session_id])->first();
+            if($session_id){
+                $pay_account = UserAdminPayAccount::where(['user_admin_id'=>$user_admin_id, 'browser_session_id'=>$session_id])->first();
+                if($pay_account)
+                    return $pay_account;
+            }
         }
         if(!$pay_account && $is_default )
            return UserAdminPayAccount::where('user_admin_id', $user_admin_id)->first();
