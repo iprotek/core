@@ -2,7 +2,7 @@
     <div>
         <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="fas fa-th-large"></i>
-            <span class="badge badge-warning navbar-badge" > ? </span>
+            <span v-if="error_count" class="badge badge-warning navbar-badge" v-text="error_count" > </span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <a class="dropdown-item py-0 text-center text-sm text-black">
@@ -18,7 +18,7 @@
              <!-- MGMT( Administrator ONLY ) -->
                 <div class="text-center px-1 pt-1 pb-0">
                     <span v-for="free_app in free_apps" v-bind:key="'free-app'+free_app.id">
-                        <app-button v-bind:app_info="free_app" v-bind:group_id="group_id" :current_app_name="current_app_name" ></app-button>
+                        <app-button v-bind:app_info="free_app" v-bind:group_id="group_id" :current_app_name="current_app_name" :pay_account_id="pay_account_id" ></app-button>
                     </span>
                 </div>
             <div class="dropdown-divider"></div>
@@ -31,7 +31,7 @@
             </a>
             <div v-if="current_app_name" class="text-center px-1 pt-1 pb-0">
                 <span v-for="other_app in other_apps" v-bind:key="'other-app'+other_app.id">
-                    <app-button v-bind:app_info="other_app" v-bind:group_id="group_id"  :current_app_name="current_app_name"></app-button>
+                    <app-button v-bind:app_info="other_app" v-bind:group_id="group_id"  :current_app_name="current_app_name" :pay_account_id="pay_account_id"></app-button>
                 </span>
             </div>
             <div class="dropdown-divider"></div>
@@ -48,7 +48,7 @@
 <script>
     import AppButton from './AppButton.vue';
     export default {
-        props:[ "group_id","app_name","current_app_name" ],
+        props:[ "group_id", "pay_account_id", "app_name","current_app_name" ],
         components: {
             "app-button": AppButton
         },
@@ -56,7 +56,8 @@
             
         },
         data: function () {
-            return {    
+            return { 
+                error_count:0,
                 summary:{
                     isLoadSummary:false,
                     summaryList:[],

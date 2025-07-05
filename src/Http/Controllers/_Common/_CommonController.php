@@ -186,14 +186,16 @@ class _CommonController extends BaseController
         $user_admin_id = $user->id;
         $pay_account = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account($user_admin_id);            
         $group_id = 0;
+        $pay_account_id = 0;
         if($pay_account){
             $group_id = $pay_account->default_proxy_group_id;
+            $pay_account_id = $pay_account->pay_app_user_account_id;
         }
 
         $selected_branch_id = \iProtek\Core\Helpers\BranchSelectionHelper::get();
        
 
-        return ["SIDEMENUS"=>$sidemenus, "USER"=>$user, "group_id"=>$group_id, "selected_branch_id"=>$selected_branch_id ];
+        return ["SIDEMENUS"=>$sidemenus, "pay_account_id"=>$pay_account_id, "USER"=>$user, "group_id"=>$group_id, "selected_branch_id"=>$selected_branch_id ];
     }
 
     public function loginpage()

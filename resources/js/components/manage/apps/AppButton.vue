@@ -12,7 +12,7 @@
 
 <script>
     export default {
-        props:[ "group_id", "app_info","current_app_name" ],
+        props:[ "group_id", "pay_account_id", "app_info","current_app_name" ],
         $emits:[],
         watch: { 
         },
@@ -34,7 +34,7 @@
 
             getUrl:function(){ 
                 if(this.app_info && this.app_info.public_url){
-                    return (this.app_info.is_https ? 'https://':'http://')+ ( this.app_info.is_default ? this.app_info.www : this.app_info.public_url )+'/manage';
+                    return (this.app_info.is_https ? 'https://':'http://')+ ( this.app_info.is_default ? this.app_info.www : this.app_info.public_url )+'/manage?account_id='+this.pay_account_id;
                 }
                 return '#';
             }
