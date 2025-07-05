@@ -50,6 +50,8 @@ class UserAdminPayAccountController extends _CommonController
         $user_admin = null;
         $pay_account = null;
         $sub_account = null;
+        $name = null;
+        $email= null;
         if($result && $result["status"] == 1){                
             
             $auth_result = $result["result"];
@@ -61,7 +63,8 @@ class UserAdminPayAccountController extends _CommonController
                 $pay_account = $auth_result["pay_account"];
                 $sub_account = $auth_result["sub_account"];
 
-
+                 $name = $user_admin["name"];
+                 $email = $user_admin["email"];
 
             }
             else if($auth_result && $auth_result["message"]){
