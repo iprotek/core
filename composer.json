@@ -29,6 +29,7 @@
         "iprotek/device":">=1.0.0",
         "iprotek/apps":">=1.0.0",
         "iprotek/account":">=1.0.0",
+        "iprotek/dbm":">=1.0.0",
         "pusher/pusher-php-server": "^7.2",
         "phpoffice/phpspreadsheet": "^3.8",
         "simplesoftwareio/simple-qrcode": "*",
