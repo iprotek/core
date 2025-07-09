@@ -44,14 +44,17 @@ class Kernel extends HttpKernel
         ],
         "customer"=>[ 
             \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+            \iProtek\Core\Http\Middleware\TrackSessionChanges::class,
         ],
         'api' => [            
             \iProtek\Core\Http\Middleware\EncryptCookies::class,
+            \iProtek\Core\Http\Middleware\TrackSessionChanges::class,
             'throttle:api',
             \Illuminate\Session\Middleware\StartSession::class,
         ],
         "web-visits"=>[
             \iProtek\Core\Http\Middleware\TrackVisitor::class,
+            \iProtek\Core\Http\Middleware\TrackSessionChanges::class
         ]   
     ];
 
