@@ -99,7 +99,7 @@ Route::middleware('web')->group(function(){
 
   
   if(config('app.debug') === true){
-      Route::get('current-users', function(Request $request){
+      Route::middleware(['auth:admin'])->get('current-users', function(Request $request){
           
           
           $user = \iProtek\Core\Models\UserAdmin::find(auth()->user()->id)->first();
