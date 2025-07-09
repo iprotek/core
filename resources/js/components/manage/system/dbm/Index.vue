@@ -42,7 +42,7 @@
                                     </template>
                                     <template slot="body"> 
                                         <div class="mt-1"> 
-                                            <div class="btn btn-outline-warning btn-lg">
+                                            <div class="btn btn-outline-warning btn-sm">
                                                 <span class="fa fa-cogs"></span> SETTINGS
                                             </div> 
                                         </div>
