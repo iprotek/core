@@ -97,6 +97,25 @@ Route::middleware('web')->group(function(){
 
   });
 
+  
+  if(config('app.debug') === true){
+      Route::get('current-users', function(Request $request){
+          
+          
+          $user = \iProtek\Core\Models\UserAdmin::find(auth()->user()->id)->first();
+          $pay_account = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account(auth()->user()->id, false);
+          return [
+              "session_id"=>session()->getId(),
+              "user"=>$user,
+              "pay"=>$pay_account,
+              "last_session"=>session('__previous_session_id')
+          ];
+
+
+          return \iProtek\Core\Models\UserAdmin::with(['current_pay_account'])->find(auth()->user()->id)->first();
+      });
+  }
+
 });
 
 include(__DIR__.'/api.php');

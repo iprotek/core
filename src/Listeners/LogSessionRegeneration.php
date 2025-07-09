@@ -29,11 +29,11 @@ class LogSessionRegeneration
         //
         //Log::error(session('__previous_session_id'));
         //Log::error(session()->getId());
-        /*
-        \Log::info('Session Regenerated', [
+        
+        \Log::error('Session Regenerated', [
             'old_id' => session('__previous_session_id'),
             'new_id' => session()->getId(),
         ]);
-        */
+        
     }
 }
