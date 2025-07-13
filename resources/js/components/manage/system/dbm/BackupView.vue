@@ -15,7 +15,7 @@
                 :is_loading="isLoading" 
                 :items="backupItems"
                 :url="url"
-                :search_placeholder="'Search Scheduler'"
+                :search_placeholder="'Search Backups'"
                 :json_filter="filters"
                 
                 @update:items="backupItems = $event"
