@@ -35,9 +35,15 @@ class iProtekServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Event::listen(
-            SessionRegenerated::class,
+        /*
+        \Illuminate\Support\Facades\Event::listen(
+            \Illuminate\Session\Events\SessionRegenerated\SessionRegenerated::class,
             [LogSessionRegeneration::class, 'handle']
+        );
+        */
+        \Illuminate\Support\Facades\Event::listen(
+            \Illuminate\Session\Events\SessionRegenerated\SessionRegenerated::class,
+            \iProtek\Core\Listeners\LogSessionRegeneration::class
         );
 
         //DEFAULT SETTINGS    

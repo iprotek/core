@@ -6,10 +6,10 @@
 
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-6"> 
+                        <div class="col-sm-4"> 
                             <p>DB Management information and details here..</p>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-8">
 
                             <div class="accordion" :id="'accordion-container-'+_uid">
                                 <accordion :accordionContainerId="'accordion-container-'+_uid">
@@ -18,9 +18,7 @@
                                     </template>
                                     <template slot="body"> 
                                         <div>
-                                            <div class="btn btn-outline-primary btn-sm">
-                                                CREATE BACKUP
-                                            </div>
+                                            <backup-view :branch_id="branch_id" :group_id="group_id"/>
                                         </div>
                                     </template>
                                 </accordion>
@@ -29,10 +27,8 @@
                                         <b>Restore</b>
                                     </template>
                                     <template slot="body"> 
-                                        <div class="mt-1">
-                                            <div class="btn btn-outline-info btn-sm">
-                                                RESTORE FROM BACKUP
-                                            </div>
+                                        <div>
+                                            <restore-view :branch_id="branch_id" :group_id="group_id"/>
                                         </div>
                                     </template>
                                 </accordion>
@@ -60,20 +56,28 @@
 </template>
 
 <script>
+    
     import AccordionVue from '../../../common/Accordion.vue';
+    import BackupViewVue from './BackupView.vue';
+    import RestoreViewVue from './RestoreView.vue';
+
     export default {
         props:[ "group_id", "branch_id" ],
         $emits:[],
         watch: { 
         },
         components: { 
-            "accordion":AccordionVue
+            "accordion":AccordionVue,
+            "backup-view":BackupViewVue,
+            "restore-view":RestoreViewVue
         },
         data: function () {
-            return {    
+            return { 
+
             }
         },
         methods: { 
+            
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {
                     return key + '=' + params[key]
