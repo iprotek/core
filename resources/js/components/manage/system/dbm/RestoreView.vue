@@ -4,7 +4,7 @@
             <button @click="restoreClick()" class="btn btn-outline-info btn-sm">
                 RESTORE FROM BACKUP
             </button>
-            <input type="file" accept=".sql">
+            <input :id="sql_file" type="file" accept=".sql">
             <div>
                 <small>
                     <code>**Please backup first before restoring</code>
@@ -14,7 +14,7 @@
         
         <div class="mt-1"> 
             <page-datatable 
-                ref="backup_page"
+                ref="restore_page"
                 :is_use_top_search="false" 
                 :is_loading="isLoading" 
                 :items="backupItems"
@@ -47,8 +47,8 @@
                             <td v-text="item.created_at"></td>
                             <td v-text="item.status_info"></td>
                             <td>
-                                <span v-if="item.is_restored" class="text-primary">Auto</span>
-                                <span v-else class="text-danger">Manual</span>
+                                <span v-if="item.is_restored" class="text-primary">Restored</span>
+                                <span v-else class="text-danger">Failed</span>
                             </td>
                             <td> 
                             </td>
@@ -78,7 +78,8 @@
                 isLoading:false,
                 backupItems:[],
                 url:"/api/group/"+this.group_id+"/system/dbm/restore-list",
-                filters:{}
+                filters:{},
+                sql_file:"file-"+this._uid
             }
         },
         methods: {
@@ -89,19 +90,31 @@
                 return queryString;
             },
             restoreClick:function(){
-                var vm = this;
-                this.$refs.swal_prompt.alert(
-                    'question',
-                    "Would you like to restore?", 
-                    "Confirm" , 
-                    "POST", 
-                    "/api/group/"+vm.group_id+"/system/dbm/restore-from-file", 
-                    "{}"
-                ).then(res=>{
-                    if(res.isConfirmed && res.value.status == 1){
-                        //vm.$emit('data_updated');
-                    }
-                });
+
+                var vm = this; 
+                const formData = new FormData();
+                var file = document.querySelector('#'+vm.sql_file).files[0];
+                //var file_ext = this.getFileExt(file.name);
+                formData.append('file', file);
+                var url = "/api/group/"+vm.group_id+"/system/dbm/restore-from-file";
+                
+                return  vm.$refs.swal_prompt.alert(
+                        'question', 
+                        "Restore from File?", 
+                        "Confirm" , 
+                        "POST", 
+                        url, 
+                        formData,
+                        null,
+                        "multipart/form-data"
+                    ).then(resp=>{
+                        if(resp.isConfirmed ){
+                            if(resp.value.status == 1){
+                                //vm.loadFileImportList();
+                                vm.$refs.restore_page.reloadPage();
+                            }
+                        } 
+                    }); 
             }
 
         },
