@@ -78,7 +78,7 @@
                 var url = encodeURIComponent('{{request()->fullUrl()}}'); 
                 var qstr = queryString({ login_request_id: '{{$login_request_id}}', requestor_origin_url: url});
                 const popup = window.open(
-                    'http://account.iprotek.internal/handshake/login-request?'+qstr, 
+                    '{{ config("iprotek_account.url") }}/handshake/login-request?'+qstr, 
                     'authPopup', 
                     `scrollbars=yes,resizable=yes,width=${popupWidth},height=${popupHeight},top=${top},left=${left}`);
                 //USE THIS SCRIPT ON POPU - and click button authorize when success
