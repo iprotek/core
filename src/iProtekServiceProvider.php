@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Session\Events\SessionRegenerated;
 use iProtek\Core\Listeners\LogSessionRegeneration;
 
+use Illuminate\Support\Facades\URL;
+
 class iProtekServiceProvider extends ServiceProvider
 {
     /**
@@ -41,6 +43,11 @@ class iProtekServiceProvider extends ServiceProvider
             [LogSessionRegeneration::class, 'handle']
         );
         */
+        if (config('session.secure')) {
+            URL::forceScheme('https');
+        }
+
+
         \Illuminate\Support\Facades\Event::listen(
             \Illuminate\Session\Events\SessionRegenerated\SessionRegenerated::class,
             \iProtek\Core\Listeners\LogSessionRegeneration::class
