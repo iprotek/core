@@ -147,6 +147,16 @@ class UserAdminPayAccountController extends _CommonController
 
         UserAdminHelper::create_pay_account($set_user_admin->id, session()->getId(), $account_info);
 
+        return $this->loginToIntended();
+    }
+
+    public function loginToIntended(){
+        
+        if(config('session.secure')){
+            $url = session('url.intended', '/');
+            $url = preg_replace('/^http:/i', 'https:', $url);
+            return redirect()->to($url);
+        }
 
         return redirect()->intended();
     }
@@ -258,9 +268,7 @@ class UserAdminPayAccountController extends _CommonController
 
         UserAdminHelper::create_pay_account($user_admin->id, session()->getId(), $account_info); 
 
-        return redirect()->intended();
-
-        return redirect('/manage');//->route('manage');
+        return $this->loginToIntended();
     }
     
     /*
