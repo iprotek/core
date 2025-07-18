@@ -31,6 +31,7 @@
                             }
                         }
                      ?>
+                     
                      <form id="login-request-form" method="POST">
                         @csrf   
                         <input type="hidden" id="login-request-id" name="login_request_id" value="{{$login_request_id}}" />
@@ -75,7 +76,7 @@
                 const left = dualScreenLeft + (windowWidth - popupWidth) / 2;
                 const top = dualScreenTop + (windowHeight - popupHeight) / 2;
 
-                var url = encodeURIComponent('{{request()->fullUrl()}}'); 
+                var url = encodeURIComponent('{{ config('session.secure') ? "https" : "http" }}://{{ request()->getHost() }}{{ request()->getRequestUri() }}'); 
                 var qstr = queryString({ login_request_id: '{{$login_request_id}}', requestor_origin_url: url});
                 const popup = window.open(
                     '{{ config("iprotek_account.url") }}/handshake/login-request?'+qstr, 
