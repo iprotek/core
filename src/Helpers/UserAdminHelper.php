@@ -75,7 +75,7 @@ class UserAdminHelper
     }
 
     public static function renew_pay_account_session($new_session_id, $old_session_id){
-        if(auth('admin')->check() && $new_session_id){
+        if(auth('admin')->check() && $new_session_id ){
             
             //Log::error("Checking...");
             
