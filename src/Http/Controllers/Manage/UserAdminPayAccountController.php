@@ -152,7 +152,7 @@ class UserAdminPayAccountController extends _CommonController
 
     public function loginToIntended(){
         
-        if(config('session.secure')){
+        if(config('session.secure') === true){
             $url = session('url.intended', '/');
             $url = preg_replace('/^http:/i', 'https:', $url);
             return redirect()->to($url);

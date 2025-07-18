@@ -43,7 +43,7 @@ class iProtekServiceProvider extends ServiceProvider
             [LogSessionRegeneration::class, 'handle']
         );
         */
-        if (config('session.secure')) {
+        if (config('session.secure') === true) {
             URL::forceScheme('https');
         }
 
