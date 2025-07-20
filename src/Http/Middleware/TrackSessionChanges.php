@@ -4,6 +4,7 @@ namespace iProtek\Core\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cookie;
 
 class TrackSessionChanges
 {
@@ -20,18 +21,31 @@ class TrackSessionChanges
                 //Log::error("NEW: ". $currentId." OLD: ".$lastId);
                 \iProtek\Core\Helpers\UserAdminHelper::renew_pay_account_session($currentId, $lastId);
             }
-            //Log::error("Curr: ". $currentId);
-            //Log::error("Last: ". $lastId);
+            
+            //Check if user has current log-in pay-account else auto log-out
+            else if (!$lastId){
+                $pay_account = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account(auth()->user()->id, false);
+                if(!$pay_account){
+                    //Logout and redirect to login.
+                    //return redirect('/logout');
+                    
+                    auth('admin')->logout(); // Logs out the current user
 
-            //SET THE LAST SESSION?
+                    // Optionally invalidate the session
+                    request()->session()->invalidate();
 
-            Session::put('__last_session_id', $currentId); 
+                    // Regenerate CSRF token
+                    request()->session()->regenerateToken();
 
-            //10 YEARS COOKIE EXPIRE 
+                    // Redirect to login page
+                    return redirect()->to(config('app.url').'/login');
+                }
+            }
+
             $years = 10;
             $minutes = now()->addYears($years)->diffInMinutes();
-
-            return $next($request)->cookie('__last_session_id', $currentId, $minutes );
+            Cookie::queue('__last_session_id', $currentId, $minutes);
+            return $next($request)->cookie('__last_session_id', $currentId, $minutes);
         }
 
         return $next($request);
