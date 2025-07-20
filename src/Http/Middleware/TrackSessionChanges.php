@@ -24,9 +24,14 @@ class TrackSessionChanges
             //Log::error("Last: ". $lastId);
 
             //SET THE LAST SESSION?
+
             Session::put('__last_session_id', $currentId); 
-            
-            return $next($request)->cookie('__last_session_id', $currentId, config('session.lifetime') );
+
+            //10 YEARS COOKIE EXPIRE 
+            $years = 10;
+            $minutes = now()->addYears($years)->diffInMinutes();
+
+            return $next($request)->cookie('__last_session_id', $currentId, $minutes );
         }
 
         return $next($request);
