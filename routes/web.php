@@ -106,9 +106,11 @@ Route::middleware('web')->group(function(){
           $pay_account = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account(auth()->user()->id, false);
           return [
               "session_id"=>session()->getId(),
+              "previous_session"=>session('__previous_session_id'),
+              "last_session"=>session('__last_session_id'),
+              "last_session_cookie"=>$request->cookie('__last_session_id'),
               "user"=>$user,
               "pay"=>$pay_account,
-              "last_session"=>session('__previous_session_id')
           ];
 
 

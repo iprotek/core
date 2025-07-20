@@ -11,8 +11,8 @@ class TrackSessionChanges
     {
         if(auth('admin')->check()){
             $currentId = session()->getId();
-            //$lastId = $request->cookie('__last_session_id');//
-            $lastId = Session::get('__last_session_id');
+            $lastId = $request->cookie('__last_session_id');//
+            //$lastId = Session::get('__last_session_id');
 
             // If session ID changed, store the previous one
             if ($lastId && $lastId !== $currentId) {
@@ -24,7 +24,7 @@ class TrackSessionChanges
             //Log::error("Last: ". $lastId);
 
             //SET THE LAST SESSION?
-            //Session::put('__last_session_id', $currentId); 
+            Session::put('__last_session_id', $currentId); 
             
             return $next($request)->cookie('__last_session_id', $currentId, config('session.lifetime') );
         }
