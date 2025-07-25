@@ -32,8 +32,9 @@
                         </div>
                         <validation :errors="errors" :field="'selected_items'" />
                         <validation :errors="errors" :field="'mobile_nos'" />
-                        <div>
-                            <span class="badge badge-pill badge-primary" v-for="(item,itemIndex) in sms_notify_sched.selected_items" v-bind:key="'item-'+item.id+'-'+itemIndex" >
+                        <div class="p-2 border mt-2" v-if="sms_notify_sched.selected_items && sms_notify_sched.selected_items.length > 0">
+                            <code class="text-sm"> ** Limit of 1000 entry only. </code>
+                            <span class="badge badge-pill badge-primary mr-1" v-for="(item,itemIndex) in sms_notify_sched.selected_items" v-bind:key="'item-'+item.id+'-'+itemIndex" >
                               <span class="fa fa-times text-danger" style="cursor: pointer;" @click="removeNotifSched(item)"></span>  {{ item.text }} - {{ item.mobile_no }}
                             </span>
                         </div>
@@ -201,10 +202,46 @@
 
             },
             item_selected_changed:function(val){
+                
                 var vm = this;
+
                 if(val.id <= 0) return;
 
+                if(vm.sms_notify_sched.selected_items && vm.sms_notify_sched.selected_items.length > 1000) return;
+
+
                 //CHECK IF EXISTS
+                if(val.action_info){
+                    
+                    var req = val.action_info;
+
+                    console.log(req);
+
+                    vm.sms_notify_sched.selected_items = [];
+                    vm.sms_notify_sched.mobile_nos = [];
+
+                    WebRequest2(req.method, req.action, req.data).then(resp=>{
+
+                        resp.json().then(data=>{
+
+                            var items = data.data.slice(0, 1000);
+
+                            items.forEach((item)=>{
+                                
+                                vm.sms_notify_sched.selected_items.push(item);
+                                vm.sms_notify_sched.mobile_nos.push(item.mobile_no);
+
+                            });
+
+                        });
+
+                    });
+
+                    return;
+                    
+                }
+
+
                 var exists =  vm.sms_notify_sched.selected_items.filter((item)=>{
                     return item.id == val.id;
                 });
@@ -216,7 +253,7 @@
                 vm.sms_notify_sched.selected_items.push(val);
                 vm.sms_notify_sched.mobile_nos.push(val.mobile_no);
 
-                console.log(vm.sms_notify_sched.selected_items);
+                //console.log(vm.sms_notify_sched.selected_items);
             
             },
             reset:function(){
