@@ -103,7 +103,7 @@ Route::middleware('web')->group(function(){
           
           
           $user = \iProtek\Core\Models\UserAdmin::find(auth()->user()->id)->first();
-          $pay_account = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account(auth()->user()->id, false);
+          $pay_account = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account(auth('admin')->user()->id, false);
           return [
               "session_id"=>session()->getId(),
               "previous_session"=>session('__previous_session_id'),
@@ -114,7 +114,7 @@ Route::middleware('web')->group(function(){
           ];
 
 
-          return \iProtek\Core\Models\UserAdmin::with(['current_pay_account'])->find(auth()->user()->id)->first();
+          //return \iProtek\Core\Models\UserAdmin::with(['current_pay_account'])->find(auth('admin')->user()->id)->first();
       });
   }
 
