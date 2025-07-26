@@ -4,6 +4,7 @@ namespace iProtek\Core\Helpers;
 use DB; 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use iProtek\Core\Models\UserAdminPayAccount;
 
 class PayGroup
 {
@@ -49,4 +50,19 @@ class PayGroup
     public static function pay_account_id(){
         return PayHttp::pay_account_id();
     }
+
+    public static function getGroupIdByProxyId($proxy_group_id){
+
+        $pay_account = UserAdminPayAccount::where('own_proxy_group_id', $proxy_group_id)->first();
+
+        if($pay_account){
+
+            return $pay_account->pay_app_user_account_id;
+
+        }
+
+        return 0;
+    }
+
+
 }
