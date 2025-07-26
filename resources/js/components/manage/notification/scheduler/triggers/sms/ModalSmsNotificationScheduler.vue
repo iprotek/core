@@ -228,8 +228,10 @@
 
                             items.forEach((item)=>{
                                 
-                                vm.sms_notify_sched.selected_items.push(item);
-                                vm.sms_notify_sched.mobile_nos.push(item.mobile_no);
+                                if(item.mobile_no.trim()){
+                                    vm.sms_notify_sched.selected_items.push(item);
+                                    vm.sms_notify_sched.mobile_nos.push(item.mobile_no);
+                                }
 
                             });
 
