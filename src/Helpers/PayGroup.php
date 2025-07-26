@@ -51,7 +51,7 @@ class PayGroup
         return PayHttp::pay_account_id();
     }
 
-    public static function getGroupIdByProxyId($proxy_group_id){
+    public static function getOwnGroupIdByProxyId($proxy_group_id){
 
         $pay_account = UserAdminPayAccount::where('own_proxy_group_id', $proxy_group_id)->first();
 

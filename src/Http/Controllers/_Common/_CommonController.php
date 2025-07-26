@@ -187,13 +187,23 @@ class _CommonController extends BaseController
         $pay_account = \iProtek\Core\Helpers\UserAdminHelper::get_current_pay_account($user_admin_id);            
         $group_id = 0;
         $pay_account_id = 0;
-        if($pay_account){
+        
+        $proxy_group_id = \iProtek\Core\Helpers\PayGroup::getGroupId();
+
+        //Selection of proxy group
+        if($proxy_group_id){
+            $group_id = $proxy_group_id;
+        }
+        else if($pay_account){
             $group_id = $pay_account->default_proxy_group_id;
+        }
+
+
+        if($pay_account){
             $pay_account_id = $pay_account->pay_app_user_account_id;
         }
 
         $selected_branch_id = \iProtek\Core\Helpers\BranchSelectionHelper::get();
-       
 
         return ["SIDEMENUS"=>$sidemenus, "pay_account_id"=>$pay_account_id, "USER"=>$user, "group_id"=>$group_id, "selected_branch_id"=>$selected_branch_id ];
     }
