@@ -33,7 +33,7 @@
                         <validation :errors="errors" :field="'selected_items'" />
                         <validation :errors="errors" :field="'mobile_nos'" />
                         <div class="p-2 border mt-2" v-if="sms_notify_sched.selected_items && sms_notify_sched.selected_items.length > 0">
-                            <code class="text-sm"> ** Limit of 1000 entry only. </code>
+                            <code class="text-sm"> ** Limit of <b> {{ sms_notify_sched.selected_items.length }} </b> / 1000 entry only. </code>
                             <span class="badge badge-pill badge-primary mr-1" v-for="(item,itemIndex) in sms_notify_sched.selected_items" v-bind:key="'item-'+item.id+'-'+itemIndex" >
                               <span class="fa fa-times text-danger" style="cursor: pointer;" @click="removeNotifSched(item)"></span>  {{ item.text }} - {{ item.mobile_no }}
                             </span>
