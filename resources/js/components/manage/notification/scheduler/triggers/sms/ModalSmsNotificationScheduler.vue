@@ -32,11 +32,16 @@
                         </div>
                         <validation :errors="errors" :field="'selected_items'" />
                         <validation :errors="errors" :field="'mobile_nos'" />
-                        <div class="p-2 border mt-2" v-if="sms_notify_sched.selected_items && sms_notify_sched.selected_items.length > 0">
-                            <code class="text-sm"> ** Limit of <b> {{ sms_notify_sched.selected_items.length }} </b> / 1000 entry only. </code>
-                            <span class="badge badge-pill badge-primary mr-1" v-for="(item,itemIndex) in sms_notify_sched.selected_items" v-bind:key="'item-'+item.id+'-'+itemIndex" >
-                              <span class="fa fa-times text-danger" style="cursor: pointer;" @click="removeNotifSched(item)"></span>  {{ item.text }} - {{ item.mobile_no }}
-                            </span>
+                        <div class="p-2 border mt-2">
+                            <div v-if="sms_notify_sched.selected_items && sms_notify_sched.selected_items.length > 0">
+                                <code class="text-sm"> ** <b> {{ sms_notify_sched.selected_items.length }} </b> / 1000. **</code><br/>
+                                <span class="badge badge-pill badge-primary mr-1" v-for="(item,itemIndex) in sms_notify_sched.selected_items" v-bind:key="'item-'+item.id+'-'+itemIndex" >
+                                <span class="fa fa-times text-danger" style="cursor: pointer;" @click="removeNotifSched(item)"></span>  {{ item.text }} - {{ item.mobile_no }}
+                                </span>
+                            </div>
+                            <code v-else>
+                                <code class="text-sm"> ** Please select with the limit of 1000 entry only. </code><br/>
+                            </code>
                         </div>
                         <div class="my-2">
                             <label class="mb-0">SEND MESSAGE:</label> <button class="btn btn-sm btn-primary">Automate compose message</button>
