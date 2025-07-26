@@ -228,7 +228,7 @@
 
                             items.forEach((item)=>{
                                 
-                                if(item.mobile_no.trim()){
+                                if(item.mobile_no && item.mobile_no.trim()){
                                     vm.sms_notify_sched.selected_items.push(item);
                                     vm.sms_notify_sched.mobile_nos.push(item.mobile_no);
                                 }
