@@ -77,15 +77,12 @@
                         vm.$emit('update:isLoading', true); 
                         vm.$emit('update:itemList', []); 
                         vm.is_loading = true;
-                        var fn_result = vm.fn_web_request2();
-                        if(fn_result){
-                            fn_result.then(pageData=>{
+                        vm.fn_web_request2().then(pageData=>{
+                                vm.is_loading = false;
                                 vm.pagefooterData = pageData;
                                 vm.$emit('update:isLoading', false); 
                                 vm.$emit('update:itemList', pageData.data);
-                                vm.is_loading = false;
                             });
-                        }
                     }
                 }
             },
