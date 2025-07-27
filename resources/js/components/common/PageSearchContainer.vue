@@ -56,7 +56,8 @@
             return {
                 current_page:1,
                 search_text:'',
-                pagefooterData:null
+                pagefooterData:null,
+                isLoading:false
             }
         },
         methods: { 
@@ -71,16 +72,20 @@
             search_now:function(){
                 var vm = this;
                 if(typeof this.fn_web_request2 === 'function'){
-                    vm.$emit('update:isLoading', true); 
-                    vm.$emit('update:itemList', []); 
 
-                    var fn_result = vm.fn_web_request2();
-                    if(fn_result){
-                        fn_result.then(pageData=>{
-                            vm.pagefooterData = pageData;
-                            vm.$emit('update:isLoading', false); 
-                            vm.$emit('update:itemList', pageData.data);
-                        });
+                    if(!vm.isLoading){
+                        vm.$emit('update:isLoading', true); 
+                        vm.$emit('update:itemList', []); 
+                        vm.isLoading = true;
+                        var fn_result = vm.fn_web_request2();
+                        if(fn_result){
+                            fn_result.then(pageData=>{
+                                vm.pagefooterData = pageData;
+                                vm.$emit('update:isLoading', false); 
+                                vm.$emit('update:itemList', pageData.data);
+                                vm.isLoading = false;
+                            });
+                        }
                     }
                 }
             },
