@@ -14,7 +14,7 @@
             @update:isLoading="isLoading = $event"
             @update:itemList="scheduleList = $event"
             
-            :fn_plus_click="add_click"
+            :fn_plus_click="fn_plus_click"
             :fn_web_request2="loadList"
             
             >
