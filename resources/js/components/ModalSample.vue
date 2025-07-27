@@ -13,7 +13,7 @@
                 </div>
             </template>
         </modal-view> 
-        <swal ref="swal_prompt"></swal> 
+        <swal ref="swal_prompt" :set_errors="errors" @update:set_errors="errors = $event"></swal> 
     </div>
 
 </template>
@@ -29,7 +29,8 @@
         },
         data: function () {
             return {        
-                promiseExec:null
+                promiseExec:null,
+                errors:[]
            }
         },
         methods:{ 
