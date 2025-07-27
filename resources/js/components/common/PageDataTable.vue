@@ -64,7 +64,6 @@
             loadList:function(){
 
                 var vm = this;
-                if(vm.isLoading) return;
 
                 var method = "GET";
                 if(vm.method){
@@ -84,13 +83,11 @@
 
                 var merged = Object.assign({},obj1, obj2 );
                 vm.$emit("update:items", []);
-                vm.$emit("update:is_loading", true);
-                vm.isLoading = true;
+                vm.$emit("update:is_loading", true); 
                 return WebRequest2(method, vm.url+'?'+this.queryString(merged)).then(resp=>{
                     return resp.json().then(data=>{
                         vm.$emit("update:items", data.data);
                         vm.$emit("update:is_loading", false);
-                        vm.isLoading = false;
                         return data;
                     });
                 });
