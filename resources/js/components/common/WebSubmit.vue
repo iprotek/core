@@ -56,7 +56,10 @@
                         vm.add_class = 'disabled text-success';
                         vm.message = data.message;
                     }else { //if(data.status != null){
-                        vm.$emit('update:set_errors', data);
+                        
+                        if( (data.status === undefined || data.status === null ) && data )
+                            vm.$emit('update:set_errors', data);
+
                         vm.status = 2;
                         vm.add_class = 'disabled text-danger';
                         vm.message = data.message ? data.message : "Validation Error";
