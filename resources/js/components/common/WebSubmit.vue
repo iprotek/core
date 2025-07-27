@@ -13,7 +13,8 @@
 
 <script>
     export default {
-        props:[ "el_class", "icon_class", "label","timeout", "action" ],
+        props:[ "el_class", "icon_class", "label","timeout", "action"],
+        $emits:["update:set_errors"],
         components: { 
         },
         data: function () {
@@ -27,7 +28,8 @@
         },
         methods: { 
             submit:function(){
-                var vm = this;
+                var vm = this; 
+                vm.$emit('update:set_errors', []);
                 if(vm.is_submit || vm.status > 0 || !vm.action){
                     return;
                 }
@@ -54,10 +56,15 @@
                         vm.add_class = 'disabled text-success';
                         vm.message = data.message;
                     }else { //if(data.status != null){
+                        vm.$emit('update:set_errors', data);
                         vm.status = 2;
                         vm.add_class = 'disabled text-danger';
                         vm.message = data.message ? data.message : "Validation Error";
-                    }/*else{
+                    }
+                    
+
+                    
+                    /*else{
                         vm.status = 2;
                         vm.add_class = 'disabled text-danger';
                         vm.message = `Request failed: ${vm.extractValuesFromJson(data)}`;
