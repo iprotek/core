@@ -73,11 +73,15 @@
                 if(typeof this.fn_web_request2 === 'function'){
                     vm.$emit('update:isLoading', true); 
                     vm.$emit('update:itemList', []); 
-                    vm.fn_web_request2().then(pageData=>{
-                        vm.pagefooterData = pageData;
-                        vm.$emit('update:isLoading', false); 
-                        vm.$emit('update:itemList', pageData.data);
-                    });
+
+                    var fn_result = vm.fn_web_request2();
+                    if(fn_result){
+                        fn_result.then(pageData=>{
+                            vm.pagefooterData = pageData;
+                            vm.$emit('update:isLoading', false); 
+                            vm.$emit('update:itemList', pageData.data);
+                        });
+                    }
                 }
             },
             page_chaged:function(val){
