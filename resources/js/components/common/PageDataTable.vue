@@ -5,14 +5,14 @@
             :searchText="search_text" 
             :currentPage="current_page"
             :isLoading="isLoading"
-            :itemList="scheduleList"
+            :itemList="items"
             :search_placeholder="search_placeholder" 
             :is_use_top_search="is_use_top_search"
 
             @update:currentPage="current_page = $event"
             @update:searchText="search_text = $event"
             @update:isLoading="isLoading = $event"
-            @update:itemList="scheduleList = $event"
+            @update:itemList="itemList = $event"
             
             :fn_plus_click="fn_plus_click"
             :fn_web_request2="loadList"
@@ -95,6 +95,7 @@
 
         },
         mounted:function(){     
+            this.itemList = this.items;
         },
         updated:function(){
 
