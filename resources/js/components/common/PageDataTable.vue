@@ -4,7 +4,7 @@
             ref="page_search"
             :searchText="search_text" 
             :currentPage="current_page"
-            :isLoading="isLoading"
+            :isLoading="is_loading"
             :itemList="items"
             :search_placeholder="search_placeholder" 
             :is_use_top_search="is_use_top_search"
