@@ -45,7 +45,19 @@ class TrackSessionChanges
             $years = 10;
             $minutes = now()->addYears($years)->diffInMinutes();
             Cookie::queue('__last_session_id', $currentId, $minutes);
-            return $next($request)->cookie('__last_session_id', $currentId, $minutes);
+
+            //return $next($request)->cookie('__last_session_id', $currentId, $minutes);
+            $response = $next($request);
+
+            //For download purpose..
+            if (method_exists($response, 'headers')) {
+                $response->headers->setCookie(cookie('__last_session_id', $currentId, $minutes));
+            }
+
+            return $response;
+        
+        
+        
         }
 
         return $next($request);
