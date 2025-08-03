@@ -22,10 +22,8 @@
     export default {
        
         props:[ 
-            "currentPage", 
-            "isLoading", 
+            "currentPage",
             "searchText",
-            "itemList",
             "fn_plus_click", 
             "search_placeholder", 
             "fn_web_request2",

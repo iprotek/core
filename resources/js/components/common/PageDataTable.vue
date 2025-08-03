@@ -4,8 +4,6 @@
             ref="page_search"
             :searchText="search_text" 
             :currentPage="current_page"
-            :isLoading="is_loading"
-            :itemList="items"
             :search_placeholder="search_placeholder" 
             :is_use_top_search="is_use_top_search"
 
@@ -26,7 +24,7 @@
 <script>
     import PageSearchContainerVue from './PageSearchContainer.vue';
     export default {
-        props:[ "method", "url", "items", "is_loading", "json_filter", "search_placeholder", "is_use_top_search", "fn_plus_click"  ],
+        props:[ "method", "url", "json_filter", "search_placeholder", "is_use_top_search", "fn_plus_click"  ],
         $emits:["update:items", "update:is_loading"],
         watch: {
             url:function(newVal){
@@ -94,8 +92,7 @@
             }
 
         },
-        mounted:function(){     
-            this.itemList = this.items;
+        mounted:function(){ 
         },
         updated:function(){
 
