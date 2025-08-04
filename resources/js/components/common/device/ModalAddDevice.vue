@@ -43,17 +43,22 @@
                                 <label class="mb-1">Branches</label>
                             </div>
                             <div class="card-body"> 
-                                <small class="text-secondary">
-                                    *Branches where this device can be executed.
-                                </small> 
-                                <table class="table table-bordered">
-                                    <tr v-for="(item,itemIndex) in branchList" v-bind:key="'branch-list-'+item.id+'-'+itemIndex">
-                                        <td class="p-0 pt-1 pl-2 text-center" style="width:25px;">
-                                            <icheck @update:checked="update_checked" :name="'item-check-branch-selection'" :value="item.id" :data_value="item.id" :checked="hasBranch(item.id)" />
-                                        </td>
-                                        <td v-text="item.name" class="pt-2"></td>
-                                    </tr>
-                                </table>
+                                <div class="mb-2">
+                                    <switch2 v-model="device_info.is_trigger_registration"  /> <b>Trigger upon New Registration/Entry </b>
+                                </div>
+                                <div>
+                                    <small class="text-secondary">
+                                        *Branches where this device can be executed.
+                                    </small> 
+                                    <table class="table table-bordered">
+                                        <tr v-for="(item,itemIndex) in branchList" v-bind:key="'branch-list-'+item.id+'-'+itemIndex">
+                                            <td class="p-0 pt-1 pl-2 text-center" style="width:25px;">
+                                                <icheck @update:checked="update_checked" :name="'item-check-branch-selection'" :value="item.id" :data_value="item.id" :checked="hasBranch(item.id)" />
+                                            </td>
+                                            <td v-text="item.name" class="pt-2"></td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -119,7 +124,8 @@
                     is_active:true,
                     is_app_execute:false,
                     branch_ids:[],
-                    is_ssl:false
+                    is_ssl:false,
+                    is_trigger_registration:false
                 },
                 promiseExec:null
            }
@@ -146,7 +152,8 @@
                     is_active:true,
                     is_app_execute:false,
                     branch_ids:[],
-                    is_ssl:false
+                    is_ssl:false,
+                    is_trigger_registration:true
                 };
                 this.is_check_before_saving = true;
 
@@ -186,7 +193,8 @@
                             is_active: data.is_active,
                             is_app_execute: data.is_app_execute,
                             branch_ids: data.branch_ids,
-                            is_ssl:data.is_ssl
+                            is_ssl:data.is_ssl,
+                            is_trigger_registration:data.is_trigger_registration
                         };
 
                     });
