@@ -204,7 +204,6 @@
                 var vm = this;
                 WebRequest2('GET', this.branch_source_url).then(resp=>{
                     resp.json().then(data=>{
-                        //console.log(vm.group_id,data);
                         vm.branchList = data;
                     });
                 });
