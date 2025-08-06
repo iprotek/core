@@ -48,6 +48,5 @@
                 "iProtek\\Core\\iProtekServiceProvider"
             ]
         }
-    },
-    "version": "1.8.0" 
+    }
 }
