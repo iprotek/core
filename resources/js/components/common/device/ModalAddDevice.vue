@@ -237,8 +237,8 @@
             remove:function(device_access_id){
                 var vm = this;
                 this.$refs.swal_prompt.alert(
-                    'question',
-                    "Remove this device?", 
+                    'warning',
+                    "Remove this device? Removing will disconnect you from actual device and all other existing accounts created will stay and remain active.", 
                     "Confirm" , 
                      "POST", 
                     '/api/group/'+this.group_id+'/devices/delete', 

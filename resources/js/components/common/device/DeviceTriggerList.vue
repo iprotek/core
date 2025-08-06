@@ -20,7 +20,7 @@
                                 <small> Device Info </small> 
                             </th>
                             <th>
-                                <small> Status </small> 
+                                <small> Device Status </small> 
                             </th>
                             <th></th>
                         </tr>

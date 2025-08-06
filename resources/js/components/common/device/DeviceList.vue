@@ -3,7 +3,9 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">List of Devices</div>
+                    <div class="card-header">
+                        <b> List of Devices </b>
+                    </div>
                     <div class="card-body">
                         <div class="input-group text-sm mb-1">
                             <span class="btn btn-default" @click="$refs.modal_device.show()">
@@ -17,57 +19,88 @@
                         <table class="table table-bordered w-100 mt-1">
                             <thead>
                                 <tr>
-                                    <th class="text-center">
+                                    <th class="text-center text-primary">
                                         <small> # </small>
                                     </th>
-                                    <th>
+                                    <th class="text-primary">
                                         <small> Name </small>
                                     </th>
-                                    <th>
+                                    <th class="text-primary">
                                         <small> Type </small>
                                     </th>
-                                    <th>
+                                    <th class="text-primary">
                                         <small> Host </small>
                                     </th>
-                                    <th>
+                                    <th class="text-primary">
                                         <small> User </small>
                                     </th>
-                                    <th>
+                                    <th class="text-primary">
                                         <small> Port </small>
                                     </th>
-                                    <th>
+                                    <th class="text-primary">
                                         <small> Branches </small>
                                     </th>
-                                    <th >
+                                    <th class="text-primary">
                                         <small> Is Active </small>
                                     </th>
-                                    <th>
-
+                                    <th class="text-primary">
+                                        <small> AutoRegister? </small>
                                     </th>
+                                    <th> </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-if="isLoading">
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="10" class="text-center">
                                         -- LOADING DEVICES -- 
                                     </td>
                                 </tr>
                                 <tr v-else-if="itemList.length == 0">
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="10" class="text-center">
                                         <code> NO DEVICE FOUND </code> 
                                     </td>
                                 </tr>
                                 <tr v-for="(device,deviceIndex) in itemList" v-bind:key="'device-item-'+device.id+'-'+deviceIndex">
-                                    <th v-text="device.id"></th>
-                                    <td v-text="device.name"></td>
-                                    <td v-text="device.type"></td>
-                                    <td v-text="device.host"></td>
-                                    <td v-text="device.user"></td>
-                                    <td v-text="device.port"></td>
-                                    <td v-text="device.branch_ids ? device.branch_ids.length: 0"></td>
+                                    <th class="text-center">
+                                        <small> <code v-text="device.id"></code> </small>
+                                    </th>
+                                    <td>
+                                        <small>
+                                            <b v-text="device.name"></b>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <small>
+                                            <b v-text="device.type"></b>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <small>
+                                            <b v-text="device.host"></b>
+                                        </small>
+                                    </td>
+                                    <td >
+                                        <small>
+                                            <b v-text="device.user"></b>
+                                        </small>
+                                    </td>
+                                    <td >
+                                        <small>
+                                            <b v-text="device.port"></b>
+                                        </small>
+                                    </td>
+                                    <td >
+                                        <small>
+                                            <b v-text="device.branch_ids ? device.branch_ids.length: 0"></b>
+                                        </small>
+                                    </td>
                                     <td >
                                         <span v-if="device.is_active" class="text-success">ACTIVE</span>
                                         <span v-else class="text-danger">Inactive</span>
+                                    </td>
+                                    <td >
+                                        <span v-if="device.is_trigger_registration" class="text-success">Yes</span>
+                                        <span v-else class="text-danger">No</span>
                                     </td>
                                     <td>
                                         <button @click="$refs.device_log.show(device.id)" class="btn btn-primary btn-sm" title="Trigger Logs">
@@ -144,16 +177,8 @@
             }
         },
         mounted:function(){ 
-            //console.log("GROUPID", this.group_id); 
-            //if(this.set_branch_source){
-                //this.branch_source = this.set_branch_source;
-            //}
             if(this.group_id)
                 this.loadDeviceList();
-            
-
-
-
         },
         updated:function(){
 
