@@ -56,6 +56,9 @@
             isJsonObject:function(value) {
                 return value !== null && typeof value === 'object' && !Array.isArray(value);
             },
+            reload:function(){
+                this.reloadPage();
+            },
             reloadPage:function(){
                 this.$refs.page_search.search_now();
             },
