@@ -5,7 +5,7 @@
 
 <script>
     export default {
-        props:[ "height", "width", "google_map_api_key", "coordinates", "is_multi_coordinates" ],
+        props:[ "height", "width", "google_map_api_key", "is_multi_coordinates" ],
         $emits:[],
         watch: { 
         },
