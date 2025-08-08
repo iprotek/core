@@ -67,6 +67,9 @@
     <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   
     <link rel="stylesheet" href="/iprotek/css/w3school/preview-image.css">
+    @if(config('iprotek.google_map_key'))
+      <script src="https://maps.googleapis.com/maps/api/js?key={{config('iprotek.google_map_key')}}&libraries=places"></script>
+    @endif
     
     <style>
       
