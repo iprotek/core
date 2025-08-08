@@ -29,9 +29,11 @@
             initMap:function(coordinates=[{latitude: 10.3157, longitude: 123.8854}]) { // Default Cebu, Philippines
 
                 var vm = this;
+                if(!vm.google_map_api_key) return;
+
                 const defaultLocation = { lat: coordinates[0].latitude, lng: coordinates[0].longitude }; 
 
-                vm.map = new google.maps.Map(document.getElementById(vm.map_identification), {
+                vm.map = new google.maps.Map(document.getElementById(vm.google_map_id), {
                 center: defaultLocation,
                 zoom: 10,
                 });
