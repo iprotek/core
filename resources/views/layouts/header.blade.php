@@ -92,5 +92,10 @@ use iProtek\Core\Helpers\AppVarHelper;
       }
     </style>
     @yield('head')
+
+    @if(config('iprotek.google_map_key'))
+      <script src="https://maps.googleapis.com/maps/api/js?key={{config('iprotek.google_map_key')}}&libraries=places"></script>
+    @endif
+    
 </head>
 <body>
