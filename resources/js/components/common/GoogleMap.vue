@@ -1,5 +1,5 @@
 <template>
-    <div :id="'google-map-'+_uid" :style="'height:'+(height ? height: '200px;' )+';width:'+(width ? width :'200px')" >
+    <div :id="'google-map-'+_uid" :style="'height:'+(height ? height: '200px;' )+';width:'+(width ? width :'200px')+';'" >
     </div>
 </template>
 
@@ -54,11 +54,13 @@
                         map: vm.map,
                     });
                 }
+            },
+            loadCoordinates(coordinates=[{latitude: 10.3157, longitude: 123.8854}]){
+                this.initMap(coordinates);
             }
 
         },
-        mounted:function(){ 
-            this.initMap();
+        mounted:function(){
         },
         updated:function(){
 
