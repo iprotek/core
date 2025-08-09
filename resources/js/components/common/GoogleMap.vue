@@ -39,6 +39,8 @@
                 mapId: vm.google_map_api_id
                 });
 
+                console.log(vm.google_map_api_id);
+
                 //vm.map.addListener("click", (e) => {
                 if(!vm.is_select_map){
                     google.maps.event.addListenerOnce(vm.map, 'tilesloaded', function () {
