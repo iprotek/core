@@ -78,6 +78,7 @@
             clearMarkers:function(){
                 var vm = this;
                 vm.markers.forEach(m => m.setMap(null));
+                vm.markers = [];
             },
             loadCoordinates(coordinates=[{latitude: 10.3157, longitude: 123.8854}]){
                 this.initMap(coordinates);
