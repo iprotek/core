@@ -62,7 +62,7 @@
             },            
             // Recenter function
             recenterMap:function(lat, lng) {
-                //const newCenter = new google.maps.LatLng(lat, lng);
+                const newCenter = new google.maps.LatLng(lat, lng);
                 vm.map.setCenter(newCenter);
             },
             placeMarker:function(location, is_new=false) {
