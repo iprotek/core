@@ -5,8 +5,8 @@
 
 <script>
     export default {
-        props:[ "height", "width", "google_map_api_key", "is_multi_coordinates" ],
-        $emits:[],
+        props:[ "height", "width", "google_map_api_key", "is_multi_coordinates", "is_select_map" ],
+        $emits:["selected_location"],
         watch: { 
         },
         components: { 
@@ -39,11 +39,19 @@
                 });
 
                 //vm.map.addListener("click", (e) => {
-                google.maps.event.addListenerOnce(vm.map, 'tilesloaded', function () {
-                    vm.placeMarker(defaultLocation);
-                });
+                if(!vm.is_select_map){
+                    google.maps.event.addListenerOnce(vm.map, 'tilesloaded', function () {
+                        vm.placeMarker(defaultLocation);
+                    });
+                }
+                else{                    
+                    vm.map.addListener("click", (e) => {
+                        vm.$emit('selected_location', e.latLng);
+                        vm.placeMarker(e.latLng);
+                    });
+                }
             },
-            placeMarker:function(location) {
+            placeMarker:function(location, is_new=false) {
                 var vm = this;
                 if (vm.marker) {
                     vm.marker.setPosition(location);
