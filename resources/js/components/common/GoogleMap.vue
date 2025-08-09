@@ -47,7 +47,7 @@
                 else{                    
                     vm.map.addListener("click", (e) => {
                         vm.$emit('selected_location', {
-                           latitue: e.latLng.lat(),
+                           latitude: e.latLng.lat(),
                            longitude: e.latLng.lng()
                         });
                         vm.placeMarker(e.latLng);
