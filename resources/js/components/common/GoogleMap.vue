@@ -85,7 +85,7 @@ import RepeatSettingVue from '../manage/notification/scheduler/triggers/RepeatSe
                         });
                     } 
                     else {
-                        marker = new google.maps.Marker({
+                        marker = new google.maps.marker.AdvancedMarkerElement({
                             position: {
                                 lat: location.latitude,
                                 lng: location.longitude
