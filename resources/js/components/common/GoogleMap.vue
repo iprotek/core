@@ -65,7 +65,8 @@
             },            
             // Recenter function
             recenterMap:function(lat, lng) {
-                const newCenter = new google.maps.LatLng(lat, lng);
+                console.log( "RECENTER", lat, lng);
+                const newCenter = new google.maps.LatLng(10.338667744969888, 123.87578696289063);
                 this.map.setCenter(newCenter);
             },
             placeMarker:function(location, is_new=false) {
