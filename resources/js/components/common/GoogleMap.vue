@@ -43,7 +43,10 @@
                 //vm.map.addListener("click", (e) => {
                 if(!vm.is_select_map){
                     google.maps.event.addListenerOnce(vm.map, 'tilesloaded', function () {
-                        vm.placeMarker(defaultLocation);
+                        vm.placeMarker({
+                            latitude: defaultLocation.lat,
+                            longitude: defaultLocation.lng
+                        });
                     });
                 }
                 else{                    
