@@ -64,7 +64,7 @@
                             position: location,
                             map: vm.map,
                         });
-                        vm.marker.push(marker);
+                        vm.markers.push(marker);
                     }
                 }
                 else{
