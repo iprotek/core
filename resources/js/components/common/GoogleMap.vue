@@ -51,6 +51,20 @@
                     });
                 }
             },
+            setMarker:function(location, is_center = false){
+            
+                this.placeMarker(location);
+                
+                if(is_center){
+                    this.recenterMap(location.latitude, location.longitude);
+                }
+            
+            },            
+            // Recenter function
+            recenterMap:function(lat, lng) {
+                const newCenter = new google.maps.LatLng(lat, lng);
+                vm.map.setCenter(newCenter);
+            },
             placeMarker:function(location, is_new=false) {
                 var vm = this;
                 //SING COORDINATES
