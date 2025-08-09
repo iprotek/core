@@ -15,7 +15,7 @@
             return {
                 google_map_id: 'google-map-'+this._uid,
                 map:null,
-                marker:null
+                markers:[]
             }
         },
         methods: { 
@@ -53,19 +53,36 @@
             },
             placeMarker:function(location, is_new=false) {
                 var vm = this;
-                if (vm.marker) {
-                    vm.marker.setPosition(location);
-                } 
-                else {
-                    vm.marker = new google.maps.Marker({
-                        position: location,
-                        map: vm.map,
-                    });
+                //SING COORDINATES
+                if(!vm.is_multi_coordinates){
+                    var marker = vm.markers[0];
+                    if (marker) {
+                        marker.setPosition(location);
+                    } 
+                    else {
+                        marker = new google.maps.Marker({
+                            position: location,
+                            map: vm.map,
+                        });
+                        vm.marker.push(marker);
+                    }
                 }
+                else{
+
+                    //TODO:: FOR MULTI LOCATION / ORDINATES, NOT EMPLEMENTED
+
+                }
+
+
+            },
+            clearMarkers:function(){
+                var vm = this;
+                vm.markers.forEach(m => m.setMap(null));
             },
             loadCoordinates(coordinates=[{latitude: 10.3157, longitude: 123.8854}]){
                 this.initMap(coordinates);
             }
+
 
         },
         mounted:function(){
