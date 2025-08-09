@@ -56,7 +56,10 @@
             },
             setMarker:function(location, is_center = false){
             
-                this.placeMarker(location);
+                this.placeMarker({
+                    lat:location.latitude,
+                    lng:location.longitude
+                });
                 
                 if(is_center){
                     this.recenterMap(location.latitude, location.longitude);
@@ -65,8 +68,7 @@
             },            
             // Recenter function
             recenterMap:function(lat, lng) {
-                console.log( "RECENTER", lat, lng);
-                const newCenter = new google.maps.LatLng(10.338667744969888, 123.87578696289063);
+                const newCenter = new google.maps.LatLng(lat, lng);
                 this.map.setCenter(newCenter);
             },
             placeMarker:function(location, is_new=false) {
