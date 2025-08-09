@@ -47,20 +47,18 @@ import RepeatSettingVue from '../manage/notification/scheduler/triggers/RepeatSe
                 }
                 else{                    
                     vm.map.addListener("click", (e) => {
-                        vm.$emit('selected_location', {
+                        var location = {
                            latitude: e.latLng.lat(),
                            longitude: e.latLng.lng()
-                        });
-                        vm.placeMarker(e.latLng);
+                        }
+                        vm.$emit('selected_location', location);
+                        vm.placeMarker(location);
                     });
                 }
             },
             setMarker:function(location, is_center = false){
             
-                this.placeMarker({
-                    lat:location.latitude,
-                    lng:location.longitude
-                });
+                this.placeMarker(location);
                 
                 if(is_center){
                     this.recenterMap(location.latitude, location.longitude);
@@ -81,11 +79,17 @@ import RepeatSettingVue from '../manage/notification/scheduler/triggers/RepeatSe
                 if(!vm.is_multi_coordinates){
                     var marker = vm.markers[0];
                     if (marker) {
-                        marker.setPosition(location);
+                        marker.setPosition({
+                            lat: location.latitude,
+                            lng: location.longitude
+                        });
                     } 
                     else {
                         marker = new google.maps.Marker({
-                            position: location,
+                            position: {
+                                lat: location.latitude,
+                                lng: location.longitude
+                            },
                             map: vm.map,
                         });
                         vm.markers.push(marker);
