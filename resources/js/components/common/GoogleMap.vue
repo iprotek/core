@@ -3,10 +3,9 @@
     </div>
 </template>
 
-<script>
-import RepeatSettingVue from '../manage/notification/scheduler/triggers/RepeatSetting.vue';
+<script> 
     export default {
-        props:[ "height", "width", "google_map_api_key", "is_multi_coordinates", "is_select_map" ],
+        props:[ "height", "width", "google_map_api_key", "google_map_api_id", "is_multi_coordinates", "is_select_map" ],
         $emits:["selected_location"],
         watch: { 
         },
@@ -37,6 +36,7 @@ import RepeatSettingVue from '../manage/notification/scheduler/triggers/RepeatSe
                 vm.map = new google.maps.Map(document.getElementById(vm.google_map_id), {
                 center: defaultLocation,
                 zoom: 10,
+                mapId: vm.google_map_api_id
                 });
 
                 //vm.map.addListener("click", (e) => {
@@ -79,10 +79,10 @@ import RepeatSettingVue from '../manage/notification/scheduler/triggers/RepeatSe
                 if(!vm.is_multi_coordinates){
                     var marker = vm.markers[0];
                     if (marker) {
-                        marker.setPosition({
+                        marker.position ={
                             lat: location.latitude,
                             lng: location.longitude
-                        });
+                        };
                     } 
                     else {
                         marker = new google.maps.marker.AdvancedMarkerElement({

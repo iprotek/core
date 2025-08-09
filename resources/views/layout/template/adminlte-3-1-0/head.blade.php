@@ -68,7 +68,7 @@
   
     <link rel="stylesheet" href="/iprotek/css/w3school/preview-image.css">
     @if(config('iprotek.google_map_key'))
-      <script src="https://maps.googleapis.com/maps/api/js?key={{config('iprotek.google_map_key')}}&libraries=places"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key={{config('iprotek.google_map_key')}}&libraries=places,marker"></script>
     @endif
     
     <style>

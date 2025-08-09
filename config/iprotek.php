@@ -14,6 +14,7 @@ return [
     'app_type'=>env('PAY_IPROTEK_TYPE',''),
     "cart_url"=>env('PAY_CART_URL', ''),
     "google_map_key"=>env('PAY_GOOGLE_MAP_KEY', ''),
+    "google_map_id"=>env('PAY_GOOGLE_MAP_ID', ''),
     'disable_multi_branch'=>env('PAY_DISABLE_MULTI_BRANCH', 0),
     'sa_app_account_id'=>env('PAY_SA_APP_ACCOUNT_ID', 0),
     'sa_user_admin_id'=>env('PAY_SA_USER_ADMIN_ID', 0),
