@@ -4,6 +4,7 @@
 </template>
 
 <script>
+import RepeatSettingVue from '../manage/notification/scheduler/triggers/RepeatSetting.vue';
     export default {
         props:[ "height", "width", "google_map_api_key", "is_multi_coordinates", "is_select_map" ],
         $emits:["selected_location"],
@@ -68,8 +69,11 @@
             },            
             // Recenter function
             recenterMap:function(lat, lng) {
-                const newCenter = new google.maps.LatLng(lat, lng);
-                this.map.setCenter(newCenter);
+                var vm = this;
+                setTimeout(()=>{
+                    const newCenter = new google.maps.LatLng(lat, lng);
+                    vm.map.setCenter(newCenter);
+                }, 500);
             },
             placeMarker:function(location, is_new=false) {
                 var vm = this;
