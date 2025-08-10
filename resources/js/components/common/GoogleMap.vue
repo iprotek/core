@@ -8,6 +8,9 @@
         props:[ "height", "width", "google_map_api_key", "google_map_api_id", "is_multi_coordinates", "is_select_map" ],
         $emits:["selected_location"],
         watch: { 
+            is_select_map:function(newVal){
+                this.is_select_map = newVal;
+            }
         },
         components: { 
         },
@@ -51,7 +54,7 @@
                 }
                 else{                    
                     vm.map.addListener("click", (e) => {
-                        
+
                         if(!vm.is_select_map) return;
 
                         var location = {
