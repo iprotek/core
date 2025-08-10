@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-2">
+    <div>
         <small><b>Branch:</b></small>
         <div class="input-group w-100" >
             <label class="input-group-text p-0" >
