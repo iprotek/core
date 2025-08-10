@@ -51,6 +51,9 @@
                 }
                 else{                    
                     vm.map.addListener("click", (e) => {
+                        
+                        if(!vm.is_select_map) return;
+
                         var location = {
                            latitude: e.latLng.lat(),
                            longitude: e.latLng.lng()
