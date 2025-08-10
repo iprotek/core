@@ -5,8 +5,23 @@
 
 <script> 
     export default {
+        /*
+            Market: htmlIcon, htmlContent
+            //HTML ICON
+            customize the icon
+
+            //HTML Content
+            customize the content info of the icon is clicked
+
+            CONTENT TEMPLATE
+            <div style="text-align:center; font-size:12px;">
+            <img src="https://media.istockphoto.com/id/1973365581/vector/sample-ink-rubber-stamp.jpg?s=612x612&w=0&k=20&c=_m6hNbFtLdulg3LK5LRjJiH6boCb_gcxPvRLytIz0Ws=" style="width:50px;height:50px;border-radius:50%;" />
+            <div><strong>Sample </strong></div>
+            <div>This is a sample Text</div>
+            </div>
+        */
         props:[ "height", "width", "google_map_api_key", "google_map_api_id", "is_multi_coordinates", "is_select_map" ],
-        $emits:["selected_location"],
+        $emits:["selected_location", "clicked_marker"],
         watch: { 
             is_select_map:function(newVal){
                 this.is_select_map = newVal;
@@ -18,7 +33,8 @@
             return {
                 google_map_id: 'google-map-'+this._uid,
                 map:null,
-                markers:[]
+                markers:[],
+                promiseExec:null
             }
         },
         methods: { 
@@ -32,6 +48,7 @@
             initMap:function(coordinates=[{latitude: 10.3157, longitude: 123.8854}]) { // Default Cebu, Philippines
 
                 var vm = this;
+
                 if(!vm.google_map_api_key) return;
 
                 const defaultLocation = { lat: coordinates[0].latitude, lng: coordinates[0].longitude }; 
@@ -43,16 +60,27 @@
                 });
 
                 
-                //vm.map.addListener("click", (e) => {
-                if(!vm.is_select_map){
-                    google.maps.event.addListenerOnce(vm.map, 'tilesloaded', function () {
+                //MAP LOADED
+                google.maps.event.addListenerOnce(vm.map, 'tilesloaded', function () {
+
+                    if(!vm.is_select_map){
                         vm.placeMarker({
                             latitude: defaultLocation.lat,
                             longitude: defaultLocation.lng
                         });
-                    });
-                }
-                else{                    
+                    }
+                    //
+                    vm.promiseExec(
+                        vm.map,
+                        {
+                            latitude: defaultLocation.lat,
+                            longitude: defaultLocation.lng
+                        }
+                    );
+
+                });
+                
+                if(vm.is_select_map){                    
                     vm.map.addListener("click", (e) => {
 
                         if(!vm.is_select_map) return;
@@ -65,6 +93,11 @@
                         vm.placeMarker(location);
                     });
                 }
+
+                //Triggers when map has been loaded.
+                return new Promise((promiseExec)=>{
+                    vm.promiseExec = promiseExec;
+                });
             },
             setMarker:function(location, is_center = false){
             
@@ -83,10 +116,10 @@
                     vm.map.setCenter(newCenter);
                 }, 500);
             },
-            placeMarker:function(location, is_new=false) {
+            placeMarker:function(location, is_new=false, dataInfo) {
                 var vm = this;
                 //SING COORDINATES
-                if(!vm.is_multi_coordinates){
+                if(!vm.is_multi_coordinates && is_new === false){
                     var marker = vm.markers[0];
                     if (marker) {
                         marker.position ={
@@ -95,23 +128,52 @@
                         };
                     } 
                     else {
-                        marker = new google.maps.marker.AdvancedMarkerElement({
-                            position: {
-                                lat: location.latitude,
-                                lng: location.longitude
-                            },
-                            map: vm.map,
-                        });
-                        vm.markers.push(marker);
+                        vm.createMarker(location, dataInfo);
                     }
                 }
-                else{
-
+                else if(vm.is_multi_coordinates === true && is_new === true){                    
                     //TODO:: FOR MULTI LOCATION / ORDINATES, NOT EMPLEMENTED
-
+                    vm.createMarker(location, dataInfo);
                 }
 
 
+            },
+            //dataInfo fields: title, htmlContent, htmlIcon
+            createMarker:function(location, dataInfo){
+                var vm = this;
+                var htmlElement = document.createElement("div");
+                if(dataInfo && dataInfo.htmlIcon){
+                    htmlElement.innerHTML = dataInfo.htmlIcon;
+                }
+                var marker = new google.maps.marker.AdvancedMarkerElement({
+                    position: {
+                        lat: location.latitude,
+                        lng: location.longitude,
+                    },
+                    map: vm.map,
+                    title: dataInfo && dataInfo.title ? dataInfo.title : '',
+                    content: dataInfo && dataInfo.htmlIcon ? htmlElement : null
+                });
+
+                var infoWindow = null;
+                if(dataInfo && dataInfo.htmlContent){
+                    infoWindow = new google.maps.InfoWindow({
+                        content: dataInfo.htmlContent
+                    });
+                }
+
+
+                marker.addListener("click", (evt) => {
+
+                    if(infoWindow){
+                        infoWindow.open(vm.map, marker);
+                    }
+
+                    vm.$emit('clicked_marker', marker, dataInfo, location, evt);
+
+                });
+
+                vm.markers.push(marker);   
             },
             clearMarkers:function(){
                 var vm = this;
@@ -119,7 +181,7 @@
                 vm.markers = [];
             },
             loadCoordinates(coordinates=[{latitude: 10.3157, longitude: 123.8854}]){
-                this.initMap(coordinates);
+                return this.initMap(coordinates);
             }
 
 
