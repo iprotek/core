@@ -157,8 +157,23 @@
 
                 var infoWindow = null;
                 if(dataInfo && dataInfo.htmlContent){
+
+                    
                     infoWindow = new google.maps.InfoWindow({
                         content: dataInfo.htmlContent
+                    });
+                    
+                    //Manipulate style inside of infowindow
+                    infoWindow.addListener("domready", () => {
+                        // Get the default container for the InfoWindow
+                        const iwOuter = document.querySelector('.gm-style-iw');
+                        if(iwOuter){
+                            var closeButton = iwOuter.querySelector('button.gm-ui-hover-effect');
+                            if(closeButton){
+                                closeButton.style.right = 0;
+                                closeButton.style.position = 'absolute';
+                            }
+                        }
                     });
                 }
 
