@@ -1,5 +1,21 @@
 <template>
-    <div :id="'google-map-'+_uid" :style="'height:'+(height ? height: '200px;' )+';width:'+(width ? width :'200px')+';'" >
+    <div :style="'width:'+(width ? width :'200px')+';'">
+        <div v-if="target_name && target_id">
+            <button v-if="set_view === false" class="btn btn-outline-primary btn-sm my-1" @click="set_view=true" >
+                <span class="fa fa-map"></span>  SET DEFAULT VIEW
+            </button>
+            <div v-else>
+                <button class="btn btn-outline-primary btn-sm my-1 mr-2" @click="get_center_info" >
+                    <span class="fa fa-save"></span> SAVE
+                </button>
+                <button class="btn btn-default btn-sm my-1" @click="set_view=false">
+                    <span class="fa fa-times"></span> CANCEL
+                </button>
+
+            </div>
+        </div>
+        <div :id="'google-map-'+_uid" :style="'height:'+(height ? height: '200px;' )+';width:'+(width ? width :'200px')+';'" >
+    </div>
     </div>
 </template>
 
@@ -20,7 +36,7 @@
             <div>This is a sample Text</div>
             </div>
         */
-        props:[ "height", "width", "google_map_api_key", "google_map_api_id", "is_multi_coordinates", "is_select_map" ],
+        props:[ "height", "width", "google_map_api_key", "google_map_api_id", "is_multi_coordinates", "is_select_map", "target_id", "target_name" ],
         $emits:["selected_location", "clicked_marker"],
         watch: { 
             is_select_map:function(newVal){
@@ -34,10 +50,25 @@
                 google_map_id: 'google-map-'+this._uid,
                 map:null,
                 markers:[],
-                promiseExec:null
+                promiseExec:null,
+                set_view:false
             }
         },
         methods: { 
+            get_center_info:function(){
+                var vm = this;
+                if(vm.map){
+
+                    // Assuming you already created the map:
+                    const center = vm.map.getCenter(); // returns a LatLng object
+                    const zoom = vm.map.getZoom();     // returns a number
+                    
+                    console.log("Latitude:", center.lat());
+                    console.log("Longitude:", center.lng());
+                    console.log("Zoom level:", zoom);
+
+                }
+            },
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {
                     return key + '=' + params[key]
@@ -54,14 +85,16 @@
                 const defaultLocation = { lat: coordinates[0].latitude, lng: coordinates[0].longitude }; 
 
                 vm.map = new google.maps.Map(document.getElementById(vm.google_map_id), {
-                center: defaultLocation,
-                zoom: 10,
-                mapId: vm.google_map_api_id
+                    center: defaultLocation,
+                    zoom: 15,
+                    mapId: vm.google_map_api_id
                 });
 
                 
                 //MAP LOADED
                 google.maps.event.addListenerOnce(vm.map, 'tilesloaded', function () {
+
+                    //TODO:: SET THE MAP FOR CUSTOM FOCUS HERE
 
                     if(!vm.is_select_map){
                         vm.placeMarker({
