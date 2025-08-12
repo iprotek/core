@@ -1,13 +1,11 @@
 <template>
     <div :style="'width:'+(width ? width :'200px')+';'">
-        <div v-if="target_name && target_id">
+        <div v-if="group_id && target_name && target_id">
             <button v-if="set_view === false" class="btn btn-outline-primary btn-sm my-1" @click="set_view=true" >
                 <span class="fa fa-map"></span>  SET DEFAULT VIEW
             </button>
             <div v-else>
-                <button class="btn btn-outline-primary btn-sm my-1 mr-2" @click="get_center_info" >
-                    <span class="fa fa-save"></span> SAVE
-                </button>
+                <web-submit :action="save_map_settings" el_class="btn btn-outline-primary btn-sm my-1 mr-2" icon_class="fa fa-save" :label="'SAVE'" :timeout="3000" />
                 <button class="btn btn-default btn-sm my-1" @click="set_view=false">
                     <span class="fa fa-times"></span> CANCEL
                 </button>
@@ -20,6 +18,7 @@
 </template>
 
 <script> 
+    import WebSubmitVue from './WebSubmit.vue';
     export default {
         /*
             Market: htmlIcon, htmlContent
@@ -36,14 +35,15 @@
             <div>This is a sample Text</div>
             </div>
         */
-        props:[ "height", "width", "google_map_api_key", "google_map_api_id", "is_multi_coordinates", "is_select_map", "target_id", "target_name" ],
+        props:[ "height", "width", "google_map_api_key", "google_map_api_id", "is_multi_coordinates", "is_select_map", "target_id", "target_name", "group_id" ],
         $emits:["selected_location", "clicked_marker"],
         watch: { 
             is_select_map:function(newVal){
                 this.is_select_map = newVal;
             }
         },
-        components: { 
+        components: {
+            "web-submit":WebSubmitVue
         },
         data: function () {
             return {
@@ -55,6 +55,32 @@
             }
         },
         methods: { 
+            save_map_settings:function(){
+                var vm = this;
+
+                // Assuming you already created the map:
+                const center = vm.map.getCenter(); // returns a LatLng object
+                const zoom = vm.map.getZoom();     // returns a number
+
+                var request = {
+                    latitude : center.lat(),
+                    longitude : center.lng(),
+                    target_id: this.target_id,
+                    target_name: this.target_name,
+                    zoom: zoom
+                };
+                
+                return WebRequest2('POST', '/api/group/'+vm.group_id+'/map/settings', JSON.stringify(request) ).then(resp=>{
+                    return resp.json().then(data=>{
+                        setTimeout(()=>{
+                            vm.set_view = false;
+                        }, 4000);
+
+                        return data;
+                    
+                    });
+                });
+            },
             get_center_info:function(){
                 var vm = this;
                 if(vm.map){
@@ -75,9 +101,9 @@
                 }).join('&');
                 return queryString;
             },
-            
-            initMap:function(coordinates=[{latitude: 10.3157, longitude: 123.8854}]) { // Default Cebu, Philippines
 
+            loadMapUI:function(coordinates=[{latitude: 10.3157, longitude: 123.8854}], zoom=15, set_marker=true){
+                
                 var vm = this;
 
                 if(!vm.google_map_api_key) return;
@@ -96,7 +122,7 @@
 
                     //TODO:: SET THE MAP FOR CUSTOM FOCUS HERE
 
-                    if(!vm.is_select_map){
+                    if(!vm.is_select_map && set_marker){
                         vm.placeMarker({
                             latitude: defaultLocation.lat,
                             longitude: defaultLocation.lng
@@ -110,6 +136,8 @@
                             longitude: defaultLocation.lng
                         }
                     );
+                    //This configuration is when you have group_id, target_id and target_name
+                    //vm.loadMapSettings();
 
                 });
                 
@@ -126,11 +154,59 @@
                         vm.placeMarker(location);
                     });
                 }
+            },
+            
+            initMap:function(coordinates=[{latitude: 10.3157, longitude: 123.8854}], set_marker=true) { // Default Cebu, Philippines
+                
+                var vm = this;
+
+                if(vm.group_id && vm.target_id && vm.target_name){
+                    vm.loadMapSettings().then(data=>{
+                        if(data){
+                            console.log(data);
+                            vm.loadMapUI([data], data.zoom, set_marker);
+                        }
+                        else{
+                            vm.loadMapUI(coordinates, 15, set_marker);
+                        }
+                    });
+                }else{
+                    vm.loadMapUI(coordinates, 15, set_marker);
+                }
 
                 //Triggers when map has been loaded.
                 return new Promise((promiseExec)=>{
                     vm.promiseExec = promiseExec;
                 });
+            },
+            queryString:function(params={}){ 
+                var queryString = Object.keys(params).map(function(key) {
+                    return key + '=' + params[key]
+                }).join('&');
+                return queryString;
+            },
+            loadMapSettings:function(){
+
+                var vm = this;
+                
+                return WebRequest2('GET', '/api/group/'+vm.group_id+'/map/settings?'+vm.queryString({
+                    target_id : vm.target_id,
+                    target_name : vm.target_name
+                })).then(resp=>{
+                    if(resp.ok){
+                        return resp.json().then(data=>{
+                            if(data.status == 1 && data.data ){
+                                var jsonMap = JSON.parse(data.data);
+                                if(jsonMap){
+                                    return jsonMap;
+                                }
+                            }
+                            return null;
+                        });
+                    }
+                    return null;
+                })
+
             },
             setMarker:function(location, is_center = false){
             
@@ -142,11 +218,17 @@
             
             },            
             // Recenter function
-            recenterMap:function(lat, lng) {
+            recenterMap:function(lat, lng, zoom=null) {
                 var vm = this;
                 setTimeout(()=>{
+
                     const newCenter = new google.maps.LatLng(lat, lng);
+                    
                     vm.map.setCenter(newCenter);
+
+                    if(zoom)
+                        vm.map.setZoom(zoom);
+
                 }, 500);
             },
             placeMarker:function(location, is_new=false, dataInfo) {
@@ -228,8 +310,8 @@
                 vm.markers.forEach(m => m.setMap(null));
                 vm.markers = [];
             },
-            loadCoordinates(coordinates=[{latitude: 10.3157, longitude: 123.8854}]){
-                return this.initMap(coordinates);
+            loadCoordinates(coordinates=[{latitude: 10.3157, longitude: 123.8854}], set_marker=true){
+                return this.initMap(coordinates, set_marker);
             }
 
 

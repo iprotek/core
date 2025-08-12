@@ -50,13 +50,13 @@ class GoogleMapController extends _CommonController
 
         //check if name is Invalid 
         if( !($target_id && $target_name ) ){
-            return ["status"=>0, "message"=>"Failed."];
+            return ["status"=>0, "message"=>"Failed(1)."];
         }
 
         $name = "google_map_view_setting_".$target_name.'_'.$target_id;
 
         if( !$this->isValidVariableName($name) ){
-            return ["status"=>0, "message"=>"Failed."];
+            return ["status"=>0, "message"=>"Failed(2).".$name];
         }
         
         AppVarHelper::set([
