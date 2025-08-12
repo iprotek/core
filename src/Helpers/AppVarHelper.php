@@ -66,7 +66,7 @@ class AppVarHelper
         return $appvar->value;
     } 
 
-    public static function set( $var_name, $new_value = null, $target_id = null )
+    public static function set( $var_name, $new_value = null, $target_id = null, $is_update=false )
     {
         if(!auth()->check()){
             return;
@@ -111,20 +111,25 @@ class AppVarHelper
                         //DELETE IF VALUES IS NOT SAME AND CREATE NEW
                         $appvar->value = $var_name[$orignalVarName];
                         if($appvar->isDirty()){
-                            //$appvar->delete();                            
-                            $toDel = AppVariable::where('name', $var);
-                            if($target_id == null)
-                                $toDel->whereRaw( ' target_id IS NULL ' );
-                            else 
-                                $toDel->where('target_id', $target_id); 
-                             $toDel->delete();
+                            if($is_update === true){
+                                $appvar->save();
+                            }
+                            else{
+                                //$appvar->delete();                            
+                                $toDel = AppVariable::where('name', $var);
+                                if($target_id == null)
+                                    $toDel->whereRaw( ' target_id IS NULL ' );
+                                else 
+                                    $toDel->where('target_id', $target_id); 
+                                $toDel->delete();
 
-                            $appvar = AppVariable::create([
-                                "name"=>$var,
-                                "value"=>$var_name[$orignalVarName],
-                                "updated_by"=>auth()->user()->id,
-                                "target_id"=>$target_id
-                            ]);
+                                $appvar = AppVariable::create([
+                                    "name"=>$var,
+                                    "value"=>$var_name[$orignalVarName],
+                                    "updated_by"=>auth()->user()->id,
+                                    "target_id"=>$target_id
+                                ]);
+                            }
                         }
                         break;
                     }
@@ -160,20 +165,24 @@ class AppVarHelper
             //IF Same values.. don't touch.. delete old and create new
             $appvar->value = $new_value;
             if($appvar->isDirty()){
-                
-                $toDel = AppVariable::where('name', $var_name);
-                if($target_id == null)
-                    $toDel->whereRaw( ' target_id IS NULL ' );
-                else 
-                    $toDel->where('target_id', $target_id); 
-                $toDel->delete();
+                if($is_update === true){
+                    $appvar->save();
+                }
+                else{
+                    $toDel = AppVariable::where('name', $var_name);
+                    if($target_id == null)
+                        $toDel->whereRaw( ' target_id IS NULL ' );
+                    else 
+                        $toDel->where('target_id', $target_id); 
+                    $toDel->delete();
 
-                $appvar = AppVariable::create([
-                    "name"=>$var_name,
-                    "value"=>$new_value,
-                    "updated_by"=>auth()->user()->id,
-                    "target_id"=>$target_id
-                ]);
+                    $appvar = AppVariable::create([
+                        "name"=>$var_name,
+                        "value"=>$new_value,
+                        "updated_by"=>auth()->user()->id,
+                        "target_id"=>$target_id
+                    ]);
+                }
             }
         }
         //IF NOT CREATE

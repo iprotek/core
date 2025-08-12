@@ -69,6 +69,8 @@
                     target_name: this.target_name,
                     zoom: zoom
                 };
+
+                console.log(request);
                 
                 return WebRequest2('POST', '/api/group/'+vm.group_id+'/map/settings', JSON.stringify(request) ).then(resp=>{
                     return resp.json().then(data=>{
@@ -112,7 +114,7 @@
 
                 vm.map = new google.maps.Map(document.getElementById(vm.google_map_id), {
                     center: defaultLocation,
-                    zoom: 15,
+                    zoom: zoom,
                     mapId: vm.google_map_api_id
                 });
 

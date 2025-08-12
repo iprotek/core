@@ -64,9 +64,11 @@ class GoogleMapController extends _CommonController
                 "latitude"=>$request->latitude,
                 "longitude"=>$request->longitude,
                 "zoom"=>$request->zoom
-            ]) 
-        ]);
-
+            ])], 
+            null,
+            null,
+            true
+        );
 
         return [ "status"=>1, "message"=>"Successfully Set" ];
 
