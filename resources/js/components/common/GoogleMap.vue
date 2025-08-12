@@ -70,7 +70,6 @@
                     zoom: zoom
                 };
 
-                console.log(request);
                 
                 return WebRequest2('POST', '/api/group/'+vm.group_id+'/map/settings', JSON.stringify(request) ).then(resp=>{
                     return resp.json().then(data=>{
@@ -91,9 +90,6 @@
                     const center = vm.map.getCenter(); // returns a LatLng object
                     const zoom = vm.map.getZoom();     // returns a number
                     
-                    console.log("Latitude:", center.lat());
-                    console.log("Longitude:", center.lng());
-                    console.log("Zoom level:", zoom);
 
                 }
             },
@@ -233,7 +229,7 @@
                     if(zoom)
                         vm.map.setZoom(zoom);
 
-                }, 500);
+                }, 300);
             },
             placeMarker:function(location, is_new=false, dataInfo) {
                 var vm = this;
