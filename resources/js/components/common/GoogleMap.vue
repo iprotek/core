@@ -162,17 +162,19 @@
                 
                 var vm = this;
 
+                //This is to activating the default settings in a map
                 if(vm.group_id && vm.target_id && vm.target_name){
                     vm.loadMapSettings().then(data=>{
                         if(data){
-                            console.log(data);
                             vm.loadMapUI([data], data.zoom, set_marker);
                         }
                         else{
+                            //Load the default view
                             vm.loadMapUI(coordinates, 15, set_marker);
                         }
                     });
                 }else{
+                    //Load the default view
                     vm.loadMapUI(coordinates, 15, set_marker);
                 }
 
