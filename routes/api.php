@@ -26,6 +26,9 @@ Route::prefix('api')->middleware(['api'])->group(function(){
 
         //Branch
         include(__DIR__.'/api/branch.php');
+        
+        //Map
+        include(__DIR__.'/api/map.php');
 
     });
 
