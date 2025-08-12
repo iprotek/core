@@ -170,12 +170,12 @@
                         }
                         else{
                             //Load the default view
-                            vm.loadMapUI(coordinates, 15, set_marker);
+                            vm.loadMapUI(coordinates, 11, set_marker);
                         }
                     });
                 }else{
                     //Load the default view
-                    vm.loadMapUI(coordinates, 15, set_marker);
+                    vm.loadMapUI(coordinates, 11, set_marker);
                 }
 
                 //Triggers when map has been loaded.
