@@ -36,7 +36,7 @@
             </div>
         */
         props:[ "height", "width", "google_map_api_key", "google_map_api_id", "is_multi_coordinates", "is_select_map", "target_id", "target_name", "group_id" ],
-        $emits:["selected_location", "clicked_marker"],
+        $emits:["selected_location", "clicked_marker", "clicked_path"],
         watch: { 
             is_select_map:function(newVal){
                 this.is_select_map = newVal;
@@ -50,6 +50,7 @@
                 google_map_id: 'google-map-'+this._uid,
                 map:null,
                 markers:[],
+                paths:[],
                 promiseExec:null,
                 set_view:false
             }
@@ -310,8 +311,103 @@
                 vm.markers.forEach(m => m.setMap(null));
                 vm.markers = [];
             },
+            clearPaths:function(){
+                var vm = this;
+                vm.paths.forEach(p=>{ 
+                    p.path.setMap(null);
+                    if(p.interval_callback !== null){
+                        window.clearInterval(p.interval_callback);
+                    }
+                });
+                vm.paths = [];
+            },
             loadCoordinates(coordinates=[{latitude: 10.3157, longitude: 123.8854}], set_marker=true){
                 return this.initMap(coordinates, set_marker);
+            },
+
+            createPath:function(PointAB, hex_color="#FF0000", is_dash=false, is_moving=false, speed=250, htmlContent = null){
+                var vm = this;
+                const pointA = { lat: PointAB.from.latitude * 1, lng: PointAB.from.longitude * 1 }; // Cebu City
+                const pointB = { lat: PointAB.to.latitude * 1, lng: PointAB.to.longitude * 1 }; // Nearby point
+                
+                var line = null;
+                var pathData = null;
+                
+                //ONLY LINE
+                if(is_dash === false){
+                    line = new google.maps.Polyline({
+                        path: [pointA, pointB], // Points in order
+                        geodesic: true,         // Makes the line follow the curve of the Earth
+                        strokeColor: hex_color, // Line color
+                        strokeOpacity: 1.0,     // Fully visible
+                        strokeWeight: 3         // Thickness
+                    });
+
+                    line.setMap(vm.map);
+
+                    pathData = {
+                        path:line,
+                        data:PointAB,
+                        interval_callback:null
+                    };
+
+                    vm.paths.push(pathData);
+
+                }
+                else{
+
+                    // Create a dashed polyline either moving or not.
+                    line = new google.maps.Polyline({
+                        path: [pointA, pointB],
+                        geodesic: true,
+                        strokeOpacity: 0, // Hide the solid line
+                        icons: [
+                            {
+                                icon: {
+                                    path: "M 0,-1 0,1", // short vertical dash
+                                    strokeOpacity: 1,
+                                    strokeColor: hex_color, // <-- set dash color here
+                                    scale: 2,
+                                },
+                                offset: "0",
+                                repeat: "10px", // space between dashes
+                            }
+                        ],
+                        map: vm.map
+                    });
+
+                    // Animate the dashes moving
+                    var interval_callback = null;
+                    if(is_moving){
+                        let count = 0;
+                        interval_callback = window.setInterval(() => {
+                            count = (count + 1) % 200;
+
+                            const icons = line.get("icons");
+                            icons[0].offset = count + "px";
+                            line.set("icons", icons);
+                        }, speed);
+                    }
+                    
+                    pathData = {
+                        path:line,
+                        data:PointAB,
+                        interval_callback:interval_callback
+                    };
+
+                    vm.paths.push(pathData);
+
+                }
+
+                line.addListener("click", (event) => {
+                    if(htmlContent){
+                        infoWindow.setContent(htmlContent);
+                        infoWindow.setPosition(event.latLng); // Show at clicked point
+                        infoWindow.open(vm.map);
+                    }
+                    vm.$emit('clicked_path', pathData );
+                });
+
             }
 
 
