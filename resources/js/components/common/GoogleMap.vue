@@ -35,12 +35,39 @@
             <div>This is a sample Text</div>
             </div>
         */
-        props:[ "height", "width", "google_map_api_key", "google_map_api_id", "is_multi_coordinates", "is_select_map", "target_id", "target_name", "group_id" ],
+        props:[ 
+            "height", 
+            "width", 
+            "google_map_api_key", 
+            "google_map_api_id", 
+            "is_multi_coordinates", 
+            "is_select_map", 
+
+            //For Custom View
+            "target_id", 
+            "target_name", 
+            "group_id",
+
+            //
+            "is_select_paths",
+            "select_source",
+            "select_target"
+        ],
         $emits:["selected_location", "clicked_marker", "clicked_path"],
         watch: { 
             is_select_map:function(newVal){
                 this.is_select_map = newVal;
+            },
+            select_from:function(newVal){
+                this.series_paths.source = newVal;
+                this.series_paths.lines = [];
+            },
+            select_target:function(newVal){
+                this.series_paths.target = newVal;
+                this.series_paths.lines = [];
             }
+
+
         },
         components: {
             "web-submit":WebSubmitVue
@@ -51,8 +78,15 @@
                 map:null,
                 markers:[],
                 paths:[],
+                isMapReady:false,
                 promiseExec:null,
-                set_view:false
+                set_view:false,
+                series_paths:{
+                    source:null,
+                    target:null,
+                    lines:[]
+                },
+                
             }
         },
         methods: { 
@@ -135,6 +169,7 @@
                             longitude: defaultLocation.lng
                         }
                     );
+                    vm.isMapReady = true;
                     //This configuration is when you have group_id, target_id and target_name
                     //vm.loadMapSettings();
 
@@ -408,6 +443,35 @@
                     vm.$emit('clicked_path', pathData );
                 });
 
+            },
+            defaultSvgIcon:function(icon_class, bgColor="white", stroke="silver"){
+                if(icon_class){
+                    return `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 40 50">
+                            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,0,0,0.3)" />
+                            </filter>
+
+                            <!-- Teardrop shape -->
+                            <path d="
+                            M20 2
+                            a18 18 0 0 1 18 18
+                            c0 9 -8.5 17 -17.5 27
+                            C11 37 2 29 2 20
+                            a18 18 0 0 1 18 -18z
+                            " fill="${bgColor}" stroke="${stroke}" stroke-width="2" filter="url(#shadow)" />
+
+                            <!-- Font Awesome icon -->
+                            <foreignObject x="0" y="0" width="40" height="40">
+                                <div xmlns="http://www.w3.org/1999/xhtml" 
+                                    style="display:flex;justify-content:center;align-items:center;height:40px;">
+                                <i class="${icon_class}" style="font-size:18px;"></i>
+                                </div>
+                            </foreignObject>
+                        </svg>
+                    `;
+                }
+                return null;
             }
 
 
