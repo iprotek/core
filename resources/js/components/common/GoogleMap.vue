@@ -292,14 +292,14 @@
                         if (now - lastUpdate > 100) { // update every 30ms
                             //previewLine.setPath([pointA, e.latLng.toJSON(), pointB]);
                             lastUpdate = now;
-                            console.log("Trigger", lastUpdate);
+                            //console.log("Trigger", lastUpdate);
                             if(prepareReadyInterval !== null){
                                 clearInterval(prepareReadyInterval);
                                 prepareReadyInterval = null;
                             }
 
                             prepareReadyInterval = setTimeout(()=>{
-                                console.log("Passed");
+                                //console.log("Passed");
                                 vm.setPathsPreviewLine(e, previewLine);
                                 clearInterval(prepareReadyInterval);
                                 prepareReadyInterval = null;  
@@ -315,9 +315,11 @@
                 vm.map.getDiv().addEventListener("keydown", function (event) {
                     
                     if (event.key === "Enter") {
-                        console.log("Enter key pressed on the map!");
+                        //console.log("Enter key pressed on the map!");
                         vm.doneSelecting();
-                        // Do something — like placing a marker
+                    }
+                    else if (event.key === 'Escape') {
+                        vm.undoSelectedPath();
                     }
                 });
 
@@ -528,10 +530,17 @@
                 return this.initMap(coordinates, set_marker);
             },
 
-            createPath:function(PointAB, hex_color="#FF0000", is_dash=false, is_moving=false, speed=250, htmlContent = null, isClickable = false){
+            createPath:function(coordinates, hex_color="#FF0000", is_dash=false, is_moving=false, speed=250, htmlContent = null, isClickable = false){
                 var vm = this;
-                const pointA = { lat: PointAB.from.latitude * 1, lng: PointAB.from.longitude * 1 }; // Cebu City
-                const pointB = { lat: PointAB.to.latitude * 1, lng: PointAB.to.longitude * 1 }; // Nearby point
+                var coordinatePoints = [];
+                if(typeof coordinates === "object" && coordinates !== null){
+                    const pointA = { lat: coordinates.from.latitude * 1, lng: coordinates.from.longitude * 1 }; 
+                    const pointB = { lat: coordinates.to.latitude * 1, lng: coordinates.to.longitude * 1 }; 
+                    coordinatePoints = [pointA, pointB];
+                }
+                else if(Array.isArray(coordinates)){
+                    coordinatePoints = coordinates;
+                }
                 
                 var line = null;
                 var pathData = null;
@@ -539,7 +548,7 @@
                 //ONLY LINE
                 if(is_dash === false){
                     line = new google.maps.Polyline({
-                        path: [pointA, pointB], // Points in order
+                        path: coordinatePoints, // Points in order
                         geodesic: true,         // Makes the line follow the curve of the Earth
                         strokeColor: hex_color, // Line color
                         strokeOpacity: 1.0,     // Fully visible
@@ -551,7 +560,7 @@
 
                     pathData = {
                         path:line,
-                        data:PointAB,
+                        data:coordinates,
                         interval_callback:null
                     };
 
@@ -562,7 +571,7 @@
 
                     // Create a dashed polyline either moving or not.
                     line = new google.maps.Polyline({
-                        path: [pointA, pointB],
+                        path: coordinatePoints,
                         geodesic: true,
                         strokeOpacity: 0, // Hide the solid line
                         icons: [
@@ -596,7 +605,7 @@
                     
                     pathData = {
                         path:line,
-                        data:PointAB,
+                        data:coordinates,
                         interval_callback:interval_callback
                     };
 
