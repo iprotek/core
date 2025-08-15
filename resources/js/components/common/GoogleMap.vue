@@ -1,17 +1,42 @@
 <template>
     <div :style="'width:'+(width ? width :'200px')+';'">
-        <div v-if="group_id && target_name && target_id">
-            <button v-if="set_view === false" class="btn btn-outline-primary btn-sm my-1" @click="set_view=true" >
-                <span class="fa fa-map"></span>  SET DEFAULT VIEW
-            </button>
-            <div v-else>
-                <web-submit :action="save_map_settings" el_class="btn btn-outline-primary btn-sm my-1 mr-2" icon_class="fa fa-save" :label="'SAVE'" :timeout="3000" />
-                <button class="btn btn-default btn-sm my-1" @click="set_view=false">
-                    <span class="fa fa-times"></span> CANCEL
+        <span v-if="isMapReady">
+            <span v-if="group_id && target_name && target_id && is_start_select_paths == false && series_paths.coordinates.length <= 0" class="mr-2">
+                <button v-if="set_view === false" class="btn btn-outline-primary btn-sm my-1" @click="set_view=true" >
+                    <span class="fa fa-map"></span>  SET DEFAULT VIEW
                 </button>
+                <div v-else>
+                    <web-submit :action="save_map_settings" el_class="btn btn-outline-primary btn-sm my-1 mr-2" icon_class="fa fa-save" :label="'SAVE'" :timeout="3000" />
+                    <button class="btn btn-default btn-sm my-1" @click="set_view=false">
+                        <span class="fa fa-times"></span> CANCEL
+                    </button>
+                </div>
+            </span>
+            <span v-if="is_select_paths && select_source && select_target && set_view == false">
+                <span v-if="is_start_select_paths === false" >
+                    <button class="btn btn-outline-secondary btn-sm my-1 mr-2" @click="is_start_select_paths=true" >
+                        <span class="fa fa-code-fork"></span> SELECT PATH/S
+                    </button>
+                    <web-submit v-if="series_paths.coordinates.length > 0" :action="save_paths" :el_class="'btn btn-outline-primary btn-sm my-1 mr-2'" :icon_class="' fa fa-save'" :label="'SAVE'" :timeout="3000" />
+                    <button v-if="series_paths.coordinates.length > 0" class="btn btn-default btn-sm my-1" @click="cancelSelectPaths();is_start_select_paths=false" >
+                        <span class="fa fa-times"></span> CANCEL
+                    </button>
+                </span>
+                <span v-else>
+                    <button class="btn btn-outline-success btn-sm my-1 mr-2" @click="doneSelecting();">
+                        <span class="fa fa-check"></span> DONE
+                    </button>
+                    <button class="btn btn-outline-warning btn-sm my-1" @click="undoSelectedPath();" >
+                        <span class="fa fa-undo"></span> UNDO
+                    </button>
+                    <button class="btn btn-default btn-sm my-1" @click="cancelSelectPaths();is_start_select_paths=false" >
+                        <span class="fa fa-times"></span> CANCEL
+                    </button>
 
-            </div>
-        </div>
+                </span>
+
+            </span>
+        </span>
         <div :id="'google-map-'+_uid" :style="'height:'+(height ? height: '200px;' )+';width:'+(width ? width :'200px')+';'" >
     </div>
     </div>
@@ -41,7 +66,7 @@
             "google_map_api_key", 
             "google_map_api_id", 
             "is_multi_coordinates", 
-            "is_select_map", 
+            "is_select_map", //Activate to click single mark
 
             //For Custom View
             "target_id", 
@@ -49,22 +74,51 @@
             "group_id",
 
             //
-            "is_select_paths",
+            "is_select_paths", //Active to select multi paths
             "select_source",
-            "select_target"
+            "select_target",
+            "action_saving_paths"
         ],
         $emits:["selected_location", "clicked_marker", "clicked_path"],
         watch: { 
             is_select_map:function(newVal){
                 this.is_select_map = newVal;
             },
-            select_from:function(newVal){
-                this.series_paths.source = newVal;
-                this.series_paths.lines = [];
+            select_source:function(newVal){
+                var vm = this;
+                vm.series_paths.source = newVal;
+                vm.series_paths.target = null;
+                if(vm.series_paths.lineEl){
+                    vm.clearLineElement(vm.series_paths.lineEl);
+                    vm.series_paths.lineEl = null;
+                }
+                if(vm.series_paths.previewLineEl){
+                    vm.clearLineElement(vm.series_paths.previewLineEl);
+                    vm.series_paths.previewLineEl = null;
+                }
+                vm.is_start_select_paths = false;
+
+                vm.clearSelectedPaths();
+
+                vm.selectedCentered(newVal);
             },
             select_target:function(newVal){
-                this.series_paths.target = newVal;
-                this.series_paths.lines = [];
+                var vm = this;
+                vm.series_paths.target = newVal;
+                
+                if(vm.series_paths.lineEl){
+                    vm.clearLineElement(vm.series_paths.lineEl);
+                    vm.series_paths.lineEl = null;
+                }
+                if(vm.series_paths.previewLineEl){
+                    vm.clearLineElement(vm.series_paths.previewLineEl);
+                    vm.series_paths.previewLineEl = null;
+                }
+                vm.is_start_select_paths = false;
+
+                vm.clearSelectedPaths();
+                
+                vm.selectedCentered(newVal);
             }
 
 
@@ -84,12 +138,38 @@
                 series_paths:{
                     source:null,
                     target:null,
-                    lines:[]
+                    coordinates:[],
+                    lineEl:null,
+                    previewLineEl:null
                 },
+
+                is_start_select_paths:false,
                 
             }
         },
         methods: { 
+
+            save_paths:function(){
+                var vm = this;
+                if(this.action_saving_paths){
+                    
+                   return this.action_saving_paths(this.series_paths);
+                
+                }
+
+            },
+
+            clearLineElement:function(lineEl){
+                var vm = this;
+                lineEl.path.setMap(null);
+                if(lineEl.interval_callback){
+                    clearInterval( lineEl.interval_callback );
+                    lineEl.interval_callback = null;
+                }
+                vm.paths = vm.paths.filter(a=> a != lineEl);
+                //
+            },
+
             save_map_settings:function(){
                 var vm = this;
 
@@ -117,6 +197,7 @@
                     });
                 });
             },
+
             get_center_info:function(){
                 var vm = this;
                 if(vm.map){
@@ -128,6 +209,7 @@
 
                 }
             },
+
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {
                     return key + '=' + params[key]
@@ -175,8 +257,15 @@
 
                 });
                 
-                if(vm.is_select_map){                    
+                if(vm.is_select_map || vm.is_select_paths){                    
                     vm.map.addListener("click", (e) => {
+
+                        if(vm.is_select_paths){
+                            if(vm.is_start_select_paths){
+                                vm.clickStartSelectPaths(e);
+                            }
+                            return;
+                        }
 
                         if(!vm.is_select_map) return;
 
@@ -188,6 +277,50 @@
                         vm.placeMarker(location);
                     });
                 }
+
+                //MOUSE OVER
+                let lastUpdate = 0;
+                let prepareReadyInterval = null;
+
+                vm.map.addListener("mousemove", (e) => {
+                    
+                    if(!vm.series_paths.previewLineEl) return;
+
+                    var previewLine = vm.series_paths.previewLineEl.path
+                    if(vm.is_start_select_paths && vm.is_select_paths  && previewLine){
+                        const now = Date.now();
+                        if (now - lastUpdate > 100) { // update every 30ms
+                            //previewLine.setPath([pointA, e.latLng.toJSON(), pointB]);
+                            lastUpdate = now;
+                            console.log("Trigger", lastUpdate);
+                            if(prepareReadyInterval !== null){
+                                clearInterval(prepareReadyInterval);
+                                prepareReadyInterval = null;
+                            }
+
+                            prepareReadyInterval = setTimeout(()=>{
+                                console.log("Passed");
+                                vm.setPathsPreviewLine(e, previewLine);
+                                clearInterval(prepareReadyInterval);
+                                prepareReadyInterval = null;  
+                            }, 200);
+                            //console.log("Trigger", lastUpdate);
+                            //vm.setPathsPreviewLine(previewLine);
+
+                        }
+                    }
+                });
+
+                //
+                vm.map.getDiv().addEventListener("keydown", function (event) {
+                    
+                    if (event.key === "Enter") {
+                        console.log("Enter key pressed on the map!");
+                        vm.doneSelecting();
+                        // Do something — like placing a marker
+                    }
+                });
+
             },
             
             initMap:function(coordinates=[{latitude: 10.3157, longitude: 123.8854}], set_marker=true) { // Default Cebu, Philippines
@@ -215,12 +348,14 @@
                     vm.promiseExec = promiseExec;
                 });
             },
+
             queryString:function(params={}){ 
                 var queryString = Object.keys(params).map(function(key) {
                     return key + '=' + params[key]
                 }).join('&');
                 return queryString;
             },
+
             loadMapSettings:function(){
 
                 var vm = this;
@@ -244,6 +379,7 @@
                 })
 
             },
+
             setMarker:function(location, is_center = false){
             
                 this.placeMarker(location);
@@ -252,21 +388,49 @@
                     this.recenterMap(location.latitude, location.longitude);
                 }
             
-            },            
+            },
+
             // Recenter function
-            recenterMap:function(lat, lng, zoom=null) {
+            recenterMap:function(lat, lng, zoom=null, is_animate = false) {
                 var vm = this;
                 setTimeout(()=>{
 
                     const newCenter = new google.maps.LatLng(lat, lng);
                     
-                    vm.map.setCenter(newCenter);
+                    if(is_animate === false)
+                        vm.map.setCenter(newCenter);
+                    else
+                        vm.smoothPanTo({ latitude: lat, longitude: lng });
 
                     if(zoom)
                         vm.map.setZoom(zoom);
 
                 }, 300);
             },
+
+            smoothPanTo:function(location, duration = 1000) {
+                var vm = this;
+                const startLatLng = vm.map.getCenter();
+                const startTime = performance.now();
+
+                function animate(time) {
+                    const elapsed = time - startTime;
+                    const t = Math.min(1, elapsed / duration); // progress from 0 to 1
+                    const easedT = t * (2 - t); // ease-out
+
+                    const lat = startLatLng.lat() + ( ( location.latitude * 1 )- startLatLng.lat()) * easedT;
+                    const lng = startLatLng.lng() + ( ( location.longitude * 1 ) - startLatLng.lng()) * easedT;
+
+                    vm.map.setCenter({ lat, lng });
+
+                    if (t < 1) {
+                        requestAnimationFrame(animate);
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            },
+
             placeMarker:function(location, is_new=false, dataInfo) {
                 var vm = this;
                 //SING COORDINATES
@@ -289,6 +453,7 @@
 
 
             },
+
             //dataInfo fields: title, htmlContent, htmlIcon
             createMarker:function(location, dataInfo){
                 var vm = this;
@@ -341,11 +506,13 @@
 
                 vm.markers.push(marker);   
             },
+
             clearMarkers:function(){
                 var vm = this;
                 vm.markers.forEach(m => m.setMap(null));
                 vm.markers = [];
             },
+
             clearPaths:function(){
                 var vm = this;
                 vm.paths.forEach(p=>{ 
@@ -356,11 +523,12 @@
                 });
                 vm.paths = [];
             },
+
             loadCoordinates(coordinates=[{latitude: 10.3157, longitude: 123.8854}], set_marker=true){
                 return this.initMap(coordinates, set_marker);
             },
 
-            createPath:function(PointAB, hex_color="#FF0000", is_dash=false, is_moving=false, speed=250, htmlContent = null){
+            createPath:function(PointAB, hex_color="#FF0000", is_dash=false, is_moving=false, speed=250, htmlContent = null, isClickable = false){
                 var vm = this;
                 const pointA = { lat: PointAB.from.latitude * 1, lng: PointAB.from.longitude * 1 }; // Cebu City
                 const pointB = { lat: PointAB.to.latitude * 1, lng: PointAB.to.longitude * 1 }; // Nearby point
@@ -375,7 +543,8 @@
                         geodesic: true,         // Makes the line follow the curve of the Earth
                         strokeColor: hex_color, // Line color
                         strokeOpacity: 1.0,     // Fully visible
-                        strokeWeight: 3         // Thickness
+                        strokeWeight: 3,         // Thickness
+                        clickable: isClickable 
                     });
 
                     line.setMap(vm.map);
@@ -408,7 +577,8 @@
                                 repeat: "10px", // space between dashes
                             }
                         ],
-                        map: vm.map
+                        map: vm.map,
+                        clickable: isClickable 
                     });
 
                     // Animate the dashes moving
@@ -443,7 +613,10 @@
                     vm.$emit('clicked_path', pathData );
                 });
 
+                ///return line;
+                return pathData;
             },
+
             defaultSvgIcon:function(icon_class, bgColor="white", stroke="silver"){
                 if(icon_class){
                     return `
@@ -472,7 +645,159 @@
                     `;
                 }
                 return null;
+            },
+
+
+
+            /** PATH SELECTION HERE.. */
+            clickStartSelectPaths:function(e){
+                
+                //console.log(e);
+                var vm = this;
+
+                if( vm.is_start_select_paths && vm.series_paths.source && vm.series_paths.target){
+                    vm.series_paths.coordinates.push({
+                        lat: e.latLng.lat(),
+                        lng: e.latLng.lng()
+                    });
+                    //console.log(e);
+                    vm.setSelectedPaths();
+
+                }
+            },
+            setSelectedPaths(){
+                var vm = this;
+                var pointA = vm.series_paths.source;
+                var pointB = vm.series_paths.target;
+
+                pointA = {
+                    lat: pointA.latitude,
+                    lng: pointA.longitude
+                }
+                pointB = {
+                    lat: pointB.latitude,
+                    lng: pointB.longitude
+                }
+
+                let collect = [];
+                
+                collect.push(pointA);
+                
+                vm.series_paths.coordinates.forEach(line=>{
+                    collect.push(line);
+                });
+                
+                collect.push(pointB);
+
+                vm.series_paths.lineEl.path.setPath(collect);
+
+            },
+            clearSelectedPaths:function(){
+
+                this.series_paths.coordinates = [];
+
+                //TODO:: reset path of two sources.. to the solid single line 
+
+            },
+            selectedCentered:function(val){
+                var vm = this;
+                setTimeout(()=>{
+                    if(val){
+                        if(vm.series_paths.source && vm.series_paths.target){
+                            //TODO: center in between
+                            var pointA = vm.series_paths.source;
+                            var pointB = vm.series_paths.target;
+                            
+                            const bounds = new google.maps.LatLngBounds();
+                            bounds.extend({
+                                lat: pointA.latitude,
+                                lng: pointA.longitude
+                            });
+                            bounds.extend({
+                                lat: pointB.latitude,
+                                lng: pointB.longitude
+                            });
+
+                            // Fit map to bounds
+                            vm.map.fitBounds(bounds);
+
+                            if(this.series_paths.lineEl == null){
+                                this.series_paths.lineEl = vm.createPath( { from: pointA, to: pointB }, "#0000FF", true, true, 250,  null, false);
+                            }
+
+                            if(this.series_paths.previewLineEl == null){
+                                this.series_paths.previewLineEl = vm.createPath( { from: pointA, to: pointB }, "#008000", true, true, 250, null, false);
+                            }
+
+                            /*
+                            const centerPoint = {
+                                latitude: ( (pointA.latitude * 1) + (pointB.latitude * 1 ) ) / 2,
+                                longitude: ( ( pointA.longitude * 1) + ( pointB.longitude * 1) ) / 2
+                            };
+                            vm.recenterMap(centerPoint.latitude, centerPoint.longitude, null, true);
+                            */
+
+                        }
+                        else {
+                            //TODO: center the current
+                            vm.recenterMap(val.latitude, val.longitude, 20, true);
+                        }
+                    }
+                }, 50);
+            },
+            setPathsPreviewLine:function(e,previewLine, onlyAB = false){
+
+                var vm = this;
+
+                var pointA = vm.series_paths.source;
+                var pointB = vm.series_paths.target;
+
+                pointA = {
+                    lat: pointA.latitude,
+                    lng: pointA.longitude
+                }
+                pointB = {
+                    lat: pointB.latitude,
+                    lng: pointB.longitude
+                }
+
+                if(vm.series_paths.coordinates.length > 0){
+                    pointA = vm.series_paths.coordinates[vm.series_paths.coordinates.length - 1];
+                }
+
+                if(!pointA) return;
+                if(!pointB) return;
+
+                if(onlyAB){
+                    previewLine.setPath([pointA, pointB]);
+                    return;
+                }
+
+                 previewLine.setPath([pointA, e.latLng.toJSON(), pointB]);
+
+            },
+            cancelSelectPaths:function(){
+                var vm = this;
+                vm.series_paths.coordinates = [];
+                vm.setSelectedPaths();
+                vm.setPathsPreviewLine(null, vm.series_paths.previewLineEl.path, true);
+
+            },
+            undoSelectedPath:function(){
+                var vm = this;
+                vm.series_paths.coordinates.pop();
+                vm.setSelectedPaths();
+                vm.setPathsPreviewLine(null, vm.series_paths.previewLineEl.path, true);
+
+            },
+            doneSelecting:function(){
+                var vm = this;
+                if(vm.is_start_select_paths && vm.is_select_paths  && vm.series_paths.previewLineEl){
+                    vm.is_start_select_paths = false;
+                    vm.setPathsPreviewLine(null, vm.series_paths.previewLineEl.path, true);
+                }
             }
+
 
 
         },
