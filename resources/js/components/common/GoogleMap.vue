@@ -615,7 +615,7 @@
                             let icons = line.get("icons");
                             icons[0].icon.strokeColor = color; 
                             // force redraw without recreating the whole polyline
-                            polyline.set("icons", icons);
+                            line.set("icons", icons);
                         }
                     };
 
