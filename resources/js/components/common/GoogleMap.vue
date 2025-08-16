@@ -562,7 +562,10 @@
                     pathData = {
                         path:line,
                         data:coordinates,
-                        interval_callback:null
+                        interval_callback:null,
+                        setColor:function(color){
+                            line.setOptions({ strokeColor: color });
+                        }
                     };
 
                     vm.paths.push(pathData);
@@ -607,7 +610,13 @@
                     pathData = {
                         path:line,
                         data:coordinates,
-                        interval_callback:interval_callback
+                        interval_callback:interval_callback,
+                        setColor:function(color){
+                            let icons = line.get("icons");
+                            icons[0].icon.strokeColor = color; 
+                            // force redraw without recreating the whole polyline
+                            polyline.set("icons", icons);
+                        }
                     };
 
                     vm.paths.push(pathData);
