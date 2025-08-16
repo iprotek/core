@@ -316,6 +316,8 @@
             setTimeout(()=>{
                 vm.initCalendar().then(resp=>{
                     vm.updateEvents();
+                    
+                    vm.calendar.render();
                 });
             }, 500); 
 
