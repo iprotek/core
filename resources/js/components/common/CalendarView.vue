@@ -14,7 +14,9 @@
         data: function () {
             return {  
                 calendar:null,
-                calendarId: 'calendar'+this._uid
+                calendarId: 'calendar'+this._uid,
+                hasRendered:false,
+                mountPromise:null
             }
         },
         methods: { 
@@ -178,6 +180,10 @@
                     viewDidMount:function(info) {
                         //console.log(info);
                         updateMonthView();
+                        if(vm.mountPromise){
+                            vm.mountPromise(info);
+                            vm.mountPromise = null;
+                        }
                     },
                     dateClick: function(info) {
                         var clickedMonth = info.date.getMonth();
@@ -217,6 +223,9 @@
                         vm.$emit("selectedEvent", event);
                     }
                 });
+                var promise = new Promise((mountPromise)=>{
+                    vm.mountPromise = mountPromise;
+                });
                 calendar.render();
                 vm.calendar = calendar;
                 if(gotoDate){
@@ -228,6 +237,8 @@
                 }
                 //Select the current date 
                 // $('#calendar').fullCalendar() 
+                return promise;
+                
             },
             updateEvents:function(newEvents=[]){
                 var vm = this;
@@ -300,13 +311,15 @@
         },
         mounted:function(){
             var vm = this;
-            document.addEventListener('DOMContentLoaded', function() {
+            //document.addEventListener('DOMContentLoaded', function() {
 
-                setTimeout(()=>{
-                    vm.initCalendar();
-                }, 500); 
+            setTimeout(()=>{
+                vm.initCalendar().then(resp=>{
+                    vm.updateEvents();
+                });
+            }, 500); 
 
-            });
+            //});
         },
         updated:function(){ 
             //this.initCalendar();
