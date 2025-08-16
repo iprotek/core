@@ -208,7 +208,6 @@
                 vm.image_url = '';
                 WebRequest2('GET', '/api/group/'+this.group_id+'/meta-data/get-info/'+this.source_id+'?&source='+this.source).then(resp=>{
                     resp.json().then(data=>{
-                        //console.log("data",data);
                         if(!data) return;
 
                         vm.meta_data_id = data.id;

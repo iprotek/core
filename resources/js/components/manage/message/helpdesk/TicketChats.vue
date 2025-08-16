@@ -75,7 +75,6 @@
                         vm.pageData = data;
                         vm.chatList = data.data.reverse();
                         vm.$emit('messages_result', vm.pageData);
-                        //console.log("Data", vm.chatList);
                     });
                 });
 

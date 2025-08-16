@@ -154,7 +154,6 @@
                     is_auto_trigger: chk
                 })).then(resp=>{
                     resp.json().then(data=>{
-                        //console.log("Data", data);
                         if(data.status == 1){
                             //vm.loadDeviceAccounts();
                         }
@@ -255,7 +254,6 @@
                 })).then(resp=>{
                     vm.isLoading = false;
                     resp.json().then(data=>{
-                        console.log("Data", data);
                         vm.triggerList = data;
                     });
                     

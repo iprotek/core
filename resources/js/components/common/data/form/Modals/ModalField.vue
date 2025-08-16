@@ -96,7 +96,6 @@
                     if(res.isConfirmed){  
                         if(res.value.status == 1){ 
                             this.$emit('modal_updated');
-                            //console.log("Data",res.value);
                             vm.id = res.value.data.id;
                         }
                     }

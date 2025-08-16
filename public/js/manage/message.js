@@ -4542,7 +4542,6 @@ __webpack_require__.r(__webpack_exports__);
           vm.pageData = data;
           vm.chatList = data.data.reverse();
           vm.$emit('messages_result', vm.pageData);
-          //console.log("Data", vm.chatList);
         });
       });
     },
@@ -4614,7 +4613,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    //console.log("DATA", this.data);
     if (this.data && this.data.result) {
       this.users = this.data.result;
     }

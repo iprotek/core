@@ -122,7 +122,6 @@
 
         },
         mounted:function(){   
-            console.log("Data",this. data);  
         },
         updated:function(){
 

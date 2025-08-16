@@ -91,7 +91,6 @@
 
         },
         mounted:function(){     
-            //console.log("DATA", this.data);
             if(this.data && this.data.result){
                 this.users = this.data.result;
             }
