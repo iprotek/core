@@ -299,10 +299,13 @@
             }
         },
         mounted:function(){
-            this.initCalendar();       
+            var vm = this;
+            setTimeout(()=>{
+                vm.initCalendar();
+            }, 50); 
         },
         updated:function(){ 
-            this.initCalendar();
+            //this.initCalendar();
         }
     }
 </script>
