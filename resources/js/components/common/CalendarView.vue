@@ -300,9 +300,13 @@
         },
         mounted:function(){
             var vm = this;
-            setTimeout(()=>{
-                vm.initCalendar();
-            }, 50); 
+            document.addEventListener('DOMContentLoaded', function() {
+
+                setTimeout(()=>{
+                    vm.initCalendar();
+                }, 500); 
+
+            });
         },
         updated:function(){ 
             //this.initCalendar();
