@@ -533,14 +533,15 @@
             createPath:function(coordinates, hex_color="#FF0000", is_dash=false, is_moving=false, speed=250, htmlContent = null, isClickable = false){
                 var vm = this;
                 var coordinatePoints = [];
-                if(typeof coordinates === "object" && coordinates !== null){
+                if(Array.isArray(coordinates)){
+                    coordinatePoints = coordinates;
+                }
+                else if(typeof coordinates === "object" && coordinates !== null){
                     const pointA = { lat: coordinates.from.latitude * 1, lng: coordinates.from.longitude * 1 }; 
                     const pointB = { lat: coordinates.to.latitude * 1, lng: coordinates.to.longitude * 1 }; 
                     coordinatePoints = [pointA, pointB];
                 }
-                else if(Array.isArray(coordinates)){
-                    coordinatePoints = coordinates;
-                }
+                
                 
                 var line = null;
                 var pathData = null;
