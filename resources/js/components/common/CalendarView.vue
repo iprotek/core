@@ -1,7 +1,7 @@
 <template>    
     <div class="card card-primary p-0">
         <div class="card-body p-0">
-            <div :id="calendarId"></div>
+            <div :id="calendarId" ></div>
         </div>
     </div>
 </template>
@@ -9,6 +9,7 @@
 <script>
      export default {
         props:["allow_drag_event", "allow_add_event", "allow_select_previous"],
+        $emits:[ "datesSet", "loadMonth" , "selectedEvent", "loaded" ],
         components: {  
         },
         data: function () {
@@ -184,6 +185,7 @@
                             vm.mountPromise(info);
                             vm.mountPromise = null;
                         }
+                        vm.$emit('loaded', vm.calendar);
                     },
                     dateClick: function(info) {
                         var clickedMonth = info.date.getMonth();
@@ -212,7 +214,8 @@
                             updateMonthView();
                             //updateEvents(calendar); //samples
                             setTimeout(()=>{
-                            vm.$emit('datesSet', calendar, view);
+                                vm.$emit('datesSet', calendar, view);
+                                vm.$emit('loadMonth', calendar, view);
                             }, 100);
                         }
                     },
@@ -226,8 +229,8 @@
                 var promise = new Promise((mountPromise)=>{
                     vm.mountPromise = mountPromise;
                 });
-                calendar.render();
                 vm.calendar = calendar;
+                calendar.render();
                 if(gotoDate){
                     calendar.gotoDate(gotoDate);
                     calendar.select(gotoDate);
@@ -311,20 +314,11 @@
         },
         mounted:function(){
             var vm = this;
-            //document.addEventListener('DOMContentLoaded', function() {
-
-            setTimeout(()=>{
-                vm.initCalendar().then(resp=>{
-                    vm.updateEvents();
-                    
-                    vm.calendar.render();
-                });
-            }, 500); 
-
-            //});
+            vm.initCalendar();
+         
         },
         updated:function(){ 
-            //this.initCalendar();
+            this.initCalendar();
         }
     }
 </script>
