@@ -318,7 +318,7 @@
          
         },
         updated:function(){ 
-            this.initCalendar();
+            //this.initCalendar();
         }
     }
 </script>
