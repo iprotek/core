@@ -38,7 +38,9 @@
                         </tr>
                         <tr v-for="(item, itemIndex) in itemList" v-bind:key="'device-trigger-'+item.id+'-'+itemIndex">
                             <th class="text-center">
-                                <small v-text="item.id"> </small>
+                                <small >
+                                    <code v-text="item.id"></code>
+                                </small>
                             </th>
                             <th v-text="item.trigger_name"></th>
                             <th>
