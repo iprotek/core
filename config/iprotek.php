@@ -19,5 +19,7 @@ return [
     'sa_app_account_id'=>env('PAY_SA_APP_ACCOUNT_ID', 0),
     'sa_user_admin_id'=>env('PAY_SA_USER_ADMIN_ID', 0),
     'is_demo'=>env('PAY_IPROTEK_IS_DEMO', 0),
-    'timezone'=>env('TIMEZONE', 'UTC')
+    'timezone'=>env('TIMEZONE', 'UTC'),
+    'sidebar_color'=>env('PAY_DEFAULT_THEME_SIDEBAR_COLOR', 'dark-primary'),
+    'navbar_color'=>env('PAY_DEFAULT_THEME_NAVBAR_COLOR', 'light'),
 ];

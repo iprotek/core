@@ -1,5 +1,5 @@
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-{{ config('iprotek.sidebar_color') }} elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
     <div>

@@ -1,5 +1,5 @@
   <!-- Navbar -->
-  <nav id="top-menu" class="main-header navbar navbar-expand navbar-white navbar-light" style="z-index:100000;">
+  <nav id="top-menu" class="main-header navbar navbar-expand navbar-{{ config('iprotek.navbar_color') }} navbar-light" style="z-index:100000;">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item" onclick="sideBarCollapseTrigger()">
