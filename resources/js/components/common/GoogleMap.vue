@@ -162,12 +162,16 @@
             clearLineElement:function(lineEl){
                 var vm = this;
                 lineEl.path.setMap(null);
+                lineEl.path = null;
                 if(lineEl.interval_callback){
                     clearInterval( lineEl.interval_callback );
                     lineEl.interval_callback = null;
                 }
                 vm.paths = vm.paths.filter(a=> a != lineEl);
-                //
+                if(lineEl.marker){
+                    lineEl.marker.setMap(null);
+                    lineEl.marker = null;
+                }
             },
 
             save_map_settings:function(){
@@ -351,13 +355,6 @@
                 });
             },
 
-            queryString:function(params={}){ 
-                var queryString = Object.keys(params).map(function(key) {
-                    return key + '=' + params[key]
-                }).join('&');
-                return queryString;
-            },
-
             loadMapSettings:function(){
 
                 var vm = this;
@@ -519,8 +516,14 @@
                 var vm = this;
                 vm.paths.forEach(p=>{ 
                     p.path.setMap(null);
+                    p.path = null;
                     if(p.interval_callback !== null){
                         window.clearInterval(p.interval_callback);
+                        p.interval_callback = null;
+                    }
+                    if(p.marker){
+                        p.marker.setMap(null);
+                        p.marker = null;
                     }
                 });
                 vm.paths = [];
@@ -559,12 +562,57 @@
 
                     line.setMap(vm.map);
 
-                    pathData = {
+                   pathData = {
                         path:line,
                         data:coordinates,
                         interval_callback:null,
+                        marker:null,
                         setColor:function(color){
                             line.setOptions({ strokeColor: color });
+                        },
+                        setMarker:function(icon_class, infoHTML){
+                            if(pathData.marker){
+                                pathData.marker.setMap(null);
+                                pathData.marker = null;
+                            }
+
+                            let midPoint = vm.getPolylineMidpoint(line);
+                            const faMarker = new google.maps.marker.AdvancedMarkerElement({
+                                map: vm.map,
+                                position: {
+                                    lat: midPoint.latitude,
+                                    lng: midPoint.longitude
+                                },
+                                content: document.createElement("div")
+                            });
+                            faMarker.content.innerHTML = `<i class="${icon_class}" style="font-size:24px;"></i>`;
+                            pathData.marker = faMarker;
+
+
+                            //INFO WINDOW
+                            if(infoHTML){
+                                let infoWindow = new google.maps.InfoWindow({
+                                    content: infoHTML
+                                });
+                                
+                                //Manipulate style inside of infowindow
+                                infoWindow.addListener("domready", () => {
+                                    // Get the default container for the InfoWindow
+                                    const iwOuter = document.querySelector('.gm-style-iw');
+                                    if(iwOuter){
+                                        var closeButton = iwOuter.querySelector('button.gm-ui-hover-effect');
+                                        if(closeButton){
+                                            closeButton.style.right = 0;
+                                            closeButton.style.position = 'absolute';
+                                        }
+                                    }
+                                });
+                                pathData.marker.addListener("click", (evt) => {
+                                    if(infoWindow){
+                                        infoWindow.open(vm.map, pathData.marker);
+                                    }
+                                });
+                            }
                         }
                     };
 
@@ -611,11 +659,54 @@
                         path:line,
                         data:coordinates,
                         interval_callback:interval_callback,
+                        marker:null,
                         setColor:function(color){
                             let icons = line.get("icons");
                             icons[0].icon.strokeColor = color; 
                             // force redraw without recreating the whole polyline
                             line.set("icons", icons);
+                        },
+                        setMarker:function(icon_class, infoHTML){
+                            if(pathData.marker){
+                                pathData.marker.setMap(null);
+                                pathData.marker = null;
+                            }
+                            let midPoint = vm.getPolylineMidpoint(line);
+                            const faMarker = new google.maps.marker.AdvancedMarkerElement({
+                                map: vm.map,
+                                position: {
+                                    lat: midPoint.latitude,
+                                    lng: midPoint.longitude
+                                },
+                                content: document.createElement("div")
+                            });
+                            faMarker.content.innerHTML = `<i class="${icon_class}" style="font-size:24px;"></i>`;
+                            pathData.marker = faMarker;
+                            
+                            //INFO WINDOW
+                            if(infoHTML){
+                                let infoWindow = new google.maps.InfoWindow({
+                                    content: infoHTML
+                                });
+                                
+                                //Manipulate style inside of infowindow
+                                infoWindow.addListener("domready", () => {
+                                    // Get the default container for the InfoWindow
+                                    const iwOuter = document.querySelector('.gm-style-iw');
+                                    if(iwOuter){
+                                        var closeButton = iwOuter.querySelector('button.gm-ui-hover-effect');
+                                        if(closeButton){
+                                            closeButton.style.right = 0;
+                                            closeButton.style.position = 'absolute';
+                                        }
+                                    }
+                                });
+                                pathData.marker.addListener("click", (evt) => {
+                                    if(infoWindow){
+                                        infoWindow.open(vm.map, pathData.marker);
+                                    }
+                                });
+                            }
                         }
                     };
 
@@ -666,7 +757,40 @@
                 return null;
             },
 
+            getPolylineMidpoint:function(polyline) {
+                const path = polyline.getPath().getArray();
+                let totalDist = 0;
 
+                // compute total length
+                for (let i = 0; i < path.length - 1; i++) {
+                    totalDist += google.maps.geometry.spherical.computeDistanceBetween(path[i], path[i+1]);
+                }
+
+                let halfDist = totalDist / 2;
+                let travelled = 0;
+
+                for (let i = 0; i < path.length - 1; i++) {
+                    const segDist = google.maps.geometry.spherical.computeDistanceBetween(path[i], path[i+1]);
+
+                    if (travelled + segDist >= halfDist) {
+                        const ratio = (halfDist - travelled) / segDist;
+                        const lat = path[i].lat() + (path[i+1].lat() - path[i].lat()) * ratio;
+                        const lng = path[i].lng() + (path[i+1].lng() - path[i].lng()) * ratio;
+                        //return new google.maps.LatLng(lat, lng);
+                        return {
+                            latitude: lat,
+                            longitude: lng
+                        };
+                    }
+
+                    travelled += segDist;
+                }
+
+                return {
+                    latitude: path[0].lat,
+                    longitude: path[0].lng
+                };// path[0]; // fallback
+            },
 
             /** PATH SELECTION HERE.. */
             clickStartSelectPaths:function(e){

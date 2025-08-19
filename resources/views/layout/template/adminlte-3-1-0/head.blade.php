@@ -69,13 +69,37 @@
     <link rel="stylesheet" href="/iprotek/css/w3school/preview-image.css">
 
     @if(config('iprotek.google_map_key'))
-      <script src="https://maps.googleapis.com/maps/api/js?key={{config('iprotek.google_map_key')}}&libraries=places,marker"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key={{config('iprotek.google_map_key')}}&libraries=places,marker,geometry"></script>
       <style>
         .gm-style-iw-chr{
           height:0px;
         }
+        
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+          40% {transform: translateY(-10px);}
+          60% {transform: translateY(-5px);}
+        }
+        .bounce {
+          display: inline-block;
+          animation: bounce 1s infinite;
+        }
+        
+        @keyframes shake {
+          0% { transform: rotate(0deg); }
+          25% { transform: rotate(10deg); }
+          50% { transform: rotate(-10deg); }
+          75% { transform: rotate(10deg); }
+          100% { transform: rotate(0deg); }
+        }
+        .shake {
+          display: inline-block;
+          animation: shake 0.5s infinite;
+        }
+        
       </style>
-    @endif
+      
+  @endif
     
     <style>
       
