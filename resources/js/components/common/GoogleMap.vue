@@ -666,7 +666,7 @@
                             // force redraw without recreating the whole polyline
                             line.set("icons", icons);
                         },
-                        setMarker:function(icon_class, infoHTML){
+                        setMarker:function(icon_class, infoHTML=null){
                             if(pathData.marker){
                                 pathData.marker.setMap(null);
                                 pathData.marker = null;
@@ -684,7 +684,7 @@
                             pathData.marker = faMarker;
                             
                             //INFO WINDOW
-                            if(infoHTML){
+                            if(infoHTML && infoHTML != null){
                                 let infoWindow = new google.maps.InfoWindow({
                                     content: infoHTML
                                 });
