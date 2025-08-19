@@ -680,7 +680,7 @@
                                 },
                                 content: document.createElement("div")
                             });
-                            faMarker.content.innerHTML = `<i class="${icon_class}" style="font-size:24px;"></i>`;
+                            faMarker.content.innerHTML = `<i class="${icon_class}" style="font-size:18px;"></i>`;
                             pathData.marker = faMarker;
                             
                             //INFO WINDOW
