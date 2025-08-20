@@ -82,7 +82,7 @@
         }
         .bounce {
           display: inline-block;
-          animation: bounce 1s infinite;
+          animation: bounce 5s infinite;
         }
         
         @keyframes shake {
