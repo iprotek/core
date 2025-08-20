@@ -77,8 +77,8 @@
         
         @keyframes bounce {
           0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-          85% {transform: translateY(-10px);}
-          90% {transform: translateY(-5px);}
+          78% {transform: translateY(-10px);}
+          85% {transform: translateY(-5px);}
         }
         .bounce {
           display: inline-block;
