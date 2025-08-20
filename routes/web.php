@@ -28,7 +28,7 @@ Route::middleware('web')->group(function(){
 
   
   Route::middleware('throttle:10,5')->get('/login', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'setup' ])->name('login');
-  Route::middleware('throttle:5,5')->post('/login', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'login_pay_account' ])->name('pay-login');
+  Route::middleware('throttle:10,5')->post('/login', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'login_pay_account' ])->name('pay-login');
   
 
   /** PAY ACCOUNT MANAGEMENT */
