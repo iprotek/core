@@ -78,13 +78,24 @@
         @keyframes bounce {
           0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
           75% {transform: translateY(0);}
-          79% {transform: translateY(-4px);}
-          81% {transform: translateY(-2px);}
+          79% {transform: translateY(-3px);}
+          81% {transform: translateY(-1px);}
           85% {transform: translateY(0);}
         }
         .bounce {
           display: inline-block;
           animation: bounce 8s infinite;
+        }
+        @keyframes bounce4 {
+          0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+          75% {transform: translateY(0);}
+          79% {transform: translateY(-4px);}
+          81% {transform: translateY(-2px);}
+          85% {transform: translateY(0);}
+        }
+        .bounce-4 {
+          display: inline-block;
+          animation: bounce4 8s infinite;
         }
 
         @keyframes bounce3 {
