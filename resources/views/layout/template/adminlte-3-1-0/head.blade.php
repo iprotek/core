@@ -77,12 +77,23 @@
         
         @keyframes bounce {
           0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-          78% {transform: translateY(-10px);}
-          85% {transform: translateY(-5px);}
+          75% {transform: translateY(0);}
+          78% {transform: translateY(-7px);}
+          82% {transform: translateY(-3px);}
+          85% {transform: translateY(0);}
         }
         .bounce {
           display: inline-block;
           animation: bounce 5s infinite;
+        }
+        @keyframes bounce2 {
+          0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+          78% {transform: translateY(-10px);}
+          85% {transform: translateY(-5px);}
+        }
+        .bounce-2 {
+          display: inline-block;
+          animation: bounce2 1s infinite;
         }
         
         @keyframes shake {
