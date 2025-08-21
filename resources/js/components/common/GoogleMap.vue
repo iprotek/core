@@ -41,10 +41,10 @@
         <div>
             <button class="btn btn-outline-primary btn-sm" @click="set_info_window_once = !set_info_window_once">
                 <span v-if="set_info_window_once">
-                    TOGGLE ONCE INFOWINDOW
+                    TOGGLE MULTIPLE INFOWINDOW
                 </span>
                 <span v-else>
-                    TOGGLE MULTIPLE INFOWINDOW
+                    TOGGLE ONCE INFOWINDOW
                 </span>
             </button>
         </div>
