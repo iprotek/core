@@ -564,7 +564,9 @@
 
                    pathData = {
                         path:line,
+                        default_stroke_weight:3,
                         data:coordinates,
+                        is_dash:false,
                         interval_callback:null,
                         marker:null,
                         setColor:function(color){
@@ -613,7 +615,11 @@
                                     }
                                 });
                             }
+                        },
+                        setStrokeWeight:function(strokeWeight){
+                            line.setOptions({ strokeWeight: strokeWeight });
                         }
+                        
                     };
 
                     vm.paths.push(pathData);
@@ -657,12 +663,20 @@
                     
                     pathData = {
                         path:line,
+                        default_stroke_weight:2,
                         data:coordinates,
+                        is_dash:true,
                         interval_callback:interval_callback,
                         marker:null,
                         setColor:function(color){
                             let icons = line.get("icons");
                             icons[0].icon.strokeColor = color; 
+                            // force redraw without recreating the whole polyline
+                            line.set("icons", icons);
+                        },
+                        setStrokeWeight:function(strokeWeight){
+                            let icons = line.get("icons");
+                            icons[0].icon.scale = strokeWeight; 
                             // force redraw without recreating the whole polyline
                             line.set("icons", icons);
                         },
@@ -722,6 +736,29 @@
                     }
                     vm.$emit('clicked_path', pathData );
                 });
+
+                
+                // Mouse over
+                line.addListener("mouseover", () => {
+                    //polyline.setOptions({ strokeColor: "#00FF00", strokeWeight: 4 }); // highlight
+                    //console.log("Mouse over");
+                    pathData.setColor('#0000FF');
+                    if(pathData.is_dash){
+                        pathData.setStrokeWeight(3);
+                    }
+                    else{
+                        pathData.setStrokeWeight(4);
+                    }
+                });
+
+                // Mouse leave
+                line.addListener("mouseout", () => {
+                    //polyline.setOptions({ strokeColor: "#FF0000", strokeWeight: 2 }); // restore
+                    pathData.setColor(pathData.default_color);
+                    pathData.setStrokeWeight(pathData.default_stroke_weight);
+                });
+
+                pathData.default_color = hex_color;
 
                 ///return line;
                 return pathData;
