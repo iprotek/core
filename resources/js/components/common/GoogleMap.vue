@@ -37,8 +37,17 @@
 
             </span>
         </span>
-        <div :id="'google-map-'+_uid" :style="'height:'+(height ? height: '200px;' )+';width:'+(width ? width :'200px')+';'" >
-    </div>
+        <div :id="'google-map-'+_uid" :style="'height:'+(height ? height: '200px;' )+';width:'+(width ? width :'200px')+';'" ></div>
+        <div>
+            <button class="btn btn-outline-primary btn-sm" @click="set_info_window_once = !set_info_window_once">
+                <span v-if="set_info_window_once">
+                    TOGGLE ONCE INFOWINDOW
+                </span>
+                <span v-else>
+                    TOGGLE MULTIPLE INFOWINDOW
+                </span>
+            </button>
+        </div>
     </div>
 </template>
 
@@ -77,7 +86,9 @@
             "is_select_paths", //Active to select multi paths
             "select_source",
             "select_target",
-            "action_saving_paths"
+            "action_saving_paths",
+
+            "info_window_once" //Open info and closes the previously opened.
         ],
         $emits:["selected_location", "clicked_marker", "clicked_path"],
         watch: { 
@@ -128,6 +139,7 @@
         },
         data: function () {
             return {
+                set_info_window_once: this.info_window_once !== false ? true :false,
                 google_map_id: 'google-map-'+this._uid,
                 map:null,
                 markers:[],
@@ -144,7 +156,7 @@
                 },
 
                 is_start_select_paths:false,
-                
+                currentInfoWindow:null
             }
         },
         methods: { 
@@ -495,8 +507,15 @@
 
                 marker.addListener("click", (evt) => {
 
+                    if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
+                        if(vm.currentInfoWindow != infoWindow){
+                            vm.currentInfoWindow.close();
+                        }
+                    }
+
                     if(infoWindow){
                         infoWindow.open(vm.map, marker);
+                        vm.currentInfoWindow = infoWindow;
                     }
 
                     vm.$emit('clicked_marker', marker, dataInfo, location, evt);
@@ -610,8 +629,16 @@
                                     }
                                 });
                                 pathData.marker.addListener("click", (evt) => {
+
+                                    if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
+                                        if(vm.currentInfoWindow != infoWindow){
+                                            vm.currentInfoWindow.close();
+                                        }
+                                    }
+
                                     if(infoWindow){
                                         infoWindow.open(vm.map, pathData.marker);
+                                        vm.currentInfoWindow = infoWindow;
                                     }
                                 });
                             }
@@ -716,8 +743,15 @@
                                     }
                                 });
                                 pathData.marker.addListener("click", (evt) => {
+                                    if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
+                                        if(vm.currentInfoWindow != infoWindow){
+                                            vm.currentInfoWindow.close();
+                                        }
+                                    }
+
                                     if(infoWindow){
                                         infoWindow.open(vm.map, pathData.marker);
+                                        vm.currentInfoWindow = infoWindow;
                                     }
                                 });
                             }
@@ -729,11 +763,20 @@
                 }
 
                 line.addListener("click", (event) => {
-                    if(htmlContent){
+                    /*
+                    if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
+                        if(vm.currentInfoWindow != infoWindow){
+                            vm.currentInfoWindow.close();
+                        }
+                    }
+
+                    if( infoWindow && htmlContent){
                         infoWindow.setContent(htmlContent);
                         infoWindow.setPosition(event.latLng); // Show at clicked point
                         infoWindow.open(vm.map);
+                        vm.currentInfoWindow = infoWindow;
                     }
+                    */
                     vm.$emit('clicked_path', pathData );
                 });
 
