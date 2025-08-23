@@ -407,20 +407,30 @@
             // Recenter function
             recenterMap:function(lat, lng, zoom=null, is_animate = false) {
                 var vm = this;
+                let Resolve = null;
+                let promise = new Promise((resolve)=>{
+                    Resolve = resolve;
+                });
                 setTimeout(()=>{
 
                     const newCenter = new google.maps.LatLng(lat, lng);
                     
-                    if(is_animate === false)
+                    if(is_animate === false){
                         vm.map.setCenter(newCenter);
+                        Resolve({status:"completed"});
+                    }
                     else{
                         vm.smoothPanTo({ latitude: lat, longitude: lng }).then(data=>{
                             if(zoom){
                                 vm.map.setZoom(zoom);
+                                Resolve({status:"completed"});
+                            }else{
+                                Resolve({status:"completed"});
                             }
                         });
                     }
                 }, 300);
+                return promise;
             },
 
             smoothPanTo:function(location, duration = 1000) {
