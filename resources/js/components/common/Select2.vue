@@ -67,6 +67,7 @@
                 
                 if(vm.select_template){
                     jSON.templateResult = function(data, container) {
+                       if (item.loading) return "Loading...";
                        return vm.select_template(data, container, vm.itemList);
                     }
                     jSON.templateSelection = function(data, container){ 
@@ -82,6 +83,7 @@
                     jSON.ajax = {
                         type: 'GET',
                         url: vm.url,
+                        delay: 100,
                         data: function (params) {
                             var query = {
                                 filters: vm.filters,
