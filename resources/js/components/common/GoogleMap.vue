@@ -400,7 +400,10 @@
                 }
             
             },
-
+            //MAP ELEMENT TRIGGERS LIKE CLICK, ONLOAD, ETC...
+            mapElementTrigger:function(mapEl, action){
+                google.maps.event.trigger(mapEl, action);
+            },
             // Recenter function
             recenterMap:function(lat, lng, zoom=null, is_animate = false) {
                 var vm = this;
@@ -532,7 +535,8 @@
 
                 });
 
-                vm.markers.push(marker);   
+                vm.markers.push(marker);
+                return marker;
             },
 
             clearMarkers:function(){
