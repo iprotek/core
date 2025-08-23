@@ -537,6 +537,7 @@
                     }
 
                     if(infoWindow){
+                        console.log("Other window", infoWindow);
                         infoWindow.open(vm.map, marker);
                         vm.currentInfoWindow = infoWindow;
                     }
@@ -660,7 +661,8 @@
                                         }
                                     }
 
-                                    if(infoWindow){
+                                    if(infoWindow){                                        
+                                        console.log("Other window", infoWindow);
                                         infoWindow.open(vm.map, pathData.marker);
                                         vm.currentInfoWindow = infoWindow;
                                     }
@@ -774,6 +776,7 @@
                                     }
 
                                     if(infoWindow){
+                                        console.log("Other window", infoWindow);
                                         infoWindow.open(vm.map, pathData.marker);
                                         vm.currentInfoWindow = infoWindow;
                                     }
