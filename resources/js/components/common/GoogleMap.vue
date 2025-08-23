@@ -410,11 +410,14 @@
                     
                     if(is_animate === false)
                         vm.map.setCenter(newCenter);
-                    else
-                        vm.smoothPanTo({ latitude: lat, longitude: lng });
+                    else{
+                        vm.smoothPanTo({ latitude: lat, longitude: lng }).then(data=>{
+                            if(zoom)
+                                vm.map.setZoom(zoom);
+                            //console.log(data);
+                        });
+                    }
 
-                    if(zoom)
-                        vm.map.setZoom(zoom);
 
                 }, 300);
             },
@@ -423,6 +426,10 @@
                 var vm = this;
                 const startLatLng = vm.map.getCenter();
                 const startTime = performance.now();
+                let Resolve = null;
+                let promise = new Promise((resolve)=>{
+                    Resolve = resolve;
+                });
 
                 function animate(time) {
                     const elapsed = time - startTime;
@@ -435,14 +442,16 @@
                     vm.map.setCenter({ lat, lng });
 
                     if (t < 1) {
-                        requestAnimationFrame(animate);
+                       requestAnimationFrame(animate);
                     }
                     else{
-                        console.log("animation completed");
+                        //console.log("animation completed");
+                        Resolve({status:"completed"});
                     }
                 }
 
                 requestAnimationFrame(animate);
+                return promise;
             },
 
             placeMarker:function(location, is_new=false, dataInfo) {
