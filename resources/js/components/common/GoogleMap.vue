@@ -538,7 +538,7 @@
                     }
 
                     if(infoWindow){
-                        console.log("Other window 1", vm.infoWindow);
+                        console.log("Other window 1", vm.currentInfoWindow);
                         infoWindow.open(vm.map, marker);
                         if(vm.currentInfoWindow != infoWindow)
                             vm.currentInfoWindow = infoWindow;
