@@ -532,7 +532,8 @@
 
                     if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
                         if(vm.currentInfoWindow != infoWindow){
-                            vm.currentInfoWindow.close();
+                            vm.currentInfoWindow.close();                            
+                            console.log("Trigger close");
                         }
                     }
 
@@ -658,7 +659,8 @@
 
                                     if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
                                         if(vm.currentInfoWindow != infoWindow){
-                                            vm.currentInfoWindow.close();
+                                            vm.currentInfoWindow.close();                                            
+                                            console.log("Trigger close");
                                         }
                                     }
 
@@ -774,6 +776,7 @@
                                     if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
                                         if(vm.currentInfoWindow != infoWindow){
                                             vm.currentInfoWindow.close();
+                                            console.log("Trigger close");
                                         }
                                     }
 
