@@ -793,20 +793,6 @@
                 }
 
                 line.addListener("click", (event) => {
-                    /*
-                    if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
-                        if(vm.currentInfoWindow != infoWindow){
-                            vm.currentInfoWindow.close();
-                        }
-                    }
-
-                    if( infoWindow && htmlContent){
-                        infoWindow.setContent(htmlContent);
-                        infoWindow.setPosition(event.latLng); // Show at clicked point
-                        infoWindow.open(vm.map);
-                        vm.currentInfoWindow = infoWindow;
-                    }
-                    */
                     vm.$emit('clicked_path', pathData );
                 });
 
