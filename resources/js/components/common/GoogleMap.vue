@@ -532,13 +532,11 @@
 
                     if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
                         if(vm.currentInfoWindow != infoWindow){
-                            vm.currentInfoWindow.close();                            
-                            console.log("Trigger close");
+                            vm.currentInfoWindow.close();
                         }
                     }
 
                     if(infoWindow){
-                        console.log("Other window 1", vm.currentInfoWindow);
                         infoWindow.open(vm.map, marker);
                         if(vm.currentInfoWindow != infoWindow)
                             vm.currentInfoWindow = infoWindow;
@@ -659,13 +657,11 @@
 
                                     if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
                                         if(vm.currentInfoWindow != infoWindow){
-                                            vm.currentInfoWindow.close();                                            
-                                            console.log("Trigger close");
+                                            vm.currentInfoWindow.close();
                                         }
                                     }
 
-                                    if(infoWindow){                                        
-                                        console.log("Other window2", vm.currentInfoWindow );
+                                    if(infoWindow){ 
                                         infoWindow.open(vm.map, pathData.marker);
                                         if(vm.currentInfoWindow != infoWindow)
                                             vm.currentInfoWindow = infoWindow;
@@ -776,12 +772,10 @@
                                     if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
                                         if(vm.currentInfoWindow != infoWindow){
                                             vm.currentInfoWindow.close();
-                                            console.log("Trigger close");
                                         }
                                     }
 
                                     if(infoWindow){
-                                        console.log("Other window 3", vm.currentInfoWindow);
                                         infoWindow.open(vm.map, pathData.marker);
                                         if(vm.currentInfoWindow != infoWindow)
                                             vm.currentInfoWindow = infoWindow;
