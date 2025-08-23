@@ -72,7 +72,7 @@
                     }
                     jSON.templateSelection = function(data, container){
                        //console.log("SELECTION:", data);
-                       let res = vm.itemList.filter(item=>item.id == data.id)[0];
+                       let res = vm.itemList.filter(item=>item == data )[0];
                        if(!res) return null;
                        return  vm.select_template(data, container, vm.itemList); 
                     }
