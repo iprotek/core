@@ -414,7 +414,7 @@
                         vm.smoothPanTo({ latitude: lat, longitude: lng }).then(data=>{
                             if(zoom)
                                 vm.map.setZoom(zoom);
-                            //console.log(data);
+                            console.log(data);
                         });
                     }
 
