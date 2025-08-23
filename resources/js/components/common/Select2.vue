@@ -68,10 +68,11 @@
                 if(vm.select_template){
                     jSON.templateResult = function(data, container) {
                        if (data.loading) return "Loading...";
-                       return vm.select_template(vm.itemList, container, vm.itemList);
+                       return vm.select_template(data, container, vm.itemList);
                     }
-                    jSON.templateSelection = function(data, container){ 
-                       return  vm.select_template(vm.itemList, container, vm.itemList); 
+                    jSON.templateSelection = function(data, container){
+                       console.log("SELECTION:", data);
+                       return  vm.select_template(data, container, vm.itemList); 
                     }
                     jSON.escapeMarkup = function(m) {
                         return m; 
