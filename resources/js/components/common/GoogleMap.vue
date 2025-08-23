@@ -412,9 +412,9 @@
                         vm.map.setCenter(newCenter);
                     else{
                         vm.smoothPanTo({ latitude: lat, longitude: lng }).then(data=>{
-                            if(zoom)
+                            if(zoom){
                                 vm.map.setZoom(zoom);
-                            console.log(data);
+                            }
                         });
                     }
 
