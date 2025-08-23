@@ -537,9 +537,10 @@
                     }
 
                     if(infoWindow){
-                        console.log("Other window", infoWindow);
+                        console.log("Other window 1", infoWindow);
                         infoWindow.open(vm.map, marker);
-                        vm.currentInfoWindow = infoWindow;
+                        if(vm.currentInfoWindow != infoWindow)
+                            vm.currentInfoWindow = infoWindow;
                     }
 
                     vm.$emit('clicked_marker', marker, dataInfo, location, evt);
@@ -662,9 +663,10 @@
                                     }
 
                                     if(infoWindow){                                        
-                                        console.log("Other window", infoWindow);
+                                        console.log("Other window2", infoWindow);
                                         infoWindow.open(vm.map, pathData.marker);
-                                        vm.currentInfoWindow = infoWindow;
+                                        if(vm.currentInfoWindow != infoWindow)
+                                            vm.currentInfoWindow = infoWindow;
                                     }
                                 });
                             }
@@ -776,9 +778,10 @@
                                     }
 
                                     if(infoWindow){
-                                        console.log("Other window", infoWindow);
+                                        console.log("Other window 3", infoWindow);
                                         infoWindow.open(vm.map, pathData.marker);
-                                        vm.currentInfoWindow = infoWindow;
+                                        if(vm.currentInfoWindow != infoWindow)
+                                            vm.currentInfoWindow = infoWindow;
                                     }
                                 });
                             }
