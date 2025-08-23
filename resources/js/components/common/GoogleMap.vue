@@ -437,6 +437,9 @@
                     if (t < 1) {
                         requestAnimationFrame(animate);
                     }
+                    else{
+                        console.log("animation completed");
+                    }
                 }
 
                 requestAnimationFrame(animate);
