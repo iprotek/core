@@ -156,7 +156,9 @@
                 },
 
                 is_start_select_paths:false,
-                currentInfoWindow:null
+                currentInfoWindow:null,
+                activePaths:[],
+                activeMarkers:[]
             }
         },
         methods: { 
@@ -496,8 +498,11 @@
             createMarker:function(location, dataInfo){
                 var vm = this;
                 var htmlElement = document.createElement("div");
+                var borderColor = '';
                 if(dataInfo && dataInfo.htmlIcon){
                     htmlElement.innerHTML = dataInfo.htmlIcon;
+                    borderColor = htmlElement.querySelector('path').getAttribute('stroke');
+
                 }
                 var marker = new google.maps.marker.AdvancedMarkerElement({
                     position: {
@@ -531,7 +536,6 @@
                     });
                 }
 
-
                 marker.addListener("click", (evt) => {
 
                     if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
@@ -551,6 +555,19 @@
                 });
 
                 vm.markers.push(marker);
+
+                marker.setBorderColor = function(color){
+                    if(dataInfo && dataInfo.htmlIcon){
+                        htmlElement.querySelector('path').setAttribute('stroke', color);
+                    }
+                }
+                marker.resetBorderColor = function(){
+                    if(dataInfo && dataInfo.htmlIcon && borderColor){
+                        htmlElement.querySelector('path').setAttribute('stroke', borderColor);
+                    }
+                }
+
+
                 return marker;
             },
 
@@ -593,20 +610,24 @@
                     coordinatePoints = [pointA, pointB];
                 }
                 
-                
                 var line = null;
                 var pathData = null;
                 
+                let lineDefaults = null;
+
                 //ONLY LINE
                 if(is_dash === false){
-                    line = new google.maps.Polyline({
+                    
+                    lineDefaults = {
                         path: coordinatePoints, // Points in order
                         geodesic: true,         // Makes the line follow the curve of the Earth
                         strokeColor: hex_color, // Line color
                         strokeOpacity: 1.0,     // Fully visible
                         strokeWeight: 3,         // Thickness
                         clickable: isClickable 
-                    });
+                    };
+                    
+                    line = new google.maps.Polyline(lineDefaults);
 
                     line.setMap(vm.map);
 
@@ -675,6 +696,14 @@
                         },
                         setStrokeWeight:function(strokeWeight){
                             line.setOptions({ strokeWeight: strokeWeight });
+                        },
+                        resetStyle:function(){
+                            pathData.setColor(hex_color);
+                            pathData.setStrokeWeight(3);
+                            line.setOptions(lineDefaults);
+                        },
+                        setStyle:function(options){
+                            line.setOptions(options);
                         }
                         
                     };
@@ -685,7 +714,7 @@
                 else{
 
                     // Create a dashed polyline either moving or not.
-                    line = new google.maps.Polyline({
+                    lineDefaults = {
                         path: coordinatePoints,
                         geodesic: true,
                         strokeOpacity: 0, // Hide the solid line
@@ -703,7 +732,9 @@
                         ],
                         map: vm.map,
                         clickable: isClickable 
-                    });
+                    };
+
+                    line = new google.maps.Polyline( lineDefaults);
 
                     // Animate the dashes moving
                     var interval_callback = null;
@@ -718,7 +749,7 @@
                         }, speed);
                     }
                     
-                    pathData = {
+                    pathData = { 
                         path:line,
                         default_stroke_weight:2,
                         data:coordinates,
@@ -786,22 +817,33 @@
                                     }
                                 });
                             }
+                        },
+                        resetStyle:function(){
+                            pathData.setColor(hex_color);
+                            pathData.setStrokeWeight(2);
+                            line.setOptions(lineDefaults);
+                        },
+                        setStyle:function(options){
+                            line.setOptions(options);
                         }
                     };
 
                     vm.paths.push(pathData);
 
                 }
+                if(isClickable){
+                    line.addListener("click", (event) => {
 
-                line.addListener("click", (event) => {
-                    vm.$emit('clicked_path', pathData );
-                });
-
+                        vm.$emit('clicked_path', pathData );
+                    });
+                }
                 
                 // Mouse over
                 line.addListener("mouseover", () => {
-                    //polyline.setOptions({ strokeColor: "#00FF00", strokeWeight: 4 }); // highlight
-                    //console.log("Mouse over");
+                    
+                    //Check if line is in active
+                    if(vm.activePaths.filter(a=>a == pathData)[0]) return;
+                    
                     pathData.setColor('#0000FF');
                     if(pathData.is_dash){
                         pathData.setStrokeWeight(3);
@@ -809,11 +851,14 @@
                     else{
                         pathData.setStrokeWeight(4);
                     }
+
                 });
 
                 // Mouse leave
                 line.addListener("mouseout", () => {
-                    //polyline.setOptions({ strokeColor: "#FF0000", strokeWeight: 2 }); // restore
+                    
+                    if(vm.activePaths.filter(a=>a == pathData)[0]) return;
+
                     pathData.setColor(pathData.default_color);
                     pathData.setStrokeWeight(pathData.default_stroke_weight);
                 });
@@ -822,6 +867,45 @@
 
                 ///return line;
                 return pathData;
+            },
+
+            setActivePaths:function(pathDataList, activeColor='blue'){
+                var vm = this;
+                var prevPaths = vm.activePaths;
+                vm.activePaths = pathDataList;
+                setTimeout(()=>{
+                    prevPaths.forEach((line)=>{
+                        line.resetStyle();
+                    });
+                    let activeLine = { // Points in order
+                        geodesic: true,         // Makes the line follow the curve of the Earth
+                        strokeColor: activeColor, // Line color
+                        strokeOpacity: 1.0,     // Fully visible
+                        strokeWeight: 8,         // Thickness
+                        clickable: true 
+                    }
+                    vm.activePaths.forEach((line)=>{
+                        line.setStyle(activeLine);
+                    });
+
+                }, 50);
+
+
+            },
+            setActiveMarkers:function(markerList, activeColor='blue'){
+                var vm = this;
+                var prevMarkers = vm.activeMarkers;
+                vm.activeMarkers = markerList;
+                setTimeout(()=>{
+                    prevMarkers.forEach((marker)=>{
+                        marker.resetBorderColor();
+                    });
+                    vm.activeMarkers.forEach((marker)=>{
+                        marker.setBorderColor(activeColor);
+                    });
+
+                }, 50);
+
             },
 
             defaultSvgIcon:function(icon_class, bgColor="white", stroke="silver"){
