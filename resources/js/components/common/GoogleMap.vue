@@ -421,12 +421,16 @@
                     }
                     else{
                         vm.smoothPanTo({ latitude: lat, longitude: lng }).then(data=>{
-                            if(zoom){
-                                vm.map.setZoom(zoom);
-                                Resolve({status:"completed"});
-                            }else{
-                                Resolve({status:"completed"});
+
+                            if(data.status == 'completed'){
+                                if(zoom){
+                                    vm.map.setZoom(zoom);
+                                    Resolve({status:"completed"});
+                                }else{
+                                    Resolve({status:"completed"});
+                                }
                             }
+                            
                         });
                     }
                 }, 300);
