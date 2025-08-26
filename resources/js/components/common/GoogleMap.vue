@@ -339,33 +339,33 @@
 
                 });
                                    
-                    vm.map.addListener("click", (e) => {
-                        
-                        if(vm.isMarkerDrop){
-                            vm.placerMarkerDrop(e);
+                vm.map.addListener("click", (e) => {
+                    
+                    if(vm.isMarkerDrop){
+                        vm.placerMarkerDrop(e);
+                        return;
+                    }
+
+                    if(vm.is_select_map || vm.is_select_paths){ 
+
+                        if(vm.is_select_paths){
+                            if(vm.is_start_select_paths){
+                                vm.clickStartSelectPaths(e);
+                            }
                             return;
                         }
 
-                        if(vm.is_select_map || vm.is_select_paths){ 
+                        if(!vm.is_select_map) return;
 
-                            if(vm.is_select_paths){
-                                if(vm.is_start_select_paths){
-                                    vm.clickStartSelectPaths(e);
-                                }
-                                return;
-                            }
-
-                            if(!vm.is_select_map) return;
-
-                            var location = {
-                            latitude: e.latLng.lat(),
-                            longitude: e.latLng.lng()
-                            }
-                            vm.$emit('selected_location', location);
-                            vm.placeMarker(location);
+                        var location = {
+                        latitude: e.latLng.lat(),
+                        longitude: e.latLng.lng()
                         }
-                        
-                    });
+                        vm.$emit('selected_location', location);
+                        vm.placeMarker(location);
+                    }
+                    
+                });
 
                 //MOUSE OVER
                 let lastUpdate = 0;
