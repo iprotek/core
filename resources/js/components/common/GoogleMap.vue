@@ -90,7 +90,7 @@
 
             "info_window_once" //Open info and closes the previously opened.
         ],
-        $emits:["selected_location", "clicked_marker", "clicked_path"],
+        $emits:["selected_location", "clicked_marker", "clicked_path", "drop_marker_info"],
         watch: { 
             is_select_map:function(newVal){
                 this.is_select_map = newVal;
@@ -158,10 +158,79 @@
                 is_start_select_paths:false,
                 currentInfoWindow:null,
                 activePaths:[],
-                activeMarkers:[]
+                activeMarkers:[],
+                isMarkerDrop:false,
+                markerDropEl:null
             }
         },
-        methods: { 
+        methods: {
+
+            setMarkerDrop:function(isDrop=true){
+                var vm = this;
+                vm.isMarkerDrop = isDrop;
+
+                //CREATE MARKER
+                if(isDrop){
+                    //Create Marker El
+                    if(vm.markerDropEl === null){
+                        var loc = vm.map.getCenter();
+                        
+                        vm.markerDropEl = vm.createMarker({
+                            latitude:loc.lat(), 
+                            longitude: loc.lng()
+                        }, {
+                            htmlIcon: vm.defaultSvgIcon("fa fa-check-circle-o text-white", "green", "orange")
+                        }, false);
+                    }
+                }
+                else{
+                    vm.markerDropEl.setMap(null);
+                    vm.markerDropEl = null;
+                }
+            },
+            getAddress:function(lat, lng) {
+                var vm = this;
+                const geocoder = new google.maps.Geocoder({
+                    apiKey:vm.google_map_api_key
+                });
+
+                const latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+                geocoder.geocode({ location: latlng }, (results, status) => {
+                    let address = "";
+                    if (status === "OK") {
+                        if (results[0]) {
+                            console.log("Address:", results[0].formatted_address);
+                            address = results[0].formatted_address;
+                            // Example: display in an input field
+                            //document.getElementById("address").value = results[0].formatted_address;
+                        } else {
+                            console.log("No results found");
+                            address = "";
+                        }
+                    } else {
+                        console.log("Geocoder failed due to: " + status);
+                        address = "";
+                    }
+                    vm.$emit('drop_marker_info', {
+                        location:{
+                            latitude:lat,
+                            longitude: lng
+                        },
+                        address:address
+                    })
+                });
+            },
+
+            placerMarkerDrop:function(e){
+                var vm = this;
+                if(vm.markerDropEl){
+                    vm.markerDropEl.position = {
+                        lat:e.latLng.lat(),
+                        lng:e.latLng.lng()
+                    }
+                    vm.getAddress( e.latLng.lat(), e.latLng.lng());
+                }
+            },
 
             save_paths:function(){
                 var vm = this;
@@ -277,6 +346,12 @@
                 
                 if(vm.is_select_map || vm.is_select_paths){                    
                     vm.map.addListener("click", (e) => {
+                        
+                        if(vm.isMarkerDrop){
+                            vm.placerMarkerDrop(e);
+                            return;
+                        }
+
 
                         if(vm.is_select_paths){
                             if(vm.is_start_select_paths){
@@ -495,7 +570,7 @@
             },
 
             //dataInfo fields: title, htmlContent, htmlIcon
-            createMarker:function(location, dataInfo){
+            createMarker:function(location, dataInfo, isClickable = true){
                 var vm = this;
                 var htmlElement = document.createElement("div");
                 var borderColor = '';
@@ -535,24 +610,25 @@
                         }
                     });
                 }
+                if(isClickable){
+                    marker.addListener("click", (evt) => {
 
-                marker.addListener("click", (evt) => {
-
-                    if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
-                        if(vm.currentInfoWindow != infoWindow){
-                            vm.currentInfoWindow.close();
+                        if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
+                            if(vm.currentInfoWindow != infoWindow){
+                                vm.currentInfoWindow.close();
+                            }
                         }
-                    }
 
-                    if(infoWindow){
-                        infoWindow.open(vm.map, marker);
-                        if(vm.currentInfoWindow != infoWindow)
-                            vm.currentInfoWindow = infoWindow;
-                    }
+                        if(infoWindow){
+                            infoWindow.open(vm.map, marker);
+                            if(vm.currentInfoWindow != infoWindow)
+                                vm.currentInfoWindow = infoWindow;
+                        }
 
-                    vm.$emit('clicked_marker', marker, dataInfo, location, evt);
+                        vm.$emit('clicked_marker', marker, dataInfo, location, evt);
 
-                });
+                    });
+                }
 
                 vm.markers.push(marker);
 
