@@ -4,10 +4,12 @@
         <i v-else-if="status == 2" class="fa fa-times text-danger"></i>
         <i v-else-if="status == 1" class="fa fa-check text-success"></i>
         <i v-else :class="icon_class"></i>
-        <span v-if="is_submit"> Submitting </span>
-        <span v-else-if="status >= 1" v-html="message"></span>
-        <span v-else v-html="label">
+        <span v-if="label">
+            <span v-if="is_submit"> Submitting </span>
+            <span v-else-if="status >= 1" v-html="message"></span>
+            <span v-else v-html="label">
         </span>
+    </span>
     </span>
 </template>
 

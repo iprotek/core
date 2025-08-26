@@ -199,16 +199,11 @@
                     let address = "";
                     if (status === "OK") {
                         if (results[0]) {
-                            console.log("Address:", results[0].formatted_address);
                             address = results[0].formatted_address;
-                            // Example: display in an input field
-                            //document.getElementById("address").value = results[0].formatted_address;
                         } else {
-                            console.log("No results found");
                             address = "";
                         }
                     } else {
-                        console.log("Geocoder failed due to: " + status);
                         address = "";
                     }
                     vm.$emit('drop_marker_info', {
