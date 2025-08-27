@@ -27,7 +27,7 @@
     ActivateMenu(['menu-dashboard']);
   </script> 
   
-    <script src="/iprotek/js/manage/my-details.js?v=1"> </script>
+    <script src="/iprotek/js/manage/my-details.js?v=1.2"> </script>
   
   
 @endsection
