@@ -11,7 +11,7 @@
                     </div>
                     <div>
                         <label class="mb-0"> <i> NAV COLOR: </i> </label>
-                        <select v-model="dashboard_nav_color" class="form-control" @change="dashboardThemeChanged()">
+                        <select v-model="theme_dashboard_nav_color" class="form-control" @change="dashboardThemeChanged()">
                             <option value="dark navbar-dark">dark navbar-dark</option>
                             <option value="dark navbar-primary">dark navbar-primary</option>
                             <option value="dark navbar-info">dark navbar-info</option>
@@ -38,7 +38,7 @@
                             <option value="light navbar-gray">light navbar-gray</option>
                         </select>
                         <label class="mb-0 text-italic"> <i> SIDE BAR COLOR: </i> </label>
-                        <select v-model="dashboard_sidebar_color" class="form-control" @change="dashboardThemeChanged()">
+                        <select v-model="theme_dashboard_sidebar_color" class="form-control" @change="dashboardThemeChanged()">
                             <option value="dark-primary">dark-primary</option>
                             <option value="dark-secondary">dark-secondary</option>
                             <option value="dark-info">dark-info</option>
@@ -65,7 +65,7 @@
                             <option value="light-gray">light-gray</option>
                         </select>
                         <label class="mb-0 text-italic"> <i> CARD COLOR: </i> </label>
-                        <select v-model="dashboard_card_color" class="form-control" @change="dashboardThemeChanged()">
+                        <select v-model="theme_dashboard_card_color" class="form-control" @change="dashboardThemeChanged()">
                             <option value=""></option>
                             <option value="primary">primary</option>
                             <option value="secondary">secondary</option>
@@ -81,12 +81,13 @@
                             <option value="gray">gray</option>
                         </select>
                     </div>
-                    <div>
+                    <div class="mt-4">
                         <div>
                             <label class="mb-0">FRONT THEME</label>
                         </div>
                         <label class="mb-0 text-italic"> <i> NAV COLOR: </i> </label>
-                        <select class="form-control">
+                        <select v-model="theme_front_nav_color" class="form-control">
+                            <option value="dark navbar-dark">dark navbar-dark</option>
                             <option value="dark navbar-primary">dark navbar-primary</option>
                             <option value="dark navbar-info">dark navbar-info</option>
                             <option value="dark navbar-success">dark navbar-success</option>
@@ -111,7 +112,7 @@
                             <option value="light navbar-gray">light navbar-gray</option>
                         </select>
                         <label class="mb-0 text-italic"> <i> CARD COLOR: </i> </label>
-                        <select class="form-control">
+                        <select v-model="theme_front_card_color" class="form-control">
                             <option value=""></option>
                             <option value="primary">primary</option>
                             <option value="secondary">secondary</option>
@@ -130,14 +131,10 @@
                 </div>
             </template>
             <template slot="footer">
-                <div>
-                    <button class="btn btn-outline-warning mr-4" >
-                        <span class="fa fa-undo"></span> RESTORE DEFAULTS
-                    </button>
-                    <button class="btn btn-outline-primary mr-4" >
-                        <span class="fa fa-save"></span> SAVE
-                    </button>
-                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal" @click="$refs.modal.dismiss()">
+                <div>                    
+                    <web-submit :action="resetTheme" el_class="btn btn-outline-warning mr-4 btn-sm" icon_class="fa fa-undo" label="RESTORE DEFAULTS" :timeout="3000" />
+                    <web-submit :action="save" el_class="btn btn-outline-primary btn-sm mr-4" icon_class="fa fa-save" label="SAVE" :timeout="3000" />
+                    <button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal" @click="$refs.modal.dismiss()">
                         <span class="fa fa-times"></span> Close
                     </button> 
                 </div>
@@ -149,26 +146,49 @@
 </template>
 
 <script>    
-    
+    import WebSubmitVue from '../../common/WebSubmit.vue';
     export default {
         props:[ "theme_info", "group_id", "branch_id" ],
         $emits:[],
         watch: { 
         },
-        components: {   
+        components: {
+            "web-submit":WebSubmitVue
         },
         data: function () {
             return {        
                 promiseExec:null,
                 errors:[],
-                dashboard_nav_color:'light navbar-light',
-                dashboard_sidebar_color:'dark-primary',
-                dashboard_card_color:'',
-                front_nav_color:'',
-                front_card_color:''
+                theme_dashboard_nav_color:'light navbar-light',
+                theme_dashboard_sidebar_color:'dark-primary',
+                theme_dashboard_card_color:'',
+                theme_front_nav_color:'dark navbar-primary',
+                theme_front_card_color:''
            }
         },
         methods:{ 
+            save:function(){
+                var vm = this;
+                var request = {
+                    theme_dashboard_nav_color: vm.theme_dashboard_nav_color,
+                    theme_dashboard_sidebar_color: vm.theme_dashboard_sidebar_color,
+                    theme_dashboard_card_color: vm.theme_dashboard_card_color,
+                    theme_front_nav_color: vm.theme_front_nav_color,
+                    theme_front_card_color: vm.theme_front_card_color
+                }
+                return WebRequest2('POST', '/manage/company-details/update-theme', JSON.stringify(request) ).then(resp=>{
+                    return resp.json().then(data=>{
+                        return data;
+                    })
+                });
+            },
+            resetTheme:function(){
+                return WebRequest2('POST', '/manage/company-details/reset-theme', JSON.stringify({}) ).then(resp=>{
+                    return resp.json().then(data=>{
+                        return data;
+                    })
+                });
+            },
             reset:function(){
 
             },
@@ -177,15 +197,15 @@
                 let topNav = document.querySelector('nav#top-menu');
                 let sideBar = document.querySelector('aside#main-sidebar');
                 if(topNav){
-                    topNav.setAttribute("class", "main-header navbar navbar-expand navbar-"+(vm.dashboard_nav_color));
+                    topNav.setAttribute("class", "main-header navbar navbar-expand navbar-"+(vm.theme_dashboard_nav_color));
                 }
                 if(sideBar){
-                    sideBar.setAttribute("class", "main-sidebar elevation-4 sidebar-"+(vm.dashboard_sidebar_color));
+                    sideBar.setAttribute("class", "main-sidebar elevation-4 sidebar-"+(vm.theme_dashboard_sidebar_color));
                 }
                 //ALL CARD
                 let cards = document.querySelectorAll('div.card');
                 cards.forEach(card=>{
-                    card.setAttribute("class", "card card-"+ vm.dashboard_card_color);
+                    card.setAttribute("class", "card card-"+ vm.theme_dashboard_card_color);
                 })
 
             },
@@ -193,6 +213,16 @@
                 var vm = this;
 
                 this.$refs.modal.show();
+                WebRequest2('GET', '/manage/company-details/get-theme').then(resp=>{
+                    resp.json().then(data=>{
+                        console.log("THEME DATA", data);
+                        vm.theme_dashboard_nav_color = data.theme_dashboard_nav_color;
+                        vm.theme_dashboard_sidebar_color = data.theme_dashboard_sidebar_color;
+                        vm.theme_dashboard_card_color = data.theme_dashboard_card_color;
+                        vm.theme_front_nav_color = data.theme_front_nav_color;
+                        vm.theme_front_card_color = data.theme_front_card_color;
+                    });
+                })
 
                 return new Promise((promiseExec)=>{
                     vm.promiseExec = promiseExec;

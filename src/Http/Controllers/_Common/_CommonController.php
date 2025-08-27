@@ -204,8 +204,10 @@ class _CommonController extends BaseController
         }
 
         $selected_branch_id = \iProtek\Core\Helpers\BranchSelectionHelper::get();
+        
+        $theme = \iProtek\Core\Helpers\UISettingHelper::get_theme();
 
-        return ["SIDEMENUS"=>$sidemenus, "pay_account_id"=>$pay_account_id, "USER"=>$user, "group_id"=>$group_id, "selected_branch_id"=>$selected_branch_id ];
+        return [ "theme"=>$theme, "SIDEMENUS"=>$sidemenus, "pay_account_id"=>$pay_account_id, "USER"=>$user, "group_id"=>$group_id, "selected_branch_id"=>$selected_branch_id ];
     }
 
     public function loginpage()

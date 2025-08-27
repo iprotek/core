@@ -19,5 +19,10 @@
         
         Route::post('/update-about-us', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'update_contact_us'])->name('.update-about-us');
         Route::get('/get-about-us', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'get_contact_us'])->name('.get-about-us');
-        
+
+
+        Route::post('/update-theme', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'update_theme'])->name('.update-theme');
+        Route::get('/get-theme', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'get_theme'])->name('.get-theme');
+        Route::post('/reset-theme', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'reset_theme'])->name('.reset-theme');
+
       });  

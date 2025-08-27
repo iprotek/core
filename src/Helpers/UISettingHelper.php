@@ -51,5 +51,48 @@ class UISettingHelper
     }
 
 
+    public static function get_theme(){
+        
+        $user_id = auth()->user()->id;
+        
+        $data = AppVarHelper::get([
+            "theme_dashboard_nav_color_$user_id",
+            "theme_dashboard_sidebar_color_$user_id",
+            "theme_dashboard_card_color_$user_id",
+            "theme_front_nav_color_$user_id",
+            "theme_front_card_color_$user_id"
+        ]);
+
+        if(!$data["theme_dashboard_nav_color_$user_id"]){
+            $data["theme_dashboard_nav_color_$user_id"] = config('iprotek.navbar_color'); // default color
+        }
+        
+        if(!$data["theme_dashboard_sidebar_color_$user_id"]){
+            $data["theme_dashboard_sidebar_color_$user_id"] = config('iprotek.sidebar_color'); // default color
+        }
+
+        return [
+            "theme_dashboard_nav_color" => $data["theme_dashboard_nav_color_$user_id"],
+            "theme_dashboard_sidebar_color" => $data["theme_dashboard_sidebar_color_$user_id"],
+            "theme_dashboard_card_color" => $data["theme_dashboard_card_color_$user_id"],
+            "theme_front_nav_color" => $data["theme_front_nav_color_$user_id"],
+            "theme_front_card_color" => $data["theme_front_card_color_$user_id"]
+        ];
+    }
+
+    public static function reset_theme(){
+        
+        $user_id = auth()->user()->id;
+
+        AppVarHelper::set([
+            "theme_dashboard_nav_color_$user_id" => config('iprotek.navbar_color'),
+            "theme_dashboard_sidebar_color_$user_id" => config('iprotek.sidebar_color'),
+            "theme_dashboard_card_color_$user_id" => "",
+            "theme_front_nav_color_$user_id" => "",
+            "theme_front_card_color_$user_id" => ""
+        ]);
+    }
+
+
 
 }

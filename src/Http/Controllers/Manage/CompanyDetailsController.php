@@ -137,4 +137,43 @@ class CompanyDetailsController extends _CommonController
         ]);
         return ["status"=>1, "message"=>"Logo has been updated.". $logo_type];
     }
+
+    public function update_theme(Request $request){
+        $this->validate($request, [
+            "theme_dashboard_nav_color"=>'required|string|max:50',
+            "theme_dashboard_sidebar_color"=>'required|string|max:50',
+            "theme_dashboard_card_color"=>'nullable|string|max:50',
+            "theme_front_nav_color"=>'nullable|string|max:50',
+            "theme_front_card_color"=>'nullable|string|max:50'
+        ]);
+
+         $user_id = auth()->user()->id;
+        //TODO:: Set for specific user not for general
+        
+        AppVarHelper::set([
+            "theme_dashboard_nav_color_$user_id" => $request->theme_dashboard_nav_color,
+            "theme_dashboard_sidebar_color_$user_id" => $request->theme_dashboard_sidebar_color,
+            "theme_dashboard_card_color_$user_id" => $request->theme_dashboard_card_color ?:"",
+            "theme_front_nav_color_$user_id" => $request->theme_front_nav_color ?:"",
+            "theme_front_card_color_$user_id" => $request->theme_front_card_color ?:""
+        ]);
+
+        return ["status"=>1, "message"=>"Theme updated."];
+    }
+
+    public function get_theme(Request $request){
+
+        $data = \iProtek\Core\Helpers\UISettingHelper::get_theme();
+        return $data;
+    }
+
+    
+    public function reset_theme(Request $request){
+
+        $data = \iProtek\Core\Helpers\UISettingHelper::reset_theme();
+
+        return ["status"=>1, "message"=>"Theme resetted."];
+    
+    }
+
 }
