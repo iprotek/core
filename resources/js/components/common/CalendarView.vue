@@ -9,7 +9,7 @@
 <script>
      export default {
         props:["allow_drag_event", "allow_add_event", "allow_select_previous"],
-        $emits:[ "datesSet", "loadMonth" , "selectedEvent", "loaded" ],
+        $emits:[ "datesSet", "select", "loadMonth" , "selectedEvent", "loaded" ],
         components: {  
         },
         data: function () {
