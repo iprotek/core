@@ -15,7 +15,15 @@
                                 <button class="btn btn-outline-warning mt-2" @click="$refs.modal_change_pass.show()">Change Password</button>
                             </div>
                             <div class="col-sm-6"> 
-                                <file-uploads v-if="user_admin_id" :gallery_title="'My Profile Image Gallery'" :target_name="'user_admins'" :value="user_admin_id"></file-uploads>
+                                <div class="card">
+                                    <div class="card-header">Personalize</div>
+                                    <div class="card-body">
+                                        <div class="my-1">
+                                            <button class="btn btn-outline-primary btn-sm" @click="$refs.modal_theme.show()"> CUSTOMIZE MY THEME </button>
+                                        </div>
+                                        <file-uploads v-if="user_admin_id" :gallery_title="'My Profile Image Gallery'" :target_name="'user_admins'" :value="user_admin_id"></file-uploads>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -23,6 +31,7 @@
             </div>
         </div>
         <modal-change-pass v-if="email" ref="modal_change_pass" :email="email" />
+        <modal-theme ref="modal_theme" :branch_id="branch_id" :group_id="group_id" :theme_info="theme_info" />
         <swal ref="swal_prompt"></swal> 
     </div>
 </template>
@@ -30,13 +39,15 @@
 <script>
     import FileUploadsVue from '../../common/FileUploads.vue';
     import UserInput2Vue from '../../common/UserInput2.vue';
+    import ModalThemeVue from '../company-details/ModalTheme.vue';
     import ModalChangePasswordVue from './ModalChangePassword.vue';
     export default {
-        props:[ "group_id", "user_admin_id" ],
+        props:[ "theme_info", "group_id",  "user_admin_id" ],
         components: { 
             "file-uploads":FileUploadsVue,
             "user-input2":UserInput2Vue,
-            "modal-change-pass":ModalChangePasswordVue
+            "modal-change-pass":ModalChangePasswordVue,
+            "modal-theme":ModalThemeVue
         },
         watch: { 
         },

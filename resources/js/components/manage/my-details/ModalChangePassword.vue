@@ -29,7 +29,7 @@
 <script>    
     import UserInput2Vue from '../../common/UserInput2.vue';
     export default {
-        props:[ "group_id", "user_admin_id", "email" ],
+        props:[ "theme_info", "group_id", "user_admin_id", "email" ],
         components: {
             "user-input2":UserInput2Vue
         },

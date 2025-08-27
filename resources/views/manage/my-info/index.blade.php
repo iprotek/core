@@ -24,7 +24,7 @@
 
 @section('foot') 
   <script>
-    //ActivateMenu(['menu-dashboard']);
+    ActivateMenu(['menu-dashboard']);
   </script> 
   
     <script src="/iprotek/js/manage/my-details.js?v=1"> </script>
