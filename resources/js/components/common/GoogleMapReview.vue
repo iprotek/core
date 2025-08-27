@@ -14,7 +14,7 @@
                         <summary-review :review_full_link="review_full_link" v-if="placeService" :rating="placeService.rating" :user_ratings_total="placeService.user_ratings_total" :review_link="review_link"></summary-review>
                     </div>
                 </div>
-                <div v-if="placeService && placeService.reviews.length > 0" class="card m-1 p-1" style="background-color:white;">
+                <div v-if="placeService && placeService.reviews && placeService.reviews.length > 0" class="card m-1 p-1" style="background-color:white;">
                     <div>
                         <google-customer-reviews :reviews="placeService.reviews"></google-customer-reviews>
                     </div>
