@@ -86,38 +86,6 @@
 
 
 <script>
-  //COMMON LISTING HERE
-/*
-  WebRequest('GET', '/v2/Data/Factory', null, 'application/json', result=>{
-      //console.log(result);
-    document.querySelectorAll('select.factorylist').forEach((factoryEl, factoryElIndex)=>{
-
-      result.Data.forEach((factoryItem, factoryIndex)=>{
-          var option = document.createElement('OPTION');
-          option.Data = factoryItem;
-          option.value = factoryItem.ID;
-          option.innerHTML = factoryItem.Name;
-          factoryEl.append(option);
-      });
-
-    });
-  });
-
-  WebRequest('GET', '/v2/Data/Door', null, 'application/json', resultDoor=>{
-    document.querySelectorAll('select.doorlist').forEach((doorElSelect, doorElIndex)=>{
-
-      resultDoor.Data.forEach((doorItem, doorIndex)=>{
-        var _option = document.createElement('OPTION');
-        _option.Data = doorItem;
-        _option.value = doorItem.ID;
-        _option.innerHTML = doorItem.FactoryName+" - "+ doorItem.Name
-        doorElSelect.append(_option);
-      });
-
-
-    });
-  });
-*/
 
 <?php
     $user_id = 0;
@@ -126,25 +94,6 @@
       $user_id = $user->id;
 ?>
 @if($user_id != 0)
-/*
-  WebRequest('GET','/v2/Data/SuggestionCounts/1/20/{"UserID":<?=$user_id?>}', null, 'application/json', result=>{
-    //console.log(result);
-    var _data = result.Data;
-    
-    createBadge( 'menu-suggestion-list', 'badge-warning', _data.MySuggestionCount);
-    
-    createBadge('menu-classification', 'badge-danger', _data.ClassificationCount);
-
-    createBadge('menu-evaluation', 'badge-danger', _data.EvaluationCount);    
-
-    createBadge('menu-approval', 'badge-danger', _data.ApprovalCount);
-    
-    createBadge('menu-implementation', 'badge-danger', _data.ImplementationCount);
-    
-    createBadge('menu-recovery-request', 'badge-danger', _data.RecoveryCount);
-
-  });
-*/
   function createBadge( menu_name , cl, val){
     var menu = document.querySelector('i.'+menu_name);
     if(menu){
@@ -344,14 +293,28 @@ WebRequest("GET", '/v2/Data/List', null, 'application/json', function(result){
 
 </script>
 <script src="/iprotek/js/xpose/Xpose-Translations.js?version=1"></script>
-<script>
-  //$('select.select2').val("");
-  //$('select.select2').select2();//.val("");
+<script> 
   $(document).on('select2:open', () => {
     document.querySelector('.select2-search__field').focus();
-    //console.log("HELLO");
   });
  </script>
-
+ 
 
 @yield('foot')
+ <script>
+
+   //SET CUSTOMIZE THEME ON CARDS
+   let themeStr = '{{json_encode($theme)}}';
+   let theme = JSON.parse(themeStr.replace(/&quot;/g, '"'));
+   //console.log(theme);
+   var cards = document.querySelectorAll('div.card');
+   if(theme.theme_dashboard_card_color){
+    cards.forEach(card => {
+        // Apply theme styles to each card
+        if(card.getAttribute('class', 'card')){
+            card.setAttribute('class', 'card card-' + theme.theme_dashboard_card_color);
+        }
+    });
+  }
+
+ </script>
