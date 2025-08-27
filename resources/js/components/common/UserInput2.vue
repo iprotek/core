@@ -1,7 +1,7 @@
 <template>
     <div class="p-0 m-0">
         <div v-if="prepend_icon" class="input-group mt-4">
-            <div class="input-group-prepend input-group-text" :title="prepend_icon_title" @click="$emit('prepend_icon_click')"> 
+            <div class="input-group-prepend input-group-text py-0" :title="prepend_icon_title" @click="$emit('prepend_icon_click')"> 
                 <span class="p-0" style="font-size:20px;"> 
                     <i :class="'fa mx-2 '+prepend_icon"></i>
                 </span>

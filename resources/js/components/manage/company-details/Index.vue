@@ -49,7 +49,7 @@
                     <button class="btn btn-outline-primary btn-lg m-1" @click="$refs.modal_business_background.show()">
                         Background Images
                     </button>
-                    <button class="btn btn-outline-primary btn-lg m-1 disabled">
+                    <button class="btn btn-outline-primary btn-lg m-1" @click="$refs.modal_theme.show()">
                         Theme Color
                     </button>
                     <button class="btn btn-outline-primary btn-lg m-1" @click="$refs.modal_business_logos.show()">
@@ -69,6 +69,7 @@
         <modal-business-logos ref="modal_business_logos"></modal-business-logos> 
         <modal-terms-conditions ref="modal_terms_conditions"></modal-terms-conditions>
         <modal-about-us ref="modal_about_us"></modal-about-us>
+        <modal-theme :theme_info="theme_info" :branch_id="branch_id" :group_id="group_id"  ref="modal_theme" />
     </div>
 </template>
 
@@ -78,14 +79,16 @@
     import ModalBusinessLogosVue from './ModalBusinessLogos.vue'
     import ModalTermsandConditionVue from './ModalTermsandCondition.vue'
     import ModalAboutUs from './ModalAboutUs.vue'
+    import ModalThemeVue from './ModalTheme.vue'
     export default {
-        props:[  ],
+        props:["theme_info", "group_id", "branch_id" ],
         components: { 
             "user-input2":UserInput2Vue,
             "modal-business-backgrounds": ModalBusinessBackgroundsVue,
             "modal-business-logos": ModalBusinessLogosVue,
             "modal-terms-conditions" : ModalTermsandConditionVue,
-            'modal-about-us' : ModalAboutUs
+            'modal-about-us' : ModalAboutUs,
+            'modal-theme' : ModalThemeVue
         },
         data: function () {
             return {    

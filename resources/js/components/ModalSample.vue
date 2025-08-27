@@ -21,7 +21,7 @@
 <script>    
     
     export default {
-        props:[ "group_id", "branch_id" ],
+        props:[ "theme_info", "group_id", "branch_id" ],
         $emits:[],
         watch: { 
         },
