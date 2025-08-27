@@ -15,7 +15,7 @@
                         <user-input2 v-model="business_email" :prepend_icon="'ion ion-ios-email-outline'"  :disabled="false" :input_style="'height:35px;'" :placeholder="'Business Email'" :placeholder_description="''" :placeholder_focus_color="'blue'" :placeholder_style="''" :type="'text'" ></user-input2>
                         <user-input2 v-model="business_representative" :prepend_icon="'ion ion-person'"  :disabled="false" :input_style="'height:35px;'" :placeholder="'Business Representative'" :placeholder_description="''" :placeholder_focus_color="'blue'" :placeholder_style="''" :type="'text'" ></user-input2>
                     </div>
-                    <div class="card-header">
+                    <div class="card-header rounded-0">
                         SOCAIL LINKS
                     </div>
                     <div class="card-body pt-0">
@@ -25,7 +25,7 @@
                         <user-input2 v-model="business_snapchat_link" :prepend_icon="'ion ion-social-snapchat-outline text-warning'"  :disabled="false" :input_style="'height:35px;'" :placeholder="'Snapchat'" :placeholder_description="''" :placeholder_focus_color="'blue'" :placeholder_style="''" :type="'text'" ></user-input2>
                         <user-input2 v-model="business_youtube_link" :prepend_icon="'ion ion-social-youtube text-danger'"  :disabled="false" :input_style="'height:35px;'" :placeholder="'Youtube'" :placeholder_description="''" :placeholder_focus_color="'blue'" :placeholder_style="''" :type="'text'" ></user-input2>
                     </div>
-                    <div class="card-header">
+                    <div class="card-header rounded-0">
                         BOOKING SITES
                     </div>
                     <div class="card-body pt-0">

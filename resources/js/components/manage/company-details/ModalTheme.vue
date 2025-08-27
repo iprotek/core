@@ -11,7 +11,8 @@
                     </div>
                     <div>
                         <label class="mb-0"> <i> NAV COLOR: </i> </label>
-                        <select class="form-control">
+                        <select v-model="dashboard_nav_color" class="form-control" @change="dashboardThemeChanged()">
+                            <option value="dark navbar-dark">dark navbar-dark</option>
                             <option value="dark navbar-primary">dark navbar-primary</option>
                             <option value="dark navbar-info">dark navbar-info</option>
                             <option value="dark navbar-success">dark navbar-success</option>
@@ -24,6 +25,7 @@
                             <option value="dark navbar-teal">dark navbar-teal</option>
                             <option value="dark navbar-cyan">dark navbar-cyan</option>
                             <option value="dark navbar-gray-dark">dark navbar-gray-dark</option>
+                            <option value="light navbar-light">light navbar-light</option>
                             <option value="light navbar-info">light navbar-info</option>
                             <option value="light navbar-success">light navbar-success</option>
                             <option value="light navbar-warning">light navbar-warning</option>
@@ -35,8 +37,8 @@
                             <option value="light navbar-cyan">light navbar-cyan</option>
                             <option value="light navbar-gray">light navbar-gray</option>
                         </select>
-                        <label class="mb-0 text-italic">SIDE BAR COLOR:</label>
-                        <select class="form-control">
+                        <label class="mb-0 text-italic"> <i> SIDE BAR COLOR: </i> </label>
+                        <select v-model="dashboard_sidebar_color" class="form-control" @change="dashboardThemeChanged()">
                             <option value="dark-primary">dark-primary</option>
                             <option value="dark-secondary">dark-secondary</option>
                             <option value="dark-info">dark-info</option>
@@ -49,21 +51,21 @@
                             <option value="dark-teal">dark-teal</option>
                             <option value="dark-cyan">dark-cyan</option>
                             <option value="dark-gray-dark">dark-gray-dark</option>
-                            <option value="dark-primary">light-primary</option>
-                            <option value="dark-secondary">light-secondary</option>
-                            <option value="dark-info">light-info</option>
-                            <option value="dark-success">light-success</option>
-                            <option value="dark-warning">light-warning</option>
-                            <option value="dark-danger">light-danger</option>
-                            <option value="dark-indigo">light-indigo</option>
-                            <option value="dark-lightblue">light-lightblue</option>
-                            <option value="dark-navy">light-navy</option>
-                            <option value="dark-teal">light-teal</option>
-                            <option value="dark-cyan">light-cyan</option>
-                            <option value="dark-gray">light-gray</option>
+                            <option value="light-primary">light-primary</option>
+                            <option value="light-secondary">light-secondary</option>
+                            <option value="light-info">light-info</option>
+                            <option value="light-success">light-success</option>
+                            <option value="light-warning">light-warning</option>
+                            <option value="light-danger">light-danger</option>
+                            <option value="light-indigo">light-indigo</option>
+                            <option value="light-lightblue">light-lightblue</option>
+                            <option value="light-navy">light-navy</option>
+                            <option value="light-teal">light-teal</option>
+                            <option value="light-cyan">light-cyan</option>
+                            <option value="light-gray">light-gray</option>
                         </select>
-                        <label class="mb-0 text-italic">CARD COLOR:</label>
-                        <select class="form-control">
+                        <label class="mb-0 text-italic"> <i> CARD COLOR: </i> </label>
+                        <select v-model="dashboard_card_color" class="form-control" @change="dashboardThemeChanged()">
                             <option value=""></option>
                             <option value="primary">primary</option>
                             <option value="secondary">secondary</option>
@@ -80,8 +82,10 @@
                         </select>
                     </div>
                     <div>
-                        <label class="mb-0">FRONT THEME</label>
-                        <label class="mb-0 text-italic">NAV COLOR:</label>
+                        <div>
+                            <label class="mb-0">FRONT THEME</label>
+                        </div>
+                        <label class="mb-0 text-italic"> <i> NAV COLOR: </i> </label>
                         <select class="form-control">
                             <option value="dark navbar-primary">dark navbar-primary</option>
                             <option value="dark navbar-info">dark navbar-info</option>
@@ -106,7 +110,7 @@
                             <option value="light navbar-cyan">light navbar-cyan</option>
                             <option value="light navbar-gray">light navbar-gray</option>
                         </select>
-                        <label class="mb-0 text-italic">CARD COLOR:</label>
+                        <label class="mb-0 text-italic"> <i> CARD COLOR: </i> </label>
                         <select class="form-control">
                             <option value=""></option>
                             <option value="primary">primary</option>
@@ -127,7 +131,15 @@
             </template>
             <template slot="footer">
                 <div>
-                    <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
+                    <button class="btn btn-outline-warning mr-4" >
+                        <span class="fa fa-undo"></span> RESTORE DEFAULTS
+                    </button>
+                    <button class="btn btn-outline-primary mr-4" >
+                        <span class="fa fa-save"></span> SAVE
+                    </button>
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal" @click="$refs.modal.dismiss()">
+                        <span class="fa fa-times"></span> Close
+                    </button> 
                 </div>
             </template>
         </modal-view> 
@@ -149,8 +161,8 @@
             return {        
                 promiseExec:null,
                 errors:[],
-                dashboard_nav_color:'',
-                dashboard_sidebar_color:'',
+                dashboard_nav_color:'light navbar-light',
+                dashboard_sidebar_color:'dark-primary',
                 dashboard_card_color:'',
                 front_nav_color:'',
                 front_card_color:''
@@ -158,6 +170,23 @@
         },
         methods:{ 
             reset:function(){
+
+            },
+            dashboardThemeChanged:function(){
+                var vm = this;
+                let topNav = document.querySelector('nav#top-menu');
+                let sideBar = document.querySelector('aside#main-sidebar');
+                if(topNav){
+                    topNav.setAttribute("class", "main-header navbar navbar-expand navbar-"+(vm.dashboard_nav_color));
+                }
+                if(sideBar){
+                    sideBar.setAttribute("class", "main-sidebar elevation-4 sidebar-"+(vm.dashboard_sidebar_color));
+                }
+                //ALL CARD
+                let cards = document.querySelectorAll('div.card');
+                cards.forEach(card=>{
+                    card.setAttribute("class", "card card-"+ vm.dashboard_card_color);
+                })
 
             },
             show:function(){ 
