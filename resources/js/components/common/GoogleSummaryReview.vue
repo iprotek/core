@@ -18,7 +18,7 @@
                     <img src="/images/components/star.svg" style="height: 20px;"/>
                     <!--<img src="/images/components/star-gray.svg" style="height: 20px;"/>-->
                     &nbsp;&nbsp;
-                    <label class="m-0 p-1 text-nowrap" v-text="' '+user_ratings_total +' reviews'" style="color:gray; cursor:pointer;"></label>
+                    <label class="m-0 p-1 text-nowrap" v-text="' '+(user_ratings_total ? user_ratings_total : 'N/A' )+' reviews'" style="color:gray; cursor:pointer;"></label>
                 </div>
             </a>
         </div>
