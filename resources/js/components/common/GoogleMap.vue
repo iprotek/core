@@ -161,7 +161,12 @@
                 activeMarkers:[],
                 isMarkerDrop:false,
                 markerDropEl:null,
-                contextMenuOverlay:null
+                contextMenu:{
+                    overlay:null,
+                    marker:null
+                },
+                //contextMenuOverlay:null,
+
             }
         },
         methods: {
@@ -172,6 +177,10 @@
 
                 //CREATE MARKER
                 if(isDrop){
+
+                    //Hide the Selection drop
+                    vm.hideContextMenu();
+
                     //Create Marker El
                     if(vm.markerDropEl === null){
                         var loc = vm.map.getCenter();
@@ -984,7 +993,7 @@
 
             },
 
-            defaultSvgIcon:function(icon_class, bgColor="white", stroke="silver"){
+            defaultSvgIcon:function(icon_class, bgColor="white", stroke="silver", font_size="18px"){
                 if(icon_class){
                     return `
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 40 50">
@@ -1005,7 +1014,7 @@
                             <foreignObject x="0" y="0" width="40" height="40">
                                 <div xmlns="http://www.w3.org/1999/xhtml" 
                                     style="display:flex;justify-content:center;align-items:center;height:40px;">
-                                <i class="${icon_class}" style="font-size:18px;"></i>
+                                <i class="${icon_class}" style="font-size:${font_size};"></i>
                                 </div>
                             </foreignObject>
                         </svg>
@@ -1203,6 +1212,16 @@
                 var vm = this;
                 if(!vm.isMapReady) return;
                 // Define custom overlay for context menu
+                if(!containerEl) return;
+                containerEl.style.display = "none";
+                containerEl.style.position = "absolute";
+                
+                containerEl.onclick = function(e){
+                    event.stopPropagation();
+                }
+
+
+
                 function ContextMenuOverlay() {
                     this.div = containerEl;
                 }
@@ -1212,6 +1231,9 @@
                     this.div = containerEl;
                     let panes = this.getPanes();
                     panes.floatPane.appendChild(containerEl); // attach into map overlay system
+
+                    //Create marker
+
                 };
 
                 let currentPos = null;
@@ -1231,19 +1253,50 @@
                         this.div = null;
                     }
                 };
-                vm.contextMenuOverlay = new ContextMenuOverlay();
-                vm.contextMenuOverlay.setMap(vm.map);
+                vm.contextMenu.overlay = new ContextMenuOverlay();
+                vm.contextMenu.overlay.setMap(vm.map);
                 vm.map.addListener("rightclick", function(e) {
-                        
-                        vm.contextMenuOverlay.position = e.latLng;
-                        vm.contextMenuOverlay.draw();
+                    if(vm.isMarkerDrop) return;
+
+                        var coordinates ={
+                            latitude: e.latLng.lat(),
+                            longitude: e.latLng.lng()
+                        };
+                        vm.contextMenu.overlay.position = {
+                            lat: coordinates.latitude,
+                            lng: coordinates.longitude
+                        };
+                        vm.contextMenu.overlay.draw();
                         containerEl.style.display = "block";
+                        //IF contextMenu marker is Empty then create
+
+                        if(vm.contextMenu.marker == null){
+                            vm.contextMenu.marker = vm.createMarker(
+                                coordinates, 
+                                { title:"Add Marker", htmlIcon: vm.defaultSvgIcon("fa fa-question text-danger bounce", "white", "navy", "28px") }, 
+                                false
+                            );
+                            vm.contextMenu.marker.addListener("click", (evt) => { 
+                                return false;
+                            });
+                        }else{
+                            vm.contextMenu.marker.setMap(vm.map);
+                            vm.contextMenu.marker.position = {
+                                lat: coordinates.latitude,
+                                lng: coordinates.longitude
+                            }
+                        }
+
                     }
                 );
             },
-            hideContextMenu:function(){                
-                if (this.contextMenuOverlay && this.contextMenuOverlay.div) {
-                    this.contextMenuOverlay.div.style.display = "none";
+            hideContextMenu:function(){      
+                var vm = this;          
+                if (vm.contextMenu.overlay && vm.contextMenu.overlay.div) {
+                    vm.contextMenu.overlay.div.style.display = "none";
+                }
+                if( vm.contextMenu.marker ){
+                    vm.contextMenu.marker.setMap(null);
                 }
             }
 
