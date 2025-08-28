@@ -1238,7 +1238,7 @@
                             latitude: e.latLng.lat(),
                             longitude: e.latLng.lng()
                         }
-                        if(newPos != currentPos){
+                        if( currentPos == null || currentPos.latitude != newPos.latitude || currentPos.longitude != newPos.longitude ){
                             currentPos = newPos;
                             vm.contextMenuOverlay.position = e.latLng;
                             vm.contextMenuOverlay.draw();
