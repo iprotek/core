@@ -1229,9 +1229,9 @@
                 ContextMenuOverlay.prototype.onAdd = function() {
                     //let div = document.querySelector("#"+vm.map_context_container);
                     this.div = containerEl;
-                    let panes = this.getPanes();
-                    panes.floatPane.appendChild(containerEl); // attach into map overlay system
-
+                    //let panes = this.getPanes();
+                    //panes.floatPane.appendChild(containerEl); // attach into map overlay system
+                    this.getPanes().overlayMouseTarget.appendChild(containerEl);
                     //Create marker
 
                 };
