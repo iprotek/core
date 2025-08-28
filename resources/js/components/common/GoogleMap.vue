@@ -1213,10 +1213,22 @@
                     let panes = this.getPanes();
                     panes.floatPane.appendChild(containerEl); // attach into map overlay system
                 };
-                //return;
+
+                let currentPos = null;
                 ContextMenuOverlay.prototype.draw = function() {
+                    
                     if (!this.div || !this.position) return;
                     //return;
+                    let newPos = {
+                            latitude: this.position.lat(),
+                            longitude: this.position.lng()
+                        }
+                    if( currentPos == null || currentPos.latitude != newPos.latitude || currentPos.longitude != newPos.longitude ){
+                        currentPos = newPos;
+                    }else{
+                        return;
+                    }
+
                     let projection = this.getProjection();
                     let pos = projection.fromLatLngToDivPixel(this.position);
 
@@ -1232,17 +1244,11 @@
                 };
                 vm.contextMenuOverlay = new ContextMenuOverlay();
                 vm.contextMenuOverlay.setMap(vm.map);
-                let currentPos = null;
                 vm.map.addListener("rightclick", function(e) {
-                        let newPos = {
-                            latitude: e.latLng.lat(),
-                            longitude: e.latLng.lng()
-                        }
-                        if( currentPos == null || currentPos.latitude != newPos.latitude || currentPos.longitude != newPos.longitude ){
-                            currentPos = newPos;
-                            vm.contextMenuOverlay.position = e.latLng;
-                            vm.contextMenuOverlay.draw();
-                        }
+                        
+                        vm.contextMenuOverlay.position = e.latLng;
+                        vm.contextMenuOverlay.draw();
+                        
                     
                     }
                 );
