@@ -1273,7 +1273,7 @@
                         if(vm.contextMenu.marker == null){
                             vm.contextMenu.marker = vm.createMarker(
                                 coordinates, 
-                                { title:"Add Marker", htmlIcon: vm.defaultSvgIcon("fa fa-question text-danger bounce", "white", "navy", "28px") }, 
+                                { title:"Add Marker", htmlIcon: vm.defaultSvgIcon("fa fa-question text-danger bounce", "white", "navy", "24px") }, 
                                 false
                             );
                             vm.contextMenu.marker.addListener("click", (evt) => { 
