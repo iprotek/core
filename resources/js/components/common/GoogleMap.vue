@@ -1232,10 +1232,18 @@
                 };
                 vm.contextMenuOverlay = new ContextMenuOverlay();
                 vm.contextMenuOverlay.setMap(vm.map);
-                
+                let currentPos = null;
                 vm.map.addListener("rightclick", function(e) {
-                        vm.contextMenuOverlay.position = e.latLng;
-                        vm.contextMenuOverlay.draw();
+                        let newPos = {
+                            latitude: e.latLng.lat(),
+                            longitude: e.latLng.lng()
+                        }
+                        if(newPos != currentPos){
+                            currentPos = newPos;
+                            vm.contextMenuOverlay.position = e.latLng;
+                            vm.contextMenuOverlay.draw();
+                        }
+                    
                     }
                 );
             },
