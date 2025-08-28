@@ -1204,14 +1204,14 @@
                 if(!vm.isMapReady) return;
                 // Define custom overlay for context menu
                 function ContextMenuOverlay() {
-                    this.div = null;
+                    this.div = containerEl;
                 }
                 ContextMenuOverlay.prototype = new google.maps.OverlayView();
                 ContextMenuOverlay.prototype.onAdd = function() {
                     //let div = document.querySelector("#"+vm.map_context_container);
                     this.div = containerEl;
                     let panes = this.getPanes();
-                    panes.floatPane.appendChild(div); // attach into map overlay system
+                    panes.floatPane.appendChild(containerEl); // attach into map overlay system
                 };
                 //return;
                 ContextMenuOverlay.prototype.draw = function() {
