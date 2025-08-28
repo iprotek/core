@@ -160,7 +160,8 @@
                 activePaths:[],
                 activeMarkers:[],
                 isMarkerDrop:false,
-                markerDropEl:null
+                markerDropEl:null,
+                contextMenuOverlay:null
             }
         },
         methods: {
@@ -340,7 +341,10 @@
                 });
                                    
                 vm.map.addListener("click", (e) => {
-                    
+
+                    //Hide the context when left click
+                    vm.hideContextMenu();
+
                     if(vm.isMarkerDrop){
                         vm.placerMarkerDrop(e);
                         return;
@@ -1192,8 +1196,54 @@
                     vm.is_start_select_paths = false;
                     vm.setPathsPreviewLine(null, vm.series_paths.previewLineEl.path, true);
                 }
-            }
+            },
 
+            //Context Menu
+            setContextMenu:function(containerEl){
+                var vm = this;
+                if(!vm.isMapReady) return;
+                // Define custom overlay for context menu
+                function ContextMenuOverlay() {
+                    this.div = null;
+                }
+                ContextMenuOverlay.prototype = new google.maps.OverlayView();
+                ContextMenuOverlay.prototype.onAdd = function() {
+                    //let div = document.querySelector("#"+vm.map_context_container);
+                    this.div = containerEl;
+                    let panes = this.getPanes();
+                    panes.floatPane.appendChild(div); // attach into map overlay system
+                };
+                //return;
+                ContextMenuOverlay.prototype.draw = function() {
+                    if (!this.div || !this.position) return;
+                    //return;
+                    let projection = this.getProjection();
+                    let pos = projection.fromLatLngToDivPixel(this.position);
+
+                    this.div.style.left = pos.x + "px";
+                    this.div.style.top = pos.y + "px";
+                    this.div.style.display = "block";
+                };
+                ContextMenuOverlay.prototype.onRemove = function() {
+                    if (this.div) {
+                        this.div.parentNode.removeChild(this.div);
+                        this.div = null;
+                    }
+                };
+                vm.contextMenuOverlay = new ContextMenuOverlay();
+                vm.contextMenuOverlay.setMap(vm.map);
+                
+                vm.map.addListener("rightclick", function(e) {
+                        contextMenuOverlay.position = e.latLng;
+                        contextMenuOverlay.draw();
+                    }
+                );
+            },
+            hideContextMenu:function(){                
+                if (this.contextMenuOverlay && this.contextMenuOverlay.div) {
+                    this.contextMenuOverlay.div.style.display = "none";
+                }
+            }
 
 
         },
