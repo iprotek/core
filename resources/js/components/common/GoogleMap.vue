@@ -1219,22 +1219,11 @@
                     
                     if (!this.div || !this.position) return;
                     //return;
-                    let newPos = {
-                            latitude: this.position.lat(),
-                            longitude: this.position.lng()
-                        }
-                    if( currentPos == null || currentPos.latitude != newPos.latitude || currentPos.longitude != newPos.longitude ){
-                        currentPos = newPos;
-                    }else{
-                        return;
-                    }
-
                     let projection = this.getProjection();
                     let pos = projection.fromLatLngToDivPixel(this.position);
 
                     this.div.style.left = pos.x + "px";
                     this.div.style.top = pos.y + "px";
-                    this.div.style.display = "block";
                 };
                 ContextMenuOverlay.prototype.onRemove = function() {
                     if (this.div) {
@@ -1248,8 +1237,7 @@
                         
                         vm.contextMenuOverlay.position = e.latLng;
                         vm.contextMenuOverlay.draw();
-                        
-                    
+                        containerEl.style.display = "block";
                     }
                 );
             },
