@@ -7,7 +7,7 @@
                     <div class="card-body">  
                         <div class="row">
                             <div class="col-sm-6">
-                                <user-input2 :value="email" :input_style="'height:40px;'" :placeholder="'Last Name'" :readonly="true" />
+                                <user-input2 :value="email" :input_style="'height:40px;'" :placeholder="'Email'" :readonly="true" />
                                 <user-input2 v-model="first_name" :input_style="'height:40px;'" :placeholder="'First Name'" />
                                 <user-input2 v-model="middle_name" :input_style="'height:40px;'" :placeholder="'Middle Name'" />
                                 <user-input2 v-model="last_name" :input_style="'height:40px;'" :placeholder="'Last Name'" />
