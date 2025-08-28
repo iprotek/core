@@ -90,7 +90,7 @@
 
             "info_window_once" //Open info and closes the previously opened.
         ],
-        $emits:["selected_location", "clicked_marker", "clicked_path", "drop_marker_info"],
+        $emits:["selected_location", "clicked_marker", "clicked_path", "drop_marker_info", "context_menu_right_click"],
         watch: { 
             is_select_map:function(newVal){
                 this.is_select_map = newVal;
@@ -1286,6 +1286,7 @@
                                 lng: coordinates.longitude
                             }
                         }
+                        vm.$emit('context_menu_right_click', vm.contextMenu, coordinates );
 
                     }
                 );
