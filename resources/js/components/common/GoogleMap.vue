@@ -1234,8 +1234,8 @@
                 vm.contextMenuOverlay.setMap(vm.map);
                 
                 vm.map.addListener("rightclick", function(e) {
-                        contextMenuOverlay.position = e.latLng;
-                        contextMenuOverlay.draw();
+                        vm.contextMenuOverlay.position = e.latLng;
+                        vm.contextMenuOverlay.draw();
                     }
                 );
             },
