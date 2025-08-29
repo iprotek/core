@@ -955,19 +955,20 @@
                         vm.$emit('clicked_path', pathData, dataInfo, coordinates );
                     });
                     
-                    if(infoWindow){  
                         line.addListener("rightclick", (event) => {
 
-                            infoWindow.setPosition(event.latLng); // Where user clicked
-                            infoWindow.open(vm.map); 
+                            if(infoWindow){  
+                                infoWindow.setPosition(event.latLng); // Where user clicked
+                                infoWindow.open(vm.map); 
+                            }
                             let coordinates = {
                                 latitude: event.latLng.lat(),
                                 longitude: event.latLng.lng()
                             }
+
                             vm.$emit('rightclicked_path', pathData, dataInfo, coordinates );
                             
                         });
-                    }
                 }
                 
                 // Mouse over
