@@ -683,7 +683,7 @@
                 return this.initMap(coordinates, set_marker);
             },
 
-            createPath:function(coordinates, hex_color="#FF0000", is_dash=false, is_moving=false, speed=250, htmlContent = null, isClickable = false){
+            createPath:function(coordinates, hex_color="#FF0000", is_dash=false, is_moving=false, speed=250, dataInfo = null, isClickable = false){
                 var vm = this;
                 var coordinatePoints = [];
                 if(Array.isArray(coordinates)){
@@ -699,6 +699,28 @@
                 var pathData = null;
                 
                 let lineDefaults = null;
+
+                var infoWindow = null;
+                if(dataInfo && dataInfo.htmlContent){
+
+                    
+                    infoWindow = new google.maps.InfoWindow({
+                        content: dataInfo.htmlContent
+                    });
+                    
+                    //Manipulate style inside of infowindow
+                    infoWindow.addListener("domready", () => {
+                        // Get the default container for the InfoWindow
+                        const iwOuter = document.querySelector('.gm-style-iw');
+                        if(iwOuter){
+                            var closeButton = iwOuter.querySelector('button.gm-ui-hover-effect');
+                            if(closeButton){
+                                closeButton.style.right = 0;
+                                closeButton.style.position = 'absolute';
+                            }
+                        }
+                    });
+                }
 
                 //ONLY LINE
                 if(is_dash === false){
@@ -919,8 +941,16 @@
                 if(isClickable){
                     line.addListener("click", (event) => {
 
-                        vm.$emit('clicked_path', pathData );
+                        vm.$emit('clicked_path', pathData, dataInfo );
                     });
+                    
+                    if(infoWindow){  
+                        line.addListener("rightclick", (event) => {
+                                infoWindow.setPosition(event.latLng); // Where user clicked
+                                infoWindow.open(vm.map); 
+                            
+                        });
+                    }
                 }
                 
                 // Mouse over
