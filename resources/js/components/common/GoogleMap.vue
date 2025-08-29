@@ -1226,9 +1226,6 @@
                 //FOCUS CONTROLS 
                 let sourceEl = null;
                 let isReady = true;
-                containerEl.addEventListener("focus", (evt)=>{
-                    console.log("container focus", evt);
-                });
                 containerEl.querySelectorAll('*').forEach((input)=>{
                     input.addEventListener("blur", (e) => {
                         e.preventDefault();
