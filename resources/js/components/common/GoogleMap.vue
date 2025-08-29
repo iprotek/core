@@ -1217,13 +1217,23 @@
                 containerEl.style.position = "absolute";
                 
                 containerEl.onclick = function(e){
-                    event.stopPropagation();
+                    e.stopPropagation();
                 }
 
+                //FOCUS CONTROLS
+                let sourceEl = null;
+                let isReady = true;
                 containerEl.querySelectorAll('input').forEach((input)=>{
                     input.addEventListener("blur", (e) => {
                         e.preventDefault();
-                        setTimeout(() => input.focus(), 0); // keeps caret where it was
+                        if(sourceEl == e.target)
+                            setTimeout(() => input.focus(), 0); // keeps caret where it was
+                    });
+                    input.addEventListener("focus", (event) => {
+                        if(!isReady) return;
+                        isReady=false;
+                        sourceEl = event.srcElement;
+                        setTimeout(()=>{isReady=true}, 50);
                     });
                 });
 
