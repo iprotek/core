@@ -1218,24 +1218,31 @@
                 
                 containerEl.onclick = function(e){
                     e.stopPropagation();
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    return false;
                 }
 
-                //FOCUS CONTROLS
+                //FOCUS CONTROLS 
                 let sourceEl = null;
                 let isReady = true;
-                containerEl.querySelectorAll('input').forEach((input)=>{
+                containerEl.addEventListener("focus", (evt)=>{
+                    console.log("container focus", evt);
+                });
+                containerEl.querySelectorAll('*').forEach((input)=>{
                     input.addEventListener("blur", (e) => {
                         e.preventDefault();
-                        if(sourceEl == e.target)
+                        if(sourceEl == e.target && e.target.tagName == "INPUT")
                             setTimeout(() => input.focus(), 0); // keeps caret where it was
                     });
                     input.addEventListener("focus", (event) => {
                         if(!isReady) return;
                         isReady=false;
                         sourceEl = event.srcElement;
+                        console.log(event);
                         setTimeout(()=>{isReady=true}, 50);
                     });
-                });
+                }); 
 
 
 
