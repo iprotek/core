@@ -1236,7 +1236,6 @@
                         if(!isReady) return;
                         isReady=false;
                         sourceEl = event.srcElement;
-                        console.log(event);
                         setTimeout(()=>{isReady=true}, 50);
                     });
                 }); 
