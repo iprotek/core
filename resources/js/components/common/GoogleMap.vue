@@ -1220,6 +1220,13 @@
                     event.stopPropagation();
                 }
 
+                containerEl.querySelectorAll('input').forEach((input)=>{
+                    input.addEventListener("blur", (e) => {
+                        e.preventDefault();
+                        setTimeout(() => input.focus(), 0); // keeps caret where it was
+                    });
+                });
+
 
 
                 function ContextMenuOverlay() {
@@ -1246,6 +1253,7 @@
 
                     this.div.style.left = pos.x + "px";
                     this.div.style.top = pos.y + "px";
+                    console.log("Hello");
                 };
                 ContextMenuOverlay.prototype.onRemove = function() {
                     if (this.div) {
