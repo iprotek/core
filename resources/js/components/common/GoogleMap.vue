@@ -90,7 +90,14 @@
 
             "info_window_once" //Open info and closes the previously opened.
         ],
-        $emits:["selected_location", "clicked_marker", "clicked_path", "drop_marker_info", "context_menu_right_click"],
+        $emits:[
+            "selected_location", 
+            "clicked_marker", 
+            "clicked_path", 
+            "drop_marker_info", 
+            "context_menu_right_click",
+            "rightclicked_path"
+        ],
         watch: { 
             is_select_map:function(newVal){
                 this.is_select_map = newVal;
@@ -940,14 +947,24 @@
                 }
                 if(isClickable){
                     line.addListener("click", (event) => {
+                        let coordinates = {
+                            latitude: event.latLng.lat(),
+                            longitude: event.latLng.lng()
+                        }
 
-                        vm.$emit('clicked_path', pathData, dataInfo );
+                        vm.$emit('clicked_path', pathData, dataInfo, coordinates );
                     });
                     
                     if(infoWindow){  
                         line.addListener("rightclick", (event) => {
-                                infoWindow.setPosition(event.latLng); // Where user clicked
-                                infoWindow.open(vm.map); 
+
+                            infoWindow.setPosition(event.latLng); // Where user clicked
+                            infoWindow.open(vm.map); 
+                            let coordinates = {
+                                latitude: event.latLng.lat(),
+                                longitude: event.latLng.lng()
+                            }
+                            vm.$emit('rightclicked_path', pathData, dataInfo, coordinates );
                             
                         });
                     }
