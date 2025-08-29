@@ -1253,7 +1253,6 @@
 
                     this.div.style.left = pos.x + "px";
                     this.div.style.top = pos.y + "px";
-                    console.log("Hello");
                 };
                 ContextMenuOverlay.prototype.onRemove = function() {
                     if (this.div) {
