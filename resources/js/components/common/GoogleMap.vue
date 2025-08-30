@@ -966,7 +966,7 @@
                                 longitude: event.latLng.lng()
                             }
 
-                            vm.$emit('rightclicked_path', pathData, dataInfo, coordinates );
+                            vm.$emit('rightclicked_path', pathData, dataInfo, coordinates, infoWindow );
                             
                         });
                 }
