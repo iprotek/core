@@ -963,7 +963,7 @@
                     
                         line.addListener("rightclick", (event) => {
 
-                            if(infoWindow){  
+                            if(infoWindow && pathData.isActive){  
                                 infoWindow.setPosition(event.latLng); // Where user clicked
                                 infoWindow.open(vm.map); 
                             }
