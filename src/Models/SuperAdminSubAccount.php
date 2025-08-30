@@ -19,4 +19,8 @@ class SuperAdminSubAccount extends Model
     public function target_workspace(){
         return $this->hasOne(UserAdminPayAccount::class, 'pay_app_user_account_id', 'sub_account_group_id');// BillingUserAdminPayAccount::where('sub_account_group_id', $this->sub_account_group_id)->first();
     }
+
+    public function user_admin(){
+        return $this->hasOne(UserAdmin::class, 'email', 'email');
+    }
 }
