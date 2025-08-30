@@ -752,6 +752,7 @@
                         is_dash:false,
                         interval_callback:null,
                         marker:null,
+                        isActive:false,
                         setColor:function(color){
                             line.setOptions({ strokeColor: color });
                         },
@@ -812,11 +813,13 @@
                             line.setOptions({ strokeWeight: strokeWeight });
                         },
                         resetStyle:function(){
+                            pathData.isActive = false;
                             pathData.setColor(hex_color);
                             pathData.setStrokeWeight(3);
                             line.setOptions(lineDefaults);
                         },
-                        setStyle:function(options){
+                        setStyle:function(options, isActive=false){
+                            pathData.isActive = isActive;
                             line.setOptions(options);
                         }
                         
@@ -870,6 +873,7 @@
                         is_dash:true,
                         interval_callback:interval_callback,
                         marker:null,
+                        isActive:false,
                         setColor:function(color){
                             let icons = line.get("icons");
                             icons[0].icon.strokeColor = color; 
@@ -933,11 +937,13 @@
                             }
                         },
                         resetStyle:function(){
+                            pathData.isActive = false;
                             pathData.setColor(hex_color);
                             pathData.setStrokeWeight(2);
                             line.setOptions(lineDefaults);
                         },
-                        setStyle:function(options){
+                        setStyle:function(options, isActive=false){
+                            pathData.isActive = isActive;
                             line.setOptions(options);
                         }
                     };
@@ -1018,7 +1024,7 @@
                         clickable: true 
                     }
                     vm.activePaths.forEach((line)=>{
-                        line.setStyle(activeLine);
+                        line.setStyle(activeLine, true);
                     });
 
                 }, 50);
