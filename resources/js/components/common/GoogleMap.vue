@@ -54,21 +54,6 @@
 <script> 
     import WebSubmitVue from './WebSubmit.vue';
     export default {
-        /*
-            Market: htmlIcon, htmlContent
-            //HTML ICON
-            customize the icon
-
-            //HTML Content
-            customize the content info of the icon is clicked
-
-            CONTENT TEMPLATE
-            <div style="text-align:center; font-size:12px;">
-            <img src="https://media.istockphoto.com/id/1973365581/vector/sample-ink-rubber-stamp.jpg?s=612x612&w=0&k=20&c=_m6hNbFtLdulg3LK5LRjJiH6boCb_gcxPvRLytIz0Ws=" style="width:50px;height:50px;border-radius:50%;" />
-            <div><strong>Sample </strong></div>
-            <div>This is a sample Text</div>
-            </div>
-        */
         props:[ 
             "height", 
             "width", 
