@@ -684,18 +684,18 @@
                         }
                     });
                 }
-                if(dataInfo && dataInfo.contextHtmlContent){
+                if(dataInfo && dataInfo.htmlContextContent){
 
                     let content = null;
                     let info_identity = marker.contextInfoWindowId;
-                    if(dataInfo.contextHtmlContent instanceof HTMLElement){
-                        content = dataInfo.contextHtmlContent;
+                    if(dataInfo.htmlContextContent instanceof HTMLElement){
+                        content = dataInfo.htmlContextContent;
                         content.classList.add(info_identity);
                     }
                     else{
                         content = document.createElement('div');
                         content.classList.add(info_identity);
-                        content.innerHTML = dataInfo.contextHtmlContent;
+                        content.innerHTML = dataInfo.htmlContextContent;
                     }
                     
                     contextInfoWindow = new google.maps.InfoWindow({
