@@ -707,6 +707,10 @@
                     });
                 }
 
+                marker.infoWindow = infoWindow;
+                marker.hoverInfoWindow = hoverInfoWindow;
+                marker.contextInfoWindow = contextInfoWindow;
+
 
                 if(isClickable){
                     marker.addListener("click", (evt) => {
