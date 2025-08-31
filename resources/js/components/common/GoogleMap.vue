@@ -96,7 +96,8 @@
             "clicked_path", 
             "drop_marker_info", 
             "context_menu_right_click",
-            "rightclicked_path"
+            "rightclicked_path",
+            "rightclicked_marker"
         ],
         watch: { 
             is_select_map:function(newVal){
@@ -164,6 +165,7 @@
 
                 is_start_select_paths:false,
                 currentInfoWindow:null,
+                currentContextInfoWindow:null,
                 activePaths:[],
                 activeMarkers:[],
                 isMarkerDrop:false,
@@ -329,7 +331,6 @@
                     zoom: zoom,
                     mapId: vm.google_map_api_id
                 });
-
                 
                 //MAP LOADED
                 google.maps.event.addListenerOnce(vm.map, 'tilesloaded', function () {
@@ -605,11 +606,14 @@
                     content: dataInfo && dataInfo.htmlIcon ? htmlElement : null
                 });
 
-                var infoWindow = null;
-                var hoverInfoWindow = null;
+                let infoWindow = null;
+                let hoverInfoWindow = null;
+                let contextInfoWindow = null;
+
                 var identity = 'marker-'+vm.markers.length;
-                marker.hoverInfoWindowId = "info-hover-window-"+identity;
+                marker.hoverInfoWindowId = "hover-info-window-"+identity;
                 marker.infoWindowId = "info-window-"+identity;
+                marker.contextInfoWindowId = "context-info-window-"+identity;
                 if(dataInfo && dataInfo.htmlHoverContent){
                     let content = null;
                     let hover_identity = marker.hoverInfoWindowId;
@@ -680,10 +684,57 @@
                         }
                     });
                 }
+                if(dataInfo && dataInfo.contextHtmlContent){
+
+                    let content = null;
+                    let info_identity = marker.contextInfoWindowId;
+                    if(dataInfo.contextHtmlContent instanceof HTMLElement){
+                        content = dataInfo.contextHtmlContent;
+                        content.classList.add(info_identity);
+                    }
+                    else{
+                        content = document.createElement('div');
+                        content.classList.add(info_identity);
+                        content.innerHTML = dataInfo.contextHtmlContent;
+                    }
+                    
+                    contextInfoWindow = new google.maps.InfoWindow({
+                        content: content
+                    });
+                    
+                    //Manipulate style inside of infowindow
+                    contextInfoWindow.addListener("domready", () => {
+                        // Get the default container for the InfoWindow 
+                        let current_target = document.querySelector('.'+info_identity);
+                        if(current_target){
+                            let container = current_target.closest('.gm-style-iw.gm-style-iw-c');
+                            if(container){
+                                var closeButton = container.querySelector('button.gm-ui-hover-effect');
+                                if(closeButton){
+                                    closeButton.style.right = 0;
+                                    closeButton.style.position = 'absolute';
+                                    closeButton.addEventListener("click",(evt)=>{
+                                        marker.isInfoWindowOpen = false;
+                                    });
+                                }
+                            }
+                        }
+                    });
+                }
+
+
                 if(isClickable){
                     marker.addListener("click", (evt) => {
                         if(hoverInfoWindow){
                             vm.closeInfoHover(hoverInfoWindow, marker, "close", isForceCloseInfoHover);
+                        }
+
+                        //CLOSING THE CONTEXTS
+                        if(contextInfoWindow){
+                            contextInfoWindow.close();
+                        }
+                        if( vm.set_info_window_once && vm.currentContextInfoWindow){
+                            vm.currentContextInfoWindow.close();
                         }
 
                         if( infoWindow && vm.set_info_window_once && vm.currentInfoWindow){
@@ -692,6 +743,7 @@
                                 vm.currentInfoWindow.marker.isInfoWindowOpen = false;
                             }
                         }
+
 
                         if(infoWindow){
                             infoWindow.open(vm.map, marker);
@@ -704,7 +756,40 @@
                         vm.$emit('clicked_marker', marker, dataInfo, location, evt);
 
                     });
+                    if(contextInfoWindow){
+                        marker.addEventListener("contextmenu", (evt)=>{
+
+                            if(hoverInfoWindow){
+                                vm.closeInfoHover(hoverInfoWindow, marker, "close", isForceCloseInfoHover);
+                            }
+
+                            if(vm.set_info_window_once){
+                                if(vm.currentInfoWindow && vm.currentInfoWindow != infoWindow){
+                                    vm.currentInfoWindow.close();
+                                }
+                            }
+                            if(vm.set_info_window_once && infoWindow){
+                                infoWindow.close();
+                            }
+
+                            //CLOSE THE OTHER CONTEXT
+                            if( vm.set_info_window_once && vm.currentContextInfoWindow){
+                                if(vm.currentContextInfoWindow != contextInfoWindow){
+                                    vm.currentContextInfoWindow.close();
+                                    vm.currentContextInfoWindow.marker.isInfoWindowOpen = false;
+                                }
+                            }
+                            
+                            contextInfoWindow.open(vm.map, marker);
+                            vm.currentContextInfoWindow = contextInfoWindow;
+                            vm.currentContextInfoWindow.marker = marker
+                            marker.isInfoWindowOpen = true;
+                            vm.$emit('rightclicked_marker', marker, dataInfo, location, evt);
+
+                        });
+                    }
                 }
+                
 
                 if(hoverInfoWindow){
                     // Mouse over
