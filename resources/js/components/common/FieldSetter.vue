@@ -121,20 +121,17 @@
 
 
                     //FIXING INTO DEFAULT
-                    if(!data || data.length == 0 ){
-                        vm.setFieldElements(base_fields);
-                        return;
-                    }
-
-                    //COMPARING AND SETTINGS
-                    for(let i = 0; i < base_fields.length; i++){
-                        //CHECK IN DATA IF HAS THAT SETTING
-                        data.forEach((field)=>{
-                            //console.log("triggered", field);
-                            if(base_fields[i].name == field.name){
-                                base_fields[i] = field;
-                            }
-                        });
+                    if(data && data.length > 0 ){
+                        //COMPARING AND SETTINGS
+                        for(let i = 0; i < base_fields.length; i++){
+                            //CHECK IN DATA IF HAS THAT SETTING
+                            data.forEach((field)=>{
+                                //console.log("triggered", field);
+                                if(base_fields[i].name == field.name){
+                                    base_fields[i] = field;
+                                }
+                            });
+                        }
                     }
 
                     //REORDERING BASE ON field order no
