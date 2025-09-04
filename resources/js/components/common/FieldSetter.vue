@@ -15,7 +15,7 @@
                                     <icheck :checked="item.is_active" @update:checked="(a,b)=>{ item.is_active = a } " />
                                 </span>
                                 <span class="btn btn-default" title="Drag and Drop">
-                                    <span class="fa  fa-arrows"></span>
+                                    <span :class="`fa ${moveIcon}`"></span>
                                 </span>
                                 <label class="mb-0 form-control">
                                     {{ item.description }}
@@ -34,7 +34,7 @@
     import iCheckVue from './iCheck.vue';
     import WebSubmitVue from './WebSubmit.vue';
     export default {
-        props:[ "theme_info", "title" ,"group_id", "branch_id", "target_name", "target_id" ],
+        props:[ "theme_info","move_icon", "title" ,"group_id", "branch_id", "target_name", "target_id" ],
         $emits:[],
         watch: {
 
@@ -46,7 +46,8 @@
         data: function () {
             return {
                 dragItem: null,
-                fieldList:[ ]
+                fieldList:[ ],
+                moveIcon:'fa-arrows'
             }
         },
         methods: {
@@ -206,6 +207,9 @@
         },
         mounted:function(){ 
             this.loadElementDragging();
+            if(this.move_icon){
+                this.moveIcon = this.move_icon;
+            }
             //this.loadDragSetting(this.base_fields);
         },
         updated:function(){
