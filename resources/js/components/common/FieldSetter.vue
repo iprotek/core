@@ -10,14 +10,14 @@
                         <li v-for="(item) in fieldList" 
                             v-bind:key="'item-field-'+_uid+'-'+item.order_no" draggable="true" 
                          class="py-1">
-                            <div class="input-group ml-2">
+                            <div class="input-group input-group-sm ml-1">
                                 <span class="btn btn-default" title="Show/Hide">
                                     <icheck :checked="item.is_active" @update:checked="(a,b)=>{ item.is_active = a } " />
                                 </span>
                                 <span class="btn btn-default" title="Drag and Drop">
                                     <span :class="`fa ${moveIcon}`"></span>
                                 </span>
-                                <label class="mb-0 form-control">
+                                <label class="mb-0 form-control form-control-sm">
                                     {{ item.description }}
                                 </label>
                             </div>
