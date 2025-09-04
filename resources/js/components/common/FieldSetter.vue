@@ -35,7 +35,7 @@
     import WebSubmitVue from './WebSubmit.vue';
     export default {
         props:[ "theme_info","move_icon", "title" ,"group_id", "branch_id", "target_name", "target_id" ],
-        $emits:[],
+        $emits:['updated_fields'],
         watch: {
 
         },
@@ -65,6 +65,7 @@
                         return resp.json().then(data=>{
                             if(data.status == 1){
                                 vm.fieldList = req.data;
+                                vm.$emit('updated_fields', vm.fieldList);
                             }
                             return data;
                         });
