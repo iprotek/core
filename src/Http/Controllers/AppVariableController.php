@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use iProtek\Core\Helpers\AppVarHelper;
 
 class AppVariableController extends Controller
 {
@@ -72,6 +73,41 @@ class AppVariableController extends Controller
         $apps = \App\Models\Application::on();
         $apps->select('id', 'name', 'url');
         return $apps->get();
+    }
+
+    public function get_field_settings(Request $request){
+        $this->validate($request, [
+            'target_name' => 'required|string|max:191',
+            'target_id' => 'required|integer|min:1',
+        ]);
+
+        $varName = $request->target_name."_".$request->target_id;
+        $result = AppVarHelper::get($varName, "[]", $request->target_id);
+        //CONVERT T JSON RESULT
+
+        return json_decode($result, true);
+
+    }
+
+    public function set_field_settings(Request $request){
+
+        $this->validate($request, [
+            'target_name' => 'required|string|max:191',
+            'target_id' => 'required|integer|min:1',
+            'data' => 'required|array',
+        ]);
+
+        $varName = $request->target_name."_".$request->target_id;
+        $newValue = json_encode( $request->data );
+
+        $result = AppVarHelper::set(
+            $varName, 
+            $newValue, 
+            $request->target_id, 
+            true
+        );
+
+        return ["status"=>1, "message"=>"Field settings saved."];
     }
 
 }

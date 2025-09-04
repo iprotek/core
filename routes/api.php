@@ -29,6 +29,9 @@ Route::prefix('api')->middleware(['api'])->group(function(){
         
         //Map
         include(__DIR__.'/api/map.php');
+        
+        //Settings
+        include(__DIR__.'/api/settings.php');
 
     });
 

@@ -2,17 +2,20 @@
     <div>
         <div class="card">
             <div class="card-header">
-                FIELDS SETTINGS
+                {{ title ? title : 'FIELDS SETTINGS' }}
             </div>
             <div class="card-body">
                 <div  >
                     <ol class="draggable-list" style="width:100%;" >
                         <li v-for="(item) in fieldList" 
                             v-bind:key="'item-field-'+_uid+'-'+item.order_no" draggable="true" 
-                        >
-                            <div class="input-group input-group-sm">
-                                <span class="btn btn-default">
+                         class="py-1">
+                            <div class="input-group ml-2">
+                                <span class="btn btn-default" title="Show/Hide">
                                     <icheck :checked="item.is_active" @update:checked="(a,b)=>{ item.is_active = a } " />
+                                </span>
+                                <span class="btn btn-default" title="Drag and Drop">
+                                    <span class="fa  fa-arrows"></span>
                                 </span>
                                 <label class="mb-0 form-control">
                                     {{ item.description }}
@@ -20,9 +23,7 @@
                             </div>
                         </li>
                     </ol>
-                    <button class="btn btn-outline-primary btn-sm" @click="checkFieldList">
-                        <span class="fa fa-save"></span> SAVE
-                    </button>
+                    <web-submit :action="saveField" el_class="btn btn-outline-primary btn-sm" icon_class="fa fa-save" label="SAVE" :timeout="3000" />
                 </div>
             </div>
         </div>
@@ -31,14 +32,16 @@
 
 <script>
     import iCheckVue from './iCheck.vue';
+    import WebSubmitVue from './WebSubmit.vue';
     export default {
-        props:[ "theme_info", "group_id", "branch_id", "fields", "target_name", "target_id" ],
+        props:[ "theme_info", "title" ,"group_id", "branch_id", "target_name", "target_id" ],
         $emits:[],
         watch: {
 
         },
         components: { 
-            "icheck":iCheckVue
+            "icheck":iCheckVue,
+            "web-submit":WebSubmitVue
         },
         data: function () {
             return {
@@ -47,8 +50,32 @@
             }
         },
         methods: {
+
+            saveField:function(){
+                var vm = this;
+                return this.checkFieldList().then(data=>{
+                    //console.log(data);
+                    let req = {
+                        target_name:vm.target_name,
+                        target_id:vm.target_id,
+                        data:data
+                    }
+                    return WebRequest2('POST', '/api/group/'+this.group_id+'/settings/set-field-setter', JSON.stringify(req) ).then(resp=>{
+                        return resp.json().then(data=>{
+                            if(data.status == 1){
+                                vm.fieldList = req.data;
+                            }
+                            return data;
+                        });
+                    });
+                });
+            },
             checkFieldList:function(){
                 var vm = this;
+                var _resolve = null;
+                var promise = new Promise(resolve=>{
+                    _resolve = resolve
+                });
                 setTimeout(()=>{
                     let newList = [];
                     let List = vm.$el.querySelectorAll('li');
@@ -58,7 +85,9 @@
                         newList.push( field);
                     }
                     vm.setFieldElements(newList);
+                    _resolve(newList);
                 }, 50);
+                return promise;
             },
             setFieldElements:function(newVal){
                 var vm = this;
@@ -79,30 +108,57 @@
                 }).join('&');
                 return queryString;
             },
-            loadDragSetting:function(){
+            loadDragSetting:function(base_fields){
+                var vm = this;
+                return  WebRequest2('GET', '/api/group/'+vm.group_id+'/settings/get-field-setter?'+vm.queryString({
+                    target_id: vm.target_id,
+                    target_name: vm.target_name
+                })).then(resp=>{
+                    return resp.json().then(data=>{
+                        return data;
+                    });
+                }).then(data=>{
+
+
+                    //FIXING INTO DEFAULT
+                    if(!data || data.length == 0 ){
+                        vm.setFieldElements(base_fields);
+                        return;
+                    }
+
+                    //COMPARING AND SETTINGS
+                    for(let i = 0; i < base_fields.length; i++){
+                        //CHECK IN DATA IF HAS THAT SETTING
+                        data.forEach((field)=>{
+                            //console.log("triggered", field);
+                            if(base_fields[i].name == field.name){
+                                base_fields[i] = field;
+                            }
+                        });
+                    }
+
+                    //REORDERING BASE ON field order no
+                    let sorted = base_fields.sort((a, b) => a.order_no - b.order_no);
+
+                    //Final order_no by unique no
+                    let count = 0;
+                    sorted.forEach((field)=>{
+                        field.order_no = count+1;
+                        count++;
+                    });
+
+                    vm.setFieldElements(sorted);
+
+
+                    return sorted;
+
+                });
+
+            },
+
+            loadElementDragging:function(){
                 var vm = this;
                 const list =  this.$el.querySelector(".draggable-list");
-                this.setFieldElements( [
-                    {
-                        is_active:true,
-                        name:"test",
-                        order_no:1,
-                        description:'Item 1'
-                    },
-                    {
-                        is_active:true,
-                        name:"test",
-                        order_no:2,
-                        description:'Item 2'
-                    },
-                    {
-                        is_active:true,
-                        name:"test",
-                        order_no:3,
-                        description:'Item 3'
-                    }
-                ]);
-
 
                 list.addEventListener("dragstart", e => {
                     const li = e.target.closest("li");
@@ -152,7 +208,8 @@
 
         },
         mounted:function(){ 
-            this.loadDragSetting();
+            this.loadElementDragging();
+            //this.loadDragSetting(this.base_fields);
         },
         updated:function(){
 
