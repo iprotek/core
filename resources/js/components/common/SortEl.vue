@@ -31,7 +31,6 @@
         },
         methods: { 
             getItemIndex:function(){
-                console.log("Triggered");
                 if(!this.filter){
                     this.item_priority = 0;
                     return;
