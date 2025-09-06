@@ -71,10 +71,10 @@ class AppVarHelper
         $auth_user_id = 0;
         if($is_auth === true){
             if(!auth('admin')->check()){
-                return '0';
+                return ;
             }
             if(!$var_name){
-                return '0';
+                return ;
             }
             $auth_user_id = auth('admin')->user()->id;
         }
