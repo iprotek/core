@@ -66,13 +66,17 @@ class AppVarHelper
         return $appvar->value;
     } 
 
-    public static function set( $var_name, $new_value = null, $target_id = null, $is_update=false )
+    public static function set( $var_name, $new_value = null, $target_id = null, $is_update=false, $is_auth = true )
     {
-        if(!auth()->check()){
-            return;
-        }
-        if(!$var_name){
-            return;
+        $auth_user_id = 0;
+        if($is_auth === true){
+            if(!auth('admin')->check()){
+                return;
+            }
+            if(!$var_name){
+                return;
+            }
+            $auth_user_id = auth('admin')->user()->id;
         }
 
         
@@ -126,7 +130,7 @@ class AppVarHelper
                                 $appvar = AppVariable::create([
                                     "name"=>$var,
                                     "value"=>$var_name[$orignalVarName],
-                                    "updated_by"=>auth()->user()->id,
+                                    "updated_by"=>$auth_user_id,
                                     "target_id"=>$target_id
                                 ]);
                             }
@@ -139,7 +143,7 @@ class AppVarHelper
                     $appvar = AppVariable::create([
                         "name"=>$var,
                         "value"=>$var_name[$orignalVarName],
-                        "updated_by"=>auth()->user()->id,
+                        "updated_by"=>$auth_user_id,
                         "target_id"=>$target_id
                     ]);
                 }
@@ -179,7 +183,7 @@ class AppVarHelper
                     $appvar = AppVariable::create([
                         "name"=>$var_name,
                         "value"=>$new_value,
-                        "updated_by"=>auth()->user()->id,
+                        "updated_by"=>$auth_user_id,
                         "target_id"=>$target_id
                     ]);
                 }
@@ -190,7 +194,7 @@ class AppVarHelper
             $appvar = AppVariable::create([
                 "name"=>$var_name,
                 "value"=>$new_value,
-                "updated_by"=>auth()->user()->id,
+                "updated_by"=>$auth_user_id,
                 "target_id"=>$target_id
             ]);
         }
