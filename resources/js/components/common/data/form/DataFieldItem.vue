@@ -37,7 +37,7 @@
                 <!-- ADD FIELD -->
                 <data-field-item :data_id="data_id" v-for="(opt, optIndex) in fields" v-bind:key="'data-field-item-'+opt.id+'-'+optIndex+'-'+_uid" v-model="fields[optIndex]"  ></data-field-item>
                 <!-- ADD ITEM -->
-                <div class="input-group text-sm mb-1" v-for="(dItem,dIndex) in data_values"  v-bind:key="'ditem-'+_uid+'-'+dItem.id+'-'+dIndex"> 
+                <div :class="` input-group text-sm mb-1 ${is_small ? 'input-group-sm':''}`" v-for="(dItem,dIndex) in data_values"  v-bind:key="'ditem-'+_uid+'-'+dItem.id+'-'+dIndex"> 
                     
                     <span :class="'input-group-text btn success'"  > 
                         <b><small v-text="dItem.type"></small> </b>
@@ -67,7 +67,7 @@
                 </button>
             </div>
         </div>
-        <div v-else class="input-group" > 
+        <div v-else :class="`input-group ${is_small ? 'input-group-sm':''}`" > 
             <span class="input-group-text justify-content-end" style="min-width:130px;">
                 <b>
                     <span v-text="name"></span>
@@ -93,7 +93,7 @@
     import SwalAlertVue from '../../SwalAlert.vue'; 
     export default {
         name:'DataFieldItem',
-        props:[  "value", "has_down", "data_id", "group_id", "is_data" ],
+        props:[  "value", "has_down", "data_id", "group_id", "is_data", "is_small" ],
         components: {
             "swal-alert":SwalAlertVue
         },
