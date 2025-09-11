@@ -2,7 +2,7 @@
 
 
     //COMPANY DETAILS
-    Route::prefix('/company-details')->name('.company-details')->group(function(){
+    Route::prefix('/company-details')->middleware(['can:superadmin'])->name('.company-details')->group(function(){
         Route::get('/', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'index'])->name('.index');
         Route::get('/get-list', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'list'])->name('.get-list');
         Route::get('/get-list/{id}', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'list'])->name('.get-one');
