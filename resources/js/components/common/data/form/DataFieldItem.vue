@@ -137,7 +137,12 @@
                 if(this.is_data){
                     data_src = "iprotek-data";
                 }
-                WebRequest2('POST', '/manage/'+data_src+'/searches/data/data-value/'+this.id, JSON.stringify(req) ).then(resp=>{
+                let url = '/manage/'+data_src+'/searches/data/data-value/'+this.id;
+                if(this.group_id){
+                    url = '/api/group/'+this.group_id+'/'+data_src+'/searches/data/data-value/'+this.id;
+                }
+
+                WebRequest2('POST', url, JSON.stringify(req) ).then(resp=>{
                     resp.json().then(data=>{ 
                         if(data.status == 1){
                             vm.old_input_value = vm.input_value;
