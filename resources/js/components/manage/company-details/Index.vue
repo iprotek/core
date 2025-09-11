@@ -55,7 +55,7 @@
                     <button class="btn btn-outline-primary btn-lg m-1" @click="$refs.modal_business_logos.show()">
                         Icon/Logo
                     </button>
-                    <button class="btn btn-outline-primary btn-lg m-1 disabled" @click="$refs.modal_terms_conditions.show()">
+                    <button class="btn btn-outline-primary btn-lg m-1" @click="$refs.modal_terms_conditions.show()">
                        Terms and Conditions
                     </button>
                     <button class="btn btn-outline-primary btn-lg m-1 disabled" @click="$refs.modal_about_us.show()">

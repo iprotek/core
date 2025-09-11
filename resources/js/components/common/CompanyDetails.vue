@@ -55,7 +55,7 @@
                     <button class="btn btn-outline-primary btn-lg m-1" @click="$refs.modal_business_logo.show()">
                         Icon/Logo
                     </button>
-                    <button v-if="has_terms" class="btn btn-outline-primary btn-lg m-1 disabled" >
+                    <button v-if="has_terms" class="btn btn-outline-primary btn-lg m-1" >
                         Terms and Conditions
                     </button>
                     <button v-if="has_about" class="btn btn-outline-primary btn-lg m-1 disabled" >

@@ -18,6 +18,7 @@ class CompanyDetailsHelper
             $fileUpload = FileUpload::create([
                 "target_name"=>"terms_and_conditions_content",
                 "target_id"=>1,
+                "order_no"=>0,
                 "file_type"=>"text/plain",
                 "file_name"=>"htmlcontent.txt",
                 "file_ext"=>"txt",
