@@ -28,6 +28,6 @@
   <script>
     ActivateMenu(['menu-company-details']);
   </script> 
-  <script src="/iprotek/js/manage/company-details.js"> </script>
+  <script src="/iprotek/js/manage/company-details.js?v=1.0"> </script>
 @endsection
 
