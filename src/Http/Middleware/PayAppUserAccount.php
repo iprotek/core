@@ -23,7 +23,7 @@ class PayAppUserAccount
      public function handle($request, Closure $next)
      {
         \iProtek\Core\Helpers\PayHttp::client();
-         if (!Auth::guard()->check()) {
+         if (!Auth::guard('admin')->check()) {
              return redirect('/login');//->route('login');
          }
          $user = auth()->user();
@@ -40,7 +40,6 @@ class PayAppUserAccount
 
         $has_other_group_access = false;
         $group_id = PayGroup::getGroupId();
-        //Log::error("1-".$group_id);
         if(!$group_id){
             PayGroup::setGroupId( $pay_account->default_proxy_group_id);
             $group_id = $pay_account->default_proxy_group_id;
@@ -60,7 +59,6 @@ class PayAppUserAccount
                 $pay_account->default_proxy_group_id = $group_id; 
                 $pay_account->save();
                 PayGroup::setGroupId( $group_id);
-                //Log::error("2-".$group_id);
             }
         }
 
@@ -82,7 +80,6 @@ class PayAppUserAccount
             else{
                 $auth_info = PayGroup::GroupAuth($pay_account->access_token, $group_id);
                 if(!$auth_info){
-                    //Log::error("3-".$group_id);
                     return redirect()->route('login');
                 }
             }
@@ -92,7 +89,6 @@ class PayAppUserAccount
             'user'=>$auth_info,
             "is_own_group"=>$is_own_group
         ]);
-
 
  
          return $next($request);

@@ -206,7 +206,7 @@ class UserAdminPayAccountController extends _CommonController
         //Log::error($result);
         //die();
 
-        $refresh_token = $result['refresh_token'];
+        $refresh_token = isset($result['refresh_token']) ? $result['refresh_token'] : "";
         $access_token = $result['access_token'];
 
         //GET INFO

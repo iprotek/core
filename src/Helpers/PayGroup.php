@@ -11,7 +11,6 @@ class PayGroup
     public static function GroupAuth( $access_token, $group_id ){
         //$user_admin = auth()->user();
 
-        
         $client = PayHttp::auth($access_token);
         $response = $client->get('app-user-account/group/'.$group_id);
         
