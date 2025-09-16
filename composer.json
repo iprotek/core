@@ -8,6 +8,9 @@
             "email": "admin@iprotek.net"
         }
     ],
+    "conflict": {
+        "iprotek/pay": "*"
+    },
     "autoload": {
         "psr-4": {
             "iProtek\\Core\\": "src/"
