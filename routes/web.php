@@ -77,13 +77,20 @@ Route::middleware('web')->group(function(){
   });
 
   Route::get('/logout', function(Request $request){
-    auth('admin')->logout();
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
     return redirect('/');
   })->name('logout');
     
   Route::post('/logout',function(Request $request){
-    auth('admin')->logout();
-    return redirect('/');
+
+      Auth::logout();
+      $request->session()->invalidate();
+      $request->session()->regenerateToken();
+
+      return redirect('/');
+
   })->name('post-logout');
 
   /** STORED PROCEDURE DATA */
