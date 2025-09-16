@@ -76,6 +76,16 @@ Route::middleware('web')->group(function(){
 
   });
 
+  Route::get('/logout', function(Request $request){
+    auth('admin')->logout();
+    return redirect('/');
+  })->name('logout');
+    
+  Route::post('/logout',function(Request $request){
+    auth('admin')->logout();
+    return redirect('/');
+  })->name('post-logout');
+
   /** STORED PROCEDURE DATA */
   Route::prefix('v2/Data')->name('v2.Data')->group(function(){
 
