@@ -192,19 +192,20 @@
                 return false;
             },
             rotateMarker:function(angle) {
-                this.myLocationStatus.myMarker.setIcon({
-                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
-                    scale: 5,
-                    fillColor: "#4285F4",
-                    fillOpacity: 1,
-                    strokeWeight: 2,
-                    strokeColor: "#fff",
-                    rotation: angle, // 🔑 apply heading/compass angle
-                });
+                if(this.myLocationStatus.myMarker){
+                    this.myLocationStatus.myMarker.setIcon({
+                        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                        scale: 5,
+                        fillColor: "red",
+                        fillOpacity: 1,
+                        strokeWeight: 2,
+                        strokeColor: "#4285F4",
+                        rotation: angle, // 🔑 apply heading/compass angle
+                    });
+                }
             },
 
             markMyLocation:function(){
-                console.log("Set my location");
                 var vm = this;
                 if(!vm.myLocationStatus.myMarker){
                     navigator.geolocation.watchPosition(
@@ -222,10 +223,10 @@
                                 icon: {
                                         path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, // arrow shape
                                         scale: 5,
-                                        fillColor: "#4285F4",
+                                        fillColor: "red",
                                         fillOpacity: 1,
                                         strokeWeight: 2,
-                                        strokeColor: "#fff",
+                                        strokeColor: "#4285F4",
                                         rotation: 0, // will update
                                     },
                                 });
