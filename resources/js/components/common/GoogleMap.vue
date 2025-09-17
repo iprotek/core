@@ -47,6 +47,19 @@
                     TOGGLE ONCE INFOWINDOW
                 </span>
             </button>
+            <span v-if="show_my_location" class="ml-2">
+                <code v-if="myLocationStatus.error_message">
+                    {{myLocationStatus.error_message}} / A Geolocation request can only be fulfilled in a secure context.
+                </code>
+                <span v-else-if="hasNavigationGeolocation()">
+                    <button @click="myLocationBtnClicked" class="btn btn-outline-primary btn-sm">
+                        <span class="fa fa-circle"></span> SHOW MY LOCATION
+                    </button>
+                </span>
+                <code v-else>
+                    -- MY LOCATION IS NOT AVAILABLE --
+                </code>
+            </span>
         </div>
     </div>
 </template>
@@ -73,7 +86,8 @@
             "select_target",
             "action_saving_paths",
 
-            "info_window_once" //Open info and closes the previously opened.
+            "info_window_once", //Open info and closes the previously opened.
+            "show_my_location"
         ],
         $emits:[
             "selected_location", 
@@ -161,9 +175,102 @@
                 },
                 //contextMenuOverlay:null,
 
+                myLocationStatus:{
+                    clicked:false,
+                    error_message:'',
+                    myMarker:null                
+                }
+
             }
         },
         methods: {
+
+            hasNavigationGeolocation:function(){
+                if( navigator && navigator.geolocation){
+                    return true
+                }
+                return false;
+            },
+            rotateMarker:function(angle) {
+                this.myLocationStatus.myMarker.setIcon({
+                    path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                    scale: 5,
+                    fillColor: "#4285F4",
+                    fillOpacity: 1,
+                    strokeWeight: 2,
+                    strokeColor: "#fff",
+                    rotation: angle, // 🔑 apply heading/compass angle
+                });
+            },
+
+            markMyLocation:function(){
+                console.log("Set my location");
+                var vm = this;
+                if(!vm.myLocationStatus.myMarker){
+                    navigator.geolocation.watchPosition(
+                        function (position) {
+                            const pos = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude,
+                            };
+                            if (!vm.myLocationStatus.myMarker) {
+                                // First time create marker
+                                vm.myLocationStatus.myMarker = new google.maps.Marker({
+                                position: pos,
+                                map: vm.map,
+                                title: "You are here!",
+                                icon: {
+                                        path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW, // arrow shape
+                                        scale: 5,
+                                        fillColor: "#4285F4",
+                                        fillOpacity: 1,
+                                        strokeWeight: 2,
+                                        strokeColor: "#fff",
+                                        rotation: 0, // will update
+                                    },
+                                });
+                            } else {
+                                // Move marker as you move
+                                vm.myLocationStatus.myMarker.setPosition(pos);
+                            }        
+                            if (position.coords && position.coords.heading !== null) {
+                                vm.rotateMarker(position.coords.heading);
+                            }
+                        // Center the map on your location
+                        //map.setCenter(pos);
+                        },
+                        function (error) {
+                            vm.myLocationStatus.error_message = error.message;
+                            //console.error(error);
+                            //alert("Unable to retrieve your location.");
+                        },
+                        { enableHighAccuracy: true }
+                    );
+                }
+            },
+
+            myLocationBtnClicked:function(){
+                var vm = this;
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        var pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                        };
+                        vm.recenterMap(pos.lat, pos.lng, 20, true);
+                        if(!vm.myLocationStatus.clicked){
+                            //WATCHING LOCATION
+                            vm.markMyLocation();
+                        }
+                        vm.myLocationStatus.clicked = true;
+                    }, 
+                    function (res) {
+                        vm.myLocationStatus.error_message = res.message;
+                        //console.log("Geolocation service failed.", res);
+                    }
+                );
+
+            },
 
             setMarkerDrop:function(isDrop=true){
                 var vm = this;
