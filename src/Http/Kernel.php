@@ -39,21 +39,21 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             //\Illuminate\Auth\Middleware\EnsureEmailIsVerified::class
-            \iProtek\Core\Http\Middleware\TrackSessionChanges::class,
+            //TODO:: FIX THIS \iProtek\Core\Http\Middleware\TrackSessionChanges::class,
         ],
         "customer"=>[ 
             \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-            \iProtek\Core\Http\Middleware\TrackSessionChanges::class,
+            //TODO:: FIX THIS \iProtek\Core\Http\Middleware\TrackSessionChanges::class,
         ],
         'api' => [            
             \iProtek\Core\Http\Middleware\EncryptCookies::class,
             \iProtek\Core\Http\Middleware\TrackSessionChanges::class,
             'throttle:api',
-            \Illuminate\Session\Middleware\StartSession::class,
+            //TODO:: FIX THIS \Illuminate\Session\Middleware\StartSession::class,
         ],
         "web-visits"=>[
             \iProtek\Core\Http\Middleware\TrackVisitor::class,
-            \iProtek\Core\Http\Middleware\TrackSessionChanges::class
+            //TODO:: FIX THIS \iProtek\Core\Http\Middleware\TrackSessionChanges::class
         ]   
     ];
 
