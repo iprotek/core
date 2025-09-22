@@ -1343,9 +1343,9 @@
 
             },
 
-            defaultSvgIcon:function(icon_class, bgColor="white", stroke="silver", font_size="18px", width=40, height=50){
+            defaultSvgIcon:function(icon_class, bgColor="white", stroke="silver", font_size="18px", width=40, height=50, custom_top=null){
                 if(icon_class){
-                    return `
+                    return custom_top+`
                         <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 40 50">
                             <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
                                 <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,0,0,0.3)" />
