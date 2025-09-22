@@ -26,10 +26,10 @@ Route::middleware('web')->group(function(){
   Route::get('/terms-and-conditions', [iProtek\Core\Http\Controllers\HomeController::class, 'terms_and_conditions'])->name('terms-and-conditions');
   Route::get('/privacy-policy', [iProtek\Core\Http\Controllers\HomeController::class, 'privacy_policy'])->name('privacy-policy');
 
-  
-  Route::middleware('throttle:10,5')->get('/login', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'setup' ])->name('login');
-  Route::middleware('throttle:10,5')->post('/login', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'login_pay_account' ])->name('pay-login');
-  
+  if(config('iprotek.menu') == 'admin'){
+    Route::middleware('throttle:10,5')->get('/login', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'setup' ])->name('login');
+    Route::middleware('throttle:10,5')->post('/login', [ iProtek\Core\Http\Controllers\Manage\UserAdminPayAccountController::class, 'login_pay_account' ])->name('pay-login');
+  }
 
   /** PAY ACCOUNT MANAGEMENT */
   Route::get('/logout', [ iProtek\Core\Http\Controllers\Auth\LoginController::class, 'logout' ])->name('.get-logout');
