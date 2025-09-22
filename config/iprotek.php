@@ -21,5 +21,6 @@ return [
     'is_demo'=>env('PAY_IPROTEK_IS_DEMO', 0),
     'timezone'=>env('TIMEZONE', 'UTC'),
     'sidebar_color'=>env('PAY_DEFAULT_THEME_SIDEBAR_COLOR', 'dark-primary'),
-    'navbar_color'=>env('PAY_DEFAULT_THEME_NAVBAR_COLOR', 'light navbar-light')
+    'navbar_color'=>env('PAY_DEFAULT_THEME_NAVBAR_COLOR', 'light navbar-light'),
+    'menu'=>env('PAY_MENU', 'admin')
 ];
