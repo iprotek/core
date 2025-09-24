@@ -258,9 +258,9 @@ class PayHttp
     }
 
     //ALL ACCOUNTS IN CLIENT
-    public static function app_accounts($search, $page=1, $items_per_page=10){
+    public static function app_accounts($search, $page=1, $items_per_page=10, $exact=null){
         
-        $queryString = http_build_query(["search"=>$search, "page"=>$page, "items_per_page"=>$items_per_page]);
+        $queryString = http_build_query(["search"=>$search, "page"=>$page, "items_per_page"=>$items_per_page, "exact"=>$exact?:""]);
         
         $user = auth()->user();
         $user_admin_id = $user->id;
