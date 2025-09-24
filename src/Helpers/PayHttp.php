@@ -452,7 +452,7 @@ class PayHttp
 
     public static function get_client_users(){
         
-        $client = static::http2();
+        $client = static::client();
         $response = $client->get('client-users?');
         
         $response_code = $response->getStatusCode();
