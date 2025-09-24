@@ -450,6 +450,25 @@ class PayHttp
 
     }
 
+    public static function get_client_users(){
+        
+        $client = static::http2();
+        $response = $client->get('client-users?');
+        
+        $response_code = $response->getStatusCode();
+        $result = json_decode($response->getBody(), true); 
+        if($response_code != 200 && $response_code != 201){
+
+            //If accept array value it will return null in case of error.
+            //if($is_array_value){
+            //    return null;
+            //}
+            return response()->json($result, $response_code);
+        
+        }
+        return $result;
+    }
+
 
 
 }
