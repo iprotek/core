@@ -83,7 +83,7 @@
                     jSON.ajax = {
                         type: 'GET',
                         url: vm.url,
-                        delay: 100,
+                        delay: 400,
                         data: function (params) {
                             var query = {
                                 filters: vm.filters,
@@ -106,6 +106,18 @@
                             }
                             // Query parameters will be ?search=[term]&type=public
                             return query;
+                        },
+                        transport: function (params, success, failure) {
+                            // Cancel previous request if still running
+                            if (this._request) {
+                                this._request.abort();
+                            }
+
+                            this._request = $.ajax(params)
+                                .done(success)
+                                .fail(failure);
+
+                            return this._request;
                         },
                         dataType: 'json',
                         processResults: function (result) { 
