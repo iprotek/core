@@ -88,7 +88,7 @@ class FileUploadController extends _CommonController
 
         //CHECK FOR LOGO
         if($id->target_name == 'business_logos' && $id->is_default == 1){
-            AppVarHelper::set("business_logo_url", $id->public_link);
+            AppVarHelper::set("business_logo_url", $id->origin_full_url);
             AppVarHelper::set("business_logo_type", $id->file_type);
         } 
 
@@ -150,7 +150,7 @@ class FileUploadController extends _CommonController
         }
         
         if($fileUpload->target_name == 'business_logos' && $fileUpload->is_default == 1){
-            AppVarHelper::set("business_logo_url", $fileUpload->public_link);
+            AppVarHelper::set("business_logo_url", $fileUpload->origin_full_url);
             AppVarHelper::set("business_logo_type", $fileUpload->file_type);
         }
 
