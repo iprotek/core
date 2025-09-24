@@ -24,7 +24,8 @@ class FileUpload extends _CommonModel
         "group_id",
         "pay_created_by",
         "pay_updated_by",
-        "pay_deleted_by"
+        "pay_deleted_by",
+        "origin_url"
     ];
     
     public $casts = [
