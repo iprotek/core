@@ -36,7 +36,8 @@ class FileUpload extends _CommonModel
     public $appends = [
         "link",
         "public_link",
-        "full_url"
+        "full_url",
+        "origin_full_url"
     ];
 
     public function getLinkAttribute(){
@@ -63,4 +64,10 @@ class FileUpload extends _CommonModel
         //return "/storage/images/0blank.png";
         //return "/image-preview/".$this->id; 
     }
+
+    public function getOriginFullUrlAttribute(){
+        return $this->origin_url."/storage/images/".$this->target_id."_".$this->id.".".$this->file_ext;
+    }
+
+
 }
