@@ -456,7 +456,7 @@ class PayHttp
 
         $queryString = "";        
         if($email)
-            $queryString = http_build_query(["email"=>$email, "exact"=>"email"]);
+            $queryString = http_build_query(["search"=>$email, "exact"=>"email"]);
         
         $response = $client->get('client-users?'.$queryString);
         
@@ -467,7 +467,7 @@ class PayHttp
         if($response_code != 200 && $response_code != 201){
             return null;
         }
-        
+
         return $result;
     }
 
