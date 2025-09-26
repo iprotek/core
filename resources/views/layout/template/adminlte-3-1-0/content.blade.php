@@ -14,7 +14,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6 @if( config('iprotek.is_demo') ) text-danger @endif">
-            <h1> 
+            <h1 class="content-title-header"> 
               
             @if( config('iprotek.is_demo') )
               DEMO
