@@ -100,7 +100,9 @@ class _CommonController extends BaseController
 
     public function validate(Request $request, $args = array(), $custom=array()){
         
-        $validator = Validator::make($request->all(), 
+        $data = array_merge($request->all(), $request->route()->parameters());
+
+        $validator = Validator::make($data, 
             $args,
             $custom
         );
