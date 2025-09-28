@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace iProtek\Core\Models;
 
 use iProtek\Core\Models\_CommonModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
