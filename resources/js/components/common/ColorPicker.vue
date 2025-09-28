@@ -1,17 +1,19 @@
 <template>
-    <div v-if="is_selection">
-        <select2  v-model="selectItem" @selected="itemSelected" :has_clear="true" :default_theme="select_theme" :placeholder="' '" :select_data="colordata"  :select_template="colorTemplate" ></select2>
-    </div>
-    <div v-else>
-        <ul class="fc-color-picker" :id="'color-chooser-'+_uid">
-            <li><a class="text-white" href="#" @click="colorSelected('')"><i class="fas fa-square" :style="(color == '' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'text-shadow:0px 0px 1px black;')"></i></a></li>
-            <li><a class="text-primary" href="#" @click="colorSelected('primary')"><i class="fas fa-square" :style="(color == 'primary' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
-            <li><a class="text-warning" href="#" @click="colorSelected('warning')"><i class="fas fa-square" :style="(color == 'warning' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
-            <li><a class="text-success" href="#" @click="colorSelected('success')"><i class="fas fa-square" :style="(color == 'success' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
-            <li><a class="text-danger" href="#" @click="colorSelected('danger')"><i class="fas fa-square" :style="(color == 'danger' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
-            <li><a class="text-muted" href="#" @click="colorSelected('muted')"><i class="fas fa-square" :style="(color == 'muted' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
-            <li><a class="text-info" href="#" @click="colorSelected('info')"><i class="fas fa-square" :style="(color == 'info' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
-        </ul>    
+    <div>
+        <div v-if="is_selection">
+            <select2  v-model="selectItem" @selected="itemSelected" :has_clear="true" :default_theme="select_theme" :placeholder="' '" :select_data="colordata"  :select_template="colorTemplate" ></select2>
+        </div>
+        <div v-else>
+            <ul class="fc-color-picker" :id="'color-chooser-'+_uid">
+                <li><a class="text-white" href="#" @click="colorSelected('')"><i class="fas fa-square" :style="(color == '' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'text-shadow:0px 0px 1px black;')"></i></a></li>
+                <li><a class="text-primary" href="#" @click="colorSelected('primary')"><i class="fas fa-square" :style="(color == 'primary' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
+                <li><a class="text-warning" href="#" @click="colorSelected('warning')"><i class="fas fa-square" :style="(color == 'warning' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
+                <li><a class="text-success" href="#" @click="colorSelected('success')"><i class="fas fa-square" :style="(color == 'success' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
+                <li><a class="text-danger" href="#" @click="colorSelected('danger')"><i class="fas fa-square" :style="(color == 'danger' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
+                <li><a class="text-muted" href="#" @click="colorSelected('muted')"><i class="fas fa-square" :style="(color == 'muted' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
+                <li><a class="text-info" href="#" @click="colorSelected('info')"><i class="fas fa-square" :style="(color == 'info' ? 'border: 2px solid black; border-radius:5px; padding:1px;' :'')"></i></a></li>
+            </ul>    
+        </div>
     </div>
 </template>
 <script>
