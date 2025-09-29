@@ -37,6 +37,8 @@ Route::prefix('api')->middleware(['api'])->group(function(){
         //Settings
         include(__DIR__.'/api/settings.php');
         
+        //Common
+        include(__DIR__.'/api/common.php');
 
     });
 

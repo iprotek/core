@@ -31,7 +31,7 @@
 
 
     export default {
-        props:[ "value", "selection_list"],
+        props:[ "group_id", "value", "selection_list", "target_name", "target_id", "is_set"],
         $emits:['selected'],
         components: { 
         },
@@ -83,6 +83,9 @@
 
                     vm.$emit('input', vm.selectedValue);
                     vm.$emit('selected', vm.selectedValue);
+                    if(vm.is_set === true){
+                        vm.setColorTag();
+                    }
 
                     opts.style.display = 'none';
 
@@ -91,6 +94,22 @@
                 // close when clicking outside
                 document.addEventListener('click', function(e){
                     if(!dd.contains(e.target)) opts.style.display = 'none';
+                });
+            },
+            setColorTag:function(){
+                if(this.is_set !== true) return;
+
+                //
+                let request = {
+                    target_id:this.target_id,
+                    target_name: this.target_name,
+                    value: JSON.stringify(this.selectedValue)
+                };
+
+                WebRequest2('POST', '/api/group/'+this.group_id+'/common/tagging/set', JSON.stringify(request)).then(resp=>{
+                    resp.json().then(data=>{
+                        console.log(data);
+                    });
                 });
             }
 
