@@ -15,7 +15,9 @@ class Tagging extends _CommonModel
         "value"
     ];
 
+    /*Has no effect better inline select
     public function description(){
         return $this->hasOne(TaggingDescription::class, 'target_name', 'target_name');
     }
+        */
 }
