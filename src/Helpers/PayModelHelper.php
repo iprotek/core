@@ -42,12 +42,12 @@ class PayModelHelper
     }
 
     public static function update($class, Request $request, $fields, $is_own=false){
-        $user = $request->get('user');
-        if(Schema::hasColumn( $class->getTable(), 'group_id' )){
-            $fields['group_id'] = static::get_group_id($user, $is_own);
-        }
         $class->fill($fields);
         if($class->isDirty()){
+            $user = $request->get('user');
+            if(Schema::hasColumn( $class->getTable(), 'group_id' )){
+                $fields['group_id'] = static::get_group_id($user, $is_own);
+            }
             $fields['pay_updated_by'] = static::get_user_id($user);
             return $class->update($fields);
         }
