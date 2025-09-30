@@ -1,21 +1,16 @@
 <?php
 
-namespace iProtek\Core\Models;
+namespace App\Models;
 
 use iProtek\Core\Models\_CommonModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Tagging extends _CommonModel
+class TaggingDescription extends Model
 {
     //
-
     public $fillable = [
         "target_id",
         "target_name",
         "value"
     ];
-
-    public function description(){
-        return $this->hasOne(TaggingDescription::class, 'target_name', 'target_name');
-    }
 }
