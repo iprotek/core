@@ -26,8 +26,8 @@
 </template>
 <script>
     /**
-     * value: {'name':'', color:''}
-     * selection_list:[{'name':'', color:''},...]
+     * value: {'name':'', color:'', description:''}
+     * selection_list:[{'name':'', color:'', description:''},...]
      */
 
 
