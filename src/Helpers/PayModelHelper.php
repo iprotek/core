@@ -49,7 +49,7 @@ class PayModelHelper
         $class->fill($fields);
         if($class->isDirty()){
             $fields['pay_updated_by'] = static::get_user_id($user);
-            $class->update($fields);
+            return $class->update($fields);
         }
         return $class;
     }
