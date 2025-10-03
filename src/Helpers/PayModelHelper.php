@@ -51,7 +51,7 @@ class PayModelHelper
             $fields['pay_updated_by'] = static::get_user_id($user);
             return $class->update($fields);
         }
-        return $class;
+        return true;
     }
     public static function update_own($class, Request $request, $fields ){
         return static::update($class, $request, $fields, true);
