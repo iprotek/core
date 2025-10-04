@@ -152,6 +152,9 @@ class iProtekServiceProvider extends ServiceProvider
             // $schedule->call(function () {
             //     Log::info('Running scheduled task from package...');
             // })->everyFiveMinutes();
+
+            return;
+            /** USE THIS ON YOUR KERNELL */
             $schedule->command('file-import-batch:process')
             ->everyMinute()
             ->onOneServer()
