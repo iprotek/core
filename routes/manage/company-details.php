@@ -27,10 +27,10 @@
         Route::get('/get-about-us', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'get_contact_us'])->name('.get-about-us');
 
 
-        Route::post('/update-theme', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'update_theme'])
-          ->middleware(['can:superadmin'])->name('.update-theme');
+        Route::post('/update-theme', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'update_theme'])->name('.update-theme');
+        //->middleware(['can:superadmin'])
         Route::get('/get-theme', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'get_theme'])->name('.get-theme');
-        Route::post('/reset-theme', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'reset_theme'])
-          ->middleware(['can:superadmin'])->name('.reset-theme');
+        Route::post('/reset-theme', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'reset_theme'])->name('.reset-theme');
+        //->middleware(['can:superadmin'])
 
       });  
