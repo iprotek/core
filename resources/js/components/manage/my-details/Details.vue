@@ -42,7 +42,7 @@
     import ModalThemeVue from '../company-details/ModalTheme.vue';
     import ModalChangePasswordVue from './ModalChangePassword.vue';
     export default {
-        props:[ "theme_info", "group_id",  "user_admin_id" ],
+        props:[ "theme_info", "group_id",  "user_admin_id", "branch_id" ],
         components: { 
             "file-uploads":FileUploadsVue,
             "user-input2":UserInput2Vue,
