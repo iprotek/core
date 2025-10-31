@@ -19,6 +19,10 @@ use iProtek\Core\Helpers\AppVarHelper;
       <meta name="author" content="Jose de Eagle">
     @endif
 
+    
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#317EFB">
+
 
     <?php
       //Customise icon
