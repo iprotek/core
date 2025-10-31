@@ -6,6 +6,10 @@
 
     <title>{{ config('app.name', ' ') }} - @yield("site-title")</title>
 
+    
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#317EFB">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="/iprotek/css/icons.css?v=1.2">
