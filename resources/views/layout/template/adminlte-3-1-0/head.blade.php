@@ -6,8 +6,9 @@
 
     <title>{{ config('app.name', ' ') }} - @yield("site-title")</title>
 
-    
-    <link rel="manifest" href="/manifest.json">
+    @if(config('iprotek.allow_manifest') == 1)
+      <link rel="manifest" href="/manifest.json">
+    @endif
     <meta name="theme-color" content="#317EFB">
 
     <!-- Styles -->

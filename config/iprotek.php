@@ -22,5 +22,6 @@ return [
     'timezone'=>env('TIMEZONE', 'UTC'),
     'sidebar_color'=>env('PAY_DEFAULT_THEME_SIDEBAR_COLOR', 'dark-primary'),
     'navbar_color'=>env('PAY_DEFAULT_THEME_NAVBAR_COLOR', 'light navbar-light'),
-    'menu'=>env('PAY_MENU', 'admin')
+    'menu'=>env('PAY_MENU', 'admin'),
+    'allow_manifest'=>env('PAY_ALLOW_MANIFEST', 0)
 ];
