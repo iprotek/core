@@ -32,7 +32,7 @@
                 var d    = date.getDate(),
                     m    = date.getMonth(),
                     y    = date.getFullYear() 
- 
+                console.log('calendar');
                 var calendarEl = document.getElementById(vm.calendarId);
                     
                 var updateEvents = function(_calendar ,newEvents=[]) {
@@ -79,10 +79,10 @@
                 var calendar = new FullCalendar.Calendar(calendarEl, {
                     headerToolbar: {
                         //left  : 'prev,next today',
-                        left: 'prev,next',
+                        left: 'prev,next today',
                         center: 'title',
-                        right: ''
-                        //right : 'dayGridMonth,timeGridWeek,timeGridDay'
+                        //right: ''
+                        right : 'dayGridMonth,timeGridWeek,timeGridDay'
                     },
                     themeSystem: 'bootstrap',
                     //Random default events
