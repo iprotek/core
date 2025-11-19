@@ -25,4 +25,5 @@ return [
     'menu'=>env('PAY_MENU', 'admin'),
     'allow_manifest'=>env('PAY_ALLOW_MANIFEST', 0),
     'billing_system_api_url'=>env('SUBSCRIBER_BILLING_API_URL',''),
+    'show_login'=>env('PAY_SHOW_LOGIN', 'yes')
 ];
