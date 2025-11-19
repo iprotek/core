@@ -204,7 +204,11 @@
                 var vm = this;
                 WebRequest2('GET', this.branch_source_url).then(resp=>{
                     resp.json().then(data=>{
-                        vm.branchList = data;
+                        if(data.data)
+                            vm.branchList = data.data;
+                        else{
+                            vm.branchList = data;
+                        }
                     });
                 });
             },
