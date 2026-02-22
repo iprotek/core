@@ -142,7 +142,7 @@
                             }
                             if(!vm.first_data_loaded){
                                 vm.first_data_loaded = true;
-                                vm.$emit('first_data_load', data_result, data);
+                                vm.$emit('first_data_load', result, data);
                             } 
 
                             return {
