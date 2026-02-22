@@ -57,8 +57,14 @@
                                     id:data.branch.id,
                                     text:data.branch.name
                                 }
-                            } 
-                            vm.$emit('selected', this.item_branch );
+                            }
+                            else{
+                                vm.item_branch = {
+                                    id:0,
+                                    text:''
+                                }
+                            }
+                            vm.$emit('selected', vm.item_branch );
                         });
                     });
                 }, 500);

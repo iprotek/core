@@ -96,7 +96,7 @@ class FileImportBatchController extends _CommonController
         $fileBatch = FileImportBatch::create($data); 
 
         $file->storeAs("imports", $fileBatch->id.".". $request->file_ext);
-        return ["status"=>1, "message"=>"Successfully Imported"];
+        return ["status"=>1, "message"=>"Successfully Imported", "file_import_batch_id"=>$fileBatch->id ];
     }
 
     public function action_retry(Request $request){
