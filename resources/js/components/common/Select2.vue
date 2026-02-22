@@ -141,7 +141,6 @@
                                 vm.custom_data(item_list);
                             }
 
-                            //console.log("GG", first_data_loaded, result, data);
                             if(!vm.first_data_loaded){
                                 vm.first_data_loaded = true;
                                 vm.$emit('first_data_load', result, data);
