@@ -4,7 +4,7 @@
         <div class="input-group w-100" >
             <label class="input-group-text p-0" >
                 <div style="min-width:300px;">
-                    <select2 :modal_selector="modal_selector" v-model="item_branch" :has_clear="true" @selected="brandSelected" :placeholder="' -- SELECT ALL BRANCH -- '"  :url="'/api/group/'+group_id+'/branch/list'" ></select2>
+                    <select2 :modal_selector="modal_selector" v-model="item_branch" :has_clear="true" @selected="brandSelected" @first_data_load="first_data_load" :placeholder="' -- SELECT ALL BRANCH -- '"  :url="'/api/group/'+group_id+'/branch/list'" ></select2>
                 </div>
             </label>
             <button v-if="item_branch.id <= 0 && item_branch.id != default_branch.id" class="btn btn-outline-primary btn-sm" @click="setDefaultBranch">
@@ -38,6 +38,9 @@
             }
         },
         methods: { 
+            first_data_load:function(result,data){
+                console.log(result, data);
+            },
             brandSelected:function(branch){
                 this.$emit('selected', this.item_branch);
             },
@@ -56,12 +59,6 @@
                                 vm.default_branch = {
                                     id:data.branch.id,
                                     text:data.branch.name
-                                }
-                            }
-                            else{
-                                vm.item_branch = {
-                                    id:0,
-                                    text:''
                                 }
                             }
                             vm.$emit('selected', vm.item_branch );

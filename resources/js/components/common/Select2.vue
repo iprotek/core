@@ -14,7 +14,8 @@
         props:[ "value" ,"allow_multiple", "minimum_input_length" ,"is_remain_focus_on_enter", "is_clean_after_select", "url", "custom_data" , "default_theme", "append_data", "placeholder", "query_filters" ,"filters", "modal_selector", "allowtag", "has_clear", "disabled", "search_param", "display_items_no", "select_data", "select_template" ],
         emits: {
             data_result:(data)=>{},
-            selected:(item, tags)=>{}
+            selected:(item, tags)=>{},
+            first_data_load:(data_result, data)=>{}
         },
         components: { 
         },
@@ -44,7 +45,8 @@
                 itemList:[],
                 selectedItem:null, 
                 items_per_page : 10,
-                select_tags:[]
+                select_tags:[],
+                first_data_loaded:false
             }
         },
         methods: { 
@@ -138,6 +140,10 @@
                                 var item_list = vm.itemList.filter((item)=>item.id>0);
                                 vm.custom_data(item_list);
                             }
+                            if(!vm.first_data_loaded){
+                                vm.first_data_loaded = true;
+                                vm.$emit('first_data_load', data_result, data);
+                            } 
 
                             return {
                                 results: vm.itemList
