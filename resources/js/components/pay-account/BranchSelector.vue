@@ -39,7 +39,7 @@
         },
         methods: { 
             first_data_load:function(result,data){
-                console.log(result, data);
+                console.log("First Load",result, data);
             },
             brandSelected:function(branch){
                 this.$emit('selected', this.item_branch);
