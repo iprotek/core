@@ -40,7 +40,7 @@ class FileImportHelper
                 
                 $file_batch->status_id = 2;
                 
-                $file_batch->status_info = "Error: The file is invalid. Please try another.";
+                $file_batch->status_info = "Error: The file is invalid. Please try another.".$ex->getMessage();
 
                 $file_batch->save();
 
