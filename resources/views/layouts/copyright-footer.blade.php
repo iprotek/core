@@ -9,7 +9,7 @@
         </div> 
         <div  class="col-sm-3 text-center">
             <div class="float-right d-none d-sm-block">
-                <b>Version</b> 1.0.0.0
+                <b>Version</b> {{ config('assets.version') }}
             </div>
         </div>
     </div>
