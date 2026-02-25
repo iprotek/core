@@ -2,7 +2,7 @@
 <footer class="main-footer m-0 sticky-bottom py-1 bg-white">
     <div  class="row mx-4">
         <div class="col-sm-5">
-            <strong>Copyright©{{date('Y')}} <a href="/">{{ config('app.name') }}</a>.</strong> All rights reserved.
+            <strong>Copyright©{{date('Y')}} <a href="#">{{ config('app.name') }}</a>.</strong> All rights reserved.
         </div>
         <div  class="col-sm-4 text-nowrap text-center">
             <a href="/terms-and-conditions" target="_blank">Terms and Conditions</a> | <a href="/privacy-policy" target="_blank">Privacy Policy</a>
