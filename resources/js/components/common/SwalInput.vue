@@ -4,7 +4,7 @@
 <script>
 export default {
      
-        props:[ ],
+        props:[ "custom_input_field_name"],
         components: {  
         },
         data: function () {
@@ -21,35 +21,40 @@ export default {
                             showLoaderOnConfirm: true,
                             input:"text",
                             preConfirm: (inputText) => {
-                            data.name = inputText;
-                            return WebRequest2(method, url, data, _contentType)
-                                .then(response => {
-                                    if (response.ok) 
-                                        return response.json()
-                                    //Initiator to stop from closing
-                                    Swal.showValidationMessage( `ERROR` )
-                                    return response.json().then(a=>{
-                                        //console.log(a);
-                                        //throw new Error(a.message);
-                                        if(__error_callback){
-                                            __error_callback(a);
-                                        }
-                                        Swal.showValidationMessage(
-                                        `Request failed: ${this.extractValuesFromJson(a)}`
-                                        )
-                                        return a;
-                                    })
-                                    .catch(error => { 
-                                        console.log(error);
-                                        Swal.showValidationMessage(
-                                        `Request failed: ${error}`
-                                        )
-                                        if(__error_callback){
-                                            __error_callback(error);
-                                        }
-                                        return error;
-                                    }); 
-                                });
+
+                                if(this.custom_input_field_name)
+                                    data[custom_input_field_name] = inputText;
+                                else
+                                    data.name = inputText;
+                                
+                                return WebRequest2(method, url, data, _contentType)
+                                    .then(response => {
+                                        if (response.ok) 
+                                            return response.json()
+                                        //Initiator to stop from closing
+                                        Swal.showValidationMessage( `ERROR` )
+                                        return response.json().then(a=>{
+                                            //console.log(a);
+                                            //throw new Error(a.message);
+                                            if(__error_callback){
+                                                __error_callback(a);
+                                            }
+                                            Swal.showValidationMessage(
+                                            `Request failed: ${this.extractValuesFromJson(a)}`
+                                            )
+                                            return a;
+                                        })
+                                        .catch(error => { 
+                                            console.log(error);
+                                            Swal.showValidationMessage(
+                                            `Request failed: ${error}`
+                                            )
+                                            if(__error_callback){
+                                                __error_callback(error);
+                                            }
+                                            return error;
+                                        }); 
+                                    });
                             },
                             allowOutsideClick: () => !Swal.isLoading()
                         }).then((result) => {
