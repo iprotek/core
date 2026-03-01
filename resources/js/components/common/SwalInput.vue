@@ -13,6 +13,7 @@ export default {
         },
         methods: { 
             alert(icon, title, buttonTitle,method, url, data, __error_callback=null,_contentType='application/json'){
+                var vm = this;
                 return  Swal.fire({
                             title: title, 
                             icon: icon,
@@ -22,8 +23,8 @@ export default {
                             input:"text",
                             preConfirm: (inputText) => {
 
-                                if(this.custom_input_field_name)
-                                    data[custom_input_field_name] = inputText;
+                                if(vm.custom_input_field_name)
+                                    data[vm.custom_input_field_name] = inputText;
                                 else
                                     data.name = inputText;
                                 
