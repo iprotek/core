@@ -1,12 +1,13 @@
 <template> 
     <div>
-        <a class="nav-link" data-toggle="dropdown" href="#">
+        <a class="nav-link" data-toggle="dropdown" href="#" @click="click_notification">
             <i class="far fa-bell text-info"></i>
             <span class="badge badge-warning navbar-badge" v-if="summary.isLoadSummary == true || summary.total > 0" v-text=" (summary.isLoadSummary == true ? '?': summary.total)"> </span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <!--
             <span class="dropdown-item dropdown-header" v-text=" (summary.isLoadSummary == true ? ' Loading Notification.. ': (summary.total +' Notifications'))"> </span>
-            
+            -->
             <div v-for="(summary, summaryIndex) in summary.summaryList" v-bind:key="'summary-item-'+summaryIndex">
                 <div v-if="summary.type == 'message'">
                     <div class="dropdown-divider"></div>
@@ -29,6 +30,13 @@
                         <span class="float-right text-muted text-sm"  v-text="summary.diff"></span>
                     </a>
                 </div>
+                <div v-else-if="summary.type == 'custom'">
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-file mr-2"></i> <span class="text-wrap" v-html="summary.details">  </span>
+                        <span class="float-right text-muted text-sm"  v-text="summary.diff"></span>
+                    </a>
+                </div>
                 <div  v-else-if="summary.type == 'git'">
                     <div class="dropdown-divider"></div>
                     <a href="/manage/sys-notification" class="dropdown-item">
@@ -36,6 +44,7 @@
                         <span class="float-right text-muted text-sm"  v-text="summary.diff"></span>
                     </a>
                 </div>
+                <!--
                 <div v-else>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
@@ -43,6 +52,7 @@
                         <span class="float-right text-muted text-sm"  v-text="summary.diff"></span>
                     </a>
                 </div>
+                -->
             </div>
 
 
@@ -83,6 +93,11 @@
             }
         },
         methods: { 
+
+            click_notification:function(){
+                //RESET THE NOTIFICATION ENGAGEMENT TO 0
+                
+            },
             clickUpdate:function(evt){
                 //Actions Here
                 if(this.updates.isCheck == false){
