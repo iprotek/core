@@ -44,10 +44,10 @@
 <script src="/iprotek/design/templates/adminlte3.1.0/plugins/moment/moment.min.js"></script> 
 
  
-<script src="/iprotek/js/manage/notification.js"></script> 
-<script src="/iprotek/js/manage/message.js"></script> 
-<script src="/iprotek/js/manage/branches.js"></script> 
-<script src="/iprotek/js/manage/app-notifications.js"></script> 
+<script src="/iprotek/js/manage/notification.js?v={{ config('assets.version') }}"></script> 
+<script src="/iprotek/js/manage/message.js?v={{ config('assets.version') }}"></script> 
+<script src="/iprotek/js/manage/branches.js?v={{ config('assets.version') }}"></script> 
+<script src="/iprotek/js/manage/app-notifications.js?v={{ config('assets.version') }}"></script> 
 
 <script>
   
