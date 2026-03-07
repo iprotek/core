@@ -101,10 +101,11 @@
             click_notification:function(){
                 //RESET THE NOTIFICATION ENGAGEMENT TO 0
                 var vm = this;
-                WebRequest2("GET", "/manage/sys-notification/clear" ).then(resp=>{
-                    vm.summary.total = 0;
-                });
-                
+                if(vm.summary.total > 0){
+                    WebRequest2("GET", "/manage/sys-notification/clear" ).then(resp=>{
+                        vm.summary.total = 0;
+                    });
+                }
             },
             clickUpdate:function(evt){
                 //Actions Here
