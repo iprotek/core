@@ -5,9 +5,13 @@
             <span class="badge badge-warning navbar-badge" v-if="summary.isLoadSummary == true || summary.total > 0" v-text=" (summary.isLoadSummary == true ? '?': summary.total)"> </span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <!--
-            <span class="dropdown-item dropdown-header" v-text=" (summary.isLoadSummary == true ? ' Loading Notification.. ': (summary.total +' Notifications'))"> </span>
-            -->
+            
+            <span class="dropdown-item dropdown-header" v-if="summary.isLoadSummary == false && summary.summaryList && summary.summaryList.length <= 0">
+               <code> -- EMPTY -- </code>
+            </span>
+            <span v-else class="dropdown-item dropdown-header" v-text=" (summary.isLoadSummary == true ? ' Loading Notification.. ': (' -- Notifications --'))">
+            </span>
+            
             <div v-for="(summary, summaryIndex) in summary.summaryList" v-bind:key="'summary-item-'+summaryIndex">
                 <div v-if="summary.type == 'message'">
                     <div class="dropdown-divider"></div>
@@ -73,7 +77,7 @@
 
 <script>
     export default {
-        props:[  ],
+        props:[ "group_id" ],
         components: { 
         },
         watch:{
@@ -96,6 +100,10 @@
 
             click_notification:function(){
                 //RESET THE NOTIFICATION ENGAGEMENT TO 0
+                var vm = this;
+                WebRequest2("GET", "/manage/sys-notification/clear" ).then(resp=>{
+                    vm.summary.total = 0;
+                });
                 
             },
             clickUpdate:function(evt){
