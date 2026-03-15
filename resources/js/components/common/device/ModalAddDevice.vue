@@ -18,6 +18,7 @@
                                 <option value="mikrotik">Mikrotik API</option>
                                 <option value="windows">Windows</option>
                                 <option value="ssh">SSH</option>
+                                <option value="telnet">Telnet</option>
                             </select>
                         </div>
                         <user-input2 v-model="device_info.host" :placeholder="'Host Name/IP'" :input_style="'height:35px;'" />
