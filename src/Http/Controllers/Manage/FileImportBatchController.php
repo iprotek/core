@@ -21,6 +21,9 @@ class FileImportBatchController extends _CommonController
             $search = '%'.$request->search.'%';
             $fileImports->whereRaw(" concat('#',id,'#', file_name, target_field) like ? ", [$search]);
         }
+        if($request->target_field){
+            $fileImports('target_field', $request->target_field);
+        }
 
         $fileImports->orderByRaw(' FIELD(status_id, 0, 3 )  DESC');
 

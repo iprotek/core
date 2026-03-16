@@ -270,7 +270,8 @@
                     search: vm.search,
                     page: vm.current_page,
                     items_per_page: 10,
-                    status_id: vm.search_status_id
+                    status_id: vm.search_status_id,
+                    target_field: vm.target_field
                 })).then(resp=>{
                     vm.isLoading = false;
                     resp.json().then(data=>{
