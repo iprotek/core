@@ -52,7 +52,7 @@
                             <small> UploadedBy </small>
                         </th>
                         <th>
-                            <small> InterferBy </small>
+                            <small> InterferedBy </small>
                         </th>
                         <th><small> Settings </small></th>
                         <th class="text-nowrap">
