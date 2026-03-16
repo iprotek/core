@@ -19,6 +19,7 @@
                                 <option value="windows">Windows</option>
                                 <option value="ssh">SSH</option>
                                 <option value="telnet">Telnet</option>
+                                <option value="tenda-gpon">Tenda Gpon</option>
                             </select>
                         </div>
                         <user-input2 v-model="device_info.host" :placeholder="'Host Name/IP'" :input_style="'height:35px;'" />
