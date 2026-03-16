@@ -22,7 +22,7 @@ class FileImportBatchController extends _CommonController
             $fileImports->whereRaw(" concat('#',id,'#', file_name, target_field) like ? ", [$search]);
         }
         if($request->target_field){
-            $fileImports('target_field', $request->target_field);
+            $fileImports->where('target_field', $request->target_field);
         }
 
         $fileImports->orderByRaw(' FIELD(status_id, 0, 3 )  DESC');
