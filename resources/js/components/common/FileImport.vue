@@ -151,9 +151,10 @@
             "file-import":FileImportDataVue
         },
         watch: {
+            /*
             settings:function(val){
                 this.current_settings = JSON.stringify(val);
-            },
+            },*/
             enable_import_btn:function(val){
                 this.current_enable_import_btn = val;
             }
@@ -227,7 +228,7 @@
                 formData.append('file_type', file.type);
                 formData.append('file_ext', file_ext);
                 formData.append('target_field', vm.target_field);
-                formData.append('settings', vm.current_settings );
+                formData.append('settings', vm.settings ? JSON.stringify(vm.settings) : '{}' );
                 formData.append('group_id', vm.group_id );
 
                 var url = "/manage/file-imports/batch/add";
