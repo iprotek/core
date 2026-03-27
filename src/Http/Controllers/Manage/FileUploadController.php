@@ -189,7 +189,8 @@ class FileUploadController extends _CommonController
             "file_ext"      => $req->file_ext,
             "is_default"    => $max_order_no == 1 ? 1 :0,
             "location"      => "",
-            "created_by"    =>0
+            "created_by"    =>0,
+            "origin_url"    => config('app.url')
         ]);
 
         Storage::disk('local')->putFileAs(
