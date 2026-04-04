@@ -9,7 +9,7 @@ Route::prefix('/common')->name('.map')->group(function(){
     //Route::post('/settings',  [ GoogleMapController::class ,'set_map_settings'])->name('.set-map-settings');
     Route::prefix('tagging')->group(function(){
         Route::post('/set',[ TaggingController::class ,'set_tag'])->name('.set-tag');
-        Route::post('/get',[ TaggingController::class ,'get_tag'])->name('.set-tag');
+        Route::post('/get',[ TaggingController::class ,'get_tag'])->name('.get-tag');
     });
 
 });

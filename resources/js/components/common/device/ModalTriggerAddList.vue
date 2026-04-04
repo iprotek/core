@@ -13,7 +13,7 @@
                         <div class="mt-2">
                             <label class="mb-0" > Device ACCES ID </label>
                         </div>
-                        <select2 v-model="selected_device" :query_filters="{only_active:'yes'}"   :placeholder="'-- SELECT DEVICE --'" :url="'/api/group/'+group_id+'/devices/list-selection?only_active=yes'" :has_clear="true"  />
+                        <select2 v-model="selected_device" :query_filters="{only_active:'yes'}"   :placeholder="'-- SELECT DEVICE --'" :url="'/api/group/'+group_id+'/devices/list-selection'" :has_clear="true"  />
                         <div class="mt-1">
                             <switch2 v-model="device_trigger_info.is_active" /> <label class="mb-0"> IS ACTIVE </label>
                         </div>
