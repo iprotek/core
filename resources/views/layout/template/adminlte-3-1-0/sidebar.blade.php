@@ -35,7 +35,7 @@
           </a>
         </div>
         <div class="info">
-          <a href="/manage/my-details" class="d-block"><?=$USERFULLNAME?></a>
+          <a href="/manage/my-details" class="d-block" id="my-details"><?=$USERFULLNAME?></a>
           <small class="text-secondary">
             <i>{{ $USER->branch_user_type_name }}</i>
           </small>
