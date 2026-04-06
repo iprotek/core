@@ -26,7 +26,7 @@
               $EMPLOYEEPHOTO = "/iprotek/design/templates/adminlte3.1.0/dist/img/user2-160x160.jpg";
             }
           ?>
-          <a href="/manage/my-details">
+          <a href="/manage/my-details" id="my-details">
             @if(trim($EMPLOYEEPHOTO))
               <img src="<?=$EMPLOYEEPHOTO?>" class="img-circle elevation-2" alt="User Image">
             @else
