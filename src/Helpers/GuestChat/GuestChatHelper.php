@@ -29,8 +29,6 @@ class GuestChatHelper
             return response()->json(  $data, $response_code);
         }
 
-        Log::error($data);
-
         if( !is_array($data) )
             return ["status"=>0, "message"=>"Not available right now."];
             
