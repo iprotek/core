@@ -29,9 +29,17 @@ class GuestChatHelper
             return response()->json(  $data, $response_code);
         }
 
+        Log::error($data);
+
+        if( !is_array($data) )
+            return ["status"=>0, "message"=>"Not available right now."];
+            
+        if( is_array($data) && isset($data['is_active']) && !$data['is_active'] )
+            return ["status"=>0, "message"=>"Sorry. Chat not available."];
+
+
         //GET THE ID
          $guest_info = $data["guest_info"];
-
          
 
         //SESSION VARIABLES
