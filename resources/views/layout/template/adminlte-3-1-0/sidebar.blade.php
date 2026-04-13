@@ -50,7 +50,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            @if($USER->branch_user_type_id !== null)
+            @if($USER->branch_user_type_id !== null )
               @foreach($SIDEMENUS as $sidemenu)
                   <?php if(!empty($sidemenu->items)){?> 
                   <li class="nav-header" label-trans-id="group-menu-{{$sidemenu->id}}"><?=$sidemenu->group_text?></li>
