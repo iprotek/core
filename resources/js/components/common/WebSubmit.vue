@@ -65,6 +65,7 @@
                         vm.status = 2;
                         vm.add_class = 'disabled text-danger';
                         vm.message = data.message ? data.message : "Validation Error";
+                        console.log("websubmit result", data);
                     }
                     
 
