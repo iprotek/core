@@ -62,10 +62,17 @@
                         if( (data.status === undefined || data.status === null ) && data )
                             vm.$emit('update:set_errors', data);
 
-                        vm.status = 2;
-                        vm.add_class = 'disabled text-danger';
-                        vm.message = data.message ? data.message : "Validation Error";
-                        console.log("websubmit result", data);
+                        if(data && data.isDismissed && !data.isConfirmed){
+                            vm.status = 2;
+                            vm.add_class = 'disabled text-danger';
+                            vm.message ="Request Cancelled";
+                        }
+                        else{
+                            vm.status = 2;
+                            vm.add_class = 'disabled text-danger';
+                            vm.message = data.message ? data.message : "Validation Error";
+                        }
+                        //console.log("websubmit result", data);
                     }
                     
 
