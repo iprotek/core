@@ -33,7 +33,7 @@
                         </tr>
 
                         <template  v-for="(control,rowIndex) in controlAccessList"  v-bind:key="'row-control-'+control.id+'-'+rowIndex"> 
-                            <tr v-bind:key="'row-control-'+control.id+'-'+rowIndex">
+                            <tr>
                                 <td class="text-center" style="min-width:10px;">
                                     <!-- <switch2 /> 
                                     <span class="fa fa-circle float-right text-success mt-1"></span>-->
