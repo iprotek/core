@@ -33,6 +33,7 @@
         },
         data: function () {
             let _uid = getCurrentInstance().uid;
+            console.log('current instance', _uid);
             return { 
                 _uid: _uid,
                 remain_focus:false,
