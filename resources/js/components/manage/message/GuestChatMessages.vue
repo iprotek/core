@@ -58,6 +58,7 @@
 </template>
 
 <script>
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "container_id" ],
         components: { 

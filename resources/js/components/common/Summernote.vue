@@ -5,6 +5,7 @@
 </template>
 
 <script>
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "value", "height", "placeholder", "group_id", "is_local", "is_image_upload"],
         components: { 

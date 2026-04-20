@@ -60,6 +60,7 @@
     import AccordionVue from '../../../common/Accordion.vue';
     import BackupViewVue from './BackupView.vue';
     import RestoreViewVue from './RestoreView.vue';
+    import { getCurrentInstance } from 'vue';
 
     export default {
         props:[ "group_id", "branch_id" ],

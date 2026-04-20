@@ -98,6 +98,7 @@
     import SwalVue from '../common/Swal.vue';
     import CaterModalVue from './CaterModal.vue';
     import MessageModalVue from './MessageModal.vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "data" ],
         components: { 

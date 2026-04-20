@@ -74,6 +74,7 @@
 
     import Select2Vue from './Select2.vue'
     import OrderFieldsVue from './OrderFields.vue'
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "list_title", "add_title","value" ],
         components: { 

@@ -16,13 +16,17 @@
 </template>
 
 <script>
+
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "accordionContainerId","is_show" ],
         components: { 
         },
         data: function () {
-            return {    
-                collapseId: 'collapse'+this._uid
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
+                collapseId: 'collapse'+_uid
             }
         },
         methods: { 

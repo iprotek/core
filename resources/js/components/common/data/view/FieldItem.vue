@@ -30,6 +30,7 @@
 </template>
 
 <script>  
+    import { getCurrentInstance } from 'vue';
     import SwalAlertVue from '../../../common/SwalAlert.vue';
     export default {
         name:'FieldItem',

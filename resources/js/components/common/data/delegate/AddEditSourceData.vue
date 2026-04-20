@@ -114,6 +114,7 @@
     import UserInput2Vue from '../../UserInput2.vue'; 
     import BoostrapSwitch2Vue from '../../BoostrapSwitch2.vue';
     import SwalAlertVue from '../../Swal.vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "value","view_scale", "source_id" , "source_name" ],
         watch: {

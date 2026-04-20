@@ -36,13 +36,16 @@
 </template>
 
 <script> 
+    import { getCurrentInstance } from 'vue';
     export default {
         props:['type', 'chart_title', 'is_test', 'timeline', "by_value" ],
         components: {
            // "job-item":admin_jobitem 
         },
         data: function () {
-            return {  
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 search_text:'',
                 factor_settings:[],
                 labels:[],

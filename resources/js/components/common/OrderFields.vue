@@ -14,10 +14,13 @@
     </div>
 </template>
 <script> 
+    import { getCurrentInstance } from 'vue';
     export default {
         props: ["value"],
         data: function () {
-            return { 
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 order:{
                     orderBy:'ASC',
                     selectedFieldId:'',

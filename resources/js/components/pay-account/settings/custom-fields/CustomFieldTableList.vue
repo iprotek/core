@@ -56,6 +56,7 @@
 <script> 
     import PageFooterVue from '../../../common/PageFooter.vue'
     import ModalCustomFieldVue from './ModalCustomField.vue'
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "group_id" ],
         components: {

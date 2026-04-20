@@ -10,6 +10,7 @@
     defineEmits(['update:data_value'])
 </script>
 <script>
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "type", "label", "name", "checked", "data_value", "value"],
         components: {    
@@ -23,8 +24,10 @@
             }
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
-                radioId:'icheck-'+this._uid,
+                _uid: _uid,
+                radioId:'icheck-'+_uid,
                 default_type:"checkbox",
                 default_label:"",
                 is_checked:false

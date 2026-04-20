@@ -38,6 +38,7 @@
 
 <script>
     import PageFooterVue from '../../../common/PageFooter.vue'
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "ticket_id" ],
         components: {

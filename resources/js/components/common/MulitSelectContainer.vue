@@ -31,6 +31,7 @@
     </div>
 </template>
 <script>
+    import { getCurrentInstance } from 'vue';
     import Select2Vue from './Select2.vue'; 
     export default {
         props:[ "value", "title", "modal_selector", "select_placeholder", "url", "has_clear", "empty_items_text"],
@@ -43,7 +44,9 @@
             },
         },
         data: function () {
-            return {  
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 items:[],
                 item_select:{
                     id:0,

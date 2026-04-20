@@ -3,12 +3,15 @@
 </template>
 <script> 
     
+    import { getCurrentInstance } from 'vue';
     export default {
         props:["off_color","on_color"],
         components: {    
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
+                _uid: _uid,
                 switchID:'switch-id-'+this._uid   
             }
         },

@@ -8,6 +8,7 @@
 </template>
 <script>
     
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "value", "exclude_values", "placeholder","is_text_value","url","placeholder","readonly" ],
         components: { 

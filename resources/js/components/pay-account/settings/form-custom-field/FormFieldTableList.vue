@@ -63,6 +63,7 @@
 <script>
     import PageFooterVue from '../../../common/PageFooter.vue' 
     import AddFormVue from './AddForm.vue'
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "group_id" ],
         components: {

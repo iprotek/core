@@ -26,6 +26,7 @@
 </template>
 
 <script>
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "data_id", "is_data", "group_id" ],
         components: { 

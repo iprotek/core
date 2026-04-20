@@ -27,6 +27,7 @@
 <script>
     import GoogleSummaryReviewVue from './GoogleSummaryReview.vue'; 
     import GoogleCustomerReviewsVue from './GoogleCustomerReviews.vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "has_map", "has_review", "place_id", "place_lat", "place_lng", "zoom", "test","review_full_link","review_link"  ],
         components: { 
@@ -34,9 +35,11 @@
             "google-customer-reviews" : GoogleCustomerReviewsVue
         },
         data: function () {
-            return {  
-                mapId: 'google-reviews-widget-'+this._uid,
-                mapReviewId: 'google-map-review-'+this._uid,  
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
+                mapId: 'google-reviews-widget-'+_uid,
+                mapReviewId: 'google-map-review-'+_uid,  
                 map:null,
                 placeService:null
             }

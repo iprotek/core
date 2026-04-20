@@ -107,6 +107,7 @@
 <script>
     import SwalAlertVue from '../../common/SwalAlert.vue';
     import WebSubmitVue from '../../common/WebSubmit.vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "value"],
         components: { 

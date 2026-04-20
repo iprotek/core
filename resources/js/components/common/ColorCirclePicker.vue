@@ -29,8 +29,7 @@
      * value: {'name':'', color:'', description:''}
      * selection_list:[{'name':'', color:'', description:''},...]
      */
-
-
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "group_id", "value", "selection_list", "target_name", "target_id", "is_set"],
         $emits:['selected'],
@@ -47,10 +46,12 @@
             },
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
-                colorDropdownId:'color-drop-down-'+this._uid,
-                selectedDropdownId:'selected-drop-down'+this._uid,
-                optionContainer:'option-container-'+this._uid,
+                _uid: _uid,
+                colorDropdownId:'color-drop-down-'+_uid,
+                selectedDropdownId:'selected-drop-down'+_uid,
+                optionContainer:'option-container-'+_uid,
                 selectedValue:{
                     name:'color-white',
                     color:'white',

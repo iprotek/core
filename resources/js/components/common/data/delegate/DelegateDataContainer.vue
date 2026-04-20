@@ -128,6 +128,7 @@
 </template>
 
 <script>
+    import { getCurrentInstance } from 'vue';
     import AddEditSourceDataVue from './AddEditSourceData.vue';
     export default {
         props:[ "value", "source_name", "title" ],

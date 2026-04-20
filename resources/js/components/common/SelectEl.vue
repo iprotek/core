@@ -6,6 +6,7 @@
 </template>
 <script>
     
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "value","placeholder","is_text_value","url" ],
         components: { 

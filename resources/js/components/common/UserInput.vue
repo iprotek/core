@@ -5,6 +5,7 @@
     </div>
 </template>
 <script>
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "type","placeholder", "input_style", "placeholder_style", "readonly" , "placeholder_description", "placeholder_focus_color", "disabled" ],
         components: { 

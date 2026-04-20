@@ -48,6 +48,7 @@
     import ModalModelAddField from  '../form/Modals/ModalModelAddField.vue';//'./Modals/ModalModelAddField.vue';
     import FieldItemVue from './FieldItem.vue';
     import SwalAlertVue from '../../../common/SwalAlert.vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "group_id", "is_data" ],
         components: { 

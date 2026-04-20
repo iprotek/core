@@ -18,6 +18,7 @@
 </template>
 <script>
     import Select2Vue from './Select2.vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "value", "is_selection" ,"select_theme"],
         components: { 
@@ -40,7 +41,9 @@
             },
         },
         data: function () {
-            return {  
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 color:'primary',
                 selectItem:{
                     id:'',

@@ -91,6 +91,7 @@
 
 <script>  
     import SwalAlertVue from '../../SwalAlert.vue'; 
+    import { getCurrentInstance } from 'vue';
     export default {
         name:'DataFieldItem',
         props:[  "value", "has_down", "data_id", "group_id", "is_data", "is_small" ],

@@ -64,6 +64,7 @@
 
 <script>
     import PageDataTableVue from '../../../common/PageDataTable.vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "group_id", "branch_id" ],
         $emits:[],

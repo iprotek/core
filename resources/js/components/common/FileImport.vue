@@ -160,8 +160,9 @@
             }
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
-
+                _uid: _uid,
                 search_status_id : -1,
                 current_enable_import_btn:true,
                 current_settings:'{}',
@@ -174,7 +175,7 @@
                 search:'',
                 current_page:1,
                 isLoading:false,
-                import_file_name:'file-import-'+this._uid,
+                import_file_name:'file-import-'+_uid,
                 BatchStatus: FileImportBatchStatus,
 
                 countStatus:{

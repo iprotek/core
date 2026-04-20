@@ -84,6 +84,7 @@
     import ValidationVue from '../../common/Validation.vue'
     import GuestModalVerifyVue from './GuestModalVerify.vue'
     import GuestChatMessagesVue from './GuestChatMessages.vue'
+    import { getCurrentInstance } from 'vue';
 
     export default {
         props:[ "chat_info" ],

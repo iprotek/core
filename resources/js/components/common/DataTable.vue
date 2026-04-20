@@ -16,12 +16,15 @@
 </template>
 <script> 
     //import DataTable from 'datatables.net-dt';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "json" ],
         components: { 
         },
         data: function () {
-            return {    
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 columns:[],
                 dataTable:null
             }

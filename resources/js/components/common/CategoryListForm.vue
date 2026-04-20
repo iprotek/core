@@ -30,20 +30,23 @@
     </div>
 </template>
 <script>
-    import SwalInputVue from './SwalInput.vue'
+    import SwalInputVue from './SwalInput.vue';
+        import { getCurrentInstance } from 'vue';
     export default {
         props:[ "value", "modal","selected_values","is_integrate", "add_url", "list_url" ],
         components: {  
             "swal-input":SwalInputVue
         },
         data: function () {
-            return {     
-                category_list_form_id: 'category-list-form-'+this._uid,
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
+                category_list_form_id: 'category-list-form-'+_uid,
                 base_parent_id: 0,
                 sub_categories:[],
-                subCategoryElID: 'sub-cat-el-id-'+this._uid,
+                subCategoryElID: 'sub-cat-el-id-'+_uid,
                 selected_categories:[],
-                baseChkID: 'cat'+this._uid+'-'
+                baseChkID: 'cat-'+_uid
             }
         },
         watch: {

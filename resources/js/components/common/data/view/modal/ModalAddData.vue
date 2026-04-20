@@ -41,6 +41,7 @@
     import BoostrapSwitch2Vue from '../../../../common/BoostrapSwitch2.vue'; 
     import Select2Vue from '../../../../common/Select2.vue';
     import UserInput2Vue from '../../../../common/UserInput2.vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "group_id", "is_data" ],
         components: { 

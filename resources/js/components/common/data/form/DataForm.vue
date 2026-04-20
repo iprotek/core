@@ -51,6 +51,7 @@
     import DataFieldItemVue from '../form/DataFieldItem.vue';
     import ModalAddDataVue from '../view/modal/ModalAddData.vue';//'../../../manage/projects-monitoring/searches/modal/ModalAddData.vue';
     import ProjectListVue from './ProjectList.vue';//'../../../manage/projects-monitoring/searches/ProjectList.vue'; 
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "group_id", "is_data" ],
         components: { 

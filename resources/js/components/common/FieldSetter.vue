@@ -33,6 +33,7 @@
 <script>
     import iCheckVue from './iCheck.vue';
     import WebSubmitVue from './WebSubmit.vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "theme_info","move_icon", "title" ,"group_id", "branch_id", "target_name", "target_id" ],
         $emits:['updated_fields'],
@@ -44,7 +45,9 @@
             "web-submit":WebSubmitVue
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
+                _uid: _uid,
                 dragItem: null,
                 fieldList:[ ],
                 moveIcon:'fa-arrows'

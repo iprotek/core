@@ -4,13 +4,16 @@
     </div>
 </template>
 <script> 
+    import { getCurrentInstance } from 'vue';
     export default {
         props:["off_color","on_color","value",  "disabled"],
         components: {    
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
-                switchID:'switch-id-'+this._uid,
+                _uid: _uid,
+                switchID:'switch-id-'+_uid,
                 input_check:false,
                 outside_trigger:false
             }

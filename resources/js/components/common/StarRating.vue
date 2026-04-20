@@ -4,16 +4,17 @@
                 <label class="p-0 m-0 text-xs" v-text="' ( '+DynamicRate+' / '+starCount+' ) '"></label>
         </div>
         <div>
-            <div :class="'rate-'+_uid+' star rating p-0 '+addclass">
-                <template v-for="item  in star">
+            <div :class="'rate-'+_uid+' star rating p-0 '+addclass" >
+                <template v-for="item  in star" v-bind:key="'star-label-'+_uid+'-'+item">
                     <input @change="rate_changed" :disabled="disabled" v-model="rate" type="radio" :id="'star'+item+'-'+_uid" :name="'rating-'+_uid" :value="item" v-bind:key="'star-input-'+_uid+'-'+item" />
-                    <label class="p-0 m-0" :for="'star'+item+'-'+_uid" :title="item+' star'" v-bind:key="'star-label-'+_uid+'-'+item"></label>
+                    <label class="p-0 m-0" :for="'star'+item+'-'+_uid" :title="item+' star'" ></label>
                 </template>
             </div>
         </div>
     </div>
 </template>
 <script>
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "starCount", "startRate", "disabled", "addclass", "show_val" ],
         components: { 

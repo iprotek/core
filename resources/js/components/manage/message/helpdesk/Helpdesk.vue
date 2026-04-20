@@ -96,6 +96,7 @@
 </template>
 
 <script> 
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[  ],
         components: {  

@@ -66,6 +66,7 @@
 
 <script> 
     import WebSubmitVue from './WebSubmit.vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ 
             "height", 
@@ -145,9 +146,11 @@
             "web-submit":WebSubmitVue
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
+                _uid: _uid,
                 set_info_window_once: this.info_window_once !== false ? true :false,
-                google_map_id: 'google-map-'+this._uid,
+                google_map_id: 'google-map-'+_uid,
                 map:null,
                 markers:[],
                 paths:[],

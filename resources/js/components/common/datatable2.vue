@@ -18,6 +18,7 @@
 
 <script>
     const objectAssign = require('object-assign');
+    import { getCurrentInstance } from 'vue';
     export default {
         props: {
             url: {
@@ -73,7 +74,9 @@
             }
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
+                _uid: _uid,
                 data_columns: [],
                 table: null,
                 export_options: [],

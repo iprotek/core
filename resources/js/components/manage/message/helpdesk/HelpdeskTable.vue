@@ -104,6 +104,7 @@
 <script> 
     import PageFooterVue from '../../../common/PageFooter.vue';
     import SortElVue from '../../../common/SortEl.vue';
+    import { getCurrentInstance } from 'vue';
 
     export default {
         props:[  ],

@@ -7,15 +7,18 @@
 </template>
 
 <script>
+        import { getCurrentInstance } from 'vue';
      export default {
         props:["allow_drag_event", "allow_add_event", "allow_select_previous"],
         $emits:[ "datesSet", "select", "loadMonth" , "selectedEvent", "loaded" ],
         components: {  
         },
         data: function () {
-            return {  
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 calendar:null,
-                calendarId: 'calendar'+this._uid,
+                calendarId: 'calendar-'+_uid,
                 hasRendered:false,
                 mountPromise:null
             }
