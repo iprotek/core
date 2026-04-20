@@ -32,6 +32,7 @@
             },
         },
         data: function () {
+            console.log('Current ID', this._uid);
             return { 
                 remain_focus:false,
                 select2Selector: 'select2-item-container-'+this._uid,
