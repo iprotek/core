@@ -1,13 +1,13 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 Category Name
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <user-input2 v-model="category_name" :input_style="'height:35px;'" :placeholder="'Category Name'" :placeholder_description="'A unique category name'"></user-input2>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button>
                     <button v-if="billing_category_id == 0" type="button" class="btn btn-outline-primary" @click="save">

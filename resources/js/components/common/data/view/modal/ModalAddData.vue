@@ -1,10 +1,10 @@
 <template>
     <div :id="'add-data-modal-'+_uid">
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 Add Data
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <div class="mt-2">
                     <switch2 v-model="is_link" ></switch2> <label>Link Data</label>
                     <div v-if="is_link">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button type="button" class="btn btn-outline-primary" data-dismiss="modal" @click="save" >ADD</button> 

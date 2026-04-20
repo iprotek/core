@@ -1,13 +1,13 @@
 <template>
     <div>
         <modal-view ref="modal" :extended_width="true">
-            <template slot="header" >
+            <template #header >
                 TERMS AND CONDITIONS
             </template> 
-            <template slot="body">  
+            <template #body>  
                 <summernote v-model="html_content" :height="500"></summernote>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <button type="button" class="btn btn-default mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button>
                 <button type="button" class="btn btn-warning" @click="save">
                     UPDATE

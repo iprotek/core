@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 Verify Email
             </template> 
-            <template slot="body" >
+            <template #body >
                 <div class="my-2">
                     <user-input2 v-model="email" :placeholder="'Email'" :input_style="'height:40px;'" :placeholder_description="'Will receive the verification code.'" :readonly="true" />
                     <div class="my-4">
@@ -28,7 +28,7 @@
                     </p>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                 </div>

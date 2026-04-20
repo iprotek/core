@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 Change Password
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <div class="text-center py-2 mt-2">
                     <button class="btn btn-outline-primary" @click="send_email()"> SEND EMAIL FOR CHANGE PASSWORD </button>
                 </div>
@@ -14,7 +14,7 @@
                 <user-input2 :input_style="'height:40px;'" v-model="verify_pass" :placeholder="'Verify New Password'" />
                 -->
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button>
                     <!--<button type="button" class="btn btn-outline-primary"  >UPDATE NOW</button> -->

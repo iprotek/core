@@ -1,7 +1,7 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :vw="60">
-            <template slot="header" >
+            <template #header >
                 <h3 v-if="id == 0" class="text-primary">
                     SUBMIT HELPDESK TICKET
                 </h3>
@@ -9,7 +9,7 @@
                     TICKET INFO
                 </h3>
             </template> 
-            <template slot="body" > 
+            <template #body > 
                 <div v-if="view_mode == 'details'">    
                     <div class="row mt-2" v-if="id>0">
                         <div class="col-sm-12" >
@@ -114,7 +114,7 @@
 
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button type="button" class="btn btn-outline-primary" v-if="id == 0 && view_mode == 'details'" @click="submit_ticket()"  >

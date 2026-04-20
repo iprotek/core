@@ -1,14 +1,14 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 Name Details for Support
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <user-input2 v-model="account_no" :placeholder="'Account No#:'" :input_style="'height:40px;'" :placeholder_description="'Support Account Number.'"></user-input2>
                 <user-input2 v-model="name" :placeholder="'Full name of Support'" :input_style="'height:40px'" :placeholder_description="'Name of the support will cater the ticket.'"></user-input2>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button type="button" class="btn btn-outline-primary" @click="caterTicket()"> CATER NOW </button> 

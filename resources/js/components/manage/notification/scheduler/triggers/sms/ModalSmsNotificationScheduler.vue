@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :vw="70">
-            <template slot="header" >
+            <template #header >
                 ADD SMS SCHEDULE
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <div class="row">
                     <div class="col-sm-6">
                         <input2 v-model="sms_notify_sched.name" :type="'text'" :placeholder="'SMS Schedule Trigger Name'" :input_style="'height:40px;'" />
@@ -89,7 +89,7 @@
                     </div>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button type="button" class="btn btn-outline-primary" v-if="sms_notify_sched.id == 0" @click="save">

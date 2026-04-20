@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :vw="70">
-            <template slot="header" >
+            <template #header >
                 Device Logs
             </template> 
-            <template slot="body" >
+            <template #body >
                 <div v-if="device_id">
                     <div class="input-group text-sm mb-1 mt-2"> 
                         <span class="btn btn-default" @click="current_page=1;loadDeviceLogs()">
@@ -54,7 +54,7 @@
                 </div>
             
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                 </div>

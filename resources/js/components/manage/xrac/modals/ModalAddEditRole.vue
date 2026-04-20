@@ -1,7 +1,7 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 <label v-if="role_info.id">
                     EDIT ROLE
                 </label>
@@ -9,7 +9,7 @@
                     ADD ROLE
                 </label>
             </template> 
-            <template slot="body" >  
+            <template #body >  
                 <user-input2 v-if="role_info.id" :readonly="true" :value="role_info.id" :placeholder="'RoleID#'"  :input_style="'height:40px;'" :placeholder_description="'Unique id of the role'"/>   
                 <user-input2 v-model="role_info.name" :placeholder="'Role Name'"  :input_style="'height:40px;'" :placeholder_description="'Unique role name assigned to a user'"/>
                 <validation :errors="errors" :field="'name'" />
@@ -18,7 +18,7 @@
                     <switch2 v-model="role_info.is_active" :off_color="'red'" /> Is Active 
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button v-if="role_info.id" type="button" class="btn btn-outline-danger mr-4" @click="removeRole()" >
                         <span class="fa fa-trash"></span>

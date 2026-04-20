@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :vw="70">
-            <template slot="header" >
+            <template #header >
                 <label v-text="device_id ? 'UPDATE DEVICE':'ADD DEVICE'"></label>
             </template> 
-            <template slot="body" >
+            <template #body >
                 <div>
                     <user-input2 v-model="device_info.name" :placeholder="'Descriptive Name'" :input_style="'height:35px;'" /> 
                     <label class="mt-2 mb-0">Description</label>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button class="btn btn-outline-primary" v-if="device_id" @click="save" >

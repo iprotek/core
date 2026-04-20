@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :extended_width="true">
-            <template slot="header" >
+            <template #header >
                 Chat Support
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <div class="row"> 
                     <h5>
                     <code>** We are very sorry, we are still working on chat support system. As of the moment you may use details below as your contact reference.</code>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                 </div>

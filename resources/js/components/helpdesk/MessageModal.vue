@@ -1,13 +1,13 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 Message
             </template> 
-            <template slot="body" >
+            <template #body >
                 <textarea v-model="message" class="w-100 form-control" style="min-heigth: 250px;"></textarea> 
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button>
                     <button type="button" class="btn btn-outline-primary" @click="submit_message">

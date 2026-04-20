@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 Send Message
             </template> 
-            <template slot="body" >
+            <template #body >
                 <div class="mt-2"> 
                     <label>Select SMS Api Client</label>
                     <select2  
@@ -22,7 +22,7 @@
                 </div>
                      
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button>
                     <button v-if="id == 0 && selItem.id > 0 && to_number && message" class="btn btn-outline-primary"  @click="send_message"><span class="fa fa-paper-plane"></span> SEND </button> 

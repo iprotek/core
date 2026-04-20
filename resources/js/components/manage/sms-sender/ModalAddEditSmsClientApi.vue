@@ -1,11 +1,11 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                <label v-if="id == 0"> SMS Client Add </label>
                <label v-else> SMS Client Edit </label>
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <user-input2 v-model="name" :placeholder="'Custom name for API'" :input_style="'height:37px;'"></user-input2>
                 <label class="mb-0">Priority:</label>
                 <select class="form-control mb-2" v-model="priority">
@@ -57,7 +57,7 @@
                     <button-copy :base_color="'primary'" :button_title="'Click to Copy Webhook URL'" :text_to_copy="webhook_response_url" :base_icon="'fa fa-link'"  :copied_message="'Webhook copied!'" ></button-copy>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button v-if="id == 0" class="btn btn-outline-primary"  @click="add"><span class="fa fa-plus"></span> ADD </button> 

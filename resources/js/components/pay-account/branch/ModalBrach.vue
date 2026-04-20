@@ -1,17 +1,17 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :extended_width="true">
-            <template slot="header" >
+            <template #header >
                 Own Branch
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <user-input2 v-model="name" :input_style="'height:35px;'" :placeholder="'Branch name'" :placeholder_description="'A unique branch name.'" ></user-input2>
                 <user-input2 v-model="address" :input_style="'height:35px;'" :placeholder="'Address'" :placeholder_description="'Address where branch located.'" ></user-input2>
                 <user-input2 v-model="coordinates" :input_style="'height:35px;'" :placeholder="'Coordinates'" :placeholder_description="'Google geolocation'" ></user-input2>
                 <user-input2 v-model="status" :input_style="'height:35px;'" :placeholder="'Status'" :placeholder_description="'Status(Active, Inactive, etc.).'" ></user-input2>
                 <user-input2 v-model="status_info" :input_style="'height:35px;'" :placeholder="'Status Info'" :placeholder_description="'Details describing the status.'" ></user-input2>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button v-if="billing_branch_id == 0" type="button" class="btn btn-outline-primary" @click="save">

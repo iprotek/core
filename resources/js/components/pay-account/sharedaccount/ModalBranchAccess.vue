@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" >
-            <template slot="header" >
+            <template #header >
                 Branch Access
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <div>
                     <label class="text-primary">*Every check click action will immediately take effect.</label>
                     <table class="w-100 table table-bordered">
@@ -38,7 +38,7 @@
                     <page-footer v-model="pageFooterData" @page_changed="page_changed"></page-footer>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                 </div>

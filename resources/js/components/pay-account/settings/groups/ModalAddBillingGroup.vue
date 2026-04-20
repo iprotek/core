@@ -1,13 +1,13 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 Group Name
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <user-input2 v-model="group_name" :input_style="'height:35px;'" :placeholder="'Group Name'" :placeholder_description="'A unique group name'"></user-input2>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button>
                     <button v-if="billing_group_id == 0" type="button" class="btn btn-outline-primary" @click="save">

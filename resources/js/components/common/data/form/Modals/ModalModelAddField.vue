@@ -1,13 +1,13 @@
 <template>
     <div id="modal_model_vue">
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 AddField
             </template> 
-            <template slot="body" >   
+            <template #body >   
                 <select2 v-model="field_info"  :has_clear="true" :url="'/manage/'+(is_data ? 'iprotek-data':'projects-monitoring')+'/model-fields/field/list-selection'" :modal_selector="'#modal_model_vue .modal-body'" :placeholder="'-- Select Field --'"></select2>   
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button type="button" class="btn btn-outline-primary" @click="add_click" >ADD</button> 

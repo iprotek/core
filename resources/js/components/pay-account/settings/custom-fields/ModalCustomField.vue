@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 Custom Fields
             </template> 
-            <template slot="body" >
+            <template #body >
                 <label class="mt-2">Field Data Type:</label>
                 <select class="form-control" v-model="data_type" :disabled="custom_field_id > 0">
                     <option value="textbox">TEXTBOX</option>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button v-if="custom_field_id == 0" type="button" class="btn btn-outline-primary" @click="save">

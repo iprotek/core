@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :vw="90">
-            <template slot="header" >
+            <template #header >
                 PAYMENT
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <div class="row" v-if="pay_info.sys_notify_schedule_sms_triggers_id">
                     <div class="col-sm-7 pt-4">
                         <paid-schedule-trigger v-if="$refs.swal_prompt" :swal_prompt="$refs.swal_prompt" :branch_id="branch_id" :group_id="group_id" :sys_notify_schedule_sms_triggers_id="pay_info.sys_notify_schedule_sms_triggers_id" :type="pay_info.type" />
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                 </div>

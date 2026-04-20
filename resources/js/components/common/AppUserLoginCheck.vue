@@ -1,15 +1,15 @@
 <template> 
     <div>
         <modal-view ref="login_prompt_modal">
-            <template slot="header" > LOGIN PROMPT </template> 
-            <template slot="body"> 
+            <template #header > LOGIN PROMPT </template> 
+            <template #body> 
                 <login-prompt v-if="login_show" ref="login_prompt" :text_info="text_info" @login_success_result="login_success_result"></login-prompt>
                 <register-prompt v-if="register_show" ref="register_prompt"></register-prompt>
                 <br/><br/>
                 <a style="color:blue; cursor:pointer;" v-if="login_show" @click="registerShow()" v-text="'Register >>'"></a>
                 <a style="color:blue; cursor:pointer;" v-if="register_show" @click="loginShow()"  v-text="'<< LOGIN'"></a>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <button type="button" class="btn btn-default mr-4" data-dismiss="modal" @click="$refs.login_prompt_modal.dismiss()">Close</button>
             </template>
         </modal-view> 

@@ -1,11 +1,11 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :vw="70">
-            <template slot="header" >
+            <template #header >
                 <label v-if="device_trigger_id == 0">ADD TRIGGER</label>
                 <label v-else>UPDATE TRIGGER</label>
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <div class="row">
                     <div class="col-sm-5">
                         
@@ -218,7 +218,7 @@
                 </div>  
             
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button v-if="device_trigger_id == 0" @click="save" class="btn btn-outline-primary"  >
                         <span class="fa fa-plus"></span> ADD

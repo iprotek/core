@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :extended_width="true">
-            <template slot="header" >
+            <template #header >
                 BACKGROUND IMAGES
             </template> 
-            <template slot="body"> 
+            <template #body> 
                 <!--
                 <div class="mb-3 row" v-if="service_id != 0">
                     <label class="col-sm-4 col-form-label text-right">Order#:</label>
@@ -21,7 +21,7 @@
                 <file-uploads :gallery_title="'Background Image Gallery'"  :value="1" :target_name="'business_backgrounds'"></file-uploads>
                 
             </template>
-            <template slot="footer">
+            <template #footer>
                 <button type="button" class="btn btn-default mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button>
                  <button type="button" class="btn btn-warning" @click="save"  >
                         UPDATE

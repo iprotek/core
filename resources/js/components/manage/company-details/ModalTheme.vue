@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0 mt-2'">
-            <template slot="header" >
+            <template #header >
                 THEME COLOR
             </template> 
-            <template slot="body" > 
+            <template #body > 
                 <div>
                     <div>
                         <label class="mb-0">DASHBOARD THEME</label>
@@ -130,7 +130,7 @@
                     </div>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>                    
                     <web-submit :action="resetTheme" el_class="btn btn-outline-warning mr-4 btn-sm" icon_class="fa fa-undo" label="RESTORE DEFAULTS" :timeout="3000" />
                     <web-submit :action="save" el_class="btn btn-outline-primary btn-sm mr-4" icon_class="fa fa-save" label="SAVE" :timeout="3000" />

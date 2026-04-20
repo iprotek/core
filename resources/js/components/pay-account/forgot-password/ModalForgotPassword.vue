@@ -1,13 +1,13 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 Forgot Password
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <user-input2 v-model="email" :type="'text'" :input_style="'height:40px;'" :placeholder="'Email'"></user-input2>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" onclick="ModalClose();" @click="$refs.modal.dismiss()">Close</button> 
                     <button type="button" class="btn btn-outline-primary" onclick="SendEmail();">

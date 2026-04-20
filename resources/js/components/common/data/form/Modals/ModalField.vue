@@ -1,11 +1,11 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :extended_width="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                <span v-if="id == 0">Add Field</span>
                <span v-else>Update Field</span>
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <user-input2 v-model="name" :type="'text'"  :placeholder="'Name'" :placeholder_description="'Please add a unique name of field'" :input_style="'height:40px;'"></user-input2>
                 <label class="mt-2">Type:</label>
                 <select class="form-control" v-model="type" :disabled="id>0">
@@ -20,7 +20,7 @@
 
                 </textarea>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button type="button" class="btn btn-outline-secondary mr-4" v-if="id > 0" @click="reset()">NEW</button> 

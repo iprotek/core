@@ -1,13 +1,13 @@
 <template>
     <div>
         <modal-view ref="modal" :extended_width="true">
-            <template slot="header" >
+            <template #header >
                 LOGO IMAGES
             </template> 
-            <template slot="body"> 
+            <template #body> 
                  <file-uploads :gallery_title="'Logo Image Gallery'"  :value="1" :target_name="'business_logos'"></file-uploads>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <button type="button" class="btn btn-default mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button>
                 <button type="button" class="btn btn-warning" @click="save"  >
                         UPDATE LOGO

@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                 Send Invitation
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <div>
                     <user-input2 v-model="email" :input_style="'height:40px;'" :placeholder="'Email'" :placeholder_description="'Email of the invetee.'"></user-input2>
                     <user-input2 v-model="role" :input_style="'height:40px;'" :placeholder="'Role'" :placeholder_description="'Role of the invitee.'"></user-input2>
@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button type="button" class="btn btn-outline-primary mr-4" @click="send_invitation">Send Invitation</button> 

@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" >
-            <template slot="header" >
+            <template #header >
                  Custom Field
             </template> 
-            <template slot="body">
+            <template #body>
                 <div class="mt-4">  
                     <label>Select Custom Field:</label>  
                     <select2 :modal_selector="'#modal-form-custom-field .modal-body'" v-model="item_custom_field" @selected="selectedCustomField" :placeholder="' -- SELECT CUSTOM FIELD -- '"  :url="'/api/group/'+group_id+'/settings/custom-field/list-selection'" ></select2>
@@ -20,7 +20,7 @@
                     <div></div>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button  type="button" class="btn btn-outline-primary" @click="save">

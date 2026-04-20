@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :vw="70">
-            <template slot="header" >
+            <template #header >
                 BRANCH LIST MODAL
             </template> 
-            <template slot="body" >
+            <template #body >
                 
                 <div v-if="view_mode == 'list'">
                     <button class="btn btn-outline-primary my-2" @click="view_mode = 'add-edit'; addorEdit()">
@@ -117,7 +117,7 @@
                     </div>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                 </div>

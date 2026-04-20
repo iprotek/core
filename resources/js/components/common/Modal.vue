@@ -39,10 +39,13 @@
     </div>
 </template>
 <script>
+    import { getCurrentInstance } from 'vue';
     export default {
         props: ['name', 'extended_width', 'prevent', 'body_class', 'vw', "mh", 'zIndex', "has_close", "is_scrollable"],
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
+                _uid: _uid,
                 modal: null,
                 message: '',
                 has_error_message: false,

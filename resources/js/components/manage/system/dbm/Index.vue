@@ -13,30 +13,30 @@
 
                             <div class="accordion" :id="'accordion-container-'+_uid">
                                 <accordion :accordionContainerId="'accordion-container-'+_uid">
-                                    <template slot="header">
+                                    <template #header>
                                         <b>Backup</b> 
                                     </template>
-                                    <template slot="body"> 
+                                    <template #body> 
                                         <div>
                                             <backup-view :branch_id="branch_id" :group_id="group_id"/>
                                         </div>
                                     </template>
                                 </accordion>
                                 <accordion :accordionContainerId="'accordion-container-'+_uid">
-                                    <template slot="header">
+                                    <template #header>
                                         <b>Restore</b>
                                     </template>
-                                    <template slot="body"> 
+                                    <template #body> 
                                         <div>
                                             <restore-view :branch_id="branch_id" :group_id="group_id"/>
                                         </div>
                                     </template>
                                 </accordion>
                                 <accordion :accordionContainerId="'accordion-container-'+_uid">
-                                    <template slot="header">
+                                    <template #header>
                                         <b> <span class="fa fa-cogs"></span>  Settings</b>
                                     </template>
-                                    <template slot="body"> 
+                                    <template #body> 
                                         <div class="mt-1"> 
                                             <div class="btn btn-outline-warning btn-sm">
                                                 <span class="fa fa-cogs"></span> SETTINGS

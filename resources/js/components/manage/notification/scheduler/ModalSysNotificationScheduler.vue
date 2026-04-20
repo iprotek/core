@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'">
-            <template slot="header" >
+            <template #header >
                SCHEDULER NAME
             </template> 
-            <template slot="body" >
+            <template #body >
                 <div>
                     <input2 :input_style="'height:40px;'" :placeholder="'Notification Name'" v-model="schedule_info.name" :placeholder_description="'The name of the main control of your notification.'" />
                     <label  class="mt-4">TYPE:</label>
@@ -25,7 +25,7 @@
                     
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button v-if="schedule_info.id == 0 " type="button" class="btn btn-outline-primary" @click="save">

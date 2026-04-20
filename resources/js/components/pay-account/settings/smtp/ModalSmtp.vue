@@ -1,10 +1,10 @@
 <template>
     <div>
         <modal-view ref="modal" :prevent="true" :body_class="'pt-0'" :extended_width="true">
-            <template slot="header" >
+            <template #header >
                 SMTP Setup
             </template> 
-            <template slot="body" >     
+            <template #body >     
                 <div>
                     <div class="row">
                         <div class="col-sm-12 mt-4">
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </template>
-            <template slot="footer">
+            <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <button v-if="id > 0" type="button" class="btn btn-outline-secondary" @click="set_new">
