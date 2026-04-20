@@ -32,12 +32,13 @@
             },
         },
         data: function () {
-            console.log('Current ID', this._uid);
+            let _uid = Math.random().toString(36).substr(2, 9);
             return { 
+                _uid: _uid,
                 remain_focus:false,
-                select2Selector: 'select2-item-container-'+this._uid,
+                select2Selector: 'select2-item-container-'+_uid,
                 setUp:false,
-                selectElID: 'select-el-'+this._uid,
+                selectElID: 'select-el-'+_uid,
                 item:{
                     id:0,
                     text:''
