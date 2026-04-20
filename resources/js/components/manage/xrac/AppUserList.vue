@@ -63,7 +63,6 @@
 
 <script>
     import PageFooterVue from '../../common/PageFooter.vue';
-    import tempImage from '@/assets/temp-image.png'
     export default {
         props:[  ],
         watch: { 
