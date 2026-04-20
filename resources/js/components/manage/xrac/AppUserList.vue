@@ -32,7 +32,7 @@
                         <td colspan="2" class="px-1" :style=" selected_app_user_id == item.id ? 'background-color:#a49f9f61;':''">
                             <div class="user-panel d-flex">
                                 <div class="image pl-0 mx-1">
-                                    <img :for="'user-selection-'+item.id" src="/images/temp-image.png" class="img-circle elevation-2" alt="User Image">
+                                    <img :for="'user-selection-'+item.id" :src="tempImage" class="img-circle elevation-2" alt="User Image">
                                 </div>
                                 <div class="info py-0 px-1">
                                     <label :for="'user-selection-'+item.id" v-text="item.name" :title="item.is_blocked? 'InActive':'Active'" :class="'text-sm mb-0 '+(item.is_blocked? 'text-secondary':'text-primary')"></label>
@@ -63,6 +63,7 @@
 
 <script>
     import PageFooterVue from '../../common/PageFooter.vue';
+    import tempImage from '@/assets/temp-image.png'
     export default {
         props:[  ],
         watch: { 
@@ -72,6 +73,7 @@
         },
         data: function () {
             return {
+                tempImage: '/images/temp-image.png',
                 pageData:null,
                 dataList:[],
                 current_page:'',
