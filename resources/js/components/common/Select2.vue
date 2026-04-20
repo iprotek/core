@@ -9,7 +9,7 @@
     </div>
 </template>
 <script>
-    
+    import { getCurrentInstance } from 'vue'
     export default {
         props:[ "value" ,"allow_multiple", "minimum_input_length" ,"is_remain_focus_on_enter", "is_clean_after_select", "url", "custom_data" , "default_theme", "append_data", "placeholder", "query_filters" ,"filters", "modal_selector", "allowtag", "has_clear", "disabled", "search_param", "display_items_no", "select_data", "select_template" ],
         emits: {
@@ -32,7 +32,7 @@
             },
         },
         data: function () {
-            let _uid = Math.random().toString(36).substr(2, 9);
+            let _uid = getCurrentInstance().uid;
             return { 
                 _uid: _uid,
                 remain_focus:false,
