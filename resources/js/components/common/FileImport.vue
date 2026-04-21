@@ -140,7 +140,7 @@
     import SwalVue from './Swal.vue';
     import PageFooterVue from './PageFooter.vue';
     import FileImportDataVue from './FileImportData.vue';
- 
+    import { getCurrentInstance } from 'vue';
     import {FileImportBatchStatus} from './enums/common_const';
 
     export default { 
