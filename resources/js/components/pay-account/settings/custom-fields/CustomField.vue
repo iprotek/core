@@ -53,6 +53,7 @@
 
 <script>
     import TagPreviewerVue from '../TagPreviewer.vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "el_object", "value","readonly","is_showbutton","tag_data" ],
         components: { 
