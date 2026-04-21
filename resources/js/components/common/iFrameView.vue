@@ -9,13 +9,16 @@
 </template>
 
 <script>
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "src", "has_print", "scrolling",'frame_style', "is_post", "post_data", "print_size", "is_print_url" ],
         components: { 
         },
         data: function () {
-            return {    
-                iframeId:'iframe-'+this._uid,
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
+                iframeId:'iframe-'+_uid,
                 iframeSource:null,
                 current_height: 0,
             }

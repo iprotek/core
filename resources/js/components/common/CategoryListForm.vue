@@ -31,7 +31,7 @@
 </template>
 <script>
     import SwalInputVue from './SwalInput.vue';
-        import { getCurrentInstance } from 'vue';
+    import { getCurrentInstance } from 'vue';
     export default {
         props:[ "value", "modal","selected_values","is_integrate", "add_url", "list_url" ],
         components: {  
