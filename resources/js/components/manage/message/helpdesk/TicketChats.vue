@@ -45,7 +45,9 @@
             "page-footer":PageFooterVue
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
+                _uid: _uid,
                 pageData:null,
                 chatList:[],
                 current_page:1,

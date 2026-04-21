@@ -107,7 +107,9 @@
             "message-modal":MessageModalVue
         },
         data: function () {
-            return {    
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
             }
         },
         methods: { 

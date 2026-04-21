@@ -128,7 +128,9 @@
             "swal":SwalAlertVue
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
+                _uid: _uid,
                 id:0,
                 placeholder_name:'',
                 source_type:'',

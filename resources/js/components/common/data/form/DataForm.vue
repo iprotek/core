@@ -62,7 +62,9 @@
             "project-list":ProjectListVue
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
+                _uid: _uid,
                 id:0,
                 name:'',
                 data_model_type:'',

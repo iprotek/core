@@ -52,13 +52,15 @@
             },
         },
         data: function () {
-            return {  
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 is_readonly:false,
                 is_disabled:false,
                 current_color:"",
-                label_id: 'ph-label-'+this._uid,
+                label_id: 'ph-label-'+_uid,
                 input_value: this.value,
-                input2_id: 'input2-'+this._uid,
+                input2_id: 'input2-'+_uid,
 
                 toggleEye:true
             }

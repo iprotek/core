@@ -11,11 +11,13 @@
         components: { 
         },
         data: function () {
-            return {  
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 is_readonly:false,
                 is_disabled:false,
                 current_color:"",
-                label_id: 'ph-label-'+this._uid,
+                label_id: 'ph-label-'+_uid,
                 value:""
             }
         },

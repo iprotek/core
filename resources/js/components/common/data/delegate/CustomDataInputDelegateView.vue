@@ -46,7 +46,9 @@
             "swal":SwalVue
         },
         data: function () {
-            return {    
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 source_id:0,
                 dataDelegateList:[]
             }

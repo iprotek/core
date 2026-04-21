@@ -74,13 +74,15 @@
             "page-datatable":PageDataTableVue
         },
         data: function () {
-            return {    
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 current_page:1,
                 isLoading:false,
                 backupItems:[],
                 url:"/api/group/"+this.group_id+"/system/dbm/restore-list",
                 filters:{},
-                sql_file:"file-"+this._uid
+                sql_file:"file-"+_uid
             }
         },
         methods: {

@@ -92,7 +92,9 @@
             },
         },
         data: function () {
-            return {    
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 input_data:{
                     search_input:null, 
                     selections:[], 

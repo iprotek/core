@@ -115,14 +115,16 @@
             "web-submit":WebSubmitVue
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
+                _uid: _uid,
                 is_active:false,
                 is_minimize:false,
-                chat_id:'chat-input-text-'+this._uid,
+                chat_id:'chat-input-text-'+_uid,
                 messages:[],
                 is_group:false,
                 sendText:'',
-                chatContainerEl:'chat-container-'+this._uid,
+                chatContainerEl:'chat-container-'+_uid,
                 isSend:false,
                 errorMessage:''
 

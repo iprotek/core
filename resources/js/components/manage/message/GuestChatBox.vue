@@ -103,7 +103,9 @@
             "guest-chat-messages":GuestChatMessagesVue,
         },
         data: function () {
-            return { 
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 has_upload:false,
                 has_info:false,
                 chat_input:{
@@ -114,7 +116,7 @@
                 errors:[],
                 message:'',
                 is_send:false,
-                chat_container:'chat-container-'+this._uid
+                chat_container:'chat-container-'+_uid
             }
         },
         methods: { 

@@ -25,8 +25,10 @@
             },
         },
         data: function () {
-            return {  
-                data_list_id: 'data-list-'+this._uid,
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
+                data_list_id: 'data-list-'+_uid,
                 search_text:'',
                 search_fn:null,
                 counter:1,

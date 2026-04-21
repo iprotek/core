@@ -57,7 +57,9 @@
             "swal-alert":SwalAlertVue
         },
         data: function () {
-            return { 
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 id:0,
                 name:'project',
                 details:'',

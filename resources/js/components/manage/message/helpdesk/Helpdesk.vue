@@ -102,7 +102,9 @@
         components: {  
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
+                _uid: _uid,
                 has_chat:false,
                 ticket_list:[],
                 isLoading:false,

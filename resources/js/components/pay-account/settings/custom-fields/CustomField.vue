@@ -64,10 +64,12 @@
             },
         },
         data: function () {
-            return {    
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 item_value:null,
-                checkboxName:'checkbox-'+this._uid,
-                inputEl:'input-el-'+this._uid
+                checkboxName:'checkbox-'+_uid,
+                inputEl:'input-el-'+_uid
             }
         },
         methods: { 

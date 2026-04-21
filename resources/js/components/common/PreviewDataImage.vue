@@ -36,10 +36,12 @@
         components: {    
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
-                previewModal:'preview-data-modal-'+this._uid,
-                previewImage:'preview-data-image-'+this._uid,
-                previeImageCaption: 'preview-data-image-caption-'+this._uid,
+                _uid: _uid,
+                previewModal:'preview-data-modal-'+_uid,
+                previewImage:'preview-data-image-'+_uid,
+                previeImageCaption: 'preview-data-image-caption-'+_uid,
                 imageIndex:0,
                 data:{
                     name:'',

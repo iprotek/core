@@ -141,7 +141,9 @@
             "add-delegate-data":AddEditSourceDataVue
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
+                _uid: _uid,
                 is_add_edit:false,
                 new_data:0,
                 source_id:0,

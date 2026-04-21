@@ -64,7 +64,9 @@
             "modal-custom-field":ModalCustomFieldVue
         },
         data: function () {
-            return {    
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 pageFooterData:null,
                 current_page:1,
                 isLoad:false,

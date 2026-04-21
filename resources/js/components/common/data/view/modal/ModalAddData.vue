@@ -50,7 +50,9 @@
             "user-input2":UserInput2Vue
         },
         data: function () {
-            return { 
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 is_link: true,
                 has_model:true,
                 //input_value:'',

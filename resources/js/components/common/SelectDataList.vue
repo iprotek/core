@@ -27,9 +27,11 @@
             },
         },
         data: function () {
-            return {  
-                data_input_list_id:'data-input_'+this._uid,
-                data_list_id: 'data-list-'+this._uid,
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
+                data_input_list_id:'data-input_'+_uid,
+                data_list_id: 'data-list-'+_uid,
                 search_text:'',
                 search_fn:null,
                 counter:1,

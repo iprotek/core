@@ -19,10 +19,12 @@
         components: {    
         },
         data: function () {
+            let _uid = getCurrentInstance().uid;
             return {
-                previewModal:'preview-modal-'+this._uid,
-                previewImage:'preview-image-'+this._uid,
-                previeImageCaption: 'preview-image-caption'+this._uid
+                _uid: _uid,
+                previewModal:'preview-modal-'+_uid,
+                previewImage:'preview-image-'+_uid,
+                previeImageCaption: 'preview-image-caption'+_uid
             }
         },
         methods: {  

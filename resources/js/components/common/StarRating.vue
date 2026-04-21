@@ -20,7 +20,9 @@
         components: { 
         },
         data: function () {
-            return { 
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
                 final_starCount:5,
                 star: [5,4,3,2,1],
                 rate: 0,

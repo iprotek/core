@@ -11,8 +11,10 @@
         components: { 
         },
         data: function () {
-            return {    
-                summernoteId: 'summernote-'+this._uid,
+            let _uid = getCurrentInstance().uid;
+            return {
+                _uid: _uid,
+                summernoteId: 'summernote-'+_uid,
                 content : ''
             }
         },
