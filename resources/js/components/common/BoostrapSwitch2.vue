@@ -40,7 +40,7 @@
                 this.$emit("input", this.input_check);
                 this.$emit('update:modelValue', this.input_check);
                 if(!this.outside_trigger)
-                this.$emit("value_changed", this.input_check);
+                    this.$emit("value_changed", this.input_check);
                 this.outside_trigger = false;
             },
             setOn:function(check){
@@ -63,7 +63,7 @@
             if(exists){ 
                 $(function(){
                     setTimeout(()=>{
-                        if(vm.value){
+                        if(vm.value || vm.modelValue){
                             vm.input_check = true;
                         }
                         else{
