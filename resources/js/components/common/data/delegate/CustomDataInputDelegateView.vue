@@ -34,11 +34,14 @@
     import UserInput2Vue from '../../UserInput2.vue';
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "value", "source_name", "key_name" ],
+        props:[ "modelValue", "value", "source_name", "key_name" ],
         watch: {
             value(newValue) {
                 this.source_id = newValue;
             },
+            modelValue(newValue){
+                this.source_id = newValue;
+            }
         },
         components: { 
             "user-input2":UserInput2Vue,

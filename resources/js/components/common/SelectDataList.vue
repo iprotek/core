@@ -10,20 +10,15 @@
     
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "value", "exclude_values", "placeholder","is_text_value","url","placeholder","readonly" ],
+        props:[ "modelValue", "value", "exclude_values", "placeholder","is_text_value","url","placeholder","readonly" ],
         components: { 
         },
         watch: {
+            modelValue(newValue){
+                this.search_text = newValue; 
+            },
             value(newValue) {
-                this.search_text = newValue;
-                /*
-                this.item = newValue;
-                if(this.item){
-                    this.selectedText = this.item.text;
-                    this.selectedItem = this.item;
-                }
-                */
-                //this.loadElement();
+                this.search_text = newValue; 
             },
         },
         data: function () {
@@ -42,13 +37,13 @@
             showOptions:function(){
                 var input = document.querySelector('#'+this.data_input_list_id);
                 if(!input.value){
-                    //input.blur();
                     input.value = ' ';
                     input.value = '';
                 }
            },  
             text_changed:function(){                
                 this.$emit("input", this.search_text);
+                this.$emit('update:modelValue', this.search_text);
                 var vm = this;
 
                 var selected = false;

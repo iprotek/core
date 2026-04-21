@@ -42,7 +42,7 @@
 <script>
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "type","placeholder","prepend_icon_title" , "input_style", "placeholder_style", "readonly" , "placeholder_description", "placeholder_focus_color", "disabled", "value", "prepend_icon" , "datalist"],
+        props:[ "modelValue", "type","placeholder","prepend_icon_title" , "input_style", "placeholder_style", "readonly" , "placeholder_description", "placeholder_focus_color", "disabled", "value", "prepend_icon" , "datalist"],
         emits:[ "value_changed"],
         components: { 
         },
@@ -50,6 +50,9 @@
             value(newValue) {
                 this.input_value = newValue;
             },
+            modelValue(newValue){
+                this.input_value = newValue;
+            }
         },
         data: function () {
             let _uid = getCurrentInstance().uid;
@@ -68,10 +71,12 @@
         methods: {
             value_changed:function(evt){
                 this.$emit("input", this.input_value);
+                this.$emit("update:modelValue", this.input_value);
                 this.$emit("value_changed", evt, this.input_value);
             },
             userInputKeyUp:function(evt){
                 this.$emit("input", this.input_value);
+                this.$emit('update:modelValue', this.input_value);
                 this.$emit("keyup", this.input_value);
             },
             setReadOnly:function(val){

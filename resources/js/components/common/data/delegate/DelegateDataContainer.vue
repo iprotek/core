@@ -131,11 +131,14 @@
     import { getCurrentInstance } from 'vue';
     import AddEditSourceDataVue from './AddEditSourceData.vue';
     export default {
-        props:[ "value", "source_name", "title" ],
+        props:[ "modelValue", "value", "source_name", "title" ],
         watch: {
             value(newValue) {
                 this.source_id = newValue;
             },
+            modelValue(newValue){
+                this.source_id = newValue;
+            }
         },
         components: { 
             "add-delegate-data":AddEditSourceDataVue

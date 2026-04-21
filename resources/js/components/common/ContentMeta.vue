@@ -82,7 +82,7 @@
     import SwalVue from './Swal.vue';
     import UserInput2Vue from './UserInput2.vue';
     export default {
-        props:[ "source", "value", "meta_title", "group_id"],
+        props:[ "modelValue", "source", "value", "meta_title", "group_id"],
         components: { 
             "file-upload":FileUploadsVue,
             "user-input2":UserInput2Vue,
@@ -90,9 +90,12 @@
             "swal":SwalVue
         },
         watch: {
+            modelValue(newValue){
+                this.source_id = newValue; 
+                this.file_target_id = this.group_id+'-'+this.source_id+'-'+this.source;
+            },
             value(newValue) {
-                this.source_id = newValue;
-                //this.load_uploads();
+                this.source_id = newValue; 
                 this.file_target_id = this.group_id+'-'+this.source_id+'-'+this.source;
             },
         },

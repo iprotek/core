@@ -7,7 +7,7 @@
 <script>
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "value", "height", "placeholder", "group_id", "is_local", "is_image_upload"],
+        props:[ "modelValue", "value", "height", "placeholder", "group_id", "is_local", "is_image_upload"],
         components: { 
         },
         data: function () {
@@ -19,6 +19,13 @@
             }
         },
         watch: {
+            modelValue(newValue){
+                var vm = this;
+                if(vm.content != newValue){
+                    vm.content = newValue; 
+                    $('#'+vm.summernoteId).summernote('code', newValue );
+                }
+            },
             value(newValue) {
                 var vm = this;
                 if(vm.content != newValue){
@@ -44,6 +51,7 @@
                     onChange: function(contents, $editable) {
                         vm.content = contents;
                         vm.$emit("input", contents);
+                        vm.$emit('update:modelValue', contents);
                         //document.querySelector('#intro').value = contents;
                     }
                 };

@@ -14,24 +14,37 @@
 <script>
     import Select2Vue from './Select2.vue';
     export default {
-        props:[ "value",  "select_theme",  "set_icon_list", "placeholder"],
+        props:[ "modelValue", "value",  "select_theme",  "set_icon_list", "placeholder"],
         components: { 
             "select2":Select2Vue
         },
         watch: {
+            modelValue(newValue){
+                this.color = newValue;
+                var colorSel = null;
+                var vm = this; 
+                colorSel = vm.iconList.filter(a=>a.id == -1)[0]; 
+                if(colorSel){
+                    setTimeout(()=>{
+                        vm.selectItem = colorSel; 
+                        console.log("Selected",colorSel);
+                    }, 500);
+                } 
+
+            },
             value(newValue) {
                 //console.log()
                 //if(this.color != newValue){
-                    this.color = newValue;
-                    var colorSel = null;
-                    var vm = this; 
-                    colorSel = vm.iconList.filter(a=>a.id == -1)[0]; 
-                    if(colorSel){
-                        setTimeout(()=>{
-                            vm.selectItem = colorSel; 
-                            console.log("Selected",colorSel);
-                        }, 500);
-                    } 
+                this.color = newValue;
+                var colorSel = null;
+                var vm = this; 
+                colorSel = vm.iconList.filter(a=>a.id == -1)[0]; 
+                if(colorSel){
+                    setTimeout(()=>{
+                        vm.selectItem = colorSel; 
+                        console.log("Selected",colorSel);
+                    }, 500);
+                } 
             },
         },
         data: function () {
@@ -55,6 +68,7 @@
                 //var colorSel = vm.iconList.filter(a=>a.id == val.id)[0];
                 //vm.selectItem = colorSel;
                 vm.$emit("input", vm.color);
+                this.$emit('update:modelValue', vm.color);
                 vm.$emit('icon_selected', val); 
  
             },
@@ -68,10 +82,12 @@
 
             value_changed:function(){
                 this.$emit("input", this.color);
+                this.$emit('update:modelValue', this.color);
             }, 
             colorSelected:function(color){
                 this.color = color;
                 this.$emit("input", this.color);
+                this.$emit('update:modelValue', this.color);
             }
 
         },

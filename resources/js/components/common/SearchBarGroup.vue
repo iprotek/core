@@ -76,12 +76,20 @@
     import OrderFieldsVue from './OrderFields.vue'
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "list_title", "add_title","value" ],
+        props:[ "modelValue", "list_title", "add_title","value" ],
         components: { 
             "select2": Select2Vue,
             "order-fields":OrderFieldsVue
         },
         watch: {
+            modelValue(newValue){
+                if(newValue){
+                    var inp = this.input_data;
+                    inp.search_input = newValue.search_input;
+                    inp.selections = newValue.selections;
+                    inp.order_fields = newValue.order_fields;
+                }
+            },
             value(newValue) {
                 if(newValue){
                     var inp = this.input_data;

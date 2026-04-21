@@ -94,7 +94,7 @@
     import { getCurrentInstance } from 'vue';
     export default {
         name:'DataFieldItem',
-        props:[  "value", "has_down", "data_id", "group_id", "is_data", "is_small" ],
+        props:[ "modelValue", "value", "has_down", "data_id", "group_id", "is_data", "is_small" ],
         components: {
             "swal-alert":SwalAlertVue
         },
@@ -106,6 +106,13 @@
                 this.fields = newValue.fields ? newValue.fields : [];
                 this.order_no = newValue.order_no;
             },
+            modelValue(newValue){
+                this.id = newValue.id;
+                this.name = newValue.name;
+                this.type = newValue.type;
+                this.fields = newValue.fields ? newValue.fields : [];
+                this.order_no = newValue.order_no;
+            }
         },
         data: function () {
             let _uid = getCurrentInstance().uid;
@@ -184,7 +191,7 @@
             },
             update_input:function(){
                 //return;
-                this.$emit('input', {
+                let data = {
                     id: this.id,
                     name: this.name,
                     type: this.type,
@@ -193,7 +200,9 @@
                     model_field_id: this.value.model_field_id,
                     data_model_id: this.value.data_model_id,
                     value: this.input_value
-                } );
+                };
+                this.$emit('input', data );
+                this.$emit('update:modelValue', data);
             },
             remove_item:function(item){
                 

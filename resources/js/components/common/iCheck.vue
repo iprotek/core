@@ -12,7 +12,7 @@
 <script>
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "type", "label", "name", "checked", "data_value", "value"],
+        props:[ "modelValue", "type", "label", "name", "checked", "data_value", "value"],
         components: {    
         },
         emits: ["update:checked", "selected"], //For hint purpose
@@ -38,6 +38,7 @@
                 var vm = this;
                 //For v-model
                 this.$emit("input", this.data_value);
+                this.$emit('update:modelValue', this.data_value);
                 //For emits
                 var is_checked = document.querySelector('#'+this.radioId).checked;
                 this.$emit('update:checked', is_checked, vm.data_value);

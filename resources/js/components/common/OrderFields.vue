@@ -16,7 +16,7 @@
 <script> 
     import { getCurrentInstance } from 'vue';
     export default {
-        props: ["value"],
+        props: [ "modelValue", "value"],
         data: function () {
             let _uid = getCurrentInstance().uid;
             return {
@@ -30,6 +30,9 @@
             }
         }, 
         watch: {
+            modelValue(newValue){
+                this.setValue(newValue);
+            },
             value(newValue) {
                 this.setValue(newValue);
             },

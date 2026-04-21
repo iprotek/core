@@ -8,20 +8,15 @@
     
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "value","placeholder","is_text_value","url" ],
+        props:[ "modelValue", "value","placeholder","is_text_value","url" ],
         components: { 
         },
         watch: {
+            modelValue(newValue){
+                this.search_text = newValue;
+            },
             value(newValue) {
                 this.search_text = newValue;
-                /*
-                this.item = newValue;
-                if(this.item){
-                    this.selectedText = this.item.text;
-                    this.selectedItem = this.item;
-                }
-                */
-                //this.loadElement();
             },
         },
         data: function () {
@@ -39,6 +34,7 @@
         methods: {  
             text_changed:function(){                
                 this.$emit("input", this.search_text);
+                this.$emit('update:modelValue', this.search_text);
             },
             sel_changed:function(evt){
                 var vm = this;
@@ -46,6 +42,7 @@
                 var selected = false;
                 
                 this.$emit("input", this.id);
+                this.$emit('update:modelValue', this.id);
                 vm.item_list.forEach((el)=>{
                     if(selected)
                         return; 

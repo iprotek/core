@@ -10,12 +10,17 @@
 
 <script>
     export default {
-        props:[ "value", "type","active_class", "inactive_class", "field", "is_right"  ],
+        props:[ "modelValue", "value", "type","active_class", "inactive_class", "field", "is_right"  ],
         components: { 
         },
         watch: {
+            modelValue(newValue){
+                if(newValue){
+                   this.filter = newValue; 
+                }
+                this.getItemIndex();
+            },
             value(newValue) {
-                //this.input_value = newValue;
                 if(newValue){
                    this.filter = newValue; 
                 }
@@ -74,8 +79,10 @@
                     
                     var trans = vm.filter;
                     vm.$emit('input', null);
+                    vm.$emit('update:modelValue', null);
                     setTimeout(()=>{
                         vm.$emit('input', trans);
+                        vm.$emit('update:modelValue', trans);
                         vm.$emit('sort_changed', vm.selected_sort, vm.filter);
                     }, 10);
                     //this.$emit('update:value', this.filter);

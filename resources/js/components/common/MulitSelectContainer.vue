@@ -34,7 +34,7 @@
     import { getCurrentInstance } from 'vue';
     import Select2Vue from './Select2.vue'; 
     export default {
-        props:[ "value", "title", "modal_selector", "select_placeholder", "url", "has_clear", "empty_items_text"],
+        props:[ "modelValue", "value", "title", "modal_selector", "select_placeholder", "url", "has_clear", "empty_items_text"],
         components: { 
             "select2":Select2Vue
         },
@@ -42,6 +42,9 @@
             value(newValue) {
                 this.items = newValue;
             },
+            modelValue(newValue){
+                this.items = newValue;
+            }
         },
         data: function () {
             let _uid = getCurrentInstance().uid;
@@ -59,6 +62,7 @@
                 var vm = this;
                 vm.items = vm.items.filter(a=>a!=item); 
                 vm.$emit("input", vm.items);
+                vm.$emit('update:modelValue', vm.items);
             },
             fn_item_selected:function(val){ 
                 //console.log(val, this.item_select);
@@ -82,6 +86,7 @@
                 vm.items = items;
 
                 vm.$emit("input", vm.items);
+                vm.$emit('update:modelValue', vm.items);
                 vm.clear_selection();
             },
             clear_selection:function(){

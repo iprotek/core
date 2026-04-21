@@ -31,19 +31,25 @@
      */
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "group_id", "value", "selection_list", "target_name", "target_id", "is_set"],
+        props:[ "modelValue", "group_id", "value", "selection_list", "target_name", "target_id", "is_set"],
         $emits:['selected'],
         components: { 
         },
         watch: {
             value(newValue) {
-                //this.color = newValue;
                 this.selectedValue = {
                     name:newValue.name,
                     color:newValue.color,
                     description:newValue.description
                 }
             },
+            modelValue(newValue){
+                this.selectedValue = {
+                    name:newValue.name,
+                    color:newValue.color,
+                    description:newValue.description
+                }
+            }
         },
         data: function () {
             let _uid = getCurrentInstance().uid;
@@ -87,6 +93,7 @@
                     };
 
                     vm.$emit('input', vm.selectedValue);
+                    vm.$emit('update:modelValue', vm.selectedValue);
                     vm.$emit('selected', vm.selectedValue);
                     if(vm.is_set === true){
                         vm.setColorTag();

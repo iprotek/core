@@ -6,7 +6,7 @@
 <script> 
     import { getCurrentInstance } from 'vue';
     export default {
-        props:["off_color","on_color","value",  "disabled"],
+        props:["off_color","on_color","value",  "disabled", "modelValue"],
         components: {    
         },
         data: function () {
@@ -19,6 +19,11 @@
             }
         },
         watch: {
+            modelValue(newValue){
+                this.input_value = newValue ? true:false;
+                this.input_check = this.input_value;
+                $('#'+this.switchID).bootstrapSwitch('state', this.input_value);
+            },
             value(newValue) {
                 //this.outside_trigger = true;
                 this.input_value = newValue ? true:false;
@@ -33,6 +38,7 @@
             value_changed:function(event){
                 //console.log("Event onchange", event);
                 this.$emit("input", this.input_check);
+                this.$emit('update:modelValue', this.input_check);
                 if(!this.outside_trigger)
                 this.$emit("value_changed", this.input_check);
                 this.outside_trigger = false;

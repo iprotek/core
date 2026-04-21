@@ -33,7 +33,7 @@
     import SwalInputVue from './SwalInput.vue';
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "value", "modal","selected_values","is_integrate", "add_url", "list_url" ],
+        props:[ "modelValue", "value", "modal","selected_values","is_integrate", "add_url", "list_url" ],
         components: {  
             "swal-input":SwalInputVue
         },
@@ -50,10 +50,13 @@
             }
         },
         watch: {
+            modelValue(newValue){
+                this.base_parent_id = newValue * 1;   
+                this.initLoad();
+            },
             value(newValue) {
                 this.base_parent_id = newValue * 1;   
                 this.initLoad();
-
             },
         },
         methods: {  

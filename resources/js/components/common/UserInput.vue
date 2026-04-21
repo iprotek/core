@@ -7,7 +7,7 @@
 <script>
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "type","placeholder", "input_style", "placeholder_style", "readonly" , "placeholder_description", "placeholder_focus_color", "disabled" ],
+        props:[ "modelValue", "type","placeholder", "input_style", "placeholder_style", "readonly" , "placeholder_description", "placeholder_focus_color", "disabled" ],
         components: { 
         },
         data: function () {
@@ -24,6 +24,7 @@
         methods: {
             value_changed:function(){
                 this.$emit("input", this.value);
+                this.$emit("update:modelValue", this.value);
             },
             setReadOnly:function(val){
                 this.is_readonly = val ? true: false;

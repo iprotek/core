@@ -1,6 +1,8 @@
 <template>
     <div class="w-100">
-        <label v-text="'Total Items: '+total_item"></label>
+        <label >
+            {{ 'Total Items: '+total_item }}
+        </label>
         <div v-if="!is_reverse" style="float:right;" class="text-nowrap">
             <button @click="pagePrev" class="btn btn-primary" v-text="'<'" :disabled="current_page<=1">  </button>
             <label>Page</label>
@@ -20,7 +22,7 @@
 </template>
 <script> 
     export default {
-        props: ["value", "is_reverse"],
+        props: { "modelValue":null, "value":null, "is_reverse":null},
         data: function () {
             return { 
                 current_page:1,
@@ -31,12 +33,18 @@
             }
         }, 
         watch: {
-            value(newValue) {
+            modelValue(newValue) {
                 this.input_value = newValue;
                 if(this.input_value){
                     this.setPaging(this.input_value);
                 }
             },
+            value(newValue){
+                this.input_value = newValue;
+                if(this.input_value){
+                    this.setPaging(this.input_value);
+                }
+            }
         },
         methods: { 
             setPaging:function(paginateData){
@@ -69,7 +77,7 @@
                 this.$emit('page_changed', this.current_page);
             }
         },
-        mounted: function () { 
+        mounted: function () {
             if(this.value){
                 this.input_value = this.value;
                 this.setPaging(this.value);

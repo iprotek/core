@@ -11,7 +11,7 @@
 <script>
     import { getCurrentInstance } from 'vue'
     export default {
-        props:[ "value" ,"allow_multiple", "minimum_input_length" ,"is_remain_focus_on_enter", "is_clean_after_select", "url", "custom_data" , "default_theme", "append_data", "placeholder", "query_filters" ,"filters", "modal_selector", "allowtag", "has_clear", "disabled", "search_param", "display_items_no", "select_data", "select_template" ],
+        props:[ "modelValue", "value" ,"allow_multiple", "minimum_input_length" ,"is_remain_focus_on_enter", "is_clean_after_select", "url", "custom_data" , "default_theme", "append_data", "placeholder", "query_filters" ,"filters", "modal_selector", "allowtag", "has_clear", "disabled", "search_param", "display_items_no", "select_data", "select_template" ],
         emits: {
             data_result:(data)=>{},
             selected:(item, tags)=>{},
@@ -20,6 +20,16 @@
         components: { 
         },
         watch: {
+            modelValue(newValue){
+                this.item = newValue;
+                if(this.item){
+                    this.selectedText = this.item.text;
+                    this.selectedItem = this.item;
+                }
+                if(this.item && this.item.id ==0)
+                    this.loadElement();
+
+            },
             value(newValue) {
                 this.item = newValue;
                 if(this.item){
@@ -28,7 +38,6 @@
                 }
                 if(this.item && this.item.id ==0)
                     this.loadElement();
-                //this.loadElement();
             },
         },
         data: function () {
@@ -202,6 +211,7 @@
                         text: vm.selectedItem.text
                     }
                     vm.$emit("input", vm.selectedItem);
+                    vm.$emit('update:modelValue', vm.selectedItem);
                     if(vm.allowtag && vm.allow_multiple){
                         vm.sanitizeDuplicate();
                     }

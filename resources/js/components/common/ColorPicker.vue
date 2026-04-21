@@ -20,11 +20,25 @@
     import Select2Vue from './Select2.vue';
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "value", "is_selection" ,"select_theme"],
+        props:[ "modelValue", "value", "is_selection" ,"select_theme"],
         components: { 
             "select2":Select2Vue
         },
         watch: {
+            modelValue(newValue){
+                this.color = newValue;
+                if(this.is_selection){
+                    var colorSel = null;
+                    if(!this.color){
+                        colorSel = this.colordata[0];
+                    }
+                    else{
+                        colorSel = this.colordata.filter(a=>a.id == this.color)[0];
+                    }
+                    if(colorSel)
+                        this.selectItem = colorSel;
+                }
+            },
             value(newValue) {
                 this.color = newValue;
                 if(this.is_selection){
@@ -81,6 +95,7 @@
             itemSelected:function(val){
                 this.color = val.id;
                 this.$emit("input", this.color);
+                this.$emit('update:modelValue', this.color);
                 this.$emit('color_selected', val);
                 //console.log(val);
             },
@@ -95,10 +110,12 @@
 
             value_changed:function(){
                 this.$emit("input", this.color);
+                this.$emit('update:modelValue', this.color);
             }, 
             colorSelected:function(color){
                 this.color = color;
                 this.$emit("input", this.color);
+                this.$emit('update:modelValue', this.color);
             }
 
         },

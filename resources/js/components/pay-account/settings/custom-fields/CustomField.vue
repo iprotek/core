@@ -111,16 +111,19 @@
                 //console.log(evt, this.item_value);
 
                 this.$emit('input', this.item_value);
+                this.$emit('update:modelValue', this.item_value);
                 this.$emit('changed', this.el_object, this.item_value);
             },
             textChanged:function(evt){
                 this.$emit('input', this.item_value);
+                this.$emit('update:modelValue', this.item_value);
                 this.$emit('changed', this.el_object, this.item_value);
                 this.value_changed();
             },
             selectionChanged:function(evt){
                 //console.log(evt);
                 this.$emit('input', this.item_value);
+                this.$emit('update:modelValue', this.item_value);
                 this.$emit('changed', this.el_object, this.item_value);
             },
             checkBoxChanged:function(){
@@ -133,6 +136,7 @@
                 });
                 this.item_value = selectedValues;
                 this.$emit('input', this.item_value);
+                this.$emit('update:modelValue', this.item_value);
                 this.$emit('changed', this.el_object, this.item_value);
             }
         },
@@ -155,6 +159,7 @@
                     this.item_value = "";
                 }
                 this.$emit('input', this.item_value);
+                this.$emit('update:modelValue', this.item_value);
             }
 
         },

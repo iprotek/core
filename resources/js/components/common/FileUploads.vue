@@ -69,13 +69,17 @@
     import PreviewImageVue from './PreviewImage.vue';
     import ButtonCopy from './ButtonCopy.vue';
     export default {
-        props:[ "target_name" , "value", "gallery_title", "group_id"],
+        props:[ "modelValue", "target_name" , "value", "gallery_title", "group_id"],
         components: { 
             "swal2":SwalVue,
             "preview-image":PreviewImageVue,
             "button-copy": ButtonCopy
         },
         watch: {
+            modelValue(newValue){
+                this.target_id = newValue;
+                this.load_uploads();
+            },
             value(newValue) {
                 this.target_id = newValue;
                 this.load_uploads();
@@ -269,6 +273,7 @@
             },
             value_changed:function(){
                 this.$emit("input", this.target_id);
+                this.$emit('update:modelValue', this.target_id);
             }, 
             load_uploads:function(is_update =false){
                 var vm = this; 

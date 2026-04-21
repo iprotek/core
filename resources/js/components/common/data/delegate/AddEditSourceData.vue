@@ -116,11 +116,14 @@
     import SwalAlertVue from '../../Swal.vue';
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "value","view_scale", "source_id" , "source_name" ],
+        props:["modelValue", "value","view_scale", "source_id" , "source_name" ],
         watch: {
             value(newValue) {
                 this.id = newValue;
             },
+            modelValue(newValue){
+                this.id = newValue;
+            }
         },
         components: { 
             "user-input2":UserInput2Vue,
