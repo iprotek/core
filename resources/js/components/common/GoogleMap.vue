@@ -37,7 +37,7 @@
 
             </span>
         </span>
-        <div :id="'google-map-'+_uid" :style="'height:'+(height ? height: '200px;' )+';width:'+(width ? width :'200px')+';'" ></div>
+        <div :id="google_map_id" :style="'height:'+(height ? height: '200px;' )+';width:'+(width ? width :'200px')+';'" ></div>
         <div>
             <button class="btn btn-outline-primary btn-sm" @click="set_info_window_once = !set_info_window_once">
                 <span v-if="set_info_window_once">
@@ -67,6 +67,8 @@
 <script> 
     import WebSubmitVue from './WebSubmit.vue';
     import { getCurrentInstance } from 'vue';
+    import { shallowRef, onMounted } from 'vue';
+    const mapInstance = shallowRef(null);
     export default {
         props:[ 
             "height", 
@@ -146,7 +148,7 @@
             "web-submit":WebSubmitVue
         },
         data: function () {
-            let _uid = getCurrentInstance().uid;
+            let _uid = `v_${Math.random().toString(36).slice(2, 10)}`;
             return {
                 _uid: _uid,
                 set_info_window_once: this.info_window_once !== false ? true :false,
@@ -421,12 +423,12 @@
                 if(!vm.google_map_api_key) return;
 
                 const defaultLocation = { lat: coordinates[0].latitude, lng: coordinates[0].longitude }; 
-
-                vm.map = new google.maps.Map(document.getElementById(vm.google_map_id), {
+                mapInstance.value = new google.maps.Map(document.getElementById(vm.google_map_id), {
                     center: defaultLocation,
                     zoom: zoom,
                     mapId: vm.google_map_api_id
                 });
+                vm.map = mapInstance;
                 
                 //MAP LOADED
                 google.maps.event.addListenerOnce(vm.map, 'tilesloaded', function () {
@@ -692,15 +694,17 @@
                     borderColor = htmlElement.querySelector('path').getAttribute('stroke');
 
                 }
+                
                 var marker = new google.maps.marker.AdvancedMarkerElement({
                     position: {
-                        lat: location.latitude,
-                        lng: location.longitude,
+                        lat: location.latitude * 1,
+                        lng: location.longitude * 1,
                     },
                     map: vm.map,
                     title: dataInfo && dataInfo.title ? dataInfo.title : '',
                     content: dataInfo && dataInfo.htmlIcon ? htmlElement : null
                 });
+                
 
                 let infoWindow = null;
                 let hoverInfoWindow = null;
@@ -1304,6 +1308,7 @@
                 pathData.default_color = hex_color;
 
                 ///return line;
+                pathData.id = `v_${Math.random().toString(36).slice(2, 10)}`;
                 return pathData;
             },
 
