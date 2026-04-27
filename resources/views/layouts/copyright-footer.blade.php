@@ -1,5 +1,5 @@
 
-<footer class="main-footer m-0 sticky-bottom py-1 bg-white">
+<div class="main-footer m-0 sticky-bottom py-1 bg-white">
     <div  class="row mx-4">
         <div class="col-sm-5">
             <strong>Copyright©{{date('Y')}} <a href="#">{{ config('app.name') }}</a>.</strong> All rights reserved.
@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-</footer>
+</div>
 @if(!auth('admin')->check())
     <div id="guest-chat-container-el" style="bottom:10%; right:10%; position:fixed; z-index:10000;"> 
         <?php
