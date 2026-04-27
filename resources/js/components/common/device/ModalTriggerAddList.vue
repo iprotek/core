@@ -57,7 +57,15 @@
                     </div>
                     <div class="col-sm-7">
                         <div class="card mt-2">
-
+                            <div class="card-header text-center p-1">
+                                <small> <b>
+                                    FILTER TARGET
+                                </b></small>
+                            </div>
+                            <div class="card-body p-1">
+                            </div>
+                        </div>
+                        <div class="card mt-2">
                             <div class="card-header text-center p-1">
                                 <small> <b>
                                 REGISTER / NEW ENTRY TRIGGER COMMAND
