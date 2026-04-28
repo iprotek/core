@@ -59,7 +59,7 @@
                         <div class="card mt-2">
                             <div class="card-header text-center p-1">
                                 <small> <b>
-                                    FILTER TARGET
+                                    FILTER TARGET PARAMETER
                                 </b></small>
                             </div>
                             <div class="card-body p-1">
