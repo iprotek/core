@@ -247,6 +247,7 @@
                 var vm = this;
                 vm.triggerList = [];
                 vm.isLoading = true;
+                console.log('Device Target: ', vm.target_id, vm.target_name );
                 WebRequest2('GET', '/api/group/'+this.group_id+'/devices/accounts/list-device-triggers?'+this.queryString({
                     target_id: this.target_id,
                     target_name: this.target_name,
