@@ -326,7 +326,10 @@
             if(this.gallery_title){
                 this.galleryTitle = this.gallery_title;
             }
-            if(this.value){
+            if(this.modelValue){
+                this.target_id = this.modelValue;
+            }
+            else if(this.value){
                 this.target_id = this.value;
             }
             this.load_uploads();
