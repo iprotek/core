@@ -552,6 +552,17 @@
                             target_name: vm.target_name,
                             target_id: vm.target_id
                         };
+
+                        if(data.target_params && data.target_params.length > 0){
+                            data.target_params.forEach(element => {
+                                vm.trigger_field_list.push({
+                                    id:element.id,
+                                    name: element.field_name,
+                                    value: element.value
+                                });
+                            });
+                            //vm.trigger_field_list
+                        }
                     
                     
                     })
@@ -560,14 +571,12 @@
             save:function(){
                 var vm = this;
                 //'/api/group/'+this.group_id+'/devices/trigger/add'
-                var request = this.device_trigger_info;
+                var request = JSON.parse( JSON.stringify( this.device_trigger_info ));
                 request.id = this.device_trigger_id;
                 request.device_access_id = this.selected_device.id ? this.selected_device.id : ''
                 //vm.device_access_id = this.selected_device.id ? this.selected_device.id : ''
+                request.trigger_fields = JSON.stringify(vm.trigger_field_list);
 
-                //console.log("REQUEST: ",request, this.selected_device);
-                //return;
-                
                 this.$refs.swal_prompt.alert(
                     'question',
                     this.device_trigger_id? "Update Trigger?":"Add Trigger?" , 
