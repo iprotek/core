@@ -13,7 +13,7 @@
                         <div class="mt-2">
                             <label class="mb-0" > Device ACCES ID </label>
                         </div>
-                        <select2 v-model="selected_device" :query_filters="{only_active:'yes'}"   :placeholder="'-- SELECT DEVICE --'" :url="'/api/group/'+group_id+'/devices/list-selection'" :has_clear="true"  />
+                        <select2 v-model="selected_device" :query_filters="{only_active:'yes' }"   :placeholder="'-- SELECT DEVICE --'" :url="'/api/group/'+group_id+'/devices/list-selection'" :has_clear="true"  />
                         <div class="mt-1">
                             <switch2 v-model="device_trigger_info.is_active" /> <label class="mb-0"> IS ACTIVE </label>
                         </div>
@@ -33,7 +33,7 @@
                                     </div>
                                     <div v-if="show_preview" class="mt-1">
                                         <label class="mb-1">SELECT SOURCE</label>
-                                        <select2 @selected="show_preview_selected" v-if="show_preview" :query_filters="{data_schema: target_name}" v-model="selected_preview" :has_clear="true" :modal_selector="true" :url="'/api/group/'+group_id+'/devices/dynamic-selection'" :placeholder="'--Select Source--'"  />
+                                        <select2 @selected="show_preview_selected" v-if="show_preview" :query_filters="{data_schema: target_name, trigger_fields: JSON.stringify( trigger_field_list )}" v-model="selected_preview" :has_clear="true" :modal_selector="true" :url="'/api/group/'+group_id+'/devices/dynamic-selection'" :placeholder="'--Select Source--'"  />
                                     </div>
                                 </div>
                                 <small class="text-primary">*use this dynamic variable to replace your command on the current instance value.</small>
