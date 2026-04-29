@@ -63,6 +63,26 @@
                                 </b></small>
                             </div>
                             <div class="card-body p-1">
+                                <div v-if="trigger_field_list.length == 0" class="text-center">
+                                    <code> -- NO FILTER AVAILABLE -- </code>
+                                </div>
+                            </div>
+                            <div class="card-footer p-0">
+                                <div class="input-group input-group-sm">
+                                        <span class="input-group-text rounded-0 text-primary">
+                                            <span class="fa fa-list"></span>
+                                        </span>
+                                        <select v-model="trigger_field.name" class="form-control">
+                                            <option :value="''">SELECT FIELD NAME</option>
+                                            <option :value="'name'">name</option>
+                                            <option :value="'id'">id</option>
+                                        </select>
+                                        <input v-if="trigger_field.name != ''" v-model="trigger_field.value" placeholder="FIELD VALUE" style="text-align: left;" class="form-control" type="text">
+                                        <span v-if="trigger_field.name != '' && trigger_field.value !=''" class="input-group-text btn btn-success bg-success rounded-0" title="Add Filter">
+                                            <span class="fa fa-plus">
+                                            </span>
+                                        </span>
+                                    </div>
                             </div>
                         </div>
                         <div class="card mt-2">
@@ -259,6 +279,11 @@
         },
         data: function () {
             return {
+                trigger_field:{
+                    name:'',
+                    value:''
+                },
+                trigger_field_list:[],
                 promiseExec:null,
                 show_preview:false,
                 device_trigger_id:0,

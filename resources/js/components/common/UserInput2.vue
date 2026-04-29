@@ -111,7 +111,10 @@
             var el = document.getElementById(this.label_id);
             if(el)
                 this.current_color = el.style.color;  
-            if(this.value){
+            if(this.modelValue){
+                this.input_value = this.modelValue;
+            }
+            else if(this.value){
                 this.input_value = this.value;
             }
             
