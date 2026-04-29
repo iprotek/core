@@ -60,29 +60,48 @@
                             <div class="card-header text-center p-1">
                                 <small> <b>
                                     FILTER TARGET PARAMETER
-                                </b></small>
+                                </b></small> <span v-if="device_trigger_id > 0" class="fa fa-redo text-primary" title="Reload Filter"></span>
                             </div>
                             <div class="card-body p-1">
                                 <div v-if="trigger_field_list.length == 0" class="text-center">
                                     <code> -- NO FILTER AVAILABLE -- </code>
                                 </div>
-                            </div>
-                            <div class="card-footer p-0">
-                                <div class="input-group input-group-sm">
-                                        <span class="input-group-text rounded-0 text-primary">
-                                            <span class="fa fa-list"></span>
-                                        </span>
-                                        <select v-model="trigger_field.name" class="form-control">
-                                            <option :value="''">SELECT FIELD NAME</option>
-                                            <option :value="'name'">name</option>
-                                            <option :value="'id'">id</option>
-                                        </select>
-                                        <input v-if="trigger_field.name != ''" v-model="trigger_field.value" placeholder="FIELD VALUE" style="text-align: left;" class="form-control" type="text">
-                                        <span v-if="trigger_field.name != '' && trigger_field.value !=''" class="input-group-text btn btn-success bg-success rounded-0" title="Add Filter">
-                                            <span class="fa fa-plus">
+                                <div v-else class="row px-4">
+                                    <div class="col-auto" v-for="(f,i) in trigger_field_list" v-bind:key="'trigger-'+f.name+'-'+i">
+                                        <span class="input-group input-group-sm">
+                                            <span @click="remove_field_click(f)" class="input-group-text btn btn-default rounded-0 text-danger">
+                                                <span class="fa fa-times"></span>
+                                            </span>
+                                            <span  class="input-group-text text-primary">
+                                                {{f.name}}
+                                            </span>
+                                            <span  class="input-group-text">
+                                                {{f.value}}
                                             </span>
                                         </span>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="card-footer p-0">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text rounded-0 text-primary">
+                                        <span class="fa fa-list"></span>
+                                    </span>
+                                    <select v-model="trigger_field.name" @change="fn_field_selected" class="form-control">
+                                        <option :value="''">SELECT FIELD NAME</option>
+                                        <option v-for="(f,i) in triggerFields" :value="f.name" v-bind:key="'item-'+f.name+'-'+i"> {{f.name}}</option>
+                                    </select>
+                                    <input v-if="trigger_field.name != ''" v-model="trigger_field.value" 
+                                        :placeholder="`FIELD VALUE ( ${trigger_field.type } )`" 
+                                        style="text-align: left;" 
+                                        :class="'form-control '+(trigger_field.value ? '':'border-danger')" 
+                                        type="text"
+                                    >
+                                    <span @click="add_field_click" v-if="trigger_field.name != '' && trigger_field.value !=''" class="input-group-text btn btn-success bg-success rounded-0" title="Add Filter">
+                                        <span class="fa fa-plus">
+                                        </span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="card mt-2">
@@ -280,10 +299,13 @@
         data: function () {
             return {
                 trigger_field:{
+                    id:0,
                     name:'',
-                    value:''
+                    value:'',
+                    type:''
                 },
                 trigger_field_list:[],
+                triggerFields:[],
                 promiseExec:null,
                 show_preview:false,
                 device_trigger_id:0,
@@ -327,13 +349,47 @@
            }
         },
         methods:{ 
+            add_field_click:function(){
+                var vm = this;
+                vm.trigger_field_list.push({
+                    id:0,
+                    name:vm.trigger_field.name,
+                    value:vm.trigger_field.value
+                });
+                vm.trigger_field.name = '';
+                vm.trigger_field.value = '';
+                vm.trigger_field.type = '';
+
+            },
+            remove_field_click:function(val){
+                var vm = this;
+                vm.trigger_field_list = vm.trigger_field_list.filter(a=>a!=val);
+
+            },
+            fn_field_selected:function(val){
+                if(!val) return;
+                var vm = this;
+                var sel = vm.triggerFields.filter(a=>{return a.name ==  vm.trigger_field.name})[0];
+                if(!sel) return;
+                console.log(sel);
+
+                vm.trigger_field.type = sel.type_name;
+
+            },
             reset:function(){
+                var vm = this;
                 this.show_preview = false;
                 this.device_trigger_id = 0;
                 this.selected_device = {
                     id:0,
                     text:' -- SELECT DEVICE -- '
                 } 
+                
+                vm.trigger_field_list = [];
+                vm.trigger_field.id = 0;
+                vm.trigger_field.name = '';
+                vm.trigger_field.value = '';
+
                 this.device_trigger_info = {
                     trigger_name:'',
                     is_active:true,
@@ -358,7 +414,6 @@
                     target_id: this.target_id
                 };
             },
-
             show_preview_selected:function(val){
 
                 //REGISTER
@@ -377,7 +432,6 @@
                 this.loadPreview('remove');
 
             },
-
             loadPreview:function(command){
                 
                 var vm = this;
@@ -450,6 +504,7 @@
             },
             show:function(device_trigger_id = 0){ 
                 var vm = this;
+                vm.loadTriggerFields();
                 vm.reset();
 
                 this.$refs.modal.show();
@@ -532,7 +587,6 @@
                     vm.promiseExec = promiseExec;
                 });
             },
-
             remove:function(trigger_id){
                 var vm = this;
                 this.$refs.swal_prompt.alert(
@@ -545,6 +599,15 @@
                     if(res.isConfirmed && res.value.status == 1){
                         vm.$emit('data_updated');
                     }
+                });
+            },
+            loadTriggerFields:function(){
+                var vm = this;
+                vm.triggerFields = [];
+                WebRequest2('GET', `/api/group/${this.group_id}/devices/target-table-info?target=${this.target_name}`).then(resp=>{
+                    resp.json().then(data=>{
+                        vm.triggerFields = data;
+                    });
                 });
             }
 
