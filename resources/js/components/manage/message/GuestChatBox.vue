@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card card-primary card-outline direct-chat direct-chat-primary " style="min-width: 350px;">
-            <div class="card-header"><img data-card-widget="" src="/iprotek/images/temp-image.png" alt="Message User Image" class="direct-chat-img" style="width: 30px; height: 30px;"> 
+            <div class="card-header"><img data-card-widget="" src="/images/temp-image.png" alt="Message User Image" class="direct-chat-img" style="width: 30px; height: 30px;"> 
             &nbsp;
             <h3 data-card-widget="" class="card-title py-1 ml-1 text-primary">
                 Live Chat Support

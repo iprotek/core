@@ -2,7 +2,7 @@
     <div :id="value.type+'-chatbox-item-'+value.id">
         <div v-if="value" @click="setActive()" :class="'card '+(is_active ? 'card-primary':'card-secondary')+' card-outline direct-chat '+(is_active ? 'direct-chat-primary':'direct-chat-secondary')+' '+(is_minimize ? 'collapsed-card':'')" style="min-width:300px;">
             <div class="card-header">
-                <img :data-card-widget="(is_minimize?'collapse':'')" class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image" style="width:30px; height:30px;" @click=" (is_minimize ? isMinimizeClick():'')" :style="(is_minimize ? 'cursor:pointer;':'')"> 
+                <img :data-card-widget="(is_minimize?'collapse':'')" class="direct-chat-img" src="/images/temp-image.png" alt="Message User Image" style="width:30px; height:30px;" @click=" (is_minimize ? isMinimizeClick():'')" :style="(is_minimize ? 'cursor:pointer;':'')"> 
                 &nbsp;
                 <h3 :title="value.name+' ('+value.email+')'" :class="'card-title py-1 ml-1 '+(is_active ? 'text-primary':'')" :data-card-widget="(is_minimize?'collapse':'')" @click=" (is_minimize ? isMinimizeClick():'')" :style="(is_minimize ? 'cursor:pointer;':'')">
                     <small>({{value.type}}{{value.is_self && value.type != 'sms' ? '/Self':''}})</small> 
@@ -33,7 +33,7 @@
                                 <small v-if="is_group && chat.from_pay_user_account" class="direct-chat-name float-left" v-text="chat.from_pay_user_account.name"> </small>
                                 <small class="direct-chat-timestamp float-right" v-if="chat.created_at_diff" v-text="chat.created_at_diff" :title="chat.created_at"></small>
                             </div> 
-                            <img class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image"> 
+                            <img class="direct-chat-img" src="/images/temp-image.png" alt="Message User Image"> 
                             <div class="direct-chat-text mr-3">
                                 <span v-if="chat.chat_type == 'text'" v-text="chat.message"> </span>
                                 <span v-else > <span class="fa fa-paperclip"></span> Attached File </span>
@@ -59,7 +59,7 @@
                                 <span v-else :class="'direct-chat-name float-right '+(is_active ? 'text-primary':'')"> <i> (SYSTEM) </i> </span>
                                 <span class="direct-chat-timestamp float-left" v-if="chat.created_at_diff" v-text="chat.created_at_diff" :title="chat.created_at"></span>
                             </div> 
-                            <img class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image"> 
+                            <img class="direct-chat-img" src="/images/temp-image.png" alt="Message User Image"> 
                             <div class="direct-chat-text ml-3">
                                 <span v-text="chat.message" v-if="chat.chat_type == 'text'"></span>
                                 <span v-else > <span class="fa fa-paperclip"></span> Attached File </span>

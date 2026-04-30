@@ -135,7 +135,7 @@
     import BoostrapSwitch2Vue from '../../../common/BoostrapSwitch2.vue';
     import ValidationVue from '../../../common/Validation.vue';
     export default {
-        props:[  ],
+        props:[ "group_id" ],
         components: {
             "validation-view":ValidationVue,
             "page-footer":PageFooterVue,

@@ -6,7 +6,7 @@
                     <small class="direct-chat-name float-left" v-text="chat.sender_info.name"> </small>
                     <small class="direct-chat-timestamp float-right" v-if="chat.created_at_diff" v-text="chat.created_at_diff" :title="chat.created_at"></small>
                 </div> 
-                <img class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image"> 
+                <img class="direct-chat-img" src="/images/temp-image.png" alt="Message User Image"> 
                 <div class="direct-chat-text mr-3">
                     <span v-if="chat.pay_account_id == 0" v-text="chat.content"> </span> 
                     <span v-else v-html="chat.content"> </span> 
@@ -32,7 +32,7 @@
                     <span :class="'direct-chat-name float-right text-primary'" v-text="chat.sender_info.name"></span>
                     <span class="direct-chat-timestamp float-left" v-if="chat.created_at_diff" v-text="chat.created_at_diff" :title="chat.created_at"></span>
                 </div> 
-                <img class="direct-chat-img" src="/iprotek/images/temp-image.png" alt="Message User Image"> 
+                <img class="direct-chat-img" src="/images/temp-image.png" alt="Message User Image"> 
                 <div class="direct-chat-text ml-3">
                     <span v-if="chat.pay_account_id == 0" v-text="chat.content"> </span> 
                     <span v-else v-html="chat.content"> </span>  
