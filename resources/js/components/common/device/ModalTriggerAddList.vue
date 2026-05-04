@@ -52,6 +52,9 @@
                                 <div>
                                     <code>[account field="User Name" data-model="contact"]</code> - get the "User Name" field value form target source custom model fields.
                                 </div>
+                                <div>
+                                    <code>[account field="name" instance="plan_type" order="last" order-by="created_at"]</code> - get value of instance referenced objects.
+                                </div>
                             </div>
                         </div>
                     </div>
