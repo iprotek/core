@@ -1,8 +1,8 @@
 <template>
-    <span>
+    <span class="mx-1" style="border:1px dotted block;">
         <label class="mt-4">{{title}}</label>
-        <div v-if="tableData.length > 0">
-            <table class="table-bordered" style="min-width:250px;">
+        <span class="table-responsive" v-if="tableData.length > 0">
+            <table class="table-bordered mb-3" style="min-width:250px;">
                 <template  v-for="(row, i) in tableData" v-bind:key="'table-row-'+_uid+'-'+i">
                     <tr v-if="i == 0">
                         <template v-for="(data, d) in row" v-bind:key="'table-data-'+_uid+'-'+d">
@@ -21,10 +21,10 @@
                     </tr>
                 </template>
             </table>
-        </div>
-        <div v-else>
-            <code>NO RESULT</code>
-        </div>
+        </span>
+        <span v-else>
+            <code> EMPTY TABLE </code>
+        </span>
     </span>
 </template>
 
