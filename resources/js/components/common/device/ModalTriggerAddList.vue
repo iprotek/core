@@ -128,8 +128,8 @@
                                 <textarea 
                                     v-if="device_trigger_info.enable_register" 
                                     v-model="device_trigger_info.register_command_template" 
-                                    class="form-control text-sm" 
-                                    style="min-height:80px" 
+                                    class="form-control" 
+                                    style="min-height:80px;font-family:Consolas, 'Lucida Console', monospace; font-size:11px;" 
                                     placeholder="Please input your text command"
                                     @change="loadPreview('register')"
                                 ></textarea>
@@ -159,8 +159,8 @@
                                 <textarea 
                                     v-if="device_trigger_info.enable_update" 
                                     v-model="device_trigger_info.update_command_template" 
-                                    class="form-control text-sm" 
-                                    style="min-height:80px" 
+                                    class="form-control" 
+                                    style="min-height:80px;font-family:Consolas, 'Lucida Console', monospace; font-size:11px;" 
                                     placeholder="Please input your text command"
                                     @change="loadPreview('update')"
                                 ></textarea>
@@ -189,8 +189,8 @@
                                 <textarea 
                                     v-if="device_trigger_info.enable_active" 
                                     v-model="device_trigger_info.active_command_template" 
-                                    class="form-control text-sm" 
-                                    style="min-height:80px" 
+                                    class="form-control" 
+                                    style="min-height:80px;font-family:Consolas, 'Lucida Console', monospace; font-size:11px;" 
                                     placeholder="Please input your text command"
                                     @change="loadPreview('active')"
                                 ></textarea>
@@ -219,8 +219,8 @@
                                 <textarea 
                                     v-if="device_trigger_info.enable_inactive" 
                                     v-model="device_trigger_info.inactive_command_template" 
-                                    class="form-control text-sm" 
-                                    style="min-height:80px" 
+                                    class="form-control" 
+                                    style="min-height:80px;font-family:Consolas, 'Lucida Console', monospace; font-size:11px;" 
                                     placeholder="Please input your text command"
                                     @change="loadPreview('inactive')"
                                 ></textarea>
@@ -249,8 +249,8 @@
                                 <textarea 
                                     v-if="device_trigger_info.enable_remove" 
                                     v-model="device_trigger_info.remove_command_template" 
-                                    class="form-control text-sm" 
-                                    style="min-height:80px" 
+                                    class="form-control" 
+                                    style="min-height:80px;font-family:Consolas, 'Lucida Console', monospace; font-size:11px;" 
                                     placeholder="Please input your text command"
                                     @change="loadPreview('remove')"
                                 ></textarea>

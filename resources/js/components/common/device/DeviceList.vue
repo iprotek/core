@@ -103,13 +103,16 @@
                                         <span v-else class="text-danger">No</span>
                                     </td>
                                     <td>
-                                        <button @click="$refs.device_log.show(device.id)" class="btn btn-primary btn-sm" title="Trigger Logs">
+                                        <button v-if="device.type == 'mikrotik'" @click="$refs.modal_mikrotik_api.show(device.id, device.name)" class="btn btn-secondary btn-sm px-1 py-0 mx-1" title="API Prompt Terminal">
+                                            <span class="fa fa-terminal"></span>
+                                        </button>
+                                        <button @click="$refs.device_log.show(device.id)" class="btn btn-primary btn-sm px-1 py-0 mx-1" title="Trigger Logs">
                                             <span class="fa fa-list"></span>
                                         </button>
-                                        <button class="btn btn-warning btn-sm" title="Edit" @click="$refs.modal_device.show(device.id)">
+                                        <button class="btn btn-warning btn-sm px-1 py-0 mx-1" title="Edit" @click="$refs.modal_device.show(device.id)">
                                             <span class="fa fa-edit"></span>
                                         </button>
-                                        <button class="btn btn-danger btn-sm" title="Remove" @click="$refs.modal_device.remove(device.id)">
+                                        <button class="btn btn-danger btn-sm px-1 py-0 mx-1" title="Remove" @click="$refs.modal_device.remove(device.id)">
                                             <span class="fa fa-times"></span>
                                         </button>
                                     </td>
@@ -123,6 +126,7 @@
         </div>
         <modal-add-device @data_updated="loadDeviceList()" ref="modal_device"  :group_id="group_id" :set_branch_source="set_branch_source" :set_branch_source_url="set_branch_source_url" />
         <modal-device-log ref="device_log" :group_id="group_id" />
+        <modal-mikrotik-api-terminal ref="modal_mikrotik_api" :group_id="group_id" :branch_id="branch_id" :theme_info="theme_info" />
     </div>
 </template>
 
@@ -130,12 +134,14 @@
     import ModalAddDeviceVue from './ModalAddDevice.vue';
     import PageFooterVue from '../PageFooter.vue';
     import ModalDeviceLogVue from './ModalDeviceLog.vue';
+    import ModalMikrotikApiTerminalVue from './ModalMikrotikApiTerminal.vue';
     export default {
-        props:[ "group_id", "set_branch_source", "set_branch_source_url" ],
+        props:[ "theme_info", "branch_id", "group_id", "set_branch_source", "set_branch_source_url" ],
         components: {
             "modal-add-device":ModalAddDeviceVue,
             "page-footer":PageFooterVue,
-            "modal-device-log":ModalDeviceLogVue
+            "modal-device-log":ModalDeviceLogVue,
+            "modal-mikrotik-api-terminal":ModalMikrotikApiTerminalVue
         },
         data: function () {
             return {
