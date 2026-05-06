@@ -9,7 +9,7 @@
                     <small> 
                         <code>** To comply security measurements, this prompt has its own commandline and does not fully clone the mikrotik commandline prompt. This also support its own scripting condition for checking and viewing only. adding and modification action will be prevented or causes an error. Please refer to our documentation <a href="#"> here</a>. </code>
                         <div>
-                           <code> *Notice: If you use [account field=""] variable please select a target before checking. </code>
+                           <code> *Notice: If you use [account field=""] variable please select a demo target before checking. </code>
                         </div>
                     </small>
                 </div>
