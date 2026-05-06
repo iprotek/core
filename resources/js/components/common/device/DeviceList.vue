@@ -126,7 +126,7 @@
         </div>
         <modal-add-device @data_updated="loadDeviceList()" ref="modal_device"  :group_id="group_id" :set_branch_source="set_branch_source" :set_branch_source_url="set_branch_source_url" />
         <modal-device-log ref="device_log" :group_id="group_id" />
-        <modal-mikrotik-api-terminal ref="modal_mikrotik_api" :group_id="group_id" :branch_id="branch_id" :theme_info="theme_info" />
+        <modal-mikrotik-api-terminal ref="modal_mikrotik_api" :group_id="group_id" :branch_id="branch_id" :theme_info="theme_info" :target_name="target_name" />
     </div>
 </template>
 
@@ -136,7 +136,7 @@
     import ModalDeviceLogVue from './ModalDeviceLog.vue';
     import ModalMikrotikApiTerminalVue from './ModalMikrotikApiTerminal.vue';
     export default {
-        props:[ "theme_info", "branch_id", "group_id", "set_branch_source", "set_branch_source_url" ],
+        props:[ "theme_info", "branch_id", "group_id", "set_branch_source", "set_branch_source_url", "target_name" ],
         components: {
             "modal-add-device":ModalAddDeviceVue,
             "page-footer":PageFooterVue,

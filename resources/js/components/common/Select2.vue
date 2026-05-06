@@ -187,7 +187,7 @@
                 if(vm.modal_selector)
                     jSON.dropdownParent = $('#'+vm.select2Selector); //$(vm.modal_selector);
                 
-                $('#'+this.selectElID).select2(jSON).on('change', function (e) { 
+                $('#'+this.selectElID).select2(jSON).on('change', function (e) {
                     //vm.itemSelected(this.value);
                     var selectedItem = vm.itemList.filter(a=>a.id == this.value)[0];
 
