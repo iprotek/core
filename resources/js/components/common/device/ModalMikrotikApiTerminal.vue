@@ -116,23 +116,25 @@
                 timer1:null,
                 timer2:null,
                 t1_height:'120px',
-                t2_height:'120px'
+                t2_height:'120px',
+                counting:0
            }
         },
         watch: { 
             commandline_script:function(newValue){
                 var vm = this;
                 this.debounceHandler(function(){
+                    console.log()
                     vm.onTypingStopped(newValue);
-                }, vm.timer1, 1500);
+                },  1500);
             }
         },
         methods:{ 
-            debounceHandler:function(callback, timer, interval = 5000) {
-                if (timer) {
-                    clearTimeout(timer);
+            debounceHandler:function(callback,  interval = 5000) {
+                if (this.timer) {
+                    clearTimeout(this.timer);
                 }
-                timer = setTimeout(() => {
+                this.timer = setTimeout(() => {
                     //this.onTypingStopped(value);
                     if(callback){
                        callback();
@@ -141,6 +143,7 @@
             },
             onTypingStopped:function(value) {
                 // 🔁 your refresh logic here
+                console.log(this.counting++);
                 this.loadPreviewScript();
             },
             loadPreviewScript(){
@@ -265,33 +268,31 @@
             },
             sync:function() {
                 var vm = this;
-                this.$nextTick(() => { 
-                    vm.debounceHandler(function(){
-                        const t1 = vm.$refs.t1;
-                        const t2 = vm.$refs.t2;
+                this.$nextTick(() => {  
+                    const t1 = vm.$refs.t1;
+                    const t2 = vm.$refs.t2;
 
-                        // reset first so shrinking works
-                        //t1.style.height = 'auto';
-                        //t2.style.height = 'auto';
+                    // reset first so shrinking works
+                    //t1.style.height = 'auto';
+                    //t2.style.height = 'auto';
 
-                        // get tallest content height
-                        const max = Math.max(t1.scrollHeight, t2.scrollHeight);
-                        let t2Height = t2.scrollHeight;
-                        if(t2Height < t1.scrollHeight)
-                            t2Height = t1.scrollHeight;
+                    // get tallest content height
+                    const max = Math.max(t1.scrollHeight, t2.scrollHeight);
+                    let t2Height = t2.scrollHeight;
+                    if(t2Height < t1.scrollHeight)
+                        t2Height = t1.scrollHeight;
 
-                        //if(t1.scrollHeight == t2Height) return;
+                    //if(t1.scrollHeight == t2Height) return;
 
-                        // apply same height
-                        if(vm.t1_height != (t1.scrollHeight + 'px')){
-                            vm.t1_height = (t1.scrollHeight + 'px');
-                            //t1.style.height = t1.scrollHeight + 'px';
-                        }
-                        if(vm.t2_height != (t2Height + 'px')){
-                            vm.t2_height = (t2Height + 'px');
-                            //t2.style.height = t2Height + 'px';
-                        }
-                    },vm.timer2, 100);
+                    // apply same height
+                    if(vm.t1_height != (t1.scrollHeight + 'px')){
+                        vm.t1_height = (t1.scrollHeight + 'px');
+                        //t1.style.height = t1.scrollHeight + 'px';
+                    }
+                    if(vm.t2_height != (t2Height + 'px')){
+                        vm.t2_height = (t2Height + 'px');
+                        //t2.style.height = t2Height + 'px';
+                    } 
                 });
             }
 
