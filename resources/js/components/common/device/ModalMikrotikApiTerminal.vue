@@ -36,11 +36,11 @@
                     <tr>
                         <td :style="'vertical-align:top; width:'+( selected_preview.id >0 ?'50':'100' )+'%'">
                             <small>SCRIPT:</small>
-                            <textarea ref="t1" v-model="commandline_script" @input="sync" class="form-control w-100" style="font-family:Consolas, 'Lucida Console', monospace; font-size:12px; min-height:120px;" />
+                            <textarea ref="t1" v-model="commandline_script" @input="sync" class="form-control w-100" :style="`font-family:Consolas, 'Lucida Console', monospace; font-size:12px; min-height:120px;height:${t1_height};`" />
                         </td>
                         <td :style="'vertical-align:top; display:'+(selected_preview.id>0 ?'':'none')">    
                             <small>TRANSLATION:</small> &nbsp;<span class="fa fa-redo text-primary" @click="loadPreviewScript()"></span> 
-                            <textarea ref="t2" :value="preview_script" readonly class="form-control w-100" style="font-family:Consolas, 'Lucida Console', monospace; font-size:12px; min-height:120px;" />
+                            <textarea ref="t2" :value="preview_script" readonly class="form-control w-100" :style="`font-family:Consolas, 'Lucida Console', monospace; font-size:12px; min-height:120px;height:${t2_height};`" />
                         </td>
                     </tr>
                 </table>
@@ -113,22 +113,30 @@
                 },
                 title:'',
                 preview_script:'',
-                timer:null
+                timer1:null,
+                timer2:null,
+                t1_height:'120px',
+                t2_height:'120px'
            }
         },
         watch: { 
             commandline_script:function(newValue){
-                this.debounceHandler(newValue, 1500);
+                var vm = this;
+                this.debounceHandler(function(){
+                    vm.onTypingStopped(newValue);
+                }, vm.timer1, 1500);
             }
         },
         methods:{ 
-            debounceHandler:function(value, interval = 5000) {
-                if (this.timer) {
-                    clearTimeout(this.timer);
+            debounceHandler:function(callback, timer, interval = 5000) {
+                if (timer) {
+                    clearTimeout(timer);
                 }
-
-                this.timer = setTimeout(() => {
-                    this.onTypingStopped(value);
+                timer = setTimeout(() => {
+                    //this.onTypingStopped(value);
+                    if(callback){
+                       callback();
+                    }
                 }, interval);
             },
             onTypingStopped:function(value) {
@@ -137,9 +145,10 @@
             },
             loadPreviewScript(){
                 var vm = this;
+                
                 if(vm.selected_preview.id <= 0) return;
 
-                if(!vm.commandline_script || !vm.commandline_script.trim()) return;
+                if(!vm.commandline_script || !vm.commandline_script.trim()){ vm.preview_script = ''; return;}
 
                 return WebRequest2(
                     'POST', 
@@ -255,23 +264,34 @@
                 });
             },
             sync:function() {
-                this.$nextTick(() => {
-                    const t1 = this.$refs.t1;
-                    const t2 = this.$refs.t2;
+                var vm = this;
+                this.$nextTick(() => { 
+                    vm.debounceHandler(function(){
+                        const t1 = vm.$refs.t1;
+                        const t2 = vm.$refs.t2;
 
-                    // reset first so shrinking works
-                    t1.style.height = 'auto';
-                    t2.style.height = 'auto';
+                        // reset first so shrinking works
+                        //t1.style.height = 'auto';
+                        //t2.style.height = 'auto';
 
-                    // get tallest content height
-                    const max = Math.max(t1.scrollHeight, t2.scrollHeight);
-                    let t2Height = t2.scrollHeight;
-                    if(t2Height < t1.scrollHeight)
-                        t2Height = t1.scrollHeight;
+                        // get tallest content height
+                        const max = Math.max(t1.scrollHeight, t2.scrollHeight);
+                        let t2Height = t2.scrollHeight;
+                        if(t2Height < t1.scrollHeight)
+                            t2Height = t1.scrollHeight;
 
-                    // apply same height
-                    t1.style.height = t1.scrollHeight + 'px';
-                    t2.style.height = t2Height + 'px';
+                        //if(t1.scrollHeight == t2Height) return;
+
+                        // apply same height
+                        if(vm.t1_height != (t1.scrollHeight + 'px')){
+                            vm.t1_height = (t1.scrollHeight + 'px');
+                            //t1.style.height = t1.scrollHeight + 'px';
+                        }
+                        if(vm.t2_height != (t2Height + 'px')){
+                            vm.t2_height = (t2Height + 'px');
+                            //t2.style.height = t2Height + 'px';
+                        }
+                    },vm.timer2, 100);
                 });
             }
 
