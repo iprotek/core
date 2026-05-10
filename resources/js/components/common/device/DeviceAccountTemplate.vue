@@ -13,7 +13,7 @@
                             <small class="pl-3 py-0 text-secondary"><i>{{acc.device_template_trigger.trigger_name}}</i></small>
                         </td>
                         <td style="width:45px;">
-                            <button title="Trigger Infos" class="border border-3 border-primary text-primary py-0">
+                            <button @click="$refs.device_account_trigger_view.show(acc.device_template_trigger.id, acc.target_name, acc.target_id, acc.device_template_trigger.device_access_id )" title="Trigger Infos" class="border border-3 border-primary text-primary py-0">
                                 <span class="fa fa-list"></span>
                             </button>
                         </td>
@@ -27,10 +27,12 @@
             </div>
         </div>
         <swal ref="swal_prompt"></swal> 
+        <device-account-trigger-view :group_id="group_id" ref="device_account_trigger_view" />
     </div>
 </template>
 
 <script>
+    import ModalAccountTriggerViewVue from './ModalAccountTriggerView.vue';
     export default {
         props:[ "theme_info", "group_id", "branch_id", "device_accounts" ],
         $emits:[],
@@ -40,6 +42,7 @@
             }
         },
         components: { 
+            "device-account-trigger-view":ModalAccountTriggerViewVue
         },
         data: function () {
             return {
@@ -87,7 +90,7 @@
         },
         mounted:function(){
             this.deviceAccounts = this.device_accounts;
-            console.log("GG",this.deviceAccounts);
+            //console.log("GG",this.deviceAccounts);
         },
         updated:function(){
 
