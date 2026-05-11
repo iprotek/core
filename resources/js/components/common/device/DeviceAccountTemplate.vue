@@ -1,43 +1,61 @@
 <template>
     <div>
+        
         <div v-if="deviceAccounts">
             <div  >
-                <label class="text-primary mb-0">*Integrated Device(s)</label>
-                <table class="table table-bordered">
-                    <tr v-for="(acc, accIndex) in deviceAccounts" v-bind:key="'device-account-'+(acc.id)+'-'+accIndex">
+                <table class="w-100">
+                    <tr>
                         <td>
-                            <div class="py-0">
-                                <label v-if="acc.device_template_trigger && acc.device_template_trigger.device_access" :class="'mb-0 p-0 '+(acc.device_template_trigger.device_access.is_active ? '':'text-danger')">{{acc.device_template_trigger.device_access.name}}</label>
-                                <label v-else class="mb-0 p-0 text-danger"> -- DEVICE NOT AVAILABLE -- </label>
-                            </div>
-                            <small class="pl-3 py-0 text-secondary"><i>{{acc.device_template_trigger.trigger_name}}</i></small>
+                            <label class="text-primary mb-0">*Integrated Device(s)</label>
                         </td>
-                        <td style="width:80px;">
-                            <label class="text-success text-nowrap"> <span class="fa fa-check"></span> OK</label>
-                        </td>
-                        <td style="width:45px;">
-                            <button @click="$refs.device_account_trigger_view.show(acc.device_template_trigger.id, acc.target_name, acc.target_id, acc.device_template_trigger.device_access_id )" title="Trigger Infos" class="border border-3 border-primary text-primary py-0">
+                        <td>
+                            <button @click="$refs.device_account_trigger_view.show(null, target_name, target_id, null )" title="Trigger Infos" class="border border-3 border-primary text-primary py-0">
                                 <span class="fa fa-list"></span>
-                            </button>
-                        </td>
-                        <td style="width:45px;">
-                            <button title="Remove" :class="'border border-3 border-danger text-danger rounded-0 mr-1 py-0'+( acc.device_template_trigger && acc.device_template_trigger.enable_remove ? '' : 'disabled')" @click="(acc.device_template_trigger && acc.device_template_trigger.enable_remove ? removeClick(acc):'')">
-                                <span class="fa fa-times"></span>
                             </button>
                         </td>
                     </tr>
                 </table>
+                <div  v-if="deviceAccounts">
+                    <table class="table table-bordered">
+                        <tr v-for="(acc, accIndex) in deviceAccounts" v-bind:key="'device-account-'+(acc.id)+'-'+accIndex">
+                            <td>
+                                <div class="py-0">
+                                    <label v-if="acc.device_template_trigger && acc.device_template_trigger.device_access" :class="'mb-0 p-0 '+(acc.device_template_trigger.device_access.is_active ? '':'text-danger')">{{acc.device_template_trigger.device_access.name}}</label>
+                                    <label v-else class="mb-0 p-0 text-danger"> -- DEVICE NOT AVAILABLE -- </label>
+                                </div>
+                                <small class="pl-3 py-0 text-secondary"><i>{{acc.device_template_trigger.trigger_name}}</i></small>
+                                <div v-if="acc.latest_action && acc.latest_action.status_id == 2 && !acc.latest_action.is_resolved">
+                                    <small> <code>{{acc.latest_action.log_info}}</code> </small>
+                                </div>
+                            </td>
+                            <td style="width:80px;">
+                                <label v-if="acc.latest_action && acc.latest_action.status_id == 2 && !acc.latest_action.is_resolved" class="text-danger text-nowrap"> <span class="fa fa-times"></span> FAILED</label>
+                                <label v-else class="text-success text-nowrap"> <span class="fa fa-check"></span> OK</label>
+                            </td>
+                            <td style="width:45px;">
+                                <button @click="$refs.device_account_trigger_view.show(acc.device_template_trigger.id, acc.target_name, acc.target_id, acc.device_template_trigger.device_access_id )" title="Trigger Infos" class="border border-3 border-primary text-primary py-0">
+                                    <span class="fa fa-list"></span>
+                                </button>
+                            </td>
+                            <td style="width:45px;">
+                                <button title="Remove" :class="'border border-3 border-danger text-danger rounded-0 mr-1 py-0'+( acc.device_template_trigger && acc.device_template_trigger.enable_remove ? '' : 'disabled')" @click="(acc.device_template_trigger && acc.device_template_trigger.enable_remove ? removeClick(acc):'')">
+                                    <span class="fa fa-times"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
         <swal ref="swal_prompt"></swal> 
-        <device-account-trigger-view :group_id="group_id" ref="device_account_trigger_view" />
+        <device-account-trigger-view :group_id="group_id" ref="device_account_trigger_view" @resolved="$emit('resolved')" />
     </div>
 </template>
 
 <script>
     import ModalAccountTriggerViewVue from './ModalAccountTriggerView.vue';
     export default {
-        props:[ "theme_info", "group_id", "branch_id", "device_accounts" ],
+        props:[ "theme_info", "group_id", "branch_id", "device_accounts", "target_name", "target_id" ],
         $emits:[],
         watch: { 
             device_accounts:function(newValue){

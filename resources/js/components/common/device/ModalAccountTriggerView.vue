@@ -5,7 +5,7 @@
                 DEVICE LOGS
             </template> 
             <template #body >     
-                <div :id="modal_selector_name" v-if="filters.device_access_id" class="py-2">
+                <div :id="modal_selector_name" v-if="target_name != '' " class="py-2">
                     <div class="mb-2 text-right">
                         <button class="btn btn-outline-primary rounded-0 text-primary" @click="resolve_all">
                             RESOLVE ALL
@@ -75,7 +75,7 @@
                                         <td >
                                             <small v-if="log.status_id == 2" class="text-danger" >
                                                 {{log.log_info}}
-                                                <div class="p-0">
+                                                <div v-if="log.is_resolved" class="p-0">
                                                     <span class="text-primary"> {{log.resolved_info}} </span>
                                                 </div>
                                             </small>
@@ -83,7 +83,7 @@
                                         </td>
                                         <td >
                                             <label v-if="log.status_id == 2 && log.is_resolved != 1" class="text-danger">FAILED</label>
-                                            <label v-if="log.status_id == 2 && log.is_resolved" class="text-primary">RESOLVED</label>
+                                            <label v-else-if="log.status_id == 2 && log.is_resolved" class="text-primary">RESOLVED</label>
                                             <label v-else class="text-success">SUCCESS</label>
                                             <button v-if="!log.is_resolved" class="btn btn-outline-success btn-sm border border-success border-3" @click="resolve(log)">
                                                 <span class="fa fa-check"></span>
@@ -152,7 +152,10 @@
             return {  
                 modal_selector_name:'modal-account-trigger-'+_uid,
                 filters:{
-                    device_access_id: 0
+                    device_access_id: 0,
+                    target_name :'',
+                    target_id:'',
+                    device_template_trigger_id:0
                 },
                 deviceTriggerLogList:[],
                 isLoading:false,
@@ -181,12 +184,17 @@
                 vm.trigger_id = trigger_id;
                 vm.target_name = target_name;
                 vm.target_id = target_id;
-                vm.filters = {
-                    device_access_id: device_access_id,
-                    target_name: target_name,
-                    target_id: target_id,
-                    device_template_trigger_id: trigger_id
-                }//.device_access_id = device_access_id;
+                vm.deviceTriggerLogList = [];
+                
+                let newfilter = {};
+                if(device_access_id) newfilter.device_access_id = device_access_id;
+                if(target_name) newfilter.target_name = target_name;
+                if(target_id) newfilter.target_id = target_id;
+                if(trigger_id) newfilter.device_template_trigger_id = trigger_id;
+
+                vm.filters = newfilter;
+                
+                console.log(vm.filters);
 
                 this.$refs.modal.show();
 
@@ -206,7 +214,14 @@
                 } ).then(res=>{
                     if(res.isConfirmed){
                         //if(res.value.status == "1")
-                        vm.$refs.device_trigger_log_table.reloadPage();
+                        if(res.value.status == 1){
+                            vm.$refs.modal.dismiss();
+                            setTimeout(()=>{
+                                     vm.$emit('resolved');
+                            }, 50);
+                            //vm.$emit('resolved');
+                            //vm.$refs.device_trigger_log_table.reloadPage();
+                        }
                         return res.value;
                     }
                 });
@@ -220,7 +235,13 @@
                 } ).then(res=>{
                     if(res.isConfirmed){
                         //if(res.value.status == "1")
-                        vm.$refs.device_trigger_log_table.reloadPage();
+                        if(res.value.status == 1){
+                            vm.$refs.modal.dismiss();
+                            setTimeout(()=>{
+                                     vm.$emit('resolved');
+                            }, 50);
+                            //vm.$refs.device_trigger_log_table.reloadPage();
+                        }
                         return res.value;
                     }
                 });
