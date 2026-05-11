@@ -74,12 +74,17 @@
                                         </td>
                                         <td >
                                             <small v-if="log.status_id == 2" class="text-danger" >
-                                                {{log.log_info}}
+                                                {{log.log_info}} 
+                                                <div class="p-0"><i> {{log.created_at}} </i> </div>
                                                 <div v-if="log.is_resolved" class="p-0">
                                                     <span class="text-primary"> {{log.resolved_info}} </span>
+                                                    <div class="text-primary p-0"><i>{{log.updated_at}} </i></div>
                                                 </div>
                                             </small>
-                                            <small v-else class="text-success" >{{log.log_info}}</small>
+                                            <small v-else class="text-success" >
+                                                {{log.log_info}}
+                                                <div class="p-0"><i>{{log.created_at}} </i></div>
+                                            </small>
                                         </td>
                                         <td >
                                             <label v-if="log.status_id == 2 && log.is_resolved != 1" class="text-danger">FAILED</label>
