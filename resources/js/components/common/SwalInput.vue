@@ -4,7 +4,7 @@
 <script>
 export default {
      
-        props:[ "custom_input_field_name"],
+        props:[ "custom_input_field_name", "modal_selector"],
         components: {  
         },
         data: function () {
@@ -14,51 +14,58 @@ export default {
         methods: { 
             alert(icon, title, buttonTitle,method, url, data, __error_callback=null,_contentType='application/json'){
                 var vm = this;
-                return  Swal.fire({
-                            title: title, 
-                            icon: icon,
-                            showCancelButton: true,
-                            confirmButtonText: buttonTitle,
-                            showLoaderOnConfirm: true,
-                            input:"text",
-                            preConfirm: (inputText) => {
 
-                                if(vm.custom_input_field_name)
-                                    data[vm.custom_input_field_name] = inputText;
-                                else
-                                    data.name = inputText;
-                                
-                                return WebRequest2(method, url, data, _contentType)
-                                    .then(response => {
-                                        if (response.ok) 
-                                            return response.json()
-                                        //Initiator to stop from closing
-                                        Swal.showValidationMessage( `ERROR` )
-                                        return response.json().then(a=>{
-                                            //console.log(a);
-                                            //throw new Error(a.message);
-                                            if(__error_callback){
-                                                __error_callback(a);
-                                            }
-                                            Swal.showValidationMessage(
-                                            `Request failed: ${this.extractValuesFromJson(a)}`
-                                            )
-                                            return a;
-                                        })
-                                        .catch(error => { 
-                                            console.log(error);
-                                            Swal.showValidationMessage(
-                                            `Request failed: ${error}`
-                                            )
-                                            if(__error_callback){
-                                                __error_callback(error);
-                                            }
-                                            return error;
-                                        }); 
-                                    });
-                            },
-                            allowOutsideClick: () => !Swal.isLoading()
-                        }).then((result) => {
+                let conf = {
+                    title: title, 
+                    icon: icon,
+                    showCancelButton: true,
+                    confirmButtonText: buttonTitle,
+                    showLoaderOnConfirm: true,
+                    input:"text",
+                    preConfirm: (inputText) => {
+
+                        if(vm.custom_input_field_name)
+                            data[vm.custom_input_field_name] = inputText;
+                        else
+                            data.name = inputText;
+                        
+                        return WebRequest2(method, url, data, _contentType)
+                            .then(response => {
+                                if (response.ok) 
+                                    return response.json()
+                                //Initiator to stop from closing
+                                Swal.showValidationMessage( `ERROR` )
+                                return response.json().then(a=>{
+                                    //console.log(a);
+                                    //throw new Error(a.message);
+                                    if(__error_callback){
+                                        __error_callback(a);
+                                    }
+                                    Swal.showValidationMessage(
+                                    `Request failed: ${this.extractValuesFromJson(a)}`
+                                    )
+                                    return a;
+                                })
+                                .catch(error => { 
+                                    console.log(error);
+                                    Swal.showValidationMessage(
+                                    `Request failed: ${error}`
+                                    )
+                                    if(__error_callback){
+                                        __error_callback(error);
+                                    }
+                                    return error;
+                                }); 
+                            });
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                };
+                if(vm.modal_selector){
+                    conf.target = document.querySelector(vm.modal_selector);
+                }
+
+
+                return  Swal.fire(conf).then((result) => {
                             if (result.isConfirmed) {
                                 if(result.value.status == 1){
                                     Swal.fire({

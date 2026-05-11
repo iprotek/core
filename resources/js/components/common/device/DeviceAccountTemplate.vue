@@ -12,6 +12,9 @@
                             </div>
                             <small class="pl-3 py-0 text-secondary"><i>{{acc.device_template_trigger.trigger_name}}</i></small>
                         </td>
+                        <td style="width:80px;">
+                            <label class="text-success text-nowrap"> <span class="fa fa-check"></span> OK</label>
+                        </td>
                         <td style="width:45px;">
                             <button @click="$refs.device_account_trigger_view.show(acc.device_template_trigger.id, acc.target_name, acc.target_id, acc.device_template_trigger.device_access_id )" title="Trigger Infos" class="border border-3 border-primary text-primary py-0">
                                 <span class="fa fa-list"></span>

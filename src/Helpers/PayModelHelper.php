@@ -42,15 +42,33 @@ class PayModelHelper
     }
 
     public static function update($class, Request $request, $fields, $is_own=false){
-        $class->fill($fields);
+
+        $table = "";
+        $is_model = false;
+        if ( $class instanceof \Illuminate\Database\Eloquent\Builder ) {
+            $table = $class->getModel()->getTable();
+        }
+        
+        if ($class instanceof \Illuminate\Database\Eloquent\Model) {
+            $class->fill($fields);
+            $table = $class->getTable();
+            $is_model = true;
+        }
+
         $user = $request->get('user');
-        if(Schema::hasColumn( $class->getTable(), 'group_id' )){
+
+        if(Schema::hasColumn(  $table, 'group_id' )){
             $fields['group_id'] = static::get_group_id($user, $is_own);
         }
-        if($class->isDirty()){
+
+        if( $is_model && $class->isDirty()){
             $fields['pay_updated_by'] = static::get_user_id($user);
             return $class->update($fields);
         }
+        else if(!$is_model){
+            return $class->update($fields);
+        }
+
         return true;
     }
     public static function update_own($class, Request $request, $fields ){
