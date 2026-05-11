@@ -9,7 +9,7 @@
                             <label class="text-primary mb-0">*Integrated Device(s)</label>
                         </td>
                         <td class="text-right">
-                            <button @click="$refs.device_account_trigger_view.show(null, target_name, target_id, null )" title="Trigger Infos" class="btn btn-outline-primary border border-3 border-primary text-primary py-0">
+                            <button @click="$refs.device_account_trigger_view.show(null, target_name, target_id, null )" title="Trigger Infos" class="btn btn-outline-primary btn-sm rounded-0">
                                 <span class="fa fa-list"></span> ALL TRIGGERS
                             </button>
                         </td>
