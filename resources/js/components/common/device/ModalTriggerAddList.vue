@@ -119,12 +119,14 @@
                                         <icheck :checked="device_trigger_info.enable_register" @update:checked="(is_checked)=>{ device_trigger_info.enable_register = is_checked; }" :label="'Enable Register / New Entry'" />
                                     </small>
                                 </div>
+                                <!--
                                 <div>
                                     <small class="text-primary">*First line of command should be registration check and getting id if exists</small>
                                 </div>
                                 <div>
                                     <small class="text-primary">*Second line of comamnd should be registration if not exists and getting the newly registered id</small>
                                 </div>
+                                -->
                                 <textarea 
                                     v-if="device_trigger_info.enable_register" 
                                     v-model="device_trigger_info.register_command_template" 
