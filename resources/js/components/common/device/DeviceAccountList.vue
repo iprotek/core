@@ -214,9 +214,9 @@
                         })
                     ).then(res=>{
                         if(res.isConfirmed){
-                            if(res.value.status == 1){
+                            //if(res.value.status == 1){
                                 vm.loadDeviceAccounts();
-                            }
+                            //}
                         }
                     }); 
 
@@ -236,9 +236,9 @@
                     })
                 ).then(res=>{
                     if(res.isConfirmed){
-                        if(res.value.status == 1){
+                        //if(res.value.status == 1){
                             vm.loadDeviceAccounts();
-                        }
+                        //}
                     }
                 }); 
 
