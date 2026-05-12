@@ -13,7 +13,10 @@ Route::prefix('/branch')->name('.branch')->group(function(){
     
     //Route::post('/save', [ CmsController::class ,'save_cms'])->name('.save'); 
     //Route::post('/get-content', [ CmsController::class ,'get_cms'])->name('.get'); 
-    Route::get('list', [XbranchController::class, 'branch_list'])->name('.list');
+    Route::get('list', [XbranchController::class, 'branch_list'])->name('.list')
+                ->defaults("_description","List of branch")
+                ->defaults("_is_visible",false)
+                ->defaults("_is_allow",true);
     
 
 });
