@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div :class="is_default_setting? 'col-sm-4':'col-sm-3'">
-            <role-menu :is_default_setting="is_default_setting" :app_account_id="app_account_id" :role_id="role_id" />
+            <role-menu :theme_info="theme_info" :group_id="group_id" :is_default_setting="is_default_setting" :app_account_id="app_account_id" :role_id="role_id" />
         </div>
         <div :class="is_default_setting? 'col-sm-8':'col-sm-9'">
             <div class="card">
@@ -29,6 +29,16 @@
                                 <switch2 v-model="isDefault" @value_changed="loadAllowAccountDefaults(true)" /> 
                                 <label class="mb-0" v-if="isDefault"> IS DEFAULT? </label>
                                 <label class="mb-0 text-danger" v-else> CUSTOMIZE </label>
+                                <button class="float-right btn btn-outline-primary rounded-0" @click="$refs.control_policy.show(isDefault)">
+                                    SET DEFAULT POLICY CONTROL
+                                </button>
+                            </td>
+                        </tr>
+                        <tr v-else>
+                            <td colspan="4">
+                                <button class="float-right btn btn-outline-primary rounded-0" @click="$refs.control_policy.show(isDefault)">
+                                    ACCOUNT POLICY CONTROL
+                                </button>
                             </td>
                         </tr>
 
@@ -58,19 +68,22 @@
                 </table>
             </div>
         </div>
+        <control-policy ref="control_policy" :app_account_id="app_account_id" :group_id="group_id" :role_id="role_id" :theme_info="theme_info"  />
     </div>
 </template>
 
 <script>
     import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
     import WebSubmitVue from '../../common/WebSubmit.vue';
+    import ControlPolicyVue from './modals/ModalPolicyControl.vue';
     import RoleMenuAccessListVue from './RoleMenuAccessList.vue';
     export default {
-        props:[ "is_default_setting", "role_id", "app_account_id", "branch_id"],
+        props:[ "theme_info", "group_id", "is_default_setting", "role_id", "app_account_id"],
         components: {
             "switch2":BoostrapSwitch2Vue,
             "role-menu":RoleMenuAccessListVue,
-            "web-submit":WebSubmitVue
+            "web-submit":WebSubmitVue,
+            "control-policy":ControlPolicyVue
         },
         watch: { 
             role_id:function(newvalue){

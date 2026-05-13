@@ -64,7 +64,7 @@
 <script>
     import PageFooterVue from '../../common/PageFooter.vue';
     export default {
-        props:[  ],
+        props:[ "theme_info", "group_id" ],
         watch: { 
         },
         components: { 

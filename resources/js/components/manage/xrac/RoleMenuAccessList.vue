@@ -34,7 +34,7 @@
     import BoostrapSwitch2Vue from '../../common/BoostrapSwitch2.vue';
     import WebSubmitVue from '../../common/WebSubmit.vue';
     export default {
-        props:[ "role_id", "app_account_id", "is_default_setting"  ],
+        props:[ "theme_info", "group_id", "role_id", "app_account_id", "is_default_setting"  ],
         components: {
             "switch2":BoostrapSwitch2Vue,
             "web-submit":WebSubmitVue

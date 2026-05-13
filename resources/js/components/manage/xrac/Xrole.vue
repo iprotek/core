@@ -1,12 +1,14 @@
 <template>
     <div>
-        <a class="btn btn-outline-primary mb-2" @click="$emit('user_role_click')"> USER ROLES </a>
+        <a class="btn btn-outline-primary mb-2" @click="$emit('user_role_click')"> 
+            <span class="fa fa-arrow-left"></span> USER ROLES 
+        </a>
         <div class="row">
             <div class="col-md-4">
-                <role-list :is_default_setting="true" @selection_changed="role_selection" />
+                <role-list :theme_info="theme_info" :group_id="group_id" :is_default_setting="true" @selection_changed="role_selection" />
             </div>
             <div v-if="role_id" class="col-md-8">
-                <control-access :is_default_setting="true" :role_id="role_id" />
+                <control-access :group_id="group_id" :theme_info="theme_info" :is_default_setting="true" :role_id="role_id" />
             </div>
         </div>
     </div>
@@ -16,7 +18,7 @@
     import RoleListVue from './RoleList.vue';
     import ControlAccessListVue from './ControlAccessList.vue';
     export default {
-        props:[  ],
+        props:[ "theme_info", "group_id"],
         components: {
             "role-list":RoleListVue,
             "control-access":ControlAccessListVue

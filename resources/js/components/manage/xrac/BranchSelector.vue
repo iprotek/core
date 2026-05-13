@@ -20,7 +20,7 @@
 
 <script>
     export default {
-        props:[ "input_size", "is_system_select" ],
+        props:[ "theme_info", "group_id", "input_size", "is_system_select" ],
         components: { 
         },
         watch: { 

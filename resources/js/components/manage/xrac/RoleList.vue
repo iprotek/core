@@ -93,7 +93,7 @@
     import BranchSelectorVue from './BranchSelector.vue';
     import ModalAddEditRoleVue from './modals/ModalAddEditRole.vue';
     export default {
-        props:[ "app_user_id", "is_default_setting" ],
+        props:[ "app_user_id", "is_default_setting", "group_id", "theme_info" ],
         components: {  
             "switch2":BoostrapSwitch2Vue,
             "branch-selector":BranchSelectorVue,

@@ -1,22 +1,19 @@
 <template>
-    <div>
-        <div v-if="view == 'user-roles'">
-            <a class="btn btn-outline-primary mb-2" @click="view='role-defaults'"> ROLE DEFAULTS </a>
-            <div class="row">
-                <div class="col-md-3">
-                    <app-user-list @selected_app_user="selected_app_user" />
-                </div>
-                <div class="col-md-2" v-if="selected_app_user_id">
-                    <role-list :app_user_id="selected_app_user_id" :is_default_setting="false" @selection_changed="(val)=>{ xrole_id = val }" @branch_changed="branch_changed" />
-                </div>
-                <div class="col-md-7" v-if="selected_app_user_id && xrole_id">
-                    <control-access :branch_id="branch_id" :is_default_setting="false" :app_account_id="selected_app_user_id" :role_id="xrole_id"  />
-                </div>
+    <div> 
+        <a class="btn btn-outline-primary mb-2" @click="$emit('role_click')">
+           ROLE DEFAULTS 
+        </a>
+        <div class="row">
+            <div class="col-md-3">
+                <app-user-list :theme_info="theme_info" :group_id="group_id" @selected_app_user="selected_app_user" />
             </div>
-        </div>
-        <div v-else>
-            <xrole @user_role_click="view='user-roles'" />
-        </div>
+            <div class="col-md-2" v-if="selected_app_user_id">
+                <role-list :group_id="group_id" :app_user_id="selected_app_user_id" :is_default_setting="false" @selection_changed="(val)=>{ xrole_id = val }" @branch_changed="branch_changed" />
+            </div>
+            <div class="col-md-7" v-if="selected_app_user_id && xrole_id">
+                <control-access :group_id="group_id" :branch_id="branch_id" :is_default_setting="false" :app_account_id="selected_app_user_id" :role_id="xrole_id"  />
+            </div>
+        </div> 
     </div>
 </template>
 
@@ -25,14 +22,12 @@
     import AppUserListVue from './AppUserList.vue';
     import RoleListVue from './RoleList.vue';
     import ControlAccessListVue from './ControlAccessList.vue';
-    import XroleVue from './Xrole.vue';
     export default {
-        props:[  ],
+        props:[ "theme_info", "group_id" ],
         components: {
             "app-user-list":AppUserListVue,
             "role-list":RoleListVue,
-            "control-access":ControlAccessListVue,
-            "xrole":XroleVue
+            "control-access":ControlAccessListVue 
         },
         data: function () {
             return {
