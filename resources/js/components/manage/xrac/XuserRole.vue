@@ -1,36 +1,45 @@
 <template>
     <div>
-        <a class="btn btn-outline-primary mb-2" href="/manage/xrac/xrole"> ROLE DEFAULTS </a>
-        <div class="row">
-            <div class="col-md-3">
-                <app-user-list @selected_app_user="selected_app_user" />
+        <div v-if="view == 'user-roles'">
+            <a class="btn btn-outline-primary mb-2" @click="view='role-defaults'"> ROLE DEFAULTS </a>
+            <div class="row">
+                <div class="col-md-3">
+                    <app-user-list @selected_app_user="selected_app_user" />
+                </div>
+                <div class="col-md-2" v-if="selected_app_user_id">
+                    <role-list :app_user_id="selected_app_user_id" :is_default_setting="false" @selection_changed="(val)=>{ xrole_id = val }" @branch_changed="branch_changed" />
+                </div>
+                <div class="col-md-7" v-if="selected_app_user_id && xrole_id">
+                    <control-access :branch_id="branch_id" :is_default_setting="false" :app_account_id="selected_app_user_id" :role_id="xrole_id"  />
+                </div>
             </div>
-            <div class="col-md-2" v-if="selected_app_user_id">
-                <role-list :app_user_id="selected_app_user_id" :is_default_setting="false" @selection_changed="(val)=>{ xrole_id = val }" @branch_changed="branch_changed" />
-            </div>
-            <div class="col-md-7" v-if="selected_app_user_id && xrole_id">
-                <control-access :branch_id="branch_id" :is_default_setting="false" :app_account_id="selected_app_user_id" :role_id="xrole_id"  />
-            </div>
+        </div>
+        <div v-else>
+            <xrole @user_role_click="view='user-roles'" />
         </div>
     </div>
 </template>
 
 <script>
+
     import AppUserListVue from './AppUserList.vue';
     import RoleListVue from './RoleList.vue';
     import ControlAccessListVue from './ControlAccessList.vue';
+    import XroleVue from './Xrole.vue';
     export default {
         props:[  ],
         components: {
             "app-user-list":AppUserListVue,
             "role-list":RoleListVue,
-            "control-access":ControlAccessListVue
+            "control-access":ControlAccessListVue,
+            "xrole":XroleVue
         },
         data: function () {
             return {
                 selected_app_user_id:0,
                 xrole_id:0,
-                branch_id:0
+                branch_id:0,
+                view:'user-roles'
             }
         },
         methods: { 

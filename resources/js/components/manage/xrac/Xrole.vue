@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a class="btn btn-outline-primary mb-2" href="/manage/xrac/xrole/user-role-access"> USER ROLES </a>
+        <a class="btn btn-outline-primary mb-2" @click="$emit('user_role_click')"> USER ROLES </a>
         <div class="row">
             <div class="col-md-4">
                 <role-list :is_default_setting="true" @selection_changed="role_selection" />
