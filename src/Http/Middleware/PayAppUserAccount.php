@@ -22,6 +22,12 @@ class PayAppUserAccount
     
      public function handle($request, Closure $next)
      {
+        
+        if (PayAppUserAccountApi::$user) {
+            return $next($request);
+        }
+        Log::info("PayAppUserAccount: Checking web pay auth");
+
         \iProtek\Core\Helpers\PayHttp::client();
          if (!Auth::guard('admin')->check()) {
              return redirect('/login');//->route('login');
@@ -89,7 +95,8 @@ class PayAppUserAccount
             'user'=>$auth_info,
             "is_own_group"=>$is_own_group
         ]);
-
+        PayAppUserAccountApi::$user = $auth_info;
+        PayAppUserAccountApi::$is_own_group = $is_own_group;
  
          return $next($request);
          

@@ -20,9 +20,19 @@ class PayAppUserAccountApi
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
+    static $user = null;
+    static $is_own_group = false;
     
      public function handle($request, Closure $next)
      { 
+        
+        if (PayAppUserAccountApi::$user) {
+            return $next($request);
+        }
+        
+        Log::info("PayAppUserAccountAPI: Checking web pay auth");
+
+
         $bearerToken = $request->bearerToken() ?: "";
         if(!$bearerToken && auth()->check()){
             $user = auth()->user();
@@ -55,6 +65,7 @@ class PayAppUserAccountApi
                 }
             }
         }
+        PayAppUserAccountApi::$user = $auth_info;
 
 
          return $next($request);  

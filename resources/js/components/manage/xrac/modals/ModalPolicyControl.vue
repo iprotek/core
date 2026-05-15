@@ -24,8 +24,6 @@
                                 <div class="card-header">SELECTED POLICY CONTROLS</div>
                                 <div class="card-body">
                                     <file-tree />
-                                    <file-tree-checking />
-
                                 </div>
                             </div>
                         </div>
@@ -93,7 +91,7 @@
             },
             loadPolicy(){
                 var vm = this;
-                WebRequest2('GET', '/api/xrac/group/'+this.group_id+'/policy-control/list').then(resp=>{
+                WebRequest2('GET', '/api/group/'+this.group_id+'/xrac/policy-control/list').then(resp=>{
                     if(resp.ok){
                         return resp.json().then(data=>{
                             console.log(data);

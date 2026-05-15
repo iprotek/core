@@ -224,5 +224,64 @@ class SystemDataController extends Controller
     {
         return 'Hello';
     }
+
+
+    /*SAMPLE
+    {
+        "batch": [
+            {
+                "key": "user",
+                "url": "/api/user",
+                "method": "GET",
+                "data":{}
+            },
+            {
+                "key": "orders",
+                "url": "/api/orders",
+                "method": "GET"
+                "data":{}
+            }
+        ]
+    }
+    */
+
+    public function batch_request(Request $request){
+
+        $cachedUser = $request->user();
+        $is_own_group = false;
+        if($request->attributes->has('is_own_group'))        {
+            $is_own_group = $request->attributes->get('is_own_group');
+        }
+       
+        foreach ($request->batch as $item) { 
+ 
+            $subRequest = (new Request())->create(
+                $item['url'],
+                $item['method'] ?? 'GET',
+                $item['data'] ?? []
+            );
+            //$subRequest->setLaravelSession($originalSession);
+            //$session = clone session(); 
+            //$request->setLaravelSession($session);
+
+            $subRequest->attributes->add([
+                'user'=>$cachedUser,
+                "is_own_group"=>$is_own_group
+            ]);
+            $response = app()->handle($subRequest);
+            
+
+            $results[$item['key']] = [
+                'status' => $response->getStatusCode(),
+                'data' => json_decode($response->getContent(), true),
+            ]; 
+
+        }
+        //TO AVOID INTERNAL REQUEST SESSION RE-WRITE
+        header('Content-Type: application/json');
+
+        echo json_encode($results);
+        die();
+    }
     
 }

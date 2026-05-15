@@ -5,6 +5,7 @@ namespace iProtek\Core\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AuthenticateCustomer
 {

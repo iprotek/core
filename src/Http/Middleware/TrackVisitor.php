@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use iProtek\Core\Models\WebVisitor;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class TrackVisitor
 {

@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route; 
 use iProtek\Core\Http\Controllers\Manage\FileUploadController; 
 use iProtek\Core\Http\Controllers\AppVariableController;
- 
+use iProtek\Core\Http\Controllers\SystemDataController;
+
 Route::prefix('api')->middleware(['api'])->group(function(){
     
     //Company Details
@@ -39,6 +40,8 @@ Route::prefix('api')->middleware(['api'])->group(function(){
         
         //Common
         include(__DIR__.'/api/common.php');
+
+        Route::post('batch-request',[SystemDataController::class,'batch_request'])->name('.batch-request');
 
     });
 
