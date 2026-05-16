@@ -41,7 +41,10 @@ Route::prefix('api')->middleware(['api'])->group(function(){
         //Common
         include(__DIR__.'/api/common.php');
 
-        Route::post('batch-request',[SystemDataController::class,'batch_request'])->name('.batch-request');
+        Route::post('batch-request',[SystemDataController::class,'batch_request'])->name('.batch-request')
+                ->defaults("_description","Allowing batch requesting.")
+                ->defaults("_is_visible",false)
+                ->defaults("_is_allow",true);
 
     });
 
