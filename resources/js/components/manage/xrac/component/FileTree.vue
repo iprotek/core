@@ -81,6 +81,7 @@ function collectRoutes(node) {
 const TreeNode = defineComponent({
     name: 'TreeNode',
     props: {
+        data:[],
         name: String,
         node: Object,
         depth: Number,
