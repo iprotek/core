@@ -29,9 +29,6 @@ class PayAppUserAccountApi
         if (PayAppUserAccountApi::$user) {
             return $next($request);
         }
-        
-        //Log::info("PayAppUserAccountAPI: Checking web pay auth");
-
 
         $bearerToken = $request->bearerToken() ?: "";
         if(!$bearerToken && auth()->check()){

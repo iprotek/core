@@ -26,7 +26,6 @@ class PayAppUserAccount
         if (PayAppUserAccountApi::$user) {
             return $next($request);
         }
-        Log::info("PayAppUserAccount: Checking web pay auth");
 
         \iProtek\Core\Helpers\PayHttp::client();
          if (!Auth::guard('admin')->check()) {
