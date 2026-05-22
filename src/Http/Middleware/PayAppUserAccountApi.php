@@ -30,7 +30,7 @@ class PayAppUserAccountApi
             return $next($request);
         }
         
-        Log::info("PayAppUserAccountAPI: Checking web pay auth");
+        //Log::info("PayAppUserAccountAPI: Checking web pay auth");
 
 
         $bearerToken = $request->bearerToken() ?: "";
@@ -51,6 +51,8 @@ class PayAppUserAccountApi
         if(!$auth_info){
             abort(403,'Not allowed to access group:'.$request->group_id);
         }
+
+        //Log::error($auth_info);
         
         $request->attributes->add([
             'user'=>$auth_info 
