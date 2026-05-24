@@ -5,15 +5,16 @@ use iProtek\Core\Http\Controllers\Manage\FileUploadController;
 use iProtek\Core\Http\Controllers\AppVariableController;
 use iProtek\Core\Http\Controllers\SystemDataController;
 use iProtek\Core\Http\Controllers\UserAdminPayAccountController;
+
 Route::prefix('api')->middleware(['api'])->group(function(){
     
     //Company Details
     include(__DIR__.'/api/company-details.php');
     
     Route::middleware(['throttle:10,5','pay_app_check'])->post('app-user-auth',[UserAdminPayAccountController::class,'app_user_auth'])->name('.app-user-auth')
-            ->defaults("_description","Getting user authentication for the app.")
-            ->defaults("_is_visible",false)
-            ->defaults("_is_allow",true);
+        ->defaults("_description","Getting user authentication for the app.")
+        ->defaults("_is_visible",false)
+        ->defaults("_is_allow",true);
 
     Route::middleware(['pay_app_check'])->get('check-app-compatibility', [\iProtek\Core\Http\Controllers\Controller::class, 'check_app_compatibility'])->name('api.check-app-compatibility');
 
