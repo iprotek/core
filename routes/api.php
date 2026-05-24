@@ -11,7 +11,7 @@ Route::prefix('api')->middleware(['api'])->group(function(){
     //Company Details
     include(__DIR__.'/api/company-details.php');
     
-    Route::middleware(['throttle:10,5','pay_app_check'])->post('app-user-auth',[UserAdminPayAccountController::class,'app_user_auth'])->name('.app-user-auth')
+    Route::middleware(['throttle:10,5','pay_app_check'])->post('auth/login',[UserAdminPayAccountController::class,'app_user_auth'])->name('.auth.login')
         ->defaults("_description","Getting user authentication for the app.")
         ->defaults("_is_visible",false)
         ->defaults("_is_allow",true);

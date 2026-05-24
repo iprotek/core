@@ -13,8 +13,6 @@ class UserAdminPayAccountController extends _CommonController
     //
     public function app_user_auth(Request $request){
 
-        $user_data = null;
-        $status = 0;
         ///HEADER REQUIRED FOR COMPATIBILITY
         //CLIENT-ID
         //CLIENT-SECRET
@@ -78,7 +76,7 @@ class UserAdminPayAccountController extends _CommonController
 
 
         return [
-            "status"=>$status,
+            "status"=>1,
             "app_type"=>config('iprotek.app_type'),
             "user_data"=> $account_info
         ];
