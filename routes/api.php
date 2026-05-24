@@ -26,6 +26,13 @@ Route::prefix('api')->middleware(['api'])->group(function(){
 
     Route::prefix('group/{group_id}')->middleware(['pay.api', 'policy.control'])->name('api')->group(function(){
         
+        //
+        Route::get('auth-access-check',[UserAdminPayAccountController::class,'auth_access_check'])->name('.auth.access.check')
+            ->defaults("_description","Getting user authentication for the app.")
+            ->defaults("_is_visible",false)
+            ->defaults("_is_allow",true);
+
+        
         //FILE UPLOADS
         include(__DIR__.'/api/file-upload.php');
 
