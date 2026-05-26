@@ -41,8 +41,11 @@
                                     <code>[account field="id" ]</code> - get the data id
                                 </div>
                                 <div>
-                                    <code>[device_account_id]</code> - get the account id from the device upon registration.
+                                    <code>[account field="name" limit="10" ]</code> - Limit the name length to 10 characters.
                                 </div>
+                                <div>
+                                     <code style="text-decoration:line-through;" title="it will not be that accurate.">[device_account_id]</code> - get the account id from the device upon registration.
+                                </div> 
                                 <div>
                                     <code>[account field="plan" data-json="data"]</code> - get the "plan" field value form target source model.
                                 </div>
