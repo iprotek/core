@@ -21,6 +21,9 @@ class PayAppCompatibleCheck
     
      public function handle($request, Closure $next)
      {  
+        if(auth()->check())
+            return $next($request);  
+
         $header_client_id = trim( $request->header('CLIENT-ID') ?: "" );
         $header_client_secret = trim( $request->header('CLIENT-SECRET') ?: "");
         $header_app_type = trim( $request->header('APP-TYPE') ?: "");
