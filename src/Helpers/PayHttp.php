@@ -420,6 +420,32 @@ class PayHttp
         return null;
     }
 
+    public static function pusher_notify(array $pusherArg, array $data, string $bind_trigger = "notify"){
+
+        $cluster = $pusherArg["cluster"] ?? "";
+        $key = $pusherArg["key"] ?? "";
+        $secret = $pusherArg["secret"] ?? "";
+        $app_id = $pusherArg["app_id"] ?? "";
+        $channel = $pusherArg["channel"] ?? "";
+
+        if($pusherArg["type"] == 'PUSHER.COM'){
+            
+            $options = array(
+                'cluster' => $cluster,//'ap1', //cluster 
+                'useTLS' => false
+            );
+
+            $pusher = new \Pusher\Pusher(
+                $key,//'3ba4f1b9531904744a8e', //key
+                $secret, //'1b7dd30d6604966641ab', //secret
+                $app_id, //'1858123', //app_id
+                $options
+            );            
+            //$data['message'] = 'new sms';
+            $pusher->trigger($channel, $bind_trigger, $data);
+        }
+    }
+
     public static function send_pusher_notification($channel, $bind_trigger, $data=[]){
         $pusher_info = static::pusher_info();
 
@@ -444,7 +470,6 @@ class PayHttp
             
             //$data['message'] = 'new sms';
             $pusher->trigger($channel, $bind_trigger, $data);
-
 
         }
 
