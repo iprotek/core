@@ -54,8 +54,13 @@
                     <switch2 v-model="is_webhook_active"></switch2> Active webhook?
                 </div>
                 <div v-if="id">
-                    <button-copy :base_color="'primary'" :button_title="'Click to Copy Webhook URL'" :text_to_copy="webhook_response_url" :base_icon="'fa fa-link'"  :copied_message="'Webhook copied!'" ></button-copy>
+                    <button-copy v-if="webhook_response_url" :base_color="'primary'" :button_title="'Click to Copy Webhook URL'" :text_to_copy="webhook_response_url" :base_icon="'fa fa-link'"  :copied_message="'Webhook copied!'" ></button-copy>
                 </div>
+                <small>
+                    <small>
+                        <code>{{webhook_response_url}}</code>
+                    </small>
+                </small>
             </template>
             <template #footer>
                 <div>

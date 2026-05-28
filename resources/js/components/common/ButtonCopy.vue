@@ -14,7 +14,8 @@
         },
         data: function () {
             return {    
-                is_copied:false
+                is_copied:false,
+                navigator: window.navigator
             }
         },
         methods: { 
@@ -31,7 +32,7 @@
 
 
                 vm.is_copied = true;
-                navigator.clipboard.writeText(vm.text_to_copy);
+                this.copyText(vm.text_to_copy);
                 vm.$emit('button_clicked', vm.text_to_copy);
                 setTimeout(()=>{
                     vm.is_copied = false;
@@ -41,11 +42,35 @@
 
                 var vm = this;
                 vm.is_copied = true;
-                navigator.clipboard.writeText(text_to_copy);
+                this.copyText(text_to_copy);
                 setTimeout(()=>{
                     vm.is_copied = false;
                 }, 1000);
 
+            },
+            copyText:function(text) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    return navigator.clipboard.writeText(text);
+                } else {
+                    const textarea = document.createElement("textarea");
+                    textarea.value = text;
+
+                    textarea.style.position = "fixed";
+                    textarea.style.left = "-999999px";
+
+                    document.body.appendChild(textarea);
+
+                    textarea.focus();
+                    textarea.select();
+
+                    try {
+                        document.execCommand("copy");
+                    } finally {
+                        textarea.remove();
+                    }
+
+                    return Promise.resolve();
+                }
             }
 
         },

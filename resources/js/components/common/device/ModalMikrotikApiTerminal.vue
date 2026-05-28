@@ -143,7 +143,8 @@
             },
             onTypingStopped:function(value) {
                 // 🔁 your refresh logic here
-                console.log(this.counting++);
+                //console.log(this.counting++);
+                this.counting++;
                 this.loadPreviewScript();
             },
             loadPreviewScript(){
