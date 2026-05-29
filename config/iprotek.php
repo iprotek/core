@@ -4,7 +4,7 @@ return [
     'system' => env('APP_SYSTEMS', ''),
     'system_id' => env('APP_SYSTEM_ID', '0'),
     'pay_client_id'=>env('PAY_IPROTEK_CLIENT_ID', '0'),
-    'app_url'=>env('PAY_APP_URL', '0'),
+    'app_url'=>env('PAY_APP_URL', ''),
     'pay_url'=>env('PAY_IPROTEK_URL', ''),
     'pay_client_secret'=>env('PAY_IPROTEK_CLIENT_SECRET', ''),
     'api_version'=>env('APP_API_VERSION', '1.0.0.1'),
