@@ -45,7 +45,7 @@
             },
             setOn:function(check){
                 this.input_value = check ? true:false;
-                $('#'+this.switchID).bootstrapSwitch('state', this.input_value);                
+                $('#'+this.switchID).bootstrapSwitch('state', this.input_value);
             },
             setState:function(check){
                 this.input_value = check ? true:false;
