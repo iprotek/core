@@ -1,5 +1,5 @@
 <template>
-    <span :class="el_class+' '+add_class" @click="submit">
+    <span :class="el_class+' '+add_class" @click="submit" :title="title">
         <i v-if="is_submit" class="fa fa-spinner fa-pulse mr-1"></i>
         <i v-else-if="status == 2" class="fa fa-times text-danger mr-1"></i>
         <i v-else-if="status == 1" class="fa fa-check text-success mr-1"></i>
@@ -15,7 +15,7 @@
 
 <script>
     export default {
-        props:[ "el_class", "icon_class", "label","timeout", "action"],
+        props:[ "el_class", "icon_class", "label","timeout", "action", "title"],
         $emits:["update:set_errors"],
         components: { 
         },
