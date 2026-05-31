@@ -49,18 +49,20 @@
                 <div class="my-1" v-if="is_active == false && inactive_reason">
                     <code v-text="inactive_reason"></code>
                 </div>
-                
-                <div class="my-1" v-if="id">
-                    <switch2 v-model="is_webhook_active"></switch2> Active webhook?
-                </div>
-                <div v-if="id">
-                    <button-copy v-if="webhook_response_url" :base_color="'primary'" :button_title="'Click to Copy Webhook URL'" :text_to_copy="webhook_response_url" :base_icon="'fa fa-link'"  :copied_message="'Webhook copied!'" ></button-copy>
-                </div>
-                <small>
+                <div v-if="sender_type == 'iprotek'">
+                    <b> Use this webhook for SMS Sender </b>
+                    <div class="my-1" v-if="id">
+                        <switch2 v-model="is_webhook_active"></switch2> Active webhook?
+                    </div>
+                    <div v-if="id">
+                        <button-copy v-if="webhook_response_url" :base_color="'primary'" :button_title="'Click to Copy Webhook URL'" :text_to_copy="webhook_response_url" :base_icon="'fa fa-link'"  :copied_message="'Webhook copied!'" ></button-copy>
+                    </div>
                     <small>
-                        <code>{{webhook_response_url}}</code>
+                        <small>
+                            <code>{{webhook_response_url}}</code>
+                        </small>
                     </small>
-                </small>
+                </div>
             </template>
             <template #footer>
                 <div>
