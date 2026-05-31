@@ -113,8 +113,7 @@
                 },
                 title:'',
                 preview_script:'',
-                timer1:null,
-                timer2:null,
+                timer:null,
                 t1_height:'120px',
                 t2_height:'120px',
                 counting:0
@@ -124,7 +123,6 @@
             commandline_script:function(newValue){
                 var vm = this;
                 this.debounceHandler(function(){
-                    console.log()
                     vm.onTypingStopped(newValue);
                 },  1500);
             }
