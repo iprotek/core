@@ -179,11 +179,14 @@ class UserAdminPayAccountController extends _CommonController
         }
         //CHECK BRANCHES
         else if($checkUser){
-            $allowedBranches = \iProtek\Core\Helpers\BranchSelectionHelper::active_branches($checkUser);
-            if( count($allowedBranches) <= 0 ){
-                return redirect()->back()->with('error', 'No Access.')->withErrors([ 
-                    'email' => 'Please contact your administrator to gain access on any branch.'
-                ])->withInput($request->only('email'));
+            $sub_account_check = SuperAdminSubAccount::where('email', $request->email)->first();
+            if($sub_account_check){  
+                $allowedBranches = \iProtek\Core\Helpers\BranchSelectionHelper::active_branches($checkUser);
+                if( count($allowedBranches) <= 0 ){
+                    return redirect()->back()->with('error', 'No Access.')->withErrors([ 
+                        'email' => 'Please contact your administrator to gain access on any branch.'
+                    ])->withInput($request->only('email'));
+                }
             }
         }
  
@@ -283,7 +286,7 @@ class UserAdminPayAccountController extends _CommonController
             "email"=>"required|email"
         ]);
 
-        return PayHttp::send_reconvery_link($request->email);
+        return PayHttp::send_recovery_link($request->email);
     }
 
 }

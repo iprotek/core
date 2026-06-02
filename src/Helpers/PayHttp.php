@@ -314,7 +314,7 @@ class PayHttp
 
     }
 
-    public static function send_reconvery_link($email){
+    public static function send_recovery_link($email){
         
         $data = [
             "email"=>$email,
