@@ -11,13 +11,19 @@
                             <div class="card">
                                 <div class="card-header"> <small><b> ALL POLICY CONTROLS</b></small> </div>
                                 <div class="card-body">
-                                    <file-tree v-if="isLoadRoutes" :routes="routes" :policyControlList="policyControlList" />
+                                    <file-tree 
+                                        v-if="isLoadRoutes" 
+                                        :routes="routes" 
+                                        :policyControlList="policyControlList" 
+                                        @move-route="moveToSelected"
+                                        @move-routes="moveMultipleToSelected"
+                                    />
 
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-2">
-                            <button class="btn btn-outline-primary btn-sm text-nowrap">
+                        <div class="col-sm-2 text-center">
+                            <button class="btn btn-outline-primary btn-sm text-nowrap" @click="unloadAllPolicies">
                                 <span class="fa fa-arrow-left"></span> UNLOAD ALL POLICY
                             </button>
                         </div>
@@ -25,7 +31,13 @@
                             <div class="card">
                                 <div class="card-header"> <small><b> SELECTED POLICY CONTROLS</b></small> </div>
                                 <div class="card-body">
-                                    <file-tree :is_plus="false" />
+                                    <file-tree 
+                                        :is_plus="false" 
+                                        :routes="selectedRoutes"
+                                        @move-route="moveToAll"
+                                        :policyControlList="policyControlList" 
+                                        @move-routes="moveMultipleToAll"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -93,7 +105,9 @@
                     "api.data-model.model-fields.field.remove",
                     "api.data-model.model-fields.field.update",
                     "api.data-model.model-fields.index"
-                ]
+                ],
+                initialRoutes: [],
+                selectedRoutes: []
            }
         },
         methods:{ 
@@ -120,7 +134,7 @@
                 WebRequest2('GET', '/api/group/'+this.group_id+'/xrac/policy-control/list').then(resp=>{
                     if(resp.ok){
                         return resp.json().then(data=>{
-                            console.log(data);
+                            //console.log(data);
                             vm.routes = [];
                             let routes = [];
                             vm.policyControlList = data;
@@ -128,6 +142,8 @@
                                 routes.push(item.name);
                             });
                             vm.routes = routes;
+                            vm.initialRoutes = [...routes];
+                            vm.selectedRoutes = [];
                             vm.isLoadRoutes = true;
                         
 
@@ -155,10 +171,59 @@
                 return new Promise((promiseExec)=>{
                     vm.promiseExec = promiseExec;
                 });
+            },
+            moveToSelected(route) {
+                const idx = this.routes.indexOf(route);
+                if (idx > -1) {
+                    this.routes.splice(idx, 1);
+                }
+                if (!this.selectedRoutes.includes(route)) {
+                    this.selectedRoutes.push(route);
+                    this.selectedRoutes.sort();
+                }
+            },
+            moveMultipleToSelected(routesList) {
+                routesList.forEach(route => {
+                    const idx = this.routes.indexOf(route);
+                    if (idx > -1) {
+                        this.routes.splice(idx, 1);
+                    }
+                    if (!this.selectedRoutes.includes(route)) {
+                        this.selectedRoutes.push(route);
+                    }
+                });
+                this.selectedRoutes.sort();
+            },
+            moveToAll(route) {
+                const idx = this.selectedRoutes.indexOf(route);
+                if (idx > -1) {
+                    this.selectedRoutes.splice(idx, 1);
+                }
+                if (!this.routes.includes(route)) {
+                    this.routes.push(route);
+                    this.routes.sort();
+                }
+            },
+            moveMultipleToAll(routesList) {
+                routesList.forEach(route => {
+                    const idx = this.selectedRoutes.indexOf(route);
+                    if (idx > -1) {
+                        this.selectedRoutes.splice(idx, 1);
+                    }
+                    if (!this.routes.includes(route)) {
+                        this.routes.push(route);
+                    }
+                });
+                this.routes.sort();
+            },
+            unloadAllPolicies() {
+                this.routes = [...this.initialRoutes];
+                this.selectedRoutes = [];
             }
 
         },
         mounted:function(){      
+            this.initialRoutes = [...this.routes];
         },
         updated:function(){
 

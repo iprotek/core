@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { computed, defineComponent, h, ref, TrackOpTypes } from 'vue';
+import { computed, defineComponent, h, ref, provide, inject } from 'vue';
 
 const props = defineProps({
     is_plus: { type: Boolean, default: true },
@@ -22,8 +22,15 @@ const props = defineProps({
     policyControlList:{type:Array, default: []}
 });
 
+const emit = defineEmits(['move-route', 'move-routes']);
 
-const routes = props.routes; 
+provide('onMoveRoute', (route) => {
+    emit('move-route', route);
+});
+
+provide('onMoveRoutes', (routesList) => {
+    emit('move-routes', routesList);
+});
 
 function buildTree(data) {
     const tree = {};
@@ -49,7 +56,7 @@ function buildTree(data) {
     return tree;
 }
 
-const tree = computed(() => buildTree(routes));
+const tree = computed(() => buildTree(props.routes));
 
 /* collect all nested routes */
 function collectRoutes(node) {
@@ -80,6 +87,8 @@ const TreeNode = defineComponent({
     setup(props) {
         //var vm = this;
         const expanded = ref(false);
+        const onMoveRoute = inject('onMoveRoute');
+        const onMoveRoutes = inject('onMoveRoutes');
 
         const toggle = () => {
             expanded.value = !expanded.value;
@@ -137,12 +146,8 @@ const TreeNode = defineComponent({
                             e.stopPropagation();
 
                             if (hasChildren()) {
-                                console.log(
-                                    "FOLDER MEMBERS:",
-                                    collectRoutes(props.node)
-                                );
-                            } else {
-                                console.log("ROUTE:", props.path);
+                                const routesList = collectRoutes(props.node);
+                                if (onMoveRoutes) onMoveRoutes(routesList);
                             }
                         }
                     }),
@@ -176,7 +181,9 @@ const TreeNode = defineComponent({
                             style: {
                                 paddingLeft: `${(props.depth + 1) * 20}px`
                             },
-                            
+                            onClick: () => {
+                                if (onMoveRoute) onMoveRoute(file);
+                            }
                         }, [
 
                             h('i', {
@@ -192,8 +199,7 @@ const TreeNode = defineComponent({
                                 style: {
                                     marginRight: '6px',
                                     color: props.is_plus ? '#16a085' : 'red'
-                                },
-                                onClick: () => console.log("ROUTE:", file)
+                                }
                             }),
 
                             file
