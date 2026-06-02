@@ -1,5 +1,13 @@
 <template>
     <div class="tree">
+        <div class="mb-2">
+            <input 
+                type="text" 
+                v-model="searchQuery" 
+                class="form-control form-control-sm" 
+                placeholder="Search policies..."
+            />
+        </div>
         <TreeNode
             v-for="(value, key) in tree"
             :key="key"
@@ -14,7 +22,7 @@
 </template>
 
 <script setup>
-import { computed, defineComponent, h, ref, provide, inject } from 'vue';
+import { computed, defineComponent, h, ref, provide, inject, watch } from 'vue';
 
 const props = defineProps({
     is_plus: { type: Boolean, default: true },
@@ -24,6 +32,9 @@ const props = defineProps({
 
 const emit = defineEmits(['move-route', 'move-routes']);
 
+const searchQuery = ref('');
+provide('searchQuery', searchQuery);
+
 provide('onMoveRoute', (route) => {
     emit('move-route', route);
 });
@@ -31,6 +42,53 @@ provide('onMoveRoute', (route) => {
 provide('onMoveRoutes', (routesList) => {
     emit('move-routes', routesList);
 });
+
+const descriptionMap = computed(() => {
+    const map = {};
+    if (props.policyControlList) {
+        props.policyControlList.forEach(item => {
+            if (item && item.name) {
+                map[item.name] = item.description || '';
+            }
+        });
+    }
+    return map;
+});
+
+provide('getRouteDescription', (route) => {
+    return descriptionMap.value[route] || '';
+});
+
+function isRouteMatch(route, query) {
+    if (!query) return true;
+    const lowerQuery = query.toLowerCase();
+
+    // Check route name
+    if (route.toLowerCase().includes(lowerQuery)) return true;
+
+    // Check description
+    const desc = descriptionMap.value[route];
+    if (desc && desc.toLowerCase().includes(lowerQuery)) return true;
+
+    // Check formatted segments (e.g. "Data Model" matching "data-model")
+    const parts = route.split('.');
+    if (parts[0] === 'api') parts.shift();
+    
+    const formatName = (text) => {
+        return text
+            .replace(/-/g, ' ')
+            .replace(/\b\w/g, l => l.toUpperCase());
+    };
+
+    for (let part of parts) {
+        const formatted = formatName(part).toLowerCase();
+        if (formatted.includes(lowerQuery)) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 function buildTree(data) {
     const tree = {};
@@ -56,7 +114,11 @@ function buildTree(data) {
     return tree;
 }
 
-const tree = computed(() => buildTree(props.routes));
+const filteredRoutes = computed(() => {
+    return props.routes.filter(route => isRouteMatch(route, searchQuery.value));
+});
+
+const tree = computed(() => buildTree(filteredRoutes.value));
 
 /* collect all nested routes */
 function collectRoutes(node) {
@@ -89,6 +151,16 @@ const TreeNode = defineComponent({
         const expanded = ref(false);
         const onMoveRoute = inject('onMoveRoute');
         const onMoveRoutes = inject('onMoveRoutes');
+        const getRouteDescription = inject('getRouteDescription');
+        const searchQuery = inject('searchQuery');
+
+        if (searchQuery) {
+            watch(searchQuery, (newVal) => {
+                if (newVal) {
+                    expanded.value = true;
+                }
+            });
+        }
 
         const toggle = () => {
             expanded.value = !expanded.value;
@@ -110,6 +182,8 @@ const TreeNode = defineComponent({
             folders().length > 0 || files().length > 0;
 
         return () => {
+            const folderRoute = props.path.startsWith('api.') ? props.path : `api.${props.path}`;
+            const folderDesc = getRouteDescription ? (getRouteDescription(folderRoute) || getRouteDescription(props.path)) : '';
 
             return h('div', { class: 'tree-node' }, [
 
@@ -118,7 +192,8 @@ const TreeNode = defineComponent({
                     class: 'folder',
                     style: {
                         paddingLeft: `${props.depth * 20}px`
-                    }
+                    },
+                    title: folderDesc || undefined
                 }, [
 
                     // ▶ / ▼ toggle
@@ -175,12 +250,14 @@ const TreeNode = defineComponent({
                         })
                     ),
 
-                    ...files().map(file =>
-                        h('div', {
+                    ...files().map(file => {
+                        const fileDesc = getRouteDescription ? getRouteDescription(file) : '';
+                        return h('div', {
                             class: 'file',
                             style: {
                                 paddingLeft: `${(props.depth + 1) * 20}px`
                             },
+                            title: fileDesc || undefined,
                             onClick: () => {
                                 if (onMoveRoute) onMoveRoute(file);
                             }
@@ -203,8 +280,8 @@ const TreeNode = defineComponent({
                             }),
 
                             file
-                        ])
-                    )
+                        ]);
+                    })
                 ])
             ]);
         };
