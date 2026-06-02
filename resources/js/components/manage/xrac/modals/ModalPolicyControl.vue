@@ -9,21 +9,23 @@
                     <div class="row" v-if="!app_account_id">
                         <div class="col-sm-5" >
                             <div class="card">
-                                <div class="card-header">ALL POLICY CONTROLS</div>
+                                <div class="card-header"> <small><b> ALL POLICY CONTROLS</b></small> </div>
                                 <div class="card-body">
-                                    <file-tree />
+                                    <file-tree v-if="isLoadRoutes" :routes="routes" :policyControlList="policyControlList" />
 
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-2">
-
+                            <button class="btn btn-outline-primary btn-sm text-nowrap">
+                                <span class="fa fa-arrow-left"></span> UNLOAD ALL POLICY
+                            </button>
                         </div>
                         <div class="col-sm-5">
                             <div class="card">
-                                <div class="card-header">SELECTED POLICY CONTROLS</div>
+                                <div class="card-header"> <small><b> SELECTED POLICY CONTROLS</b></small> </div>
                                 <div class="card-body">
-                                    <file-tree />
+                                    <file-tree :is_plus="false" />
                                 </div>
                             </div>
                         </div>
@@ -68,7 +70,30 @@
                 promiseExec:null,
                 errors:[],
                 is_default:false,
-                policyControlList:[]
+                policyControlList:[],
+                isLoadRoutes:true,
+                routes:[
+                    "api.cms.save",
+                    "api.collector.batch.add",
+                    "api.collector.batch.get",
+                    "api.collector.batch.list",
+                    "api.collector.branch.add",
+                    "api.collector.branch.collection-list",
+                    "api.collector.branch.get",
+                    "api.collector.branch.list",
+                    "api.collector.branch.my-collection-dashboard",
+                    "api.collector.branch.remove",
+                    "api.collector.branch.settings.get",
+                    "api.collector.branch.settings.set",
+                    "api.collector.collection.calendar.my-collection-events",
+                    "api.collector.collection.calendar.my-collections",
+                    "api.collector.collection.due.list",
+                    "api.collector.collection.google-map.find-subscriber",
+                    "api.data-model.model-fields.field.add",
+                    "api.data-model.model-fields.field.remove",
+                    "api.data-model.model-fields.field.update",
+                    "api.data-model.model-fields.index"
+                ]
            }
         },
         methods:{ 
@@ -91,11 +116,22 @@
             },
             loadPolicy(){
                 var vm = this;
+                vm.isLoadRoutes = false;
                 WebRequest2('GET', '/api/group/'+this.group_id+'/xrac/policy-control/list').then(resp=>{
                     if(resp.ok){
                         return resp.json().then(data=>{
                             console.log(data);
+                            vm.routes = [];
+                            let routes = [];
                             vm.policyControlList = data;
+                            data.forEach(item=>{
+                                routes.push(item.name);
+                            });
+                            vm.routes = routes;
+                            vm.isLoadRoutes = true;
+                        
+
+
                         });
                     }
                 });

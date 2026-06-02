@@ -7,35 +7,23 @@
             :node="value"
             :depth="0"
             :path="key"
+            :is_plus="is_plus"
+            
         />
     </div>
 </template>
 
 <script setup>
-import { computed, defineComponent, h, ref } from 'vue';
+import { computed, defineComponent, h, ref, TrackOpTypes } from 'vue';
 
-const routes = [
-    "api.cms.save",
-    "api.collector.batch.add",
-    "api.collector.batch.get",
-    "api.collector.batch.list",
-    "api.collector.branch.add",
-    "api.collector.branch.collection-list",
-    "api.collector.branch.get",
-    "api.collector.branch.list",
-    "api.collector.branch.my-collection-dashboard",
-    "api.collector.branch.remove",
-    "api.collector.branch.settings.get",
-    "api.collector.branch.settings.set",
-    "api.collector.collection.calendar.my-collection-events",
-    "api.collector.collection.calendar.my-collections",
-    "api.collector.collection.due.list",
-    "api.collector.collection.google-map.find-subscriber",
-    "api.data-model.model-fields.field.add",
-    "api.data-model.model-fields.field.remove",
-    "api.data-model.model-fields.field.update",
-    "api.data-model.model-fields.index"
-];
+const props = defineProps({
+    is_plus: { type: Boolean, default: true },
+    routes: {type:Array, default: []},
+    policyControlList:{type:Array, default: []}
+});
+
+
+const routes = props.routes; 
 
 function buildTree(data) {
     const tree = {};
@@ -85,10 +73,12 @@ const TreeNode = defineComponent({
         name: String,
         node: Object,
         depth: Number,
-        path: String
+        path: String,
+        is_plus: Boolean
     },
 
     setup(props) {
+        //var vm = this;
         const expanded = ref(false);
 
         const toggle = () => {
@@ -137,11 +127,11 @@ const TreeNode = defineComponent({
 
                     // [+] action icon
                     h('i', {
-                        class: 'fa fa-plus-square',
+                        class: props.is_plus ? 'fa fa-plus-square' : 'fa fa-minus-square' ,
                         style: {
                             marginRight: '6px',
                             cursor: 'pointer',
-                            color: 'rgb(24, 175, 11)'
+                            color:  props.is_plus ? 'rgb(24, 175, 11)' : 'orange'
                         },
                         onClick: (e) => {
                             e.stopPropagation();
@@ -175,7 +165,8 @@ const TreeNode = defineComponent({
                             name: key,
                             node: props.node[key],
                             depth: props.depth + 1,
-                            path: `${props.path}.${key}`
+                            path: `${props.path}.${key}`,
+                            is_plus: props.is_plus
                         })
                     ),
 
@@ -197,10 +188,10 @@ const TreeNode = defineComponent({
                             }),
 
                             h('i', {
-                                class: 'fa fa-plus',
+                                class: props.is_plus ? 'fa fa-plus' : 'fa fa-minus',
                                 style: {
                                     marginRight: '6px',
-                                    color: '#16a085'
+                                    color: props.is_plus ? '#16a085' : 'red'
                                 },
                                 onClick: () => console.log("ROUTE:", file)
                             }),
@@ -213,6 +204,7 @@ const TreeNode = defineComponent({
         };
     }
 });
+
 </script>
 
 <style scoped>
