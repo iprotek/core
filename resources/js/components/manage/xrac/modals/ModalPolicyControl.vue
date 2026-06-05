@@ -52,6 +52,7 @@
                                         :routes="selectedRoutes"
                                         :policyControlList="policyControlList"
                                         :uncheckedRoutes="uncheckedRoutes"
+                                        @update:uncheckedRoutes="uncheckedRoutes = $event"
                                     />
                                 </div>
                             </div>
@@ -163,7 +164,16 @@
             },
             saveUserRolePolicy:function(){
                 var vm = this;
-                console.log(vm.group_id, vm.branch_id, vm.role_id, vm.app_account_id);
+                var request = {
+                    app_account_id: vm.app_account_id,
+                    branch_id: vm.branch_id,
+                    policy_control_routes: vm.uncheckedRoutes
+                };
+                return WebRequest2('POST', `/api/group/${this.group_id}/xrac/policy-control/update-user-disable-routes`, JSON.stringify(request)).then(resp=>{
+                    return resp.json().then(data=>{
+                        return data;
+                    });
+                });
             },
             reset:function(){
 

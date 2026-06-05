@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { computed, defineComponent, h, ref } from 'vue';
+import { computed, defineComponent, h, ref, provide, inject } from 'vue';
 
 const props = defineProps({
     uncheckedRoutes: {type:Array, default: []},
@@ -20,7 +20,42 @@ const props = defineProps({
     policyControlList:{type:Array, default: []}
 });
 
-const routes = props.routes;
+const emit = defineEmits(['update:uncheckedRoutes']);
+
+const descriptionMap = computed(() => {
+    const map = {};
+    if (props.policyControlList) {
+        props.policyControlList.forEach(item => {
+            if (item && item.name) {
+                map[item.name] = item.description || '';
+            }
+        });
+    }
+    return map;
+});
+
+provide('getRouteDescription', (route) => {
+    return descriptionMap.value[route] || '';
+});
+
+const uncheckedSet = computed(() => new Set(props.uncheckedRoutes || []));
+provide('uncheckedSet', uncheckedSet);
+
+provide('toggleCheck', (targetRoutes, checkState) => {
+    let newUnchecked = [...(props.uncheckedRoutes || [])];
+    if (checkState) {
+        // Checked: remove from uncheckedRoutes
+        newUnchecked = newUnchecked.filter(r => !targetRoutes.includes(r));
+    } else {
+        // Unchecked: add to uncheckedRoutes
+        targetRoutes.forEach(r => {
+            if (!newUnchecked.includes(r)) {
+                newUnchecked.push(r);
+            }
+        });
+    }
+    emit('update:uncheckedRoutes', newUnchecked);
+});
 
 function buildTree(data) {
     const tree = {};
@@ -45,7 +80,7 @@ function buildTree(data) {
     return tree;
 }
 
-const tree = computed(() => buildTree(routes));
+const tree = computed(() => buildTree(props.routes));
 
 function collectRoutes(node) {
     let result = [];
@@ -74,6 +109,10 @@ const TreeNode = defineComponent({
 
     setup(props) {
         const expanded = ref(false);
+        const onMoveRoute = inject('onMoveRoute');
+        const getRouteDescription = inject('getRouteDescription');
+        const uncheckedSet = inject('uncheckedSet');
+        const toggleCheck = inject('toggleCheck');
 
         const toggle = () => {
             expanded.value = !expanded.value;
@@ -91,17 +130,15 @@ const TreeNode = defineComponent({
         const hasChildren = () =>
             folders().length > 0 || files().length > 0;
 
-        const onCheck = (e) => {
-            e.stopPropagation();
-
-            if (hasChildren()) {
-                console.log("FOLDER MEMBERS:", collectRoutes(props.node));
-            } else {
-                console.log("ROUTE:", props.path);
-            }
-        };
+        const isFolderChecked = computed(() => {
+            if (!uncheckedSet) return true;
+            const descendants = collectRoutes(props.node);
+            return descendants.every(route => !uncheckedSet.value.has(route));
+        });
 
         return () => {
+            const folderRoute = props.path.startsWith('api.') ? props.path : `api.${props.path}`;
+            const folderDesc = getRouteDescription ? (getRouteDescription(folderRoute) || getRouteDescription(props.path)) : '';
 
             return h('div', { class: 'tree-node' }, [
 
@@ -110,7 +147,8 @@ const TreeNode = defineComponent({
                     class: 'folder',
                     style: {
                         paddingLeft: `${props.depth * 20}px`
-                    }
+                    },
+                    title: folderDesc || undefined
                 }, [
 
                     // expand arrow
@@ -126,14 +164,20 @@ const TreeNode = defineComponent({
                         : '•'
                     ),
 
-                    // checkbox (NEW)
+                    // checkbox
                     h('input', {
                         type: 'checkbox',
+                        checked: isFolderChecked.value,
                         style: {
                             marginRight: '6px',
                             cursor: 'pointer'
                         },
-                        onClick: onCheck
+                        onChange: (e) => {
+                            if (toggleCheck) {
+                                const descendants = collectRoutes(props.node);
+                                toggleCheck(descendants, e.target.checked);
+                            }
+                        }
                     }),
 
                     // name
@@ -158,28 +202,38 @@ const TreeNode = defineComponent({
                         })
                     ),
 
-                    ...files().map(file =>
-                        h('div', {
+                    ...files().map(file => {
+                        const fileDesc = getRouteDescription ? getRouteDescription(file) : '';
+                        const isChecked = computed(() => {
+                            return uncheckedSet ? !uncheckedSet.value.has(file) : true;
+                        });
+
+                        return h('div', {
                             class: 'file',
                             style: {
                                 paddingLeft: `${(props.depth + 1) * 20}px`
-                            }//,
-                            //onClick: () => console.log("ROUTE:", file)
-                        },[
+                            },
+                            title: fileDesc || undefined
+                        }, [
 
-                            // checkbox (NEW)
+                            // checkbox
                             h('input', {
                                 type: 'checkbox',
+                                checked: isChecked.value,
                                 style: {
                                     marginRight: '6px',
                                     cursor: 'pointer'
                                 },
-                                onClick: () => console.log("ROUTE:", file)
+                                onChange: (e) => {
+                                    if (toggleCheck) {
+                                        toggleCheck([file], e.target.checked);
+                                    }
+                                }
                             }),
                             
                             file
-                        ])
-                    )
+                        ]);
+                    })
                 ])
             ]);
         };
