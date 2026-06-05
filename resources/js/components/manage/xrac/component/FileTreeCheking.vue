@@ -14,28 +14,13 @@
 <script setup>
 import { computed, defineComponent, h, ref } from 'vue';
 
-const routes = [
-    "api.cms.save",
-    "api.collector.batch.add",
-    "api.collector.batch.get",
-    "api.collector.batch.list",
-    "api.collector.branch.add",
-    "api.collector.branch.collection-list",
-    "api.collector.branch.get",
-    "api.collector.branch.list",
-    "api.collector.branch.my-collection-dashboard",
-    "api.collector.branch.remove",
-    "api.collector.branch.settings.get",
-    "api.collector.branch.settings.set",
-    "api.collector.collection.calendar.my-collection-events",
-    "api.collector.collection.calendar.my-collections",
-    "api.collector.collection.due.list",
-    "api.collector.collection.google-map.find-subscriber",
-    "api.data-model.model-fields.field.add",
-    "api.data-model.model-fields.field.remove",
-    "api.data-model.model-fields.field.update",
-    "api.data-model.model-fields.index"
-];
+const props = defineProps({
+    uncheckedRoutes: {type:Array, default: []},
+    routes: {type:Array, default: []},
+    policyControlList:{type:Array, default: []}
+});
+
+const routes = props.routes;
 
 function buildTree(data) {
     const tree = {};

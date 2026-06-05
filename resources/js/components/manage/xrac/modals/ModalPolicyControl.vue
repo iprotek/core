@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-sm-2 text-center">
                             <button class="btn btn-outline-primary btn-sm text-nowrap" @click="unloadAllPolicies">
-                                <span class="fa fa-arrow-left"></span> UNLOAD ALL POLICY
+                                <span class="fa fa-arrow-left"></span> UNSELECT ALL
                             </button>
                         </div>
                         <div class="col-sm-5">
@@ -47,7 +47,12 @@
                             <div class="card">
                                 <div class="card-header">CURRENT POLICY CONTROL</div>
                                 <div class="card-body"> 
-                                    <file-tree-checking />
+                                    <file-tree-checking 
+                                        v-if="selectedRoutes.length > 0" 
+                                        :routes="selectedRoutes"
+                                        :policyControlList="policyControlList"
+                                        :uncheckedRoutes="uncheckedRoutes"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -57,7 +62,8 @@
             <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
-                    <web-submit el_class="btn btn-outline-primary" :action="saveRolePolicy"  :icon_class="'fa fa-save'" :label="'SAVE'"  />
+                    <web-submit v-if="!app_account_id" el_class="btn btn-outline-primary" :action="saveRolePolicy"  :icon_class="'fa fa-save'" :label="'SAVE ROLE'"  />
+                    <web-submit v-else el_class="btn btn-outline-primary" :action="saveUserRolePolicy"  :icon_class="'fa fa-save'" :label="'SAVE USER ROLE'"  />
                 </div>
             </template>
         </modal-view> 
@@ -110,22 +116,54 @@
                     "api.data-model.model-fields.index"
                 ],
                 initialRoutes: [],
-                selectedRoutes: []
+                selectedRoutes: [],
+                uncheckedRoutes:[]
            }
         },
         methods:{ 
+            getRolePolicy:function(){
+                var vm = this;
+                let url = `/api/group/${this.group_id}/xrac/policy-control/role-routes/${vm.role_id}?branch_id=${this.branch_id}`;
+                return WebRequest2('GET', url).then(resp=>{
+                    if(resp.ok){
+                        return resp.json().then(data=>{
+                            return data;
+                        });
+                    }
+                    return [];
+                });
+            },
+            getUserDisablePolicy:function(){
+                var vm = this;
+                let url = `http://billing.iprotek.internal/api/group/${this.group_id}/xrac/policy-control/user-disable-routes/${this.app_account_id}`;
+                return WebRequest2('GET', url).then(resp=>{
+                    if(resp.ok){
+                        return resp.json().then(data=>{
+                            return data;
+                        });
+                    }
+                    return [];
+                });
+            },
             saveRolePolicy:function(){
                 var vm = this;
-                console.log(vm.group_id, vm.branch_id, vm.role_id, vm.app_account_id);
+                //console.log(vm.group_id, vm.branch_id, vm.role_id, vm.app_account_id);
                 var request = {
                     xrole_id: vm.role_id,
                     branch_id: vm.branch_id,
                     policy_control_routes: vm.selectedRoutes
                 };
-                console.log(request);
-                return;
-
-                return WebRequest2('POST', `/api/group/${this.group_id}/xrac/policy-control/update-role`)
+                //console.log(request);
+                //return;
+                return WebRequest2('POST', `/api/group/${this.group_id}/xrac/policy-control/update-role`, JSON.stringify(request)).then(resp=>{
+                    return resp.json().then(data=>{
+                        return data;
+                    });
+                })
+            },
+            saveUserRolePolicy:function(){
+                var vm = this;
+                console.log(vm.group_id, vm.branch_id, vm.role_id, vm.app_account_id);
             },
             reset:function(){
 
@@ -137,7 +175,10 @@
 
                 this.$refs.modal.show();
 
+                
                 this.loadPolicy();
+                
+
 
                 return new Promise((promiseExec)=>{
                     vm.promiseExec = promiseExec;
@@ -152,16 +193,42 @@
                         return resp.json().then(data=>{
                             //console.log(data);
                             vm.routes = [];
+                            vm.uncheckedRoutes = [];
                             let routes = [];
                             vm.policyControlList = data;
-                            data.forEach(item=>{
-                                routes.push(item.name);
+
+                            
+                            //LOAD ROLE POLICY
+                            vm.getRolePolicy().then(selectedPolicyRoutes=>{
+                                
+                                data.forEach(item=>{
+
+                                    let hasItem = selectedPolicyRoutes.filter(a=>a == item.name)[0];
+                                    if(!hasItem)
+                                        routes.push(item.name);
+
+                                });
+                                //console.log(routes);
+                                vm.routes = routes;
+                                vm.initialRoutes = [...routes];
+                                vm.selectedRoutes = selectedPolicyRoutes;
+
+
+                                //LOAD USER DISABLED ROUTES
+                                if(vm.app_account_id){
+                                    vm.getUserDisablePolicy().then(data=>{
+                                        //console.log("User disabled policy loaded.");
+                                        vm.uncheckedRoutes = data;
+                                        vm.isLoadRoutes = true;
+                                    });
+                                }
+                                else{
+                                    vm.isLoadRoutes = true;
+                                }
+
+
                             });
-                            vm.routes = routes;
-                            vm.initialRoutes = [...routes];
-                            vm.selectedRoutes = [];
-                            vm.isLoadRoutes = true;
-                        
+                       
 
 
                         });

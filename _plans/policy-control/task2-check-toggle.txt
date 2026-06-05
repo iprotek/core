@@ -1,0 +1,43 @@
+Task: Implement interactive checkbox behavior for FileTree and Policy Controls
+
+Focus on the following Vue 3 components:
+
+/packages/iprotek/core/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
+/packages/iprotek/core/resources/js/components/manage/xrac/modal/FileTreeCheking.vue
+Current State
+
+The UI is already implemented and rendered correctly.
+
+Available props:
+
+uncheckedRoutes
+routes
+policyControlList
+
+Currently, all FileTree checkboxes are displayed as checked by default.
+
+Required Behavior
+
+Implement full interactive check/uncheck functionality.
+
+Rules
+By default, all routes are considered checked/allowed.
+uncheckedRoutes represents the list of routes that are unchecked/disabled.
+When a checkbox is unchecked:
+Add the corresponding route to uncheckedRoutes.
+When a checkbox is checked:
+Remove the corresponding route from uncheckedRoutes.
+Checkbox state must always be derived from uncheckedRoutes:
+Checked = route is not in uncheckedRoutes
+Unchecked = route exists in uncheckedRoutes
+Ensure the UI immediately reflects changes when users toggle checkboxes.
+Preserve Vue 3 reactivity and avoid direct mutation of props.
+Use emits, computed properties, or reactive state as appropriate to keep parent and child components synchronized.
+Apply this behavior consistently for:
+Individual route nodes
+Nested route nodes
+Policy control items rendered by policyControlList
+Existing visual structure, styling, and layout should remain unchanged.
+Expected Result
+
+The FileTree and Policy Control checkboxes become fully functional, with uncheckedRoutes acting as the single source of truth for all checked/unchecked states. Any user interaction should immediately update the UI and synchronize the route state correctly.

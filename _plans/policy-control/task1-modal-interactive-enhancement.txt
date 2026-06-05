@@ -1,0 +1,159 @@
+Focus on Vue components:
+/packages/iprotek/core/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
+/packages/iprotek/core/resources/js/components/manage/xrac/modal/FileTree.vue
+
+Context
+The UI is already fully implemented and rendered correctly.
+You MUST NOT:
+  Modify tree rendering logic
+  Change grouping structure
+  Change layout or design
+  Add backend/API logic
+  
+This task is pure UI interactivity only (frontend state behavior).
+
+Policy Routes Dataset
+[
+"api.cms.save",
+"api.collector.batch.add",
+"api.collector.batch.get",
+"api.collector.batch.list",
+"api.collector.branch.add",
+"api.collector.branch.collection-list",
+"api.collector.branch.get",
+"api.collector.branch.list",
+"api.collector.branch.my-collection-dashboard",
+"api.collector.branch.remove",
+"api.collector.branch.settings.get",
+"api.collector.branch.settings.set",
+"api.collector.collection.calendar.my-collection-events",
+"api.collector.collection.calendar.my-collections",
+"api.collector.collection.due.list",
+"api.collector.collection.google-map.find-subscriber",
+"api.data-model.model-fields.field.add",
+"api.data-model.model-fields.field.remove",
+"api.data-model.model-fields.field.update",
+"api.data-model.model-fields.index"
+]
+
+UI Structure (Already Built)
+There are two tree cards:
+1. ALL POLICY CONTROLS
+Hierarchical structure (example):
+CMS
+  api.cms.save
+Collector
+  Batch
+    api.collector.batch.add
+  Branch
+    Settings
+      api.collector.branch.settings.get
+      api.collector.branch.settings.set
+      api.collector.branch.add
+      api.collector.branch.collection-list
+      api.collector.branch.get
+  Collection
+    ....
+
+2. SELECTED POLICY CONTROLS
+Same hierarchical structure, but only contains selected/moved policies.
+Example:
+Data Model
+  Model Fields
+    Field
+      api.data-model.model-fields.field.add
+    Model
+      api.data-model.model-fields.index
+
+Middle Action
+UNLOAD ALL POLICY button
+This button must:
+  CLEAR ALL items in SELECTED POLICY CONTROLS
+  RETURN all policies back to ALL POLICY CONTROLS
+  RESTORE original full tree exactly as initial state
+ ❗ Must NOT partially move or toggle
+ ❗ Must NOT preserve selection state
+ ❗ Always full reset only
+
+Interaction Rules (Core Requirement)
+Move from ALL → SELECTED
+  Clicking a policy OR folder/icon in ALL POLICY CONTROLS:
+    Remove it from ALL tree
+    Insert it into SELECTED tree
+    Preserve correct hierarchy in SELECTED view
+    Apply “selected” visual state/icon
+
+Move from SELECTED → ALL
+  Clicking a policy OR folder/icon in SELECTED POLICY CONTROLS:
+    Remove it from SELECTED tree
+    Restore it back to ALL tree in correct hierarchical position
+    Revert visual state/icon to default
+
+State Requirement
+  UI state only (no persistence)
+  Must support dynamic tree updates without reload
+  Must preserve hierarchy integrity when moving nodes
+  Must correctly update parent/child relationships when items move
+
+Expected Result
+A dual-tree UI where:
+  Clicking items moves them between ALL and SELECTED
+  Structure remains intact in both trees
+  SELECTED reflects only chosen policies
+  UNLOAD ALL POLICY fully resets SELECTED back to ALL
+  No backend or API interaction required
+
+Focus on Vue component:
+
+/packages/iprotek/core/resources/js/components/manage/xrac/modal/FileTree.vue
+
+Goal
+Implement a frontend-only filter search feature for the existing FileTree UI.
+
+Requirement
+Add a search/filter input to allow users to dynamically filter tree nodes.
+
+Behavior
+1. Search Input
+  Add a search field at the top of the FileTree component
+  Accept text input for filtering policies
+2. Filtering Logic (IMPORTANT)
+  A node is considered a match if the search text matches either:
+    node.name
+    node.description (from policy metadata if available)
+
+Match rules:
+  Case-insensitive
+  Partial match using includes()
+
+Example:
+
+   node.name.toLowerCase().includes(searchText)
+    || node.description?.toLowerCase().includes(searchText)
+
+3. Tree Filtering Behavior
+  Tree updates in real-time while typing
+  If a child node matches:
+    Keep its parent nodes visible to preserve hierarchy
+  If a parent node matches:
+    Show its children normally
+  Non-matching branches must be hidden
+
+4. UI Behavior
+  No page reload required
+  Do not break existing expand/collapse logic
+  Optional: highlight matched text in UI (name or description)
+
+Constraints
+  Frontend-only (no API calls)
+  Do NOT modify backend or data structure source
+  Do NOT change tree rendering logic—only add filtering layer
+  Must preserve hierarchical integrity while filtering
+
+Expected Result
+  Search box filters FileTree nodes in real time
+  Matches work on both:
+    route name
+    description text
+  Tree structure remains valid and readable
+  UX stays smooth and responsive
