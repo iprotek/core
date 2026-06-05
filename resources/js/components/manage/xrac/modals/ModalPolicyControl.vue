@@ -57,6 +57,7 @@
             <template #footer>
                 <div>
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
+                    <web-submit el_class="btn btn-outline-primary" :action="saveRolePolicy"  :icon_class="'fa fa-save'" :label="'SAVE'"  />
                 </div>
             </template>
         </modal-view> 
@@ -66,6 +67,7 @@
 </template>
 
 <script>    
+    import WebSubmitVue from '../../../common/WebSubmit.vue';
     import FileTreeVue from '../component/FileTree.vue';
     import FileTreeCheckingVue from '../component/FileTreeCheking.vue';
     export default {
@@ -75,7 +77,8 @@
         },
         components: {   
             "file-tree":FileTreeVue,
-            "file-tree-checking":FileTreeCheckingVue
+            "file-tree-checking":FileTreeCheckingVue,
+            "web-submit":WebSubmitVue
         },
         data: function () {
             return {        
@@ -111,6 +114,19 @@
            }
         },
         methods:{ 
+            saveRolePolicy:function(){
+                var vm = this;
+                console.log(vm.group_id, vm.branch_id, vm.role_id, vm.app_account_id);
+                var request = {
+                    xrole_id: vm.role_id,
+                    branch_id: vm.branch_id,
+                    policy_control_routes: vm.selectedRoutes
+                };
+                console.log(request);
+                return;
+
+                return WebRequest2('POST', `/api/group/${this.group_id}/xrac/policy-control/update-role`)
+            },
             reset:function(){
 
             },
