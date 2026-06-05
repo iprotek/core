@@ -41,3 +41,113 @@ Existing visual structure, styling, and layout should remain unchanged.
 Expected Result
 
 The FileTree and Policy Control checkboxes become fully functional, with uncheckedRoutes acting as the single source of truth for all checked/unchecked states. Any user interaction should immediately update the UI and synchronize the route state correctly.
+
+
+
+================ CONSTRAINT ==
+Task: Implement tri-state checkbox behavior for FileTree and Policy Controls
+
+Focus on the following Vue 3 components:
+
+/packages/iprotek/core/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
+/packages/iprotek/core/resources/js/components/manage/xrac/modal/FileTreeCheking.vue
+Available Props
+uncheckedRoutes
+routes
+policyControlList
+Current State
+
+The UI structure already exists and renders correctly. All route checkboxes currently appear checked by default.
+
+Goal
+
+Implement a fully interactive hierarchical checkbox system with three states:
+
+Checked ✅
+Unchecked ⬜
+Neutral / Indeterminate ➖
+Source of Truth
+
+uncheckedRoutes must remain the single source of truth.
+
+Rules:
+
+A route is checked when it does not exist in uncheckedRoutes.
+A route is unchecked when it exists in uncheckedRoutes.
+Tri-State Behavior
+
+For parent/group nodes:
+
+Checked
+
+Display as checked when:
+
+The parent route is checked.
+All descendant routes are checked.
+Unchecked
+
+Display as unchecked when:
+
+The parent route is unchecked.
+All descendant routes are unchecked.
+Neutral / Indeterminate
+
+Display as neutral when:
+
+Some descendants are checked.
+Some descendants are unchecked.
+
+This state should visually use the native checkbox indeterminate state or the existing UI equivalent.
+
+Interaction Rules
+When checking a parent node
+Remove the parent route from uncheckedRoutes.
+Remove all descendant routes from uncheckedRoutes.
+Result: parent and all children become checked.
+When unchecking a parent node
+Add the parent route to uncheckedRoutes.
+Add all descendant routes to uncheckedRoutes.
+Result: parent and all children become unchecked.
+When checking a child node
+Remove the child route from uncheckedRoutes.
+Recalculate all ancestor states.
+Parent may become:
+Checked
+Neutral
+Unchecked
+
+depending on descendants.
+
+When unchecking a child node
+Add the child route to uncheckedRoutes.
+Recalculate all ancestor states.
+Parent may become:
+Checked
+Neutral
+Unchecked
+
+depending on descendants.
+
+Vue 3 Requirements
+Do not mutate props directly.
+Use emits and reactive state updates.
+Use computed properties to derive checkbox states.
+Maintain proper reactivity throughout nested trees.
+Recalculate parent states whenever descendants change.
+Ensure UI updates immediately after each interaction.
+Apply To
+Route tree nodes
+Nested route groups
+Policy control nodes rendered from policyControlList
+Expected Result
+
+The FileTree behaves like a file explorer permission tree:
+
+Checking a parent checks all descendants.
+Unchecking a parent unchecks all descendants.
+Mixed child states automatically show the parent as indeterminate/neutral.
+uncheckedRoutes remains the only persisted state that determines permissions.
+All checkbox states stay synchronized across the hierarchy.
+Important
+
+Keep the existing UI, styling, layout, and component structure unchanged. Only implement the interaction logic and state management required for tri-state hierarchical permissions.

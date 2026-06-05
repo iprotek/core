@@ -57,6 +57,8 @@ provide('toggleCheck', (targetRoutes, checkState) => {
     emit('update:uncheckedRoutes', newUnchecked);
 });
 
+provide('allRoutes', computed(() => props.routes));
+
 function buildTree(data) {
     const tree = {};
 
@@ -113,6 +115,7 @@ const TreeNode = defineComponent({
         const getRouteDescription = inject('getRouteDescription');
         const uncheckedSet = inject('uncheckedSet');
         const toggleCheck = inject('toggleCheck');
+        const allRoutes = inject('allRoutes');
 
         const toggle = () => {
             expanded.value = !expanded.value;
@@ -130,10 +133,28 @@ const TreeNode = defineComponent({
         const hasChildren = () =>
             folders().length > 0 || files().length > 0;
 
+        const descendants = computed(() => {
+            const list = collectRoutes(props.node);
+            const routeName = props.path.startsWith('api.') ? props.path : `api.${props.path}`;
+            if (allRoutes && allRoutes.value.includes(routeName)) {
+                if (!list.includes(routeName)) {
+                    list.push(routeName);
+                }
+            }
+            return list;
+        });
+
+        const checkedCount = computed(() => {
+            if (!uncheckedSet) return 0;
+            return descendants.value.filter(r => !uncheckedSet.value.has(r)).length;
+        });
+
         const isFolderChecked = computed(() => {
-            if (!uncheckedSet) return true;
-            const descendants = collectRoutes(props.node);
-            return descendants.every(route => !uncheckedSet.value.has(route));
+            return checkedCount.value === descendants.value.length;
+        });
+
+        const isFolderIndeterminate = computed(() => {
+            return checkedCount.value > 0 && checkedCount.value < descendants.value.length;
         });
 
         return () => {
@@ -172,10 +193,15 @@ const TreeNode = defineComponent({
                             marginRight: '6px',
                             cursor: 'pointer'
                         },
+                        onVnodeMounted: (vnode) => {
+                            vnode.el.indeterminate = isFolderIndeterminate.value;
+                        },
+                        onVnodeUpdated: (vnode) => {
+                            vnode.el.indeterminate = isFolderIndeterminate.value;
+                        },
                         onChange: (e) => {
                             if (toggleCheck) {
-                                const descendants = collectRoutes(props.node);
-                                toggleCheck(descendants, e.target.checked);
+                                toggleCheck(descendants.value, e.target.checked);
                             }
                         }
                     }),
