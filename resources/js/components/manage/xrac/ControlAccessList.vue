@@ -29,8 +29,11 @@
                                 <switch2 v-model="isDefault" @value_changed="loadAllowAccountDefaults(true)" /> 
                                 <label class="mb-0" v-if="isDefault"> IS DEFAULT? </label>
                                 <label class="mb-0 text-danger" v-else> CUSTOMIZE </label>
-                                <button class="float-right btn btn-outline-primary rounded-0" @click="$refs.control_policy.show(isDefault)">
+                                <button v-if="!app_account_id" class="float-right btn btn-outline-primary rounded-0" @click="$refs.control_policy.show(isDefault)">
                                     SET DEFAULT POLICY CONTROL
+                                </button>
+                                <button v-else class="float-right btn btn-outline-primary rounded-0" @click="$refs.control_policy.show(isDefault)">
+                                    SET USER POLICY CONTROL
                                 </button>
                             </td>
                         </tr>
@@ -229,7 +232,7 @@
                     is_default: vm.isDefault
                 };
                 
-                return WebRequest2('POST', '/manage/xrac/user-role/branch-access-list/'+this.branch_id, JSON.stringify(req) ).then(resp=>{
+                return WebRequest2('POST', '/manage/xrac/user-role/branch-access-list/'+(this.branch_id ? this.branch_id : 1), JSON.stringify(req) ).then(resp=>{
                     return resp.json().then( data=>{
                         if(!resp.ok){
                             return;
