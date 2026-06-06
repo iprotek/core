@@ -22,9 +22,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-2 text-center">
+                        <div class="col-sm-2 text-center px-0">
                             <button class="btn btn-outline-primary btn-sm text-nowrap" @click="unloadAllPolicies">
                                 <span class="fa fa-arrow-left"></span> UNSELECT ALL
+                            </button>
+                            <div>
+                                <button class="btn btn-outline-primary btn-sm text-nowrap my-1" >
+                                    IMPORT <span class="fa fa-arrow-right"></span>
+                                </button>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm text-nowrap" >
+                               <span class="fa fa-download"></span> EXPORT SELECTED 
                             </button>
                         </div>
                         <div class="col-sm-5">
