@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UserAdminInfo extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $table = "user_admin_infos";
     public $fillable = [
         'user_admin_id',
         'company_id',

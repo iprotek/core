@@ -12,6 +12,7 @@ use DB;
 class UserAdmin extends Model
 {
     use HasFactory,SoftDeletes;
+    protected $table = "user_admins";
 
     public $fillable = [
         'name',
