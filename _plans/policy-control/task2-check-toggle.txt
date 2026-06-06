@@ -4,20 +4,17 @@ Focus on the following Vue 3 components:
 
 /packages/iprotek/core/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
 /packages/iprotek/core/resources/js/components/manage/xrac/modal/FileTreeCheking.vue
-Current State
 
+Current State
 The UI is already implemented and rendered correctly.
 
 Available props:
-
 uncheckedRoutes
 routes
 policyControlList
 
 Currently, all FileTree checkboxes are displayed as checked by default.
-
 Required Behavior
-
 Implement full interactive check/uncheck functionality.
 
 Rules

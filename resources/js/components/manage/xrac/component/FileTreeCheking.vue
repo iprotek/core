@@ -1,5 +1,13 @@
 <template>
     <div class="tree">
+        <div class="mb-2">
+            <input 
+                type="text" 
+                v-model="searchQuery" 
+                class="form-control form-control-sm" 
+                placeholder="Search policies..."
+            />
+        </div>
         <TreeNode
             v-for="(value, key) in tree"
             :key="key"
@@ -12,7 +20,7 @@
 </template>
 
 <script setup>
-import { computed, defineComponent, h, ref, provide, inject } from 'vue';
+import { computed, defineComponent, h, ref, provide, inject, watch } from 'vue';
 
 const props = defineProps({
     uncheckedRoutes: {type:Array, default: []},
@@ -21,6 +29,9 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:uncheckedRoutes']);
+
+const searchQuery = ref('');
+provide('searchQuery', searchQuery);
 
 const descriptionMap = computed(() => {
     const map = {};
@@ -59,6 +70,37 @@ provide('toggleCheck', (targetRoutes, checkState) => {
 
 provide('allRoutes', computed(() => props.routes));
 
+function isRouteMatch(route, query) {
+    if (!query) return true;
+    const lowerQuery = query.toLowerCase();
+
+    // Check route name
+    if (route.toLowerCase().includes(lowerQuery)) return true;
+
+    // Check description
+    const desc = descriptionMap.value[route];
+    if (desc && desc.toLowerCase().includes(lowerQuery)) return true;
+
+    // Check formatted segments (e.g. "Data Model" matching "data-model")
+    const parts = route.split('.');
+    if (parts[0] === 'api') parts.shift();
+    
+    const formatName = (text) => {
+        return text
+            .replace(/-/g, ' ')
+            .replace(/\b\w/g, l => l.toUpperCase());
+    };
+
+    for (let part of parts) {
+        const formatted = formatName(part).toLowerCase();
+        if (formatted.includes(lowerQuery)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function buildTree(data) {
     const tree = {};
 
@@ -82,7 +124,11 @@ function buildTree(data) {
     return tree;
 }
 
-const tree = computed(() => buildTree(props.routes));
+const filteredRoutes = computed(() => {
+    return props.routes.filter(route => isRouteMatch(route, searchQuery.value));
+});
+
+const tree = computed(() => buildTree(filteredRoutes.value));
 
 function collectRoutes(node) {
     let result = [];
@@ -116,6 +162,15 @@ const TreeNode = defineComponent({
         const uncheckedSet = inject('uncheckedSet');
         const toggleCheck = inject('toggleCheck');
         const allRoutes = inject('allRoutes');
+        const searchQuery = inject('searchQuery');
+
+        if (searchQuery) {
+            watch(searchQuery, (newVal) => {
+                if (newVal) {
+                    expanded.value = true;
+                }
+            });
+        }
 
         const toggle = () => {
             expanded.value = !expanded.value;
