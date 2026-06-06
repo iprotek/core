@@ -5,8 +5,8 @@
                 {{title}}
             </div> 
                 <summernote v-model="content" :is_image_upload="true" :placeholder="'Content'" :is_local="true" :group_id="group_id" :height="height"  />
-            <div class="card-footer p-0">
-                <button class="btn btn-outline-primary btn-sm" @click="$refs.web_submit.submit()"> 
+            <div class="card-footer p-1">
+                <button class="btn btn-outline-primary btn-sm mr-1" @click="$refs.web_submit.submit()"> 
                     <!--<span class="fa fa-save"></span> SAVE-->
                     <web-submit ref="web_submit" :action="saveContent"  :icon_class="'fa fa-save'"  :label="'Save'"  />
                 </button>
