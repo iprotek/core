@@ -1,10 +1,10 @@
 <template>
     <span :class="el_class+' '+add_class" @click="submit" :title="title">
-        <i v-if="is_submit" class="fa fa-spinner fa-pulse mr-1"></i>
-        <i v-else-if="status == 2" class="fa fa-times text-danger mr-1"></i>
-        <i v-else-if="status == 1" class="fa fa-check text-success mr-1"></i>
-        <i v-else :class="icon_class+' mr-1'"></i>
-        <span v-if="label">
+        <i v-if="is_submit" class="fa fa-spinner fa-pulse"></i>
+        <i v-else-if="status == 2" class="fa fa-times text-danger"></i>
+        <i v-else-if="status == 1" class="fa fa-check text-success"></i>
+        <i v-else :class="icon_class"></i>
+        <span v-if="label" class="ml-1">
             <span v-if="is_submit"> Submitting </span>
             <span v-else-if="status >= 1" v-html="message"></span>
             <span v-else v-html="label">
