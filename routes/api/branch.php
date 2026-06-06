@@ -6,7 +6,7 @@ use iProtek\Core\Http\Controllers\Manage\FileUploadController;
 use iProtek\Xrac\Http\Controllers\XbranchController;
 use Illuminate\Http\Request;
 //use iProtek\Core\Http\Controllers\Manage\CmsController;
-//use App\Http\Controllers\Manage\BillingSharedAccountDefaultBranchController;
+use iProtek\Core\Http\Controllers\Manage\SharedAccountDefaultBranchController;
 
  
 Route::prefix('/branch')->name('.branch')->group(function(){
@@ -17,6 +17,5 @@ Route::prefix('/branch')->name('.branch')->group(function(){
                 ->defaults("_description","List of branch")
                 ->defaults("_is_visible",false)
                 ->defaults("_is_allow",true);
-    
 
 });
