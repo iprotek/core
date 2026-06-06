@@ -323,22 +323,52 @@
                 this.routes = [...this.initialRoutes];
                 this.selectedRoutes = [];
             },
+            restoreModalFocus() {
+                if (window.$ && this.$refs.modal) {
+                    const modalId = this.$refs.modal.modal;
+                    const $modal = window.$("#" + modalId);
+                    const modalData = $modal.data('bs.modal');
+                    if (modalData) {
+                        if (typeof modalData._enforceFocus === 'function') {
+                            modalData._enforceFocus();
+                        } else if (typeof modalData.enforceFocus === 'function') {
+                            modalData.enforceFocus();
+                        }
+                    }
+                }
+            },
             showAlert(icon, title, message) {
                 if (window.Swal) {
+                    if (window.$) {
+                        window.$(document).off('focusin.bs.modal');
+                    }
                     window.Swal.fire({
                         icon: icon,
                         title: title,
                         text: message,
+                        target: this.$refs.modal && this.$refs.modal.$el ? this.$refs.modal.$el : 'body',
                         didOpen: () => {
                             const container = window.Swal.getPopup();
                             if (container && container.parentElement) {
                                 container.parentElement.style.zIndex = 100000;
                             }
                         }
+                    }).then(() => {
+                        this.restoreModalFocus();
                     });
                 } else {
                     alert(title + ": " + message);
                 }
+            },
+            downloadCSV(blob, filename) {
+                let link = document.createElement("a");
+                let url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             },
             exportCSV() {
                 if (!this.selectedRoutes || this.selectedRoutes.length === 0) {
@@ -357,15 +387,56 @@
                 let minutes = pad(now.getMinutes());
                 let seconds = pad(now.getSeconds());
                 let datetime = `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
+                let defaultFilename = `policy_controls_export-${datetime}`;
 
-                let link = document.createElement("a");
-                let url = URL.createObjectURL(blob);
-                link.setAttribute("href", url);
-                link.setAttribute("download", `policy_controls_export-${datetime}.csv`);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+                if (window.Swal) {
+                    if (window.$) {
+                        window.$(document).off('focusin.bs.modal');
+                    }
+                    window.Swal.fire({
+                        title: 'Export CSV',
+                        text: 'Enter a custom filename for your CSV export:',
+                        input: 'text',
+                        inputValue: defaultFilename,
+                        target: this.$refs.modal && this.$refs.modal.$el ? this.$refs.modal.$el : 'body',
+                        showCancelButton: true,
+                        inputValidator: (value) => {
+                            if (!value || !value.trim()) {
+                                return 'Filename cannot be empty!';
+                            }
+                        },
+                        didOpen: () => {
+                            const container = window.Swal.getPopup();
+                            if (container && container.parentElement) {
+                                container.parentElement.style.zIndex = 100000;
+                            }
+                            const input = window.Swal.getInput();
+                            if (input) {
+                                setTimeout(() => input.focus(), 100);
+                            }
+                        }
+                    }).then((result) => {
+                        this.restoreModalFocus();
+                        if (result.isConfirmed) {
+                            let customName = result.value.trim();
+                            if (!customName.endsWith('.csv')) {
+                                customName += '.csv';
+                            }
+                            this.downloadCSV(blob, customName);
+                        }
+                    });
+                } else {
+                    let customName = prompt("Enter filename for CSV export:", defaultFilename);
+                    if (customName === null) return; // user cancelled
+                    customName = customName.trim();
+                    if (!customName) {
+                        customName = defaultFilename;
+                    }
+                    if (!customName.endsWith('.csv')) {
+                        customName += '.csv';
+                    }
+                    this.downloadCSV(blob, customName);
+                }
             },
             handleCSVImport(e) {
                 let file = e.target.files[0];

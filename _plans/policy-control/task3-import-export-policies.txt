@@ -1,0 +1,55 @@
+Task: Implement Import and Export to File .csv
+
+Focus on the following Vue 3 components:
+
+/packages/iprotek/core/resources/js/components/manage/xrac/modal/ModalPolicyControls.Vue
+
+*Use the created button for import and export of variable:
+selectedRoutes
+
+make it interactive and should reflect initialRoutes will transfer to selectedRoutes from import.
+Front-end only, dont.
+Reuse the created button and make it functional.
+
+
+
+///////////////// REFINED ////////////
+Task: Implement CSV Import and Export for Policy Controls
+
+Focus Component
+
+/packages/iprotek/core/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
+Requirements
+Export CSV
+Reuse the existing Export button.
+Export the current selectedRoutes data to a .csv file.
+The exported file should contain all values necessary to restore selectedRoutes.
+Import CSV
+Reuse the existing Import button.
+Allow the user to select and import a .csv file.
+Parse the CSV and update selectedRoutes accordingly.
+The imported data should immediately reflect in the UI.
+Imported routes should behave exactly as if they were manually selected.
+State Synchronization
+After a successful import:
+Transfer imported route values into selectedRoutes.
+Ensure all related UI elements, checkboxes, tree nodes, and selection states are updated reactively.
+Maintain Vue 3 reactivity.
+Constraints
+Front-end only.
+Do not create API endpoints.
+Do not modify backend logic.
+Do not add database integration.
+Keep all processing within the Vue component.
+Implementation Notes
+Reuse existing buttons instead of creating new ones.
+Follow the current component structure and coding style.
+Add proper validation for invalid or malformed CSV files.
+Show user feedback for:
+Successful import
+Failed import
+Empty file
+Invalid format
+Expected Result
+
+Users can export the current selectedRoutes into a CSV file and later import that same CSV file to restore the route selections, with all UI states updating automatically and reactively.
