@@ -18,7 +18,7 @@
                             </th>
                             <th v-else  @click="$refs.save_role_default.submit()" :class="'btn btn-outline-primary btn-lg text-sm'" style="border-radius:0px;">
                                 <div >  
-                                    <web-submit ref="save_role_default" :action="updateRoleAccess" :icon_class="'fa fa-save'" :label="'SAVE USER DEFAULTS'" :timeout="3000" />
+                                    <web-submit ref="save_role_default" :action="updateRoleAccess" :icon_class="'fa fa-save'" :label="'SAVE USER ROLE'" :timeout="3000" />
                                 </div>
                             </th>
                         </tr>

@@ -74,7 +74,7 @@
                     <button v-if="app_account_id" type="button" class="btn btn-outline-secondary mr-4" @click="loadPolicy()">REVERT</button> 
                     <button type="button" class="btn btn-outline-dark mr-4" data-dismiss="modal" @click="$refs.modal.dismiss()">Close</button> 
                     <web-submit v-if="!app_account_id" el_class="btn btn-outline-primary" :action="saveRolePolicy"  :icon_class="'fa fa-save'" :label="'SAVE ROLE'"  />
-                    <web-submit v-else el_class="btn btn-outline-primary" :action="saveUserRolePolicy"  :icon_class="'fa fa-save'" :label="'SAVE USER ROLE'"  />
+                    <web-submit v-else el_class="btn btn-outline-primary" :action="saveUserRolePolicy"  :icon_class="'fa fa-save'" :label="'SAVE USER ROLE POLICY'"  />
                 </div>
             </template>
         </modal-view> 
