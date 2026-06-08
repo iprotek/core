@@ -125,7 +125,7 @@
                                 @elseif(config('iprotek.show_login') == 'yes')
                                     @if (Route::has('login'))
                                         <li class="nav-item">
-                                            <a class="nav-link text-white" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                            <a class="nav-link text-white" href="/login">{{ __('Login') }}</a>
                                         </li>
                                     @endif
                                 @endauth
