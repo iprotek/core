@@ -77,7 +77,7 @@
                         
                         <br/>
                         <p class="mb-0">
-                            <a href="/login" class="text-center" ><label style="cursor:pointer;" class="m-0 text-info" label-trans-id="login">Login</label></a>
+                            <a href="{{route('login',[], false)}}" class="text-center" ><label style="cursor:pointer;" class="m-0 text-info" label-trans-id="login">Login</label></a>
                         </p>
                         <script>
                             function sendingRequest(){

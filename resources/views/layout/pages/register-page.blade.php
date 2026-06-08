@@ -361,7 +361,7 @@
 
         @if($hasLogin)
             <p class="mb-0">
-                <a href="/login" class="text-center" label-trans-id="login">Login</a>
+                <a href="{{route('login',[], false)}}" class="text-center" label-trans-id="login">Login</a>
             </p>
         @endif
     </x-container.card>
