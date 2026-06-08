@@ -54,8 +54,8 @@ class AuthWebPayChecker
                         ])->withInput( ['email'=>$user->email ]);
                     }
                     //If Success then redirect to setup default..
-                    //return redirect()->to('https://sample.com/login');
-                    return redirect()->route('manage.sub-account-default-group');
+                    return redirect()->to(config('app.url').'/manage/sub-account-default-group');
+                    //return redirect()->route('manage.sub-account-default-group');
                 }
                 $is_own_group = false;
 
