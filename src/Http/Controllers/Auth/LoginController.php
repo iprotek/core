@@ -94,6 +94,6 @@ class LoginController extends Controller
         auth()->logout();
         auth('admin')->logout();
 
-        return redirect('/');
+        return redirect()->to(config('app.url'));
     }
 }
