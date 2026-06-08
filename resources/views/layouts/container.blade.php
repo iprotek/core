@@ -68,7 +68,7 @@
                                 <!-- Authentication Links -->
                                 @if (Route::has('helpdesk.create-get'))
                                     <li class="nav-item"> 
-                                        <a class="nav-link text-white" href="{{route('helpdesk.create-get')}}">  
+                                        <a class="nav-link text-white" href="{{route('helpdesk.create-get',[],false)}}">  
                                             <span class="ion ion-help-buoy"></span> 
                                             {{ __('Helpdesk') }}
                                         </a>
@@ -105,7 +105,7 @@
                                         </a>
 
                                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="z-index:10000;">
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                            <a class="dropdown-item" href="{{ route('logout',[],false) }}"
                                                 onclick="event.preventDefault();
                                                                 document.getElementById('logout-form').submit();">
                                                 {{ __('Logout') }}

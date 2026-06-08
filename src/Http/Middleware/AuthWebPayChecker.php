@@ -55,7 +55,7 @@ class AuthWebPayChecker
                     }
                     //If Success then redirect to setup default..
 
-                    return redirect()->route('manage.sub-account-default-group');
+                    return redirect()->route('manage.sub-account-default-group',[],false);
                 }
                 $is_own_group = false;
 

@@ -3,7 +3,7 @@
 <div class="card">
     <div class="card-header">{{ __('Account Login') }}</div>
     <div class="card-body"> 
-        <form method="POST" action="{{ route('pay-login') }}">
+        <form method="POST" action="{{ route('pay-login',[],false) }}">
             @csrf                 
             <span class="invalid-feedback text-primary d-block" role="alert">
                 <strong> Please login your account.  </strong>
