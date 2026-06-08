@@ -157,8 +157,8 @@ class UserAdminPayAccountController extends _CommonController
             $url = preg_replace('/^http:/i', 'https:', $url);
             return redirect()->to($url);
         }
-
-        return redirect()->intended();
+        return redirect()->to(config('app.url'));
+        //return redirect()->intended();
     }
 
 
