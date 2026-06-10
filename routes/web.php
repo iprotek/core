@@ -18,6 +18,11 @@ Route::middleware('web')->group(function(){
 
   }); 
 
+  Route::get('/ping', function () {
+      session()->put('last_ping', now());
+      return response()->json(['ok' => true]);
+  });
+
   //COMPANY PROFIFE
   Route::get('/get-profile-data', [ iProtek\Core\Http\Controllers\Manage\CompanyDetailsController::class ,'get_profile'])->name('.get-profile-data');
     
