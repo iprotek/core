@@ -10,8 +10,8 @@
         <div>
             <div class="rate px-5" style="align-items:center; display:flex;">
                 <template v-for="index in 5">
-                    <img v-if="index <= review.rating" v-bind:key="'review-star-'+index" src="/images/components/star.svg" style="height: 15px;"/>
-                    <img v-else v-bind:key="'review-star-'+index" src="/images/components/star-gray.svg" style="height: 15px;"/>
+                    <img v-if="index <= review.rating" v-bind:key="'review-star-'+index" :src="'/images/components/star.svg'" style="height: 15px;"/>
+                    <img v-else v-bind:key="'review-star-'+index" :src="'/images/components/star-gray.svg'" style="height: 15px;"/>
                 </template>
             </div>
         </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="my-3">
             <a :href="review.author_url" target="_blank" style="display:flex; align-items:center;text-decoration:none;">
-                <img src="/images/components/google-color-logo.svg" style="height: 40px;" />
+                <img :src="'/images/components/google-color-logo.svg'" style="height: 40px;" />
                 <label class="google-fonts">
                     <small class="d-block" style="font-size:0.8em; color:gray; cursor:pointer;"> Posted on </small>
                     <span>Google</span>
