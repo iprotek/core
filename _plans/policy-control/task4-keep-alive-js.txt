@@ -1,0 +1,37 @@
+🧠 Gemini Refinement Prompt
+You are a senior frontend architect.
+
+/packages/iprotek/core/resources/js/manage/keep-alive.js
+
+Refactor and improve the following Vue 3 keep-alive system used to ping a Laravel backend through Cloudflare.
+
+GOALS:
+1. Prevent multiple browser tabs from spamming the /ping endpoint (only one active sender allowed).
+2. Ensure robust leader election across tabs.
+3. Handle tab crashes, refreshes, and page visibility changes.
+4. Avoid using crypto.randomUUID() due to browser compatibility issues.
+5. Make the solution production-ready and efficient.
+6. Reduce unnecessary network requests (avoid redundant pings when tab is inactive).
+7. Ensure compatibility with modern browsers and older WebViews.
+8. Keep it Vue 3 composable-based (Composition API).
+
+CURRENT IMPLEMENTATION:
+
+```javascript
+// (paste current composable here)
+
+IMPROVEMENTS REQUESTED:
+
+Improve leader election logic (avoid race conditions in localStorage)
+Add fallback UUID generator if needed
+Add Page Visibility API optimization (pause ping when hidden)
+Add cleanup logic for leader failover
+Optionally suggest BroadcastChannel API improvement if better than localStorage
+Ensure minimal CPU usage and network overhead
+Make code clean, readable, and production-safe
+
+Return:
+
+Improved Vue 3 composable code
+Short explanation of improvements
+Any edge cases that still exist in this approach
