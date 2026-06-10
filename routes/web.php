@@ -18,7 +18,7 @@ Route::middleware('web')->group(function(){
 
   }); 
 
-  Route::get('/ping', function () {
+  Route::middleware(['auth', 'throttle:60,1'])->get('/ping', function () {
       session()->put('last_ping', now());
       return response()->json(['ok' => true]);
   });
