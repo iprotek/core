@@ -22,7 +22,7 @@
         ]
     },
     "require": {
-        "dompdf/dompdf": "^3.16",
+        "dompdf/dompdf": "^3.1",
         "php": ">=8.0.0",
         "illuminate/support": "^12.0",
         "iprotek/data":"dev-main",
