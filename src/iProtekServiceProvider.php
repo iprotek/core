@@ -100,9 +100,9 @@ class iProtekServiceProvider extends ServiceProvider
 
         //Create link instead
         /*
-        $target = base_path('packages').'/iprotek/core/public';//__DIR__.'/../public';
+        $target = base_path('packages').'/iprotek/core2/public';//__DIR__.'/../public';
         if (!is_dir($target)) {
-            $target = base_path('vendor').'/iprotek/core/public';
+            $target = base_path('vendor').'/iprotek/core2/public';
         }*/
         $target = __DIR__.'/../public';
         $target = realpath($target);

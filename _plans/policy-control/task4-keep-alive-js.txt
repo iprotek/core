@@ -2,7 +2,7 @@ You are a senior Vue 3 / frontend performance engineer.
 
 Refactor and improve ONLY the following file:
 
-/packages/iprotek/core/resources/js/manage/keep-alive.js
+/packages/iprotek/core2/resources/js/manage/keep-alive.js
 
 This file is used as a browser keep-alive mechanism that periodically sends a /ping request to a Laravel backend behind Cloudflare.
 

@@ -1,6 +1,6 @@
 Focus on Vue components:
-/packages/iprotek/core/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
-/packages/iprotek/core/resources/js/components/manage/xrac/modal/FileTree.vue
+/packages/iprotek/core2/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
+/packages/iprotek/core2/resources/js/components/manage/xrac/modal/FileTree.vue
 
 Context
 The UI is already fully implemented and rendered correctly.
@@ -105,7 +105,7 @@ A dual-tree UI where:
 
 Focus on Vue component:
 
-/packages/iprotek/core/resources/js/components/manage/xrac/modal/FileTree.vue
+/packages/iprotek/core2/resources/js/components/manage/xrac/modal/FileTree.vue
 
 Goal
 Implement a frontend-only filter search feature for the existing FileTree UI.

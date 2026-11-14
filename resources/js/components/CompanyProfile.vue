@@ -70,7 +70,7 @@
 
 <script>    
     import UserInput2Vue from './common/UserInput2.vue';
-    //import UserInput2Vue from '../../../../vendor/iprotek/core/resources/js/components/common/UserInput2.vue';
+    //import UserInput2Vue from '../../../../vendor/iprotek/core2/resources/js/components/common/UserInput2.vue';
     //import UserInput2Vue
 
     export default {

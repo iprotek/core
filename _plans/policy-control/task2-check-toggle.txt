@@ -2,8 +2,8 @@ Task: Implement interactive checkbox behavior for FileTree and Policy Controls
 
 Focus on the following Vue 3 components:
 
-/packages/iprotek/core/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
-/packages/iprotek/core/resources/js/components/manage/xrac/modal/FileTreeCheking.vue
+/packages/iprotek/core2/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
+/packages/iprotek/core2/resources/js/components/manage/xrac/modal/FileTreeCheking.vue
 
 Current State
 The UI is already implemented and rendered correctly.
@@ -46,8 +46,8 @@ Task: Implement tri-state checkbox behavior for FileTree and Policy Controls
 
 Focus on the following Vue 3 components:
 
-/packages/iprotek/core/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
-/packages/iprotek/core/resources/js/components/manage/xrac/modal/FileTreeCheking.vue
+/packages/iprotek/core2/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
+/packages/iprotek/core2/resources/js/components/manage/xrac/modal/FileTreeCheking.vue
 Available Props
 uncheckedRoutes
 routes

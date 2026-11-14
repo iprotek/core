@@ -2,7 +2,7 @@ Task: Implement Import and Export to File .csv
 
 Focus on the following Vue 3 components:
 
-/packages/iprotek/core/resources/js/components/manage/xrac/modal/ModalPolicyControls.Vue
+/packages/iprotek/core2/resources/js/components/manage/xrac/modal/ModalPolicyControls.Vue
 
 *Use the created button for import and export of variable:
 selectedRoutes
@@ -18,7 +18,7 @@ Task: Implement CSV Import and Export for Policy Controls
 
 Focus Component
 
-/packages/iprotek/core/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
+/packages/iprotek/core2/resources/js/components/manage/xrac/modal/ModalPolicyControls.vue
 Requirements
 Export CSV
 Reuse the existing Export button.
