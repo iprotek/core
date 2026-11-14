@@ -1,5 +1,5 @@
 {
-    "name": "iprotek/core",
+    "name": "iprotek/core2",
     "description": "A simple design for UI and core functions of iprotek(don't use iprotek/pay they are conflict, choose only one.)",
     "keywords": ["laravel", "plugin", "iprotek-core"],
     "authors": [
