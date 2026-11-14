@@ -1,7 +1,7 @@
 <template>
     <div class="form-group clearfix mb-0">
         <div class="icheck-primary d-inline">
-            <input :type="default_type" :id="radioId" :name="name" :checked="is_checked" :value="data_value" @click="selected">
+            <input :type="default_type" :id="radioId" :name="name" :checked="is_checked" :value="data_value" @click="selected" :disabled="disabled">
             <label :for="radioId" v-text="default_label"> </label>
         </div>
     </div>
@@ -12,7 +12,7 @@
 <script>
     import { getCurrentInstance } from 'vue';
     export default {
-        props:[ "modelValue", "type", "label", "name", "checked", "data_value", "value"],
+        props:[ "modelValue", "type", "label", "name", "checked", "data_value", "value", "disabled"],
         components: {    
         },
         emits: ["update:checked", "selected"], //For hint purpose
